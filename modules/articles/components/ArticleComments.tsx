@@ -1,0 +1,93 @@
+"use client";
+
+import { useState } from 'react';
+import { MessageSquare, Send, User } from 'lucide-react';
+import { ArticleComment } from '../types';
+
+interface ArticleCommentsProps {
+  comments: ArticleComment[];
+  onAddComment: (content: string) => Promise<void>;
+}
+
+export function ArticleComments({ comments, onAddComment }: ArticleCommentsProps) {
+  const [newComment, setNewComment] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newComment.trim()) return;
+
+    setLoading(true);
+    try {
+      await onAddComment(newComment.trim());
+      setNewComment('');
+    } catch (err) {
+      alert("Fehler beim Speichern des Kommentars.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center gap-2 mb-2">
+        <MessageSquare className="w-5 h-5 text-slate-500" />
+        <h3 className="text-lg font-semibold text-slate-800 dark:text-white">Kommentare ({comments.length})</h3>
+      </div>
+
+      <form onSubmit={handleSubmit} className="relative group">
+        <textarea
+          value={newComment}
+          onChange={(e) => setNewComment(e.target.value)}
+          placeholder="Schreibe einen Kommentar oder eine Notiz zum Artikel..."
+          className="block w-full rounded-2xl border-0 py-4 px-5 text-slate-900 dark:text-white dark:bg-slate-800 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-700 focus:ring-2 focus:ring-indigo-600 sm:text-sm transition-all pr-14"
+          rows={2}
+          disabled={loading}
+        />
+        <button
+          type="submit"
+          disabled={loading || !newComment.trim()}
+          className="absolute right-3 bottom-3 p-2 bg-indigo-600 text-white rounded-xl hover:bg-indigo-500 disabled:opacity-50 transition-colors shadow-lg"
+        >
+          {loading ? (
+            <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+          ) : (
+            <Send className="w-5 h-5" />
+          )}
+        </button>
+      </form>
+
+      <div className="space-y-4">
+        {comments.length === 0 ? (
+          <div className="text-center py-10 bg-slate-50 dark:bg-slate-900/30 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700">
+            <p className="text-slate-500 text-sm">Keine Kommentare vorhanden.</p>
+          </div>
+        ) : (
+          comments.map((comment) => (
+            <div key={comment.id} className="flex gap-4 p-4 rounded-2xl bg-white dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700 shadow-sm">
+              <div className="flex-shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-900/30 flex items-center justify-center">
+                  <User className="w-5 h-5 text-indigo-600" />
+                </div>
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">BENUTZER</span>
+                  <span className="text-[10px] text-slate-400 font-medium">
+                    {new Date(comment.created_at).toLocaleString('de-DE', {
+                      day: '2-digit', month: '2-digit', year: 'numeric',
+                      hour: '2-digit', minute: '2-digit'
+                    })}
+                  </span>
+                </div>
+                <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-wrap">
+                  {comment.content}
+                </p>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+    </div>
+  );
+}
