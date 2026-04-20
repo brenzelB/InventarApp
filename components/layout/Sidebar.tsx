@@ -7,6 +7,7 @@ import {
   LayoutDashboard, 
   Package, 
   Folder,
+  ChevronLeft, 
   ChevronRight,
   User,
   X 

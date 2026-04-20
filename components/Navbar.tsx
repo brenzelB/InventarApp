@@ -33,7 +33,7 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
   const { user, logout } = useAuth();
 
   return (
-    <nav className="sticky top-0 z-30 shadow-sm bg-white/80 dark:bg-slate-800/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-700 w-full h-16">
+    <nav className="sticky top-0 z-50 shadow-sm bg-white/80 dark:bg-slate-800/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-700 w-full h-16">
       <div className="h-full px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-full">
           <div className="flex items-center gap-4">
