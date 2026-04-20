@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { Article } from '../types';
 import { articleService } from '../services/articleService';
 import { useState } from 'react';
+import { useAuth } from '@/hooks/useAuth';
 import { QRCodeView } from "@/components/QRCodeView";
 import { Pencil, Trash2 } from 'lucide-react';
 
@@ -14,6 +15,7 @@ interface ArticleTableProps {
 
 export function ArticleTable({ articles, onDelete }: ArticleTableProps) {
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const { role } = useAuth();
 
   const handleDelete = async (id: string) => {
     if (!confirm('Artikel wirklich löschen?')) return;
@@ -86,27 +88,31 @@ export function ArticleTable({ articles, onDelete }: ArticleTableProps) {
               </td>
               <td className="whitespace-nowrap px-3 py-4 text-sm font-medium w-px">
                 <div className="flex items-center gap-4">
-                  <Link 
-                    href={`/dashboard/articles/${article.id}`} 
-                    title="Bearbeiten"
-                    aria-label="Artikel bearbeiten"
-                    className="hover:opacity-70 transition-all p-1"
-                  >
-                    <Pencil size={18} className="text-blue-500" />
-                  </Link>
-                  <button 
-                    onClick={() => handleDelete(article.id)}
-                    disabled={deletingId === article.id}
-                    title="Löschen"
-                    aria-label="Artikel löschen"
-                    className="hover:opacity-70 disabled:opacity-50 transition-all p-1"
-                  >
-                    {deletingId === article.id ? (
-                      <span className="w-5 h-5 border-2 border-slate-300 border-t-red-500 rounded-full animate-spin inline-block" />
-                    ) : (
-                      <Trash2 size={18} className="text-red-500" />
-                    )}
-                  </button>
+                  {(role === 'admin' || role === 'editor') && (
+                    <Link 
+                      href={`/dashboard/articles/${article.id}`} 
+                      title="Bearbeiten"
+                      aria-label="Artikel bearbeiten"
+                      className="hover:opacity-70 transition-all p-1"
+                    >
+                      <Pencil size={18} className="text-blue-500" />
+                    </Link>
+                  )}
+                  {role === 'admin' && (
+                    <button 
+                      onClick={() => handleDelete(article.id)}
+                      disabled={deletingId === article.id}
+                      title="Löschen"
+                      aria-label="Artikel löschen"
+                      className="hover:opacity-70 disabled:opacity-50 transition-all p-1"
+                    >
+                      {deletingId === article.id ? (
+                        <span className="w-5 h-5 border-2 border-slate-300 border-t-red-500 rounded-full animate-spin inline-block" />
+                      ) : (
+                        <Trash2 size={18} className="text-red-500" />
+                      )}
+                    </button>
+                  )}
                 </div>
               </td>
             </tr>

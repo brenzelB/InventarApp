@@ -9,8 +9,8 @@ import {
   Folder,
   ChevronLeft, 
   ChevronRight,
-  User,
-  X 
+  X,
+  Users 
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -23,12 +23,18 @@ interface SidebarProps {
 export default function Sidebar({ isOpen, setIsOpen, isCollapsed, setIsCollapsed }: SidebarProps) {
   const pathname = usePathname();
 
+  const { role } = useAuth();
   const navItems = [
     { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
     { name: 'Artikel', href: '/dashboard/articles', icon: Package },
     { name: 'Gruppen', href: '/dashboard/groups', icon: Folder },
     { name: 'Profil', href: '/dashboard/profile', icon: User },
   ];
+
+  // Only show Team for Admins
+  if (role === 'admin') {
+    navItems.push({ name: 'Team', href: '/dashboard/team', icon: Users });
+  }
 
   return (
     <>

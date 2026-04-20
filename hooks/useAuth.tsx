@@ -16,6 +16,7 @@ interface AuthContextType {
   loginAsGuest: () => Promise<void>;
   logout: () => Promise<void>;
   updateProfile: (metadata: any) => Promise<{ error: string | null }>;
+  role: 'admin' | 'editor' | 'viewer';
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -33,6 +34,7 @@ const getMockUser = (email: string): User => ({
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
+  const [role, setRole] = useState<'admin' | 'editor' | 'viewer'>('viewer');
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
@@ -43,6 +45,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const savedUser = localStorage.getItem("mock_user_email");
         if (savedUser) {
           setUser(getMockUser(savedUser));
+          // Load mock role
+          const roles = JSON.parse(localStorage.getItem("mock_roles") || "{}");
+          setRole(roles[savedUser] || 'admin'); // Default first user to admin in mock
         }
         setLoading(false);
         return;
@@ -51,6 +56,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const { data: { session } } = await supabase.auth.getSession();
       setSession(session);
       setUser(session?.user ?? null);
+      
+      if (session?.user) {
+        // Fetch role from profile
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('role')
+          .eq('id', session.user.id)
+          .single();
+        if (profile) setRole(profile.role);
+      }
+      
       setLoading(false);
     };
 
@@ -196,7 +212,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, session, loading, login, register, forgotPassword, resetPassword, loginAsGuest, logout, updateProfile }}>
+    <AuthContext.Provider value={{ user, session, loading, login, register, forgotPassword, resetPassword, loginAsGuest, logout, updateProfile, role }}>
       {children}
     </AuthContext.Provider>
   );

@@ -8,9 +8,11 @@ import { useArticles } from "@/modules/articles/hooks/useArticles";
 import { articleService } from "@/modules/articles/services/articleService";
 import { QrCode, RefreshCcw, CheckCircle2, Loader2, Plus } from "lucide-react";
 import { ArticleActionButtons } from "@/modules/articles/components/ArticleActionButtons";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function ArticlesPage() {
   const { articles, loading, error, refetch } = useArticles();
+  const { role } = useAuth();
   
   // Filtering & Sorting State
   const [searchQuery, setSearchQuery] = useState("");
@@ -75,10 +77,12 @@ export default function ArticlesPage() {
           
           <div className="h-8 w-px bg-slate-200 dark:bg-slate-700 hidden sm:block mx-2" />
 
-          <Link href="/dashboard/articles/new" className="inline-flex items-center gap-2 rounded-2xl bg-slate-900 dark:bg-white px-6 py-3 text-sm font-black text-white dark:text-slate-900 shadow-xl hover:scale-[1.02] transition-all active:scale-95 group">
-            <Plus className="w-5 h-5 group-hover:rotate-90 transition-transform" />
-            Neuer Artikel
-          </Link>
+          {role !== 'viewer' && (
+            <Link href="/dashboard/articles/new" className="inline-flex items-center gap-2 rounded-2xl bg-slate-900 dark:bg-white px-6 py-3 text-sm font-black text-white dark:text-slate-900 shadow-xl hover:scale-[1.02] transition-all active:scale-95 group">
+              <Plus className="w-5 h-5 group-hover:rotate-90 transition-transform" />
+              Neuer Artikel
+            </Link>
+          )}
         </div>
       </div>
 
