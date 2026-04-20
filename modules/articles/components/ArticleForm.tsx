@@ -114,15 +114,31 @@ export function ArticleForm({ initialData, articleId, qrCode, onUpdate }: Articl
         </div>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="md:col-span-1">
           <label className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-200">Name *</label>
           <input required type="text" name="name" value={formData.name} onChange={handleChange} className="mt-2 block w-full rounded-md border-0 py-1.5 px-3 text-slate-900 dark:text-white dark:bg-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:opacity-50" disabled={loading}/>
         </div>
 
-        <div>
+        <div className="md:col-span-1">
           <label className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-200">SKU (Artikelnummer) *</label>
           <input required type="text" name="sku" value={formData.sku} onChange={handleChange} className="mt-2 block w-full rounded-md border-0 py-1.5 px-3 text-slate-900 dark:text-white dark:bg-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:opacity-50" disabled={loading}/>
+        </div>
+
+        <div className="md:col-span-1">
+          <label className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-200">Gruppe</label>
+          <select 
+            name="group_id" 
+            value={formData.group_id || ''} 
+            onChange={handleChange}
+            className="mt-2 block w-full rounded-md border-0 py-1.5 px-3 text-slate-900 dark:text-white dark:bg-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:opacity-50 appearance-none bg-no-repeat bg-[right_0.5rem_center] bg-[length:1.5em_1.5em]"
+            disabled={loading}
+          >
+            <option value="">Keine Gruppe</option>
+            {groups.map(group => (
+              <option key={group.id} value={group.id}>{group.name}</option>
+            ))}
+          </select>
         </div>
       </div>
 
@@ -153,22 +169,6 @@ export function ArticleForm({ initialData, articleId, qrCode, onUpdate }: Articl
           <label className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-200">Mindestbestand *</label>
           <input required type="number" name="mindestbestand" value={formData.mindestbestand} onChange={handleChange} className="mt-2 block w-full rounded-md border-0 py-1.5 px-3 text-slate-900 dark:text-white dark:bg-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:opacity-50" disabled={loading}/>
         </div>
-      </div>
-
-      <div>
-        <label className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-200">Gruppe</label>
-        <select 
-          name="group_id" 
-          value={formData.group_id || ''} 
-          onChange={handleChange}
-          className="mt-2 block w-full rounded-md border-0 py-1.5 px-3 text-slate-900 dark:text-white dark:bg-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:opacity-50 appearance-none"
-          disabled={loading}
-        >
-          <option value="">Keine Gruppe (Nicht zugewiesen)</option>
-          {groups.map(group => (
-            <option key={group.id} value={group.id}>{group.name}</option>
-          ))}
-        </select>
       </div>
 
       <div className="flex justify-end pt-4 border-t border-slate-200 dark:border-slate-700 gap-4">
