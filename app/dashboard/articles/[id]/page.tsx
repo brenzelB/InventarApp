@@ -212,7 +212,8 @@ export default function ArticleDetailPage({ params }: { params: { id: string } }
                   herstellpreis: article.herstellpreis,
                   verkaufspreis: article.verkaufspreis,
                   bestand: article.bestand,
-                  mindestbestand: article.mindestbestand
+                  mindestbestand: article.mindestbestand,
+                  group_id: article.group_id || null
                 }} 
                 qrCode={article.qr_code} 
                 onUpdate={updateArticle}

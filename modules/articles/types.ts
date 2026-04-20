@@ -29,7 +29,7 @@ export interface ArticleFormData {
   verkaufspreis: number;
   bestand: number;
   mindestbestand: number;
-  group_id: string | null;
+  group_id?: string | null;
 }
 
 export type HistoryType = 'input' | 'output';
