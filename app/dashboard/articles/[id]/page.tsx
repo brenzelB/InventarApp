@@ -242,7 +242,9 @@ export default function ArticleDetailPage({ params }: { params: { id: string } }
               <div className="pt-4 border-t border-slate-50 dark:border-slate-700 flex justify-between items-center">
                 <span className="text-xs font-bold text-indigo-600 uppercase">Marge</span>
                 <span className="text-lg font-black text-indigo-600">
-                  {(((article.verkaufspreis - article.herstellpreis) / article.verkaufspreis) * 100).toFixed(0)}%
+                  {article.verkaufspreis > 0 
+                    ? (((article.verkaufspreis - article.herstellpreis) / article.verkaufspreis) * 100).toFixed(0) 
+                    : "0"}%
                 </span>
               </div>
             </div>
