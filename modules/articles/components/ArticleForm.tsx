@@ -23,7 +23,7 @@ const defaultData: ArticleFormData = {
   mindestbestand: 0,
 };
 
-export function ArticleForm({ initialData, articleId, qrCode }: ArticleFormProps) {
+export function ArticleForm({ initialData, articleId, qrCode, onUpdate }: ArticleFormProps) {
   const [formData, setFormData] = useState<ArticleFormData>(initialData || defaultData);
   const { create, update, loading, error } = useArticleMutations();
   const [success, setSuccess] = useState(false);
