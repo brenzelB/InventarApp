@@ -58,12 +58,10 @@ export async function GET(
     if (!isMock) {
       try {
         const supabase = createClient(supabaseUrl, supabaseAnonKey);
-        supabase
+        await supabase
           .from("articles")
           .update({ qr_code: svg })
-          .eq("id", id)
-          .then(() => {})
-          .catch(() => {});
+          .eq("id", id);
       } catch {}
     }
 
