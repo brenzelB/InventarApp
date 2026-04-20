@@ -86,6 +86,7 @@ export const articleService = {
         ...article,
         id,
         qr_code,
+        group_id: article.group_id ?? null,
         group: groupData ? { name: groupData.name } : null,
         created_at: now,
         updated_at: now,
