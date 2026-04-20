@@ -29,6 +29,23 @@ export default function GroupsPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
+  // Load view mode from localStorage on mount
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const savedMode = localStorage.getItem('groupsViewMode');
+      if (savedMode === 'grid' || savedMode === 'list') {
+        setViewMode(savedMode);
+      }
+    }
+  }, []);
+
+  // Persist view mode changes
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('groupsViewMode', viewMode);
+    }
+  }, [viewMode]);
+
   useEffect(() => {
     loadData();
   }, []);
