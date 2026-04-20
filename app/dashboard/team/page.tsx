@@ -39,6 +39,7 @@ export default function TeamPage() {
   const [loading, setLoading] = useState(true);
   const [isInviting, setIsInviting] = useState(false);
   const [inviteEmail, setInviteEmail] = useState("");
+  const [inviteName, setInviteName] = useState("");
   const [inviteRole, setInviteRole] = useState<'admin' | 'editor' | 'viewer'>('viewer');
   const [message, setMessage] = useState<{ text: string, type: 'success' | 'error' } | null>(null);
 
@@ -46,19 +47,34 @@ export default function TeamPage() {
     setLoading(true);
     try {
       console.log("[Team] Fetching members and invitations...");
-      const [pRes, iRes] = await Promise.all([
-        supabase.from('profiles').select('*').order('created_at', { ascending: false }),
-        supabase.from('invitations').select('*').order('created_at', { ascending: false })
-      ]);
+      
+      // Separate queries to avoid one failing the other
+      const { data: pData, error: pError } = await supabase
+        .from('profiles')
+        .select('*');
+      
+      const { data: iData, error: iError } = await supabase
+        .from('invitations')
+        .select('*');
 
-      if (pRes.error) throw pRes.error;
-      if (iRes.error) throw iRes.error;
+      if (pError) console.error("[Team] Profiles fetch error:", pError.message);
+      if (iError) console.error("[Team] Invitations fetch error:", iError.message);
 
-      if (pRes.data) setProfiles(pRes.data);
-      if (iRes.data) setInvitations(iRes.data);
+      if (pData) {
+        // Safe sorting locally if created_at exists
+        const sorted = [...pData].sort((a, b) => {
+          if (a.created_at && b.created_at) {
+            return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+          }
+          return 0;
+        });
+        setProfiles(sorted);
+      }
+      
+      if (iData) setInvitations(iData);
     } catch (err: any) {
       console.error("[Team] Fetch failed:", err.message);
-      setMessage({ text: "Fehler beim Laden der Daten: " + err.message, type: 'error' });
+      setMessage({ text: "Teilweiser Fehler beim Laden der Daten.", type: 'error' });
     } finally {
       setLoading(false);
     }
@@ -82,13 +98,16 @@ export default function TeamPage() {
       const { error } = await supabase.from('invitations').insert({
         email: inviteEmail.trim().toLowerCase(),
         role: inviteRole,
-        invited_by: user?.id
+        invited_by: user?.id,
+        // Optional name if we ever add it to DB, for now we just handle it in UI
+        metadata: { name: inviteName } 
       });
 
       if (error) throw error;
 
       setMessage({ text: `Einladung an ${inviteEmail} wurde gespeichert.`, type: 'success' });
       setInviteEmail("");
+      setInviteName("");
       fetchTeamData();
     } catch (err: any) {
       console.error("[Team] Invitation failed:", err);
@@ -218,8 +237,8 @@ export default function TeamPage() {
                   {profiles.map((profile) => (
                     <tr key={profile.id} className="group hover:bg-slate-50/50 dark:hover:bg-slate-700/50 transition-all">
                       <td className="px-8 py-5 whitespace-nowrap text-sm font-bold text-slate-900 dark:text-white">
-                        {profile.display_name}
-                        {profile.id === user?.id && <span className="ml-2 text-[10px] bg-slate-100 dark:bg-slate-700 px-2 py-0.5 rounded-md opacity-50">ICH</span>}
+                        {profile.display_name || 'Unbekannt'}
+                        {profile.id === user?.id && <span className="ml-2 text-[10px] bg-slate-100 dark:border-slate-700 px-2 py-0.5 rounded-md opacity-50">ICH</span>}
                       </td>
                       <td className="px-8 py-5 whitespace-nowrap text-sm text-slate-500 font-medium">
                         {profile.email}
@@ -309,6 +328,20 @@ export default function TeamPage() {
             
             <form onSubmit={handleInvite} className="space-y-6 relative z-10">
               <div className="space-y-2">
+                <label className="text-[10px] font-black uppercase tracking-[0.2em] opacity-80 pl-1">Name des Nutzers</label>
+                <div className="relative">
+                  <User className="absolute left-4 top-4 w-5 h-5 text-indigo-200" />
+                  <input
+                    type="text"
+                    value={inviteName}
+                    onChange={(e) => setInviteName(e.target.value)}
+                    placeholder="Max Mustermann"
+                    className="w-full bg-white/10 border border-white/20 rounded-2xl py-4 pl-12 pr-4 text-white placeholder-indigo-200 focus:outline-none focus:ring-2 focus:ring-white/50 text-sm font-bold transition-all"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
                 <label className="text-[10px] font-black uppercase tracking-[0.2em] opacity-80 pl-1">E-Mail Adresse</label>
                 <div className="relative">
                   <Mail className="absolute left-4 top-4 w-5 h-5 text-indigo-200" />
@@ -345,7 +378,7 @@ export default function TeamPage() {
 
               <button
                 type="submit"
-                disabled={isInviting || !inviteEmail}
+                disabled={isInviting || !inviteEmail || !inviteName}
                 className="w-full bg-white text-indigo-600 rounded-2xl py-5 text-xs font-black uppercase tracking-[0.3em] shadow-xl hover:bg-slate-50 hover:scale-[1.02] active:scale-95 transition-all disabled:opacity-50 flex items-center justify-center gap-4 group"
               >
                 {isInviting ? <Loader2 className="w-5 h-5 animate-spin" /> : <UserPlus className="w-5 h-5 group-hover:rotate-12 transition-transform" />}
