@@ -15,8 +15,10 @@ import {
   LayoutGrid,
   List,
   ChevronRight,
-  ArrowLeft
+  ArrowLeft,
+  Eye
 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 export default function GroupsPage() {
   const [groups, setGroups] = useState<Group[]>([]);
@@ -28,6 +30,7 @@ export default function GroupsPage() {
   const [selectedGroup, setSelectedGroup] = useState<Group | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const router = useRouter();
 
   // Load view mode from localStorage on mount
   useEffect(() => {
@@ -247,19 +250,24 @@ export default function GroupsPage() {
                     <th className="px-6 py-4 text-left text-xs font-black text-slate-400 uppercase tracking-widest">SKU</th>
                     <th className="px-6 py-4 text-right text-xs font-black text-slate-400 uppercase tracking-widest">Bestand</th>
                     <th className="px-6 py-4 text-right text-xs font-black text-slate-400 uppercase tracking-widest">Preis</th>
+                    <th className="w-10"></th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100 dark:divide-slate-700">
                   {getGroupArticles(selectedGroup.id).length === 0 ? (
                     <tr>
-                      <td colSpan={4} className="px-6 py-12 text-center text-slate-400 italic text-sm">
+                      <td colSpan={5} className="px-6 py-12 text-center text-slate-400 italic text-sm">
                         Keine Artikel in dieser Gruppe gefunden. Klicke auf 'Gruppe verwalten', um Artikel zuzuweisen.
                       </td>
                     </tr>
                   ) : (
                     getGroupArticles(selectedGroup.id).map((article) => (
-                      <tr key={article.id} className="hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors">
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-slate-900 dark:text-white">
+                      <tr 
+                        key={article.id} 
+                        onClick={() => router.push(`/dashboard/articles/${article.id}`)}
+                        className="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-all cursor-pointer group/row"
+                      >
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-slate-900 dark:text-white group-hover/row:text-indigo-600 transition-colors">
                           {article.name}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-slate-500 dark:text-slate-400">
@@ -272,6 +280,9 @@ export default function GroupsPage() {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-slate-600 dark:text-slate-300">
                           {Number(article.verkaufspreis).toFixed(2)} €
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-right">
+                          <Eye className="w-4 h-4 text-slate-300 group-hover/row:text-indigo-500 transition-colors" />
                         </td>
                       </tr>
                     ))
