@@ -11,7 +11,8 @@ import {
   ChevronLeft, 
   ChevronRight,
   X,
-  Users 
+  Users,
+  User
 } from 'lucide-react';
 
 interface SidebarProps {
