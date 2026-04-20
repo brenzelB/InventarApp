@@ -40,40 +40,48 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const router = useRouter();
 
   useEffect(() => {
+    // Non-blocking role fetch with fail-safe
     const fetchUserRole = async (userId: string) => {
       try {
-        const { data: profile } = await supabase
+        const { data: profile, error } = await supabase
           .from('profiles')
           .select('role')
           .eq('id', userId)
           .single();
+        
+        if (error) throw error;
         if (profile) setRole(profile.role);
       } catch (err) {
-        console.error("Error fetching user role:", err);
+        console.error("[Auth] Error fetching role (defaulting to viewer):", err);
+        setRole('viewer');
       }
     };
 
     const checkSession = async () => {
-      if (isMockMode) {
-        const savedUser = localStorage.getItem("mock_user_email");
-        if (savedUser) {
-          setUser(getMockUser(savedUser));
-          const roles = JSON.parse(localStorage.getItem("mock_roles") || "{}");
-          setRole(roles[savedUser] || 'admin');
+      try {
+        if (isMockMode) {
+          const savedUser = localStorage.getItem("mock_user_email");
+          if (savedUser) {
+            setUser(getMockUser(savedUser));
+            const roles = JSON.parse(localStorage.getItem("mock_roles") || "{}");
+            setRole(roles[savedUser] || 'admin');
+          }
+          return;
         }
-        setLoading(false);
-        return;
-      }
 
-      const { data: { session } } = await supabase.auth.getSession();
-      setSession(session);
-      setUser(session?.user ?? null);
-      
-      if (session?.user) {
-        await fetchUserRole(session.user.id);
+        const { data: { session } } = await supabase.auth.getSession();
+        setSession(session);
+        setUser(session?.user ?? null);
+        
+        if (session?.user) {
+          // Trigger role fetch but don't AWAIT it to block the app
+          fetchUserRole(session.user.id);
+        }
+      } catch (err) {
+        console.error("[Auth] Session check failed:", err);
+      } finally {
+        setLoading(false);
       }
-      
-      setLoading(false);
     };
 
     checkSession();
@@ -81,12 +89,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (!isMockMode) {
       const { data: { subscription } } = supabase.auth.onAuthStateChange(
         async (_event, session) => {
-          console.log("Auth state change:", _event, session?.user?.email);
           setSession(session);
           setUser(session?.user ?? null);
           
           if (session?.user) {
-            await fetchUserRole(session.user.id);
+            fetchUserRole(session.user.id);
           } else {
             setRole('viewer');
           }
@@ -98,6 +105,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       return () => {
         subscription.unsubscribe();
       };
+    } else {
+      setLoading(false);
     }
   }, []);
 
@@ -194,15 +203,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const logout = async () => {
+    console.log("[Auth] Logout initiated");
     setLoading(true);
-    if (isMockMode) {
-      localStorage.removeItem("mock_user_email");
+    try {
+      if (isMockMode) {
+        localStorage.removeItem("mock_user_email");
+      } else {
+        await supabase.auth.signOut();
+      }
+    } catch (err) {
+      console.error("[Auth] Logout error (clearing state anyway):", err);
+    } finally {
       setUser(null);
-    } else {
-      await supabase.auth.signOut();
+      setSession(null);
+      setRole('viewer');
+      setLoading(false);
+      router.push("/login");
     }
-    setLoading(false);
-    router.push("/login");
   };
 
   const updateProfile = async (metadata: any) => {
