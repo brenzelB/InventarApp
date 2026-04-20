@@ -3,13 +3,12 @@
 import React, { useState, useEffect } from 'react';
 import { groupService } from '@/modules/articles/services/groupService';
 import { Group } from '@/modules/articles/types';
+import { GroupEditModal } from '@/modules/articles/components/GroupEditModal';
 import { 
   Folder, 
   Plus, 
   Trash2, 
   Edit3, 
-  Save, 
-  X,
   Loader2,
   AlertCircle
 } from 'lucide-react';
@@ -19,8 +18,7 @@ export default function GroupsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [newGroupName, setNewGroupName] = useState('');
-  const [editingId, setEditingId] = useState<string | null>(null);
-  const [editingName, setEditingName] = useState('');
+  const [editingGroup, setEditingGroup] = useState<Group | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
@@ -55,20 +53,6 @@ export default function GroupsPage() {
     }
   };
 
-  const handleUpdateGroup = async (id: string) => {
-    if (!editingName.trim() || isSubmitting) return;
-    try {
-      setIsSubmitting(true);
-      const updated = await groupService.updateGroup(id, editingName.trim());
-      setGroups(prev => prev.map(g => g.id === id ? updated : g).sort((a, b) => a.name.localeCompare(b.name)));
-      setEditingId(null);
-    } catch (err: any) {
-      setError(err.message || 'Fehler beim Aktualisieren der Gruppe.');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
   const handleDeleteGroup = async (id: string) => {
     if (!confirm('Gruppe wirklich löschen? Zugeordnete Artikel bleiben bestehen, verlieren aber ihre Zuweisung.')) return;
     try {
@@ -82,9 +66,9 @@ export default function GroupsPage() {
     }
   };
 
-  const startEditing = (group: Group) => {
-    setEditingId(group.id);
-    setEditingName(group.name);
+  const onSaveGroup = (updatedGroup: Group) => {
+    setGroups(prev => prev.map(g => g.id === updatedGroup.id ? updatedGroup : g).sort((a, b) => a.name.localeCompare(b.name)));
+    setEditingGroup(null);
   };
 
   return (
@@ -157,57 +141,41 @@ export default function GroupsPage() {
                 <div className="p-2 bg-indigo-50 dark:bg-indigo-900/30 rounded-xl">
                   <Folder className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
                 </div>
-                {!editingId && (
-                  <div className="opacity-0 group-hover:opacity-100 transition-opacity flex gap-2">
-                    <button 
-                      onClick={() => startEditing(group)}
-                      className="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg text-slate-500 transition-colors"
-                    >
-                      <Edit3 className="w-4 h-4" />
-                    </button>
-                    <button 
-                      onClick={() => handleDeleteGroup(group.id)}
-                      className="p-2 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg text-red-500 transition-colors"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
-                  </div>
-                )}
+                <div className="opacity-0 group-hover:opacity-100 transition-opacity flex gap-2">
+                  <button 
+                    onClick={() => setEditingGroup(group)}
+                    className="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg text-slate-500 transition-colors"
+                  >
+                    <Edit3 className="w-4 h-4" />
+                  </button>
+                  <button 
+                    onClick={() => handleDeleteGroup(group.id)}
+                    className="p-2 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg text-red-500 transition-colors"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
 
-              {editingId === group.id ? (
-                <div className="space-y-3">
-                  <input
-                    type="text"
-                    value={editingName}
-                    onChange={(e) => setEditingName(e.target.value)}
-                    className="w-full px-3 py-2 border border-indigo-200 dark:border-indigo-800 rounded-xl bg-indigo-50/50 dark:bg-indigo-900/20 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-600 text-sm"
-                    autoFocus
-                  />
-                  <div className="flex gap-2">
-                    <button 
-                      onClick={() => handleUpdateGroup(group.id)}
-                      className="flex-1 py-2 bg-indigo-600 text-white rounded-xl text-xs font-bold hover:bg-indigo-700 flex items-center justify-center gap-1"
-                    >
-                      <Save className="w-3 h-3" /> Speichern
-                    </button>
-                    <button 
-                      onClick={() => setEditingId(null)}
-                      className="px-3 py-2 bg-slate-100 dark:bg-slate-700 text-slate-500 rounded-xl text-xs font-bold hover:bg-slate-200 dark:hover:bg-slate-600"
-                    >
-                      <X className="w-3 h-3" />
-                    </button>
-                  </div>
-                </div>
-              ) : (
-                <h3 className="text-lg font-bold text-slate-900 dark:text-white truncate">
-                  {group.name}
-                </h3>
-              )}
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white truncate">
+                {group.name}
+              </h3>
             </div>
           ))
         )}
       </div>
+
+      {editingGroup && (
+        <GroupEditModal 
+          group={editingGroup}
+          onClose={() => setEditingGroup(null)}
+          onSave={onSaveGroup}
+        />
+      )}
+    </div>
+  );
+}
+
     </div>
   );
 }

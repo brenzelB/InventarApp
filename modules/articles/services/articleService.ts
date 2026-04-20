@@ -171,6 +171,34 @@ export const articleService = {
     if (error) throw error;
   },
 
+  async updateArticlesGroup(articleIds: string[], groupId: string | null) {
+    if (isMockMode) {
+      const articles = getMockArticles();
+      const groups = JSON.parse(localStorage.getItem("mock_groups") || "[]");
+      const groupData = groupId ? groups.find((g: any) => g.id === groupId) : null;
+
+      const updatedArticles = articles.map(art => {
+        if (articleIds.includes(art.id)) {
+          return {
+            ...art,
+            group_id: groupId,
+            group: groupData ? { name: groupData.name } : null,
+            updated_at: new Date().toISOString()
+          };
+        }
+        return art;
+      });
+      saveMockArticles(updatedArticles);
+      return;
+    }
+
+    const { error } = await supabase
+      .from("articles")
+      .update({ group_id: groupId })
+      .in("id", articleIds);
+    if (error) throw error;
+  },
+
   // ──────────────────────────────────────────────────────────────
   // History & Kommentare
   // ──────────────────────────────────────────────────────────────
