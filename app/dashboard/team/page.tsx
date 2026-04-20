@@ -5,6 +5,7 @@ import { useAuth, UserRole } from "@/hooks/useAuth";
 import { supabase } from "@/lib/supabaseClient";
 import { 
   Users, 
+  User,
   UserPlus, 
   Trash2, 
   Shield, 
