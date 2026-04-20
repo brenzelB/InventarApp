@@ -40,14 +40,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const router = useRouter();
 
   useEffect(() => {
+    const fetchUserRole = async (userId: string) => {
+      try {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('role')
+          .eq('id', userId)
+          .single();
+        if (profile) setRole(profile.role);
+      } catch (err) {
+        console.error("Error fetching user role:", err);
+      }
+    };
+
     const checkSession = async () => {
       if (isMockMode) {
         const savedUser = localStorage.getItem("mock_user_email");
         if (savedUser) {
           setUser(getMockUser(savedUser));
-          // Load mock role
           const roles = JSON.parse(localStorage.getItem("mock_roles") || "{}");
-          setRole(roles[savedUser] || 'admin'); // Default first user to admin in mock
+          setRole(roles[savedUser] || 'admin');
         }
         setLoading(false);
         return;
@@ -58,13 +70,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUser(session?.user ?? null);
       
       if (session?.user) {
-        // Fetch role from profile
-        const { data: profile } = await supabase
-          .from('profiles')
-          .select('role')
-          .eq('id', session.user.id)
-          .single();
-        if (profile) setRole(profile.role);
+        await fetchUserRole(session.user.id);
       }
       
       setLoading(false);
@@ -75,16 +81,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (!isMockMode) {
       const { data: { subscription } } = supabase.auth.onAuthStateChange(
         async (_event, session) => {
+          console.log("Auth state change:", _event, session?.user?.email);
           setSession(session);
           setUser(session?.user ?? null);
           
           if (session?.user) {
-            const { data: profile } = await supabase
-              .from('profiles')
-              .select('role')
-              .eq('id', session.user.id)
-              .single();
-            if (profile) setRole(profile.role);
+            await fetchUserRole(session.user.id);
           } else {
             setRole('viewer');
           }

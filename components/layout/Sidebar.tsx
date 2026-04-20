@@ -26,6 +26,10 @@ export default function Sidebar({ isOpen, setIsOpen, isCollapsed, setIsCollapsed
   const pathname = usePathname();
 
   const { role } = useAuth();
+  
+  // DEBUG LOG
+  console.log("[Sidebar] Aktuelle Rolle:", role);
+
   const navItems = [
     { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
     { name: 'Artikel', href: '/dashboard/articles', icon: Package },
@@ -35,6 +39,7 @@ export default function Sidebar({ isOpen, setIsOpen, isCollapsed, setIsCollapsed
 
   // Only show Team for Admins
   if (role === 'admin') {
+    console.log("[Sidebar] Admin erkannt, füge Team hinzu");
     navItems.push({ name: 'Team', href: '/dashboard/team', icon: Users });
   }
 

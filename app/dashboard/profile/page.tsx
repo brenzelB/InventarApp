@@ -18,7 +18,8 @@ import {
   Heart,
   Star,
   Sparkles,
-  Loader2
+  Loader2,
+  Users
 } from "lucide-react";
 import { articleService } from "@/modules/articles/services/articleService";
 
@@ -33,7 +34,7 @@ const avatarIcons = [
 ];
 
 export default function ProfilePage() {
-  const { user, updateProfile, forgotPassword, logout } = useAuth();
+  const { user, updateProfile, forgotPassword, logout, role } = useAuth();
   const [displayName, setDisplayName] = useState(user?.user_metadata?.display_name || "");
   const [avatarId, setAvatarId] = useState(user?.user_metadata?.avatar_id || "user");
   const [articleCount, setArticleCount] = useState<number | null>(null);
@@ -222,10 +223,26 @@ export default function ProfilePage() {
               onClick={logout}
               className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-2xl font-black text-xs uppercase tracking-[0.2em] hover:bg-red-600 hover:text-white dark:hover:bg-red-600 dark:hover:text-white transition-all group relative z-10"
             >
-              <LogOut className="w-5 h-5 group-hover:scale-110 transition-transform" />
+              <LogOut className="w-4 h-4 group-hover:scale-110 transition-transform" />
               ABMELDEN
             </button>
           </div>
+
+          {role === 'admin' && (
+            <div className="bg-white dark:bg-slate-800 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm overflow-hidden relative animate-in slide-in-from-right-4 duration-500">
+              <div className="absolute top-0 right-0 p-2 opacity-10">
+                <Users className="w-16 h-16 -rotate-12 text-indigo-600" />
+              </div>
+              <h3 className="text-xs font-black text-indigo-600 uppercase tracking-[0.2em] mb-6 relative z-10">ADMINISTRATION</h3>
+              <a 
+                href="/dashboard/team"
+                className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 bg-indigo-600 text-white rounded-2xl font-black text-xs uppercase tracking-[0.2em] hover:bg-indigo-700 transition-all shadow-xl shadow-indigo-100 dark:shadow-none relative z-10"
+              >
+                <Users className="w-4 h-4" />
+                TEAM VERWALTEN
+              </a>
+            </div>
+          )}
         </div>
       </div>
     </div>
