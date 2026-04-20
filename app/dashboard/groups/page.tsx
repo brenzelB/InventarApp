@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { groupService } from '@/modules/articles/services/groupService';
-import { Group } from '@/modules/articles/types';
+import { articleService } from '@/modules/articles/services/articleService';
+import { Group, Article } from '@/modules/articles/types';
 import { GroupEditModal } from '@/modules/articles/components/GroupEditModal';
 import { 
   Folder, 
@@ -10,31 +11,44 @@ import {
   Trash2, 
   Edit3, 
   Loader2,
-  AlertCircle
+  AlertCircle,
+  LayoutGrid,
+  List,
+  ChevronRight
 } from 'lucide-react';
 
 export default function GroupsPage() {
   const [groups, setGroups] = useState<Group[]>([]);
+  const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [newGroupName, setNewGroupName] = useState('');
   const [editingGroup, setEditingGroup] = useState<Group | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
   useEffect(() => {
-    loadGroups();
+    loadData();
   }, []);
 
-  const loadGroups = async () => {
+  const loadData = async () => {
     try {
       setLoading(true);
-      const data = await groupService.getGroups();
-      setGroups(data);
+      const [groupsData, articlesData] = await Promise.all([
+        groupService.getGroups(),
+        articleService.getArticles()
+      ]);
+      setGroups(groupsData);
+      setArticles(articlesData);
     } catch (err: any) {
-      setError(err.message || 'Fehler beim Laden der Gruppen.');
+      setError(err.message || 'Fehler beim Laden der Daten.');
     } finally {
       setLoading(false);
     }
+  };
+
+  const getArticleCount = (groupId: string) => {
+    return articles.filter(a => a.group_id === groupId).length;
   };
 
   const handleCreateGroup = async (e: React.FormEvent) => {
@@ -68,6 +82,8 @@ export default function GroupsPage() {
 
   const onSaveGroup = (updatedGroup: Group) => {
     setGroups(prev => prev.map(g => g.id === updatedGroup.id ? updatedGroup : g).sort((a, b) => a.name.localeCompare(b.name)));
+    // Refresh articles to update counts in case assignments were changed in the modal
+    loadData();
     setEditingGroup(null);
   };
 
@@ -81,6 +97,22 @@ export default function GroupsPage() {
           <p className="mt-2 text-sm font-medium text-slate-500 dark:text-slate-400">
             Erstelle Kategorien wie 'Werkzeuge' oder 'Zubehör', um deine Artikel besser zu strukturieren.
           </p>
+        </div>
+        
+        {/* View Toggle */}
+        <div className="mt-4 md:mt-0 flex items-center gap-1 p-1 bg-slate-100 dark:bg-slate-900 rounded-xl">
+          <button 
+            onClick={() => setViewMode('grid')}
+            className={`p-2 rounded-lg transition-all ${viewMode === 'grid' ? 'bg-white dark:bg-slate-800 text-indigo-600 shadow-sm' : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-200'}`}
+          >
+            <LayoutGrid className="w-5 h-5" />
+          </button>
+          <button 
+            onClick={() => setViewMode('list')}
+            className={`p-2 rounded-lg transition-all ${viewMode === 'list' ? 'bg-white dark:bg-slate-800 text-indigo-600 shadow-sm' : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-200'}`}
+          >
+            <List className="w-5 h-5" />
+          </button>
         </div>
       </div>
 
@@ -119,20 +151,20 @@ export default function GroupsPage() {
         </div>
       )}
 
-      {/* Groups List */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {loading ? (
-          <div className="col-span-full flex flex-col items-center py-20 gap-4">
-            <Loader2 className="w-10 h-10 text-indigo-600 animate-spin" />
-            <p className="text-slate-500 font-medium">Lade Gruppen...</p>
-          </div>
-        ) : groups.length === 0 ? (
-          <div className="col-span-full text-center py-20 bg-slate-50 dark:bg-slate-800/50 rounded-3xl border border-dashed border-slate-200 dark:border-slate-700">
-            <Folder className="w-12 h-12 text-slate-300 mx-auto mb-4" />
-            <p className="text-slate-500 font-medium">Noch keine Gruppen erstellt.</p>
-          </div>
-        ) : (
-          groups.map((group) => (
+      {/* Groups List / Table */}
+      {loading ? (
+        <div className="flex flex-col items-center py-20 gap-4">
+          <Loader2 className="w-10 h-10 text-indigo-600 animate-spin" />
+          <p className="text-slate-500 font-medium">Lade Daten...</p>
+        </div>
+      ) : groups.length === 0 ? (
+        <div className="text-center py-20 bg-slate-50 dark:bg-slate-800/50 rounded-3xl border border-dashed border-slate-200 dark:border-slate-700">
+          <Folder className="w-12 h-12 text-slate-300 mx-auto mb-4" />
+          <p className="text-slate-500 font-medium">Noch keine Gruppen erstellt.</p>
+        </div>
+      ) : viewMode === 'grid' ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {groups.map((group) => (
             <div 
               key={group.id} 
               className="bg-white dark:bg-slate-800 p-6 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-md transition-all group relative overflow-hidden"
@@ -160,10 +192,58 @@ export default function GroupsPage() {
               <h3 className="text-lg font-bold text-slate-900 dark:text-white truncate">
                 {group.name}
               </h3>
+              <p className="mt-1 text-sm font-bold text-slate-400 uppercase tracking-tight">
+                {getArticleCount(group.id)} Artikel
+              </p>
             </div>
-          ))
-        )}
-      </div>
+          ))}
+        </div>
+      ) : (
+        <div className="bg-white dark:bg-slate-800 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm overflow-hidden animate-in fade-in zoom-in-95 duration-300">
+          <table className="min-w-full divide-y divide-slate-100 dark:divide-slate-700">
+            <thead className="bg-slate-50 dark:bg-slate-900/50">
+              <tr>
+                <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Gruppe</th>
+                <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Artikel</th>
+                <th scope="col" className="px-6 py-4 text-right text-xs font-bold text-slate-500 uppercase tracking-wider">Aktionen</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100 dark:divide-slate-700">
+              {groups.map((group) => (
+                <tr key={group.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-700/30 transition-colors">
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="flex items-center">
+                      <Folder className="w-4 h-4 text-indigo-600 mr-3" />
+                      <span className="text-sm font-bold text-slate-900 dark:text-white">{group.name}</span>
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300">
+                      {getArticleCount(group.id)} Artikel
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm">
+                    <div className="flex justify-end gap-2">
+                      <button 
+                        onClick={() => setEditingGroup(group)}
+                        className="p-2 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 rounded-lg transition-all"
+                      >
+                        <Edit3 className="w-4 h-4" />
+                      </button>
+                      <button 
+                        onClick={() => handleDeleteGroup(group.id)}
+                        className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-all"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
 
       {editingGroup && (
         <GroupEditModal 
@@ -175,3 +255,4 @@ export default function GroupsPage() {
     </div>
   );
 }
+
