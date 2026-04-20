@@ -19,6 +19,7 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ isOpen, setIsOpen, isCollapsed, setIsCollapsed }: SidebarProps) {
+  const pathname = usePathname();
 
   const navItems = [
     { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
