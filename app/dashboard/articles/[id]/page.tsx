@@ -33,7 +33,8 @@ export default function ArticleDetailPage({ params }: { params: { id: string } }
     isAdjusting,
     error, 
     addComment, 
-    adjustStock 
+    adjustStock,
+    updateArticle
   } = useArticleDetails(params.id);
   
   const [activeTab, setActiveTab] = useState<TabType>('overview');
