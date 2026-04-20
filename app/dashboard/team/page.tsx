@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useAuth, UserRole } from "@/hooks/useAuth";
 import { supabase } from "@/lib/supabaseClient";
+import { inviteTeamMember } from "./actions";
 import { 
   Users, 
   User,
@@ -99,14 +100,17 @@ export default function TeamPage() {
 
     try {
       console.log("[Team] Sending invitation to:", inviteEmail);
-      const { error } = await supabase.from('invitations').insert({
-        email: inviteEmail.trim().toLowerCase(),
-        role: inviteRole,
-        invited_by: user?.id,
-        metadata: { name: inviteName.trim() } 
-      });
+      
+      const result = await inviteTeamMember(
+        inviteEmail.trim().toLowerCase(),
+        inviteRole,
+        user?.id || "",
+        { name: inviteName.trim() }
+      );
 
-      if (error) throw error;
+      if (!result.success) {
+        throw new Error(result.error);
+      }
 
       setMessage({ text: `Einladung an ${inviteEmail} wurde gesendet!`, type: 'success' });
       setInviteEmail("");
@@ -114,7 +118,7 @@ export default function TeamPage() {
       fetchTeamData();
     } catch (err: any) {
       console.error("[Team] Invitation failed:", err);
-      setMessage({ text: "Einladung fehlgeschlagen: " + (err.message || "Datenbank-Fehler"), type: 'error' });
+      setMessage({ text: "Einladung fehlgeschlagen: " + (err.message || "Server-Fehler"), type: 'error' });
     } finally {
       setIsInviting(false);
     }
