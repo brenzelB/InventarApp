@@ -6,7 +6,8 @@ import { ArticleTable } from "@/modules/articles/components/ArticleTable";
 import { ArticleSearchFilters } from "@/modules/articles/components/ArticleSearchFilters";
 import { useArticles } from "@/modules/articles/hooks/useArticles";
 import { articleService } from "@/modules/articles/services/articleService";
-import { QrCode, RefreshCcw, CheckCircle2, Loader2 } from "lucide-react";
+import { QrCode, RefreshCcw, CheckCircle2, Loader2, Plus } from "lucide-react";
+import { ArticleActionButtons } from "@/modules/articles/components/ArticleActionButtons";
 
 export default function ArticlesPage() {
   const { articles, loading, error, refetch } = useArticles();
@@ -69,8 +70,13 @@ export default function ArticlesPage() {
             Verwalte und überwache deinen gesamten Lagerbestand an einem zentralen Ort.
           </p>
         </div>
-        <div className="mt-4 flex md:ml-4 md:mt-0">
-          <Link href="/dashboard/articles/new" className="inline-flex items-center rounded-2xl bg-indigo-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-indigo-200 dark:shadow-none hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-all active:scale-95">
+        <div className="mt-4 flex flex-wrap items-center gap-4 md:ml-4 md:mt-0">
+          <ArticleActionButtons articles={filteredArticles} onRefresh={refetch} />
+          
+          <div className="h-8 w-px bg-slate-200 dark:bg-slate-700 hidden sm:block mx-2" />
+
+          <Link href="/dashboard/articles/new" className="inline-flex items-center gap-2 rounded-2xl bg-slate-900 dark:bg-white px-6 py-3 text-sm font-black text-white dark:text-slate-900 shadow-xl hover:scale-[1.02] transition-all active:scale-95 group">
+            <Plus className="w-5 h-5 group-hover:rotate-90 transition-transform" />
             Neuer Artikel
           </Link>
         </div>
