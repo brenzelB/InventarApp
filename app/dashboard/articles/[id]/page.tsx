@@ -146,7 +146,6 @@ export default function ArticleDetailPage({ params }: { params: { id: string } }
                 <div className="flex flex-col items-center p-6 bg-white dark:bg-white rounded-3xl border-2 border-slate-100 shadow-sm transition-all hover:shadow-md">
                   <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-4">Scanbarer QR-Code</p>
                   <QRCodeView svgString={article.qr_code} name={article.name} articleId={article.id} size="lg" />
-                  <p className="mt-4 text-[10px] font-bold text-indigo-600 bg-indigo-50 px-2 py-1 rounded-lg">FESTE DOMAIN</p>
                 </div>
               </div>
 
