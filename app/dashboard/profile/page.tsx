@@ -245,6 +245,13 @@ export default function ProfilePage() {
           )}
         </div>
       </div>
+
+      {/* DEBUG INFO */}
+      <div className="mt-12 pt-8 border-t border-slate-100 dark:border-slate-800 text-center">
+        <p className="text-[10px] font-black text-slate-300 dark:text-slate-600 uppercase tracking-[0.3em]">
+          DEBUG: Aktuelle Rolle laut System: <span className="text-indigo-400 dark:text-indigo-500">{role}</span>
+        </p>
+      </div>
     </div>
   );
 }

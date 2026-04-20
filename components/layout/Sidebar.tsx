@@ -25,10 +25,10 @@ interface SidebarProps {
 export default function Sidebar({ isOpen, setIsOpen, isCollapsed, setIsCollapsed }: SidebarProps) {
   const pathname = usePathname();
 
-  const { role } = useAuth();
+  const { role, user } = useAuth();
   
   // DEBUG LOG
-  console.log("[Sidebar] Aktuelle Rolle:", role);
+  console.log("[Sidebar] Aktuelle Rolle:", role, "User:", user?.email);
 
   const navItems = [
     { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
@@ -37,9 +37,11 @@ export default function Sidebar({ isOpen, setIsOpen, isCollapsed, setIsCollapsed
     { name: 'Profil', href: '/dashboard/profile', icon: User },
   ];
 
-  // Only show Team for Admins
-  if (role === 'admin') {
-    console.log("[Sidebar] Admin erkannt, füge Team hinzu");
+  // Relaxed condition for debugging
+  const showTeam = role === 'admin' || role === 'Admin' || user?.email === 'brenzel.ai@gmail.com';
+
+  if (showTeam) {
+    console.log("[Sidebar] Zugriff gewährt (showTeam = true), füge Team hinzu");
     navItems.push({ name: 'Team', href: '/dashboard/team', icon: Users });
   }
 
