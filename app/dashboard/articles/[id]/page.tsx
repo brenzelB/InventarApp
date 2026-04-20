@@ -77,7 +77,16 @@ export default function ArticleDetailPage({ params }: { params: { id: string } }
             </div>
             <div>
               <h1 className="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">{article.name}</h1>
-              <p className="text-slate-500 font-medium">{article.sku} • {isLowStock ? <span className="text-red-500 font-bold">Niedriger Bestand!</span> : <span className="text-green-600 font-bold">Bestand OK</span>}</p>
+              <p className="text-slate-500 font-medium">
+                {article.sku} 
+                {article.lagerort && (
+                  <span className="ml-2 px-2 py-0.5 bg-slate-100 dark:bg-slate-700 rounded-lg text-xs font-bold text-indigo-600 uppercase tracking-wider">
+                    {article.lagerort}
+                  </span>
+                )}
+                <span className="mx-2">•</span>
+                {isLowStock ? <span className="text-red-500 font-bold">Niedriger Bestand!</span> : <span className="text-green-600 font-bold">Bestand OK</span>}
+              </p>
             </div>
           </div>
         </div>
@@ -213,7 +222,8 @@ export default function ArticleDetailPage({ params }: { params: { id: string } }
                   verkaufspreis: article.verkaufspreis,
                   bestand: article.bestand,
                   mindestbestand: article.mindestbestand,
-                  group_id: article.group_id || null
+                  group_id: article.group_id || null,
+                  lagerort: article.lagerort || ""
                 }} 
                 qrCode={article.qr_code} 
                 onUpdate={updateArticle}

@@ -24,6 +24,7 @@ const defaultData: ArticleFormData = {
   bestand: 0,
   mindestbestand: 0,
   group_id: null,
+  lagerort: '',
 };
 
 export function ArticleForm({ initialData, articleId, qrCode, onUpdate }: ArticleFormProps) {
@@ -140,6 +141,11 @@ export function ArticleForm({ initialData, articleId, qrCode, onUpdate }: Articl
             ))}
           </select>
         </div>
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-200">Lagerort (z.B. Regal A, Fach 3)</label>
+        <input type="text" name="lagerort" value={formData.lagerort || ''} onChange={handleChange} className="mt-2 block w-full rounded-md border-0 py-1.5 px-3 text-slate-900 dark:text-white dark:bg-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:opacity-50" placeholder="z.B. Regal A, Fach 3" disabled={loading}/>
       </div>
 
       <div>

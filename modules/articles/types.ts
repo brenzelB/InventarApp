@@ -19,6 +19,7 @@ export interface Article {
   qr_code: string | null;
   group_id?: string | null;
   group?: { name: string } | null;
+  lagerort?: string | null;
 }
 
 export interface ArticleFormData {
@@ -30,6 +31,7 @@ export interface ArticleFormData {
   bestand: number;
   mindestbestand: number;
   group_id?: string | null;
+  lagerort?: string;
 }
 
 export type HistoryType = 'input' | 'output';

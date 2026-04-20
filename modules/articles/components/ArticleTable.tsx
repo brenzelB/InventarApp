@@ -49,6 +49,7 @@ export function ArticleTable({ articles, onDelete }: ArticleTableProps) {
             <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-slate-900 dark:text-slate-200">Name</th>
             <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-slate-900 dark:text-slate-200">Beschreibung</th>
             <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-slate-900 dark:text-slate-200">SKU</th>
+            <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-slate-900 dark:text-slate-200">Lagerort</th>
             <th scope="col" className="px-3 py-3.5 text-right text-sm font-semibold text-slate-900 dark:text-slate-200">Bestand</th>
             <th scope="col" className="px-3 py-3.5 text-right text-sm font-semibold text-slate-900 dark:text-slate-200">Preis</th>
             <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-slate-900 dark:text-slate-200 w-px whitespace-nowrap">Aktionen</th>
@@ -74,6 +75,7 @@ export function ArticleTable({ articles, onDelete }: ArticleTableProps) {
                 {article.description || "—"}
               </td>
               <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-500 dark:text-slate-400 font-mono">{article.sku}</td>
+              <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-500 dark:text-slate-400">{article.lagerort || "—"}</td>
               <td className="whitespace-nowrap px-3 py-4 text-sm text-right">
                 <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset ${article.bestand <= article.mindestbestand ? 'bg-red-50 text-red-700 ring-red-600/10 dark:bg-red-900/30 dark:text-red-400 dark:ring-red-400/20' : 'bg-green-50 text-green-700 ring-green-600/20 dark:bg-green-900/30 dark:text-green-400 dark:ring-green-400/20'}`}>
                   {article.bestand}
