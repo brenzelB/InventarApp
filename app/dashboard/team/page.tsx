@@ -31,6 +31,9 @@ interface Invitation {
   email: string;
   role: UserRole;
   created_at: string;
+  metadata?: {
+    name?: string;
+  };
 }
 
 export default function TeamPage() {
@@ -100,13 +103,12 @@ export default function TeamPage() {
         email: inviteEmail.trim().toLowerCase(),
         role: inviteRole,
         invited_by: user?.id,
-        // Optional name if we ever add it to DB, for now we just handle it in UI
-        metadata: { name: inviteName } 
+        metadata: { name: inviteName.trim() } 
       });
 
       if (error) throw error;
 
-      setMessage({ text: `Einladung an ${inviteEmail} wurde gespeichert.`, type: 'success' });
+      setMessage({ text: `Einladung an ${inviteEmail} wurde gesendet!`, type: 'success' });
       setInviteEmail("");
       setInviteName("");
       fetchTeamData();
@@ -294,8 +296,13 @@ export default function TeamPage() {
                   <tbody className="divide-y divide-slate-100 dark:divide-slate-700">
                     {invitations.map((invite) => (
                       <tr key={invite.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-700/50 transition-colors">
-                        <td className="px-8 py-5 whitespace-nowrap text-sm font-bold text-slate-700 dark:text-slate-300">
-                          {invite.email}
+                        <td className="px-8 py-5 whitespace-nowrap">
+                          <div className="flex flex-col">
+                            <span className="text-sm font-bold text-slate-700 dark:text-slate-300">{invite.email}</span>
+                            {invite.metadata?.name && (
+                              <span className="text-[10px] text-slate-400 font-medium uppercase tracking-wider">{invite.metadata.name}</span>
+                            )}
+                          </div>
                         </td>
                         <td className="px-8 py-5 whitespace-nowrap text-[10px] text-amber-600 font-black uppercase tracking-widest text-right">
                           {invite.role}
