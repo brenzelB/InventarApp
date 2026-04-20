@@ -7,8 +7,8 @@ import {
   LayoutDashboard, 
   Package, 
   Folder,
-  ChevronLeft, 
   ChevronRight,
+  User,
   X 
 } from 'lucide-react';
 
@@ -26,6 +26,7 @@ export default function Sidebar({ isOpen, setIsOpen, isCollapsed, setIsCollapsed
     { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
     { name: 'Artikel', href: '/dashboard/articles', icon: Package },
     { name: 'Gruppen', href: '/dashboard/groups', icon: Folder },
+    { name: 'Profil', href: '/dashboard/profile', icon: User },
   ];
 
   return (

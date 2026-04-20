@@ -15,6 +15,7 @@ interface AuthContextType {
   resetPassword: (newPassword: string) => Promise<{ error: string | null }>;
   loginAsGuest: () => Promise<void>;
   logout: () => Promise<void>;
+  updateProfile: (metadata: any) => Promise<{ error: string | null }>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -174,8 +175,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     router.push("/login");
   };
 
+  const updateProfile = async (metadata: any) => {
+    if (isMockMode) {
+      const email = localStorage.getItem("mock_user_email");
+      if (email) {
+        const mockUser = getMockUser(email);
+        mockUser.user_metadata = { ...mockUser.user_metadata, ...metadata };
+        setUser(mockUser);
+        // Mock profile in localStorage
+        const profiles = JSON.parse(localStorage.getItem("mock_profiles") || "{}");
+        profiles[email] = mockUser.user_metadata;
+        localStorage.setItem("mock_profiles", JSON.stringify(profiles));
+      }
+      return { error: null };
+    }
+
+    const { error } = await supabase.auth.updateUser({ data: metadata });
+    if (error) return { error: error.message };
+    return { error: null };
+  };
+
   return (
-    <AuthContext.Provider value={{ user, session, loading, login, register, forgotPassword, resetPassword, loginAsGuest, logout }}>
+    <AuthContext.Provider value={{ user, session, loading, login, register, forgotPassword, resetPassword, loginAsGuest, logout, updateProfile }}>
       {children}
     </AuthContext.Provider>
   );
