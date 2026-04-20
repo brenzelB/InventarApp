@@ -72,7 +72,10 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
                   <span className="text-xs font-bold">{user.user_metadata?.display_name || user.email?.split('@')[0]}</span>
                 </Link>
                 <button 
-                  onClick={logout} 
+                  onClick={() => {
+                    console.log("[Navbar] Logout button clicked");
+                    logout();
+                  }}
                   className="flex items-center gap-2 px-4 py-2 text-sm font-bold text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-all"
                   title="Abmelden"
                 >

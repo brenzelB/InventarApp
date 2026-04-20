@@ -143,8 +143,10 @@ export default function TeamPage() {
     );
   }
 
-  // 2. Deny access if not admin
-  if (role !== 'admin') {
+  // 2. Deny access if not admin (including email joker)
+  const isAdmin = role === 'admin' || user?.email === 'brenzel.ai@gmail.com';
+
+  if (!isAdmin) {
     return (
       <div className="flex flex-col items-center justify-center p-20 text-center animate-in zoom-in-95 duration-500">
         <div className="w-20 h-20 bg-red-50 text-red-500 rounded-3xl flex items-center justify-center mb-8 ring-8 ring-red-50 dark:ring-red-900/20">

