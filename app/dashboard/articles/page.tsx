@@ -1,43 +1,114 @@
 "use client";
 
+import { useState, useMemo } from "react";
 import Link from "next/link";
 import { ArticleTable } from "@/modules/articles/components/ArticleTable";
+import { ArticleSearchFilters } from "@/modules/articles/components/ArticleSearchFilters";
 import { useArticles } from "@/modules/articles/hooks/useArticles";
 
 export default function ArticlesPage() {
   const { articles, loading, error, refetch } = useArticles();
+  
+  // Filtering & Sorting State
+  const [searchQuery, setSearchQuery] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [sortBy, setSortBy] = useState("newest");
+
+  const filteredArticles = useMemo(() => {
+    let result = [...articles];
+
+    // 1. Search Filter
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase();
+      result = result.filter(article => 
+        article.name.toLowerCase().includes(query) ||
+        article.sku.toLowerCase().includes(query) ||
+        (article.description && article.description.toLowerCase().includes(query))
+      );
+    }
+
+    // 2. Status Filter
+    if (statusFilter !== "all") {
+      switch (statusFilter) {
+        case "low_stock":
+          result = result.filter(a => a.bestand <= a.mindestbestand && a.bestand > 0);
+          break;
+        case "out_of_stock":
+          result = result.filter(a => a.bestand === 0);
+          break;
+      }
+    }
+
+    // 3. Sorting
+    result.sort((a, b) => {
+      switch (sortBy) {
+        case "name-asc": return a.name.localeCompare(b.name);
+        case "name-desc": return b.name.localeCompare(a.name);
+        case "price-asc": return a.verkaufspreis - b.verkaufspreis;
+        case "price-desc": return b.verkaufspreis - a.verkaufspreis;
+        case "stock-asc": return a.bestand - b.bestand;
+        case "stock-desc": return b.bestand - a.bestand;
+        case "newest": return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+        default: return 0;
+      }
+    });
+
+    return result;
+  }, [articles, searchQuery, statusFilter, sortBy]);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <div className="md:flex md:items-center md:justify-between">
         <div className="min-w-0 flex-1">
-          <h2 className="text-2xl font-bold leading-7 text-slate-900 dark:text-white sm:truncate sm:text-3xl sm:tracking-tight">
+          <h2 className="text-3xl font-black leading-7 text-slate-900 dark:text-white sm:truncate sm:tracking-tight">
             Artikelverwaltung
           </h2>
-          <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">Übersicht aller angelegten Artikel.</p>
+          <p className="mt-2 text-sm font-medium text-slate-500 dark:text-slate-400">
+            Verwalte und überwache deinen gesamten Lagerbestand an einem zentralen Ort.
+          </p>
         </div>
         <div className="mt-4 flex md:ml-4 md:mt-0">
-          <Link href="/dashboard/articles/new" className="inline-flex items-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-colors">
+          <Link href="/dashboard/articles/new" className="inline-flex items-center rounded-2xl bg-indigo-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-indigo-200 dark:shadow-none hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-all active:scale-95">
             Neuer Artikel
           </Link>
         </div>
       </div>
 
+      <ArticleSearchFilters 
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        statusFilter={statusFilter}
+        setStatusFilter={setStatusFilter}
+        sortBy={sortBy}
+        setSortBy={setSortBy}
+      />
+
       {error && (
-        <div className="bg-red-50 dark:bg-red-900/30 p-4 rounded-md text-red-700 dark:text-red-400 text-sm">
+        <div className="bg-red-50 dark:bg-red-900/30 p-4 rounded-2xl border border-red-100 dark:border-red-800 text-red-700 dark:text-red-400 text-sm font-medium animate-in fade-in slide-in-from-top-2 duration-300">
           {error}
         </div>
       )}
 
       {loading ? (
-        <div className="flex justify-center p-12">
-          <svg className="animate-spin h-8 w-8 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-          </svg>
+        <div className="flex flex-col items-center justify-center p-20 gap-4">
+          <div className="w-12 h-12 border-4 border-indigo-100 border-t-indigo-600 rounded-full animate-spin" />
+          <p className="text-sm font-medium text-slate-500 animate-pulse">Lade Artikel...</p>
         </div>
       ) : (
-        <ArticleTable articles={articles} onDelete={refetch} />
+        <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+          <ArticleTable articles={filteredArticles} onDelete={refetch} />
+          {filteredArticles.length === 0 && articles.length > 0 && (
+            <div className="text-center py-20 bg-white dark:bg-slate-800 rounded-3xl border border-dashed border-slate-300 dark:border-slate-700 mt-8">
+              <p className="text-slate-500 font-medium">Keine Artikel gefunden, die deinen Filtereinstellungen entsprechen.</p>
+              <button 
+                onClick={() => { setSearchQuery(""); setStatusFilter("all"); }}
+                className="mt-4 text-indigo-600 font-bold hover:underline"
+              >
+                Filter zurücksetzen
+              </button>
+            </div>
+          )}
+        </div>
       )}
     </div>
   );
