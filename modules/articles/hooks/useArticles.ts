@@ -15,20 +15,6 @@ export function useArticles() {
       setError(null);
       const data = await articleService.getArticles();
       setArticles(data);
-
-      // Backfill im Hintergrund: Artikel ohne QR-Code in Supabase nachgenerieren
-      const missing = data.filter((a) => !a.qr_code);
-      if (missing.length > 0) {
-        articleService.backfillMissingQrCodes().then((result) => {
-          if (result.updated > 0) {
-            // Neu laden damit die gespeicherten QR-Codes erscheinen
-            articleService
-              .getArticles()
-              .then((fresh) => setArticles(fresh))
-              .catch(() => {});
-          }
-        });
-      }
     } catch (err: any) {
       setError(err.message || "Fehler beim Laden der Artikel.");
     } finally {
