@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth, UserRole } from "@/hooks/useAuth";
 import { supabase } from "@/lib/supabaseClient";
 import { 
   Users, 
@@ -21,14 +21,14 @@ interface Profile {
   id: string;
   email: string;
   display_name: string;
-  role: 'admin' | 'editor' | 'viewer';
+  role: UserRole;
   created_at: string;
 }
 
 interface Invitation {
   id: string;
   email: string;
-  role: 'admin' | 'editor' | 'viewer';
+  role: UserRole;
   created_at: string;
 }
 

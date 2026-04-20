@@ -38,7 +38,7 @@ export default function Sidebar({ isOpen, setIsOpen, isCollapsed, setIsCollapsed
   ];
 
   // Relaxed condition for debugging
-  const showTeam = role === 'admin' || role === 'Admin' || user?.email === 'brenzel.ai@gmail.com';
+  const showTeam = role === 'admin' || user?.email === 'brenzel.ai@gmail.com';
 
   if (showTeam) {
     console.log("[Sidebar] Zugriff gewährt (showTeam = true), füge Team hinzu");

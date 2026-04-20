@@ -5,6 +5,8 @@ import { User, Session } from "@supabase/supabase-js";
 import { supabase, isMockMode } from "@/lib/supabaseClient";
 import { useRouter } from "next/navigation";
 
+export type UserRole = 'admin' | 'editor' | 'viewer';
+
 interface AuthContextType {
   user: User | null;
   session: Session | null;
@@ -16,7 +18,7 @@ interface AuthContextType {
   loginAsGuest: () => Promise<void>;
   logout: () => Promise<void>;
   updateProfile: (metadata: any) => Promise<{ error: string | null }>;
-  role: 'admin' | 'editor' | 'viewer';
+  role: UserRole;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -34,7 +36,7 @@ const getMockUser = (email: string): User => ({
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
-  const [role, setRole] = useState<'admin' | 'editor' | 'viewer'>('viewer');
+  const [role, setRole] = useState<UserRole>('viewer');
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
