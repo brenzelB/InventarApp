@@ -21,6 +21,7 @@ import { ArticleHistoryList } from "@/modules/articles/components/ArticleHistory
 import { ArticleComments } from "@/modules/articles/components/ArticleComments";
 import { StockAdjustmentForm } from "@/modules/articles/components/StockAdjustmentForm";
 import { QRCodeView } from "@/components/QRCodeView";
+import { useSearchParams } from "next/navigation";
 
 type TabType = 'overview' | 'analysis' | 'comments' | 'edit';
 
@@ -37,6 +38,8 @@ export default function ArticleDetailPage({ params }: { params: { id: string } }
     updateArticle
   } = useArticleDetails(params.id);
   
+  const searchParams = useSearchParams();
+  const fromGroup = searchParams.get('fromGroup');
   const [activeTab, setActiveTab] = useState<TabType>('overview');
 
   if (loading) {
@@ -68,8 +71,12 @@ export default function ArticleDetailPage({ params }: { params: { id: string } }
       {/* Top Navigation & Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div className="space-y-4">
-          <Link href="/dashboard/articles" className="inline-flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-indigo-600 transition-colors">
-            <ArrowLeft className="w-4 h-4" /> Zurück zu allen Artikeln
+          <Link 
+            href={fromGroup ? `/dashboard/groups?id=${fromGroup}` : "/dashboard/articles"} 
+            className="inline-flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-indigo-600 transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" /> 
+            {fromGroup ? "Zurück zur Gruppe" : "Zurück zu allen Artikeln"}
           </Link>
           <div className="flex items-start gap-4">
             <div className="p-3 bg-indigo-600 rounded-2xl shadow-lg shadow-indigo-200 dark:shadow-none">

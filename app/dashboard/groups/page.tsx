@@ -18,7 +18,7 @@ import {
   ArrowLeft,
   Eye
 } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 export default function GroupsPage() {
   const [groups, setGroups] = useState<Group[]>([]);
@@ -31,6 +31,8 @@ export default function GroupsPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const initialGroupId = searchParams.get('id');
 
   // Load view mode from localStorage on mount
   useEffect(() => {
@@ -74,6 +76,14 @@ export default function GroupsPage() {
       setLoading(false);
     }
   };
+
+  // Handle initial group selection from URL
+  useEffect(() => {
+    if (initialGroupId && groups.length > 0) {
+      const group = groups.find(g => g.id === initialGroupId);
+      if (group) setSelectedGroup(group);
+    }
+  }, [initialGroupId, groups]);
 
   const getArticleCount = (groupId: string) => {
     return articles.filter(a => a.group_id === groupId).length;
@@ -264,7 +274,7 @@ export default function GroupsPage() {
                     getGroupArticles(selectedGroup.id).map((article) => (
                       <tr 
                         key={article.id} 
-                        onClick={() => router.push(`/dashboard/articles/${article.id}`)}
+                        onClick={() => router.push(`/dashboard/articles/${article.id}?fromGroup=${selectedGroup.id}`)}
                         className="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-all cursor-pointer group/row"
                       >
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-slate-900 dark:text-white group-hover/row:text-indigo-600 transition-colors">
