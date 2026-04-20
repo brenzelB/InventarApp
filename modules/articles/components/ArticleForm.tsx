@@ -5,6 +5,7 @@ import { ArticleFormData } from '../types';
 import { useArticleMutations } from '../hooks/useArticleMutations';
 import { useRouter } from 'next/navigation';
 import { QRCodeView } from "@/components/QRCodeView";
+import { AlertTriangle } from 'lucide-react';
 
 interface ArticleFormProps {
   initialData?: ArticleFormData;
