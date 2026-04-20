@@ -117,7 +117,7 @@ export function GroupEditModal({ group, onClose, onSave }: GroupEditModalProps) 
         {/* Header */}
         <div className="px-6 py-4 border-b border-slate-100 dark:border-slate-700 flex items-center justify-between">
           <h3 className="text-xl font-black text-slate-900 dark:text-white flex items-center gap-2">
-            Gruppe bearbeiten
+            {group.name} ({selectedArticleIds.length} Artikel)
           </h3>
           <button onClick={onClose} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-xl transition-colors">
             <X className="w-5 h-5 text-slate-400" />
