@@ -28,9 +28,12 @@ function generateId(): string {
  * Generiert einen QR-Code serverseitig über die API-Route.
  * Gibt den SVG-String zurück oder null bei Fehler.
  */
-async function fetchQrFromApi(articleId: string): Promise<string | null> {
+async function fetchQrFromApi(articleId: string, origin?: string): Promise<string | null> {
   try {
-    const res = await fetch(`/api/articles/qr/${articleId}`);
+    const url = origin 
+      ? `/api/articles/qr/${articleId}?origin=${encodeURIComponent(origin)}` 
+      : `/api/articles/qr/${articleId}`;
+    const res = await fetch(url);
     if (!res.ok) return null;
     return await res.text();
   } catch {
@@ -80,7 +83,8 @@ export const articleService = {
       const groupData = article.group_id ? groups.find((g: any) => g.id === article.group_id) : null;
 
       // QR-Code über API-Route generieren
-      const qr_code = await fetchQrFromApi(id);
+      const origin = typeof window !== "undefined" ? window.location.origin : undefined;
+      const qr_code = await fetchQrFromApi(id, origin);
 
       const newArticle: Article = {
         ...article,
@@ -107,8 +111,9 @@ export const articleService = {
     if (insertError) throw insertError;
     const createdArticle = initialData as Article;
 
-    // QR Code über API-Route abrufen (generiert & speichert automatisch)
-    await fetchQrFromApi(createdArticle.id);
+    // QR Code über API-Route abrufen (generiert & speichert automatisch mit fester Domain)
+    const origin = typeof window !== "undefined" ? window.location.origin : undefined;
+    await fetchQrFromApi(createdArticle.id, origin);
 
     // Artikel erneut laden um gespeicherten QR-Code zu erhalten
     try {

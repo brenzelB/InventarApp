@@ -19,13 +19,16 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   const { id } = params;
+  const { searchParams } = new URL(request.url);
+  const origin = searchParams.get("origin");
 
   if (!id) {
     return new NextResponse("Missing article id", { status: 400 });
   }
 
   // 1. Versuche QR aus Supabase zu laden (gecacht)
-  if (!isMock) {
+  // Falls ein 'origin' mitgegeben wird, erzwingen wir eine Neugenerierung für dieses Ziel
+  if (!isMock && !origin) {
     try {
       const supabase = createClient(supabaseUrl, supabaseAnonKey);
       const { data } = await supabase
@@ -50,7 +53,7 @@ export async function GET(
 
   // 2. On-the-fly generieren (Fallback oder Mock)
   try {
-    const baseUrl = getBaseUrl(request);
+    const baseUrl = origin || getBaseUrl(request);
     const qrCodeUrl = `${baseUrl}/dashboard/articles/${id}`;
     const svg = await QRCode.toString(qrCodeUrl, {
       type: "svg",
