@@ -1,7 +1,7 @@
 import { supabase, isMockMode } from "@/lib/supabaseClient";
 import { Article, ArticleFormData, ArticleHistoryEntry, ArticleComment, HistoryType } from "../types";
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL || (typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000');
 
 // ──────────────────────────────────────────────────────────────
 // Mock-Speicher (localStorage) für den Demo-Modus
@@ -299,41 +299,5 @@ export const articleService = {
       .single();
     if (error) throw error;
     return data;
-  },
-
-  /**
-   * Backfill: Ruft die Server-API auf, um alle Artikel ohne QR-Code nachzuversorgen.
-   * Für Mock-Modus: QR-Codes werden über die API-Route generiert und lokal gespeichert.
-   */
-  async backfillMissingQrCodes(force: boolean = false): Promise<{ updated: number; message: string }> {
-    if (isMockMode) {
-      const articles = getMockArticles();
-      const missing = force ? articles : articles.filter((a) => !a.qr_code);
-      let updated = 0;
-
-      for (const article of missing) {
-        const qr_code = await fetchQrFromApi(article.id);
-        if (qr_code) {
-          article.qr_code = qr_code;
-          updated++;
-        }
-      }
-      if (updated > 0) saveMockArticles(articles);
-      return { updated, message: `${updated} Mock-Artikel aktualisiert.` };
-    }
-
-    // Supabase: Server-side API Route aufrufen
-    try {
-      const url = force ? "/api/articles/backfill-qr?force=true" : "/api/articles/backfill-qr";
-      const response = await fetch(url, { method: "POST" });
-      if (!response.ok) {
-        const err = await response.json();
-        throw new Error(err.error || "Backfill fehlgeschlagen");
-      }
-      return await response.json();
-    } catch (e: any) {
-      console.error("Backfill QR codes failed:", e);
-      return { updated: 0, message: e.message || "Fehler beim Backfill" };
-    }
   },
 };
