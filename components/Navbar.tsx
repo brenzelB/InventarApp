@@ -47,9 +47,15 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
             <Link href="/" className="lg:hidden flex items-center font-bold text-xl tracking-tight text-indigo-600 dark:text-indigo-400">
               InventarApp
             </Link>
-            <div className="hidden lg:block text-sm font-bold text-slate-400 tracking-tight">
-              WILLKOMMEN ZURÜCK{user ? `, ${user.user_metadata?.display_name || user.email?.split('@')[0]}` : ''}
-            </div>
+            <Link 
+              href="/dashboard/profile"
+              className="hidden lg:flex items-center gap-1.5 text-sm font-bold text-slate-400 tracking-tight hover:text-indigo-600 transition-colors group"
+            >
+              WILLKOMMEN ZURÜCK{user ? `, ` : ''}
+              <span className="text-slate-900 dark:text-white group-hover:text-indigo-600 transition-colors">
+                {user ? (user.user_metadata?.display_name || user.email?.split('@')[0]) : ''}
+              </span>
+            </Link>
           </div>
 
           <div className="flex items-center space-x-4">
