@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, SyntheticEvent } from 'react';
-import { ArticleFormData } from '../types';
+import { useState, SyntheticEvent, useEffect } from 'react';
+import { ArticleFormData, Group } from '../types';
 import { useArticleMutations } from '../hooks/useArticleMutations';
+import { groupService } from '../services/groupService';
 import { useRouter } from 'next/navigation';
 import { QRCodeView } from "@/components/QRCodeView";
 import { AlertTriangle } from 'lucide-react';
@@ -22,19 +23,25 @@ const defaultData: ArticleFormData = {
   verkaufspreis: 0,
   bestand: 0,
   mindestbestand: 0,
+  group_id: null,
 };
 
 export function ArticleForm({ initialData, articleId, qrCode, onUpdate }: ArticleFormProps) {
   const [formData, setFormData] = useState<ArticleFormData>(initialData || defaultData);
+  const [groups, setGroups] = useState<Group[]>([]);
   const { create, update, loading, error } = useArticleMutations();
   const [success, setSuccess] = useState(false);
   const router = useRouter();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  useEffect(() => {
+    groupService.getGroups().then(setGroups).catch(console.error);
+  }, []);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: type === 'number' ? Number(value) : value
+      [name]: type === 'number' ? Number(value) : (value === "" && name === "group_id" ? null : value)
     }));
   };
 
@@ -146,6 +153,22 @@ export function ArticleForm({ initialData, articleId, qrCode, onUpdate }: Articl
           <label className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-200">Mindestbestand *</label>
           <input required type="number" name="mindestbestand" value={formData.mindestbestand} onChange={handleChange} className="mt-2 block w-full rounded-md border-0 py-1.5 px-3 text-slate-900 dark:text-white dark:bg-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:opacity-50" disabled={loading}/>
         </div>
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-200">Gruppe</label>
+        <select 
+          name="group_id" 
+          value={formData.group_id || ''} 
+          onChange={handleChange}
+          className="mt-2 block w-full rounded-md border-0 py-1.5 px-3 text-slate-900 dark:text-white dark:bg-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:opacity-50 appearance-none"
+          disabled={loading}
+        >
+          <option value="">Keine Gruppe (Nicht zugewiesen)</option>
+          {groups.map(group => (
+            <option key={group.id} value={group.id}>{group.name}</option>
+          ))}
+        </select>
       </div>
 
       <div className="flex justify-end pt-4 border-t border-slate-200 dark:border-slate-700 gap-4">

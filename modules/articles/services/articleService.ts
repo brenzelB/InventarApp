@@ -48,7 +48,7 @@ export const articleService = {
     }
     const { data, error } = await supabase
       .from("articles")
-      .select("*")
+      .select("*, group:groups(name)")
       .order("created_at", { ascending: false });
     if (error) throw error;
     return data as Article[];
@@ -63,7 +63,7 @@ export const articleService = {
     }
     const { data, error } = await supabase
       .from("articles")
-      .select("*")
+      .select("*, group:groups(name)")
       .eq("id", id)
       .single();
     if (error) throw error;
@@ -75,6 +75,10 @@ export const articleService = {
       const now = new Date().toISOString();
       const id = generateId();
 
+      // For mock mode, try to fetch group name if group_id is present
+      const groups = JSON.parse(localStorage.getItem("mock_groups") || "[]");
+      const groupData = article.group_id ? groups.find((g: any) => g.id === article.group_id) : null;
+
       // QR-Code über API-Route generieren
       const qr_code = await fetchQrFromApi(id);
 
@@ -82,6 +86,7 @@ export const articleService = {
         ...article,
         id,
         qr_code,
+        group: groupData ? { name: groupData.name } : null,
         created_at: now,
         updated_at: now,
       };
@@ -95,7 +100,7 @@ export const articleService = {
     const { data: initialData, error: insertError } = await supabase
       .from("articles")
       .insert([article])
-      .select()
+      .select("*, group:groups(name)")
       .single();
 
     if (insertError) throw insertError;
@@ -108,7 +113,7 @@ export const articleService = {
     try {
       const { data: updated } = await supabase
         .from("articles")
-        .select("*")
+        .select("*, group:groups(name)")
         .eq("id", createdArticle.id)
         .single();
       return (updated ?? createdArticle) as Article;
@@ -122,9 +127,15 @@ export const articleService = {
       const articles = getMockArticles();
       const index = articles.findIndex((a) => a.id === id);
       if (index === -1) throw new Error(`Artikel mit ID ${id} nicht gefunden.`);
+      
+      const groups = JSON.parse(localStorage.getItem("mock_groups") || "[]");
+      const group_id = article.group_id !== undefined ? article.group_id : articles[index].group_id;
+      const groupData = group_id ? groups.find((g: any) => g.id === group_id) : null;
+
       articles[index] = {
         ...articles[index],
         ...article,
+        group: groupData ? { name: groupData.name } : null,
         updated_at: new Date().toISOString(),
       };
       saveMockArticles(articles);
@@ -140,7 +151,7 @@ export const articleService = {
       .from("articles")
       .update(updateData)
       .eq("id", id)
-      .select()
+      .select("*, group:groups(name)")
       .single();
     if (error) throw error;
     return data as Article;

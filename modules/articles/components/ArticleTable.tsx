@@ -47,6 +47,7 @@ export function ArticleTable({ articles, onDelete }: ArticleTableProps) {
           <tr>
             <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-slate-900 dark:text-slate-200 sm:pl-6 w-16">QR</th>
             <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-slate-900 dark:text-slate-200">Name</th>
+            <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-slate-900 dark:text-slate-200">Gruppe</th>
             <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-slate-900 dark:text-slate-200">Beschreibung</th>
             <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-slate-900 dark:text-slate-200">SKU</th>
             <th scope="col" className="px-3 py-3.5 text-right text-sm font-semibold text-slate-900 dark:text-slate-200">Bestand</th>
@@ -64,6 +65,15 @@ export function ArticleTable({ articles, onDelete }: ArticleTableProps) {
                 <Link href={`/dashboard/articles/${article.id}`} className="text-slate-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors block truncate max-w-xs md:max-w-md">
                   {article.name}
                 </Link>
+              </td>
+              <td className="px-3 py-4 text-sm">
+                {article.group ? (
+                  <span className="inline-flex items-center rounded-md bg-indigo-50 dark:bg-indigo-900/30 px-2 py-1 text-xs font-medium text-indigo-700 dark:text-indigo-300 ring-1 ring-inset ring-indigo-600/10 dark:ring-indigo-400/20">
+                    {article.group.name}
+                  </span>
+                ) : (
+                  <span className="text-slate-400 text-xs italic">Ohne Gruppe</span>
+                )}
               </td>
               <td className="px-3 py-4 text-sm text-slate-500 dark:text-slate-400 max-w-xs truncate" title={article.description || ''}>
                 {article.description || "—"}

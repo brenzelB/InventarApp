@@ -1,3 +1,10 @@
+export interface Group {
+  id: string;
+  name: string;
+  user_id?: string;
+  created_at: string;
+}
+
 export interface Article {
   id: string;
   name: string;
@@ -10,6 +17,8 @@ export interface Article {
   created_at: string;
   updated_at: string;
   qr_code: string | null;
+  group_id: string | null;
+  group?: { name: string } | null;
 }
 
 export interface ArticleFormData {
@@ -20,6 +29,7 @@ export interface ArticleFormData {
   verkaufspreis: number;
   bestand: number;
   mindestbestand: number;
+  group_id: string | null;
 }
 
 export type HistoryType = 'input' | 'output';

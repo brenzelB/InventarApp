@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import { 
   LayoutDashboard, 
   Package, 
+  Folder,
   ChevronLeft, 
   ChevronRight,
   X 
@@ -24,6 +25,7 @@ export default function Sidebar({ isOpen, setIsOpen, isCollapsed, setIsCollapsed
   const navItems = [
     { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
     { name: 'Artikel', href: '/dashboard/articles', icon: Package },
+    { name: 'Gruppen', href: '/dashboard/groups', icon: Folder },
   ];
 
   return (
