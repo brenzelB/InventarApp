@@ -5,6 +5,8 @@ import Link from "next/link";
 import { ArticleTable } from "@/modules/articles/components/ArticleTable";
 import { ArticleSearchFilters } from "@/modules/articles/components/ArticleSearchFilters";
 import { useArticles } from "@/modules/articles/hooks/useArticles";
+import { articleService } from "@/modules/articles/services/articleService";
+import { QrCode, RefreshCcw, CheckCircle2, Loader2 } from "lucide-react";
 
 export default function ArticlesPage() {
   const { articles, loading, error, refetch } = useArticles();
@@ -13,6 +15,8 @@ export default function ArticlesPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [sortBy, setSortBy] = useState("newest");
+  const [qrUpdating, setQrUpdating] = useState(false);
+  const [qrUpdateResult, setQrUpdateResult] = useState<string | null>(null);
 
   const filteredArticles = useMemo(() => {
     let result = [...articles];
@@ -56,6 +60,23 @@ export default function ArticlesPage() {
     return result;
   }, [articles, searchQuery, statusFilter, sortBy]);
 
+  const handleUpdateQrCodes = async () => {
+    if (!confirm("Möchtest du wirklich alle QR-Codes aktualisieren? Dies stellt sicher, dass sie auf die aktuelle Domain zeigen.")) return;
+    try {
+      setQrUpdating(true);
+      setQrUpdateResult(null);
+      const res = await articleService.backfillMissingQrCodes(true);
+      setQrUpdateResult(res.message);
+      // Resultat nach 5 Sekunden ausblenden
+      setTimeout(() => setQrUpdateResult(null), 5000);
+      refetch();
+    } catch (err: any) {
+      alert("Fehler beim Aktualisieren: " + err.message);
+    } finally {
+      setQrUpdating(false);
+    }
+  };
+
   return (
     <div className="space-y-8">
       <div className="md:flex md:items-center md:justify-between">
@@ -67,12 +88,29 @@ export default function ArticlesPage() {
             Verwalte und überwache deinen gesamten Lagerbestand an einem zentralen Ort.
           </p>
         </div>
-        <div className="mt-4 flex md:ml-4 md:mt-0">
+        <div className="mt-4 flex items-center md:ml-4 md:mt-0 gap-3">
+          <button 
+            onClick={handleUpdateQrCodes}
+            disabled={qrUpdating}
+            title="Alle QR-Codes auf die aktuelle Domain aktualisieren"
+            className="inline-flex items-center gap-2 rounded-2xl bg-white dark:bg-slate-800 px-5 py-3 text-sm font-bold text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:shadow-md transition-all active:scale-95 disabled:opacity-50"
+          >
+            {qrUpdating ? <Loader2 className="w-4 h-4 animate-spin text-indigo-600" /> : <RefreshCcw className="w-4 h-4 text-indigo-600" />}
+            <span className="hidden sm:inline">QR-Codes aktualisieren</span>
+          </button>
+
           <Link href="/dashboard/articles/new" className="inline-flex items-center rounded-2xl bg-indigo-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-indigo-200 dark:shadow-none hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-all active:scale-95">
             Neuer Artikel
           </Link>
         </div>
       </div>
+
+      {qrUpdateResult && (
+        <div className="bg-emerald-50 dark:bg-emerald-900/30 p-4 rounded-2xl border border-emerald-100 dark:border-emerald-800 text-emerald-700 dark:text-emerald-400 text-sm font-bold flex items-center gap-3 animate-in fade-in slide-in-from-top-2 duration-500">
+          <CheckCircle2 className="w-5 h-5" />
+          {qrUpdateResult}
+        </div>
+      )}
 
       <ArticleSearchFilters 
         searchQuery={searchQuery}

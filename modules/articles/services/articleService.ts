@@ -300,10 +300,10 @@ export const articleService = {
    * Backfill: Ruft die Server-API auf, um alle Artikel ohne QR-Code nachzuversorgen.
    * Für Mock-Modus: QR-Codes werden über die API-Route generiert und lokal gespeichert.
    */
-  async backfillMissingQrCodes(): Promise<{ updated: number; message: string }> {
+  async backfillMissingQrCodes(force: boolean = false): Promise<{ updated: number; message: string }> {
     if (isMockMode) {
       const articles = getMockArticles();
-      const missing = articles.filter((a) => !a.qr_code);
+      const missing = force ? articles : articles.filter((a) => !a.qr_code);
       let updated = 0;
 
       for (const article of missing) {
@@ -319,7 +319,8 @@ export const articleService = {
 
     // Supabase: Server-side API Route aufrufen
     try {
-      const response = await fetch("/api/articles/backfill-qr", { method: "POST" });
+      const url = force ? "/api/articles/backfill-qr?force=true" : "/api/articles/backfill-qr";
+      const response = await fetch(url, { method: "POST" });
       if (!response.ok) {
         const err = await response.json();
         throw new Error(err.error || "Backfill fehlgeschlagen");

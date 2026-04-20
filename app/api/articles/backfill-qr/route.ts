@@ -6,33 +6,46 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
 
-export async function POST() {
+function getBaseUrl(request: Request) {
+  const host = request.headers.get("host");
+  const protocol = request.headers.get("x-forwarded-proto") || "http";
+  if (!host) return APP_URL;
+  return `${protocol}://${host}`;
+}
+
+export async function POST(request: Request) {
   if (!supabaseUrl || supabaseUrl.includes("placeholder")) {
     return NextResponse.json({ message: "Mock mode – no Supabase configured.", updated: 0 });
   }
 
+  const { searchParams } = new URL(request.url);
+  const force = searchParams.get("force") === "true";
+
   const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-  // Alle Artikel ohne QR holen
-  const { data: articles, error: fetchError } = await supabase
-    .from("articles")
-    .select("id, name")
-    .is("qr_code", null);
+  // Alle Artikel oder nur solche ohne QR holen
+  let query = supabase.from("articles").select("id, name");
+  if (!force) {
+    query = query.is("qr_code", null);
+  }
+  
+  const { data: articles, error: fetchError } = await query;
 
   if (fetchError) {
     return NextResponse.json({ error: fetchError.message }, { status: 500 });
   }
 
   if (!articles || articles.length === 0) {
-    return NextResponse.json({ message: "Alle Artikel haben bereits einen QR-Code.", updated: 0 });
+    return NextResponse.json({ message: "Keine Artikel zur Aktualisierung gefunden.", updated: 0 });
   }
 
+  const baseUrl = getBaseUrl(request);
   let updated = 0;
   const errors: string[] = [];
 
   for (const article of articles) {
     try {
-      const qrCodeUrl = `${APP_URL}/dashboard/articles/${article.id}`;
+      const qrCodeUrl = `${baseUrl}/dashboard/articles/${article.id}`;
       const qr_code = await QRCode.toString(qrCodeUrl, {
         type: "svg",
         margin: 2,

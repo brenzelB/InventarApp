@@ -7,6 +7,13 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
 const isMock = !supabaseUrl || supabaseUrl.includes("placeholder");
 
+function getBaseUrl(request: Request) {
+  const host = request.headers.get("host");
+  const protocol = request.headers.get("x-forwarded-proto") || "http";
+  if (!host) return APP_URL;
+  return `${protocol}://${host}`;
+}
+
 export async function GET(
   request: Request,
   { params }: { params: { id: string } }
@@ -43,7 +50,8 @@ export async function GET(
 
   // 2. On-the-fly generieren (Fallback oder Mock)
   try {
-    const qrCodeUrl = `${APP_URL}/dashboard/articles/${id}`;
+    const baseUrl = getBaseUrl(request);
+    const qrCodeUrl = `${baseUrl}/dashboard/articles/${id}`;
     const svg = await QRCode.toString(qrCodeUrl, {
       type: "svg",
       margin: 2,
