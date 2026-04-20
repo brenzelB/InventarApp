@@ -74,9 +74,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     if (!isMockMode) {
       const { data: { subscription } } = supabase.auth.onAuthStateChange(
-        (_event, session) => {
+        async (_event, session) => {
           setSession(session);
           setUser(session?.user ?? null);
+          
+          if (session?.user) {
+            const { data: profile } = await supabase
+              .from('profiles')
+              .select('role')
+              .eq('id', session.user.id)
+              .single();
+            if (profile) setRole(profile.role);
+          } else {
+            setRole('viewer');
+          }
+          
           setLoading(false);
         }
       );
