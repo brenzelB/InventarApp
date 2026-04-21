@@ -13,7 +13,7 @@ export function ActivityLogWidget() {
   useEffect(() => {
     async function load() {
       try {
-        const data = await articleService.getRecentHistory(5);
+        const data = await articleService.getRecentHistory(10);
         setHistory(data);
       } catch (err: any) {
         console.error("Failed to load history", err);
@@ -39,7 +39,7 @@ export function ActivityLogWidget() {
         Aktivitäts-Log
       </h3>
       
-      <div className="flex-1 overflow-auto max-h-[400px] pr-4 custom-scrollbar scrollbar-gutter-stable">
+      <div className="flex-1 min-h-0 overflow-auto pr-6 custom-scrollbar scrollbar-gutter-stable">
         {history.length === 0 ? (
           <div className="h-full flex items-center justify-center text-sm text-slate-500">
             Keine Aktivitäten vorhanden.
