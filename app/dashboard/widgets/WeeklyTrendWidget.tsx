@@ -23,12 +23,18 @@ export function WeeklyTrendWidget({ config, onUpdateConfig }: WeeklyTrendWidgetP
   const [data, setData] = useState<{ date: string; input: number; output: number; total: number }[]>([]);
   const [loading, setLoading] = useState(true);
   
-  const days = config.days || 7;
+  // Robust initialization and logging
+  const timeRange = config.timeRange || 7;
   const chartType = config.chartType || 'area';
+
+  useEffect(() => {
+    console.log("📂 GELADENE WIDGET SETTINGS:", config);
+  }, [config]);
 
   const loadTrend = async () => {
     try {
       setLoading(true);
+      const days = Number(timeRange);
       
       // 1. Get History
       const trend = await articleService.getHistoryTrend(days);
@@ -91,11 +97,9 @@ export function WeeklyTrendWidget({ config, onUpdateConfig }: WeeklyTrendWidgetP
       const buckets = Object.keys(grouped);
       let runningTotal = currentGrandTotal;
       
-      // We go backwards from the last bucket to the first
       for (let i = buckets.length - 1; i >= 0; i--) {
         const key = buckets[i];
         grouped[key].total = runningTotal;
-        // To find the total at the START of this period, we undo the changes in this period
         runningTotal -= (grouped[key].input - grouped[key].output);
       }
 
@@ -114,11 +118,16 @@ export function WeeklyTrendWidget({ config, onUpdateConfig }: WeeklyTrendWidgetP
 
   useEffect(() => {
     loadTrend();
-    if (days === 1) {
+    if (Number(timeRange) === 1) {
       const interval = setInterval(loadTrend, 60000);
       return () => clearInterval(interval);
     }
-  }, [days]);
+  }, [timeRange]);
+
+  const updateSettings = (newSettings: any) => {
+    console.log("💾 SPEICHERE WIDGET SETTINGS:", newSettings);
+    onUpdateConfig(newSettings);
+  };
 
   return (
     <div className="h-full w-full bg-white dark:bg-slate-800 rounded-xl p-6 shadow ring-1 ring-slate-200 dark:ring-slate-700 flex flex-col no-drag">
@@ -132,7 +141,7 @@ export function WeeklyTrendWidget({ config, onUpdateConfig }: WeeklyTrendWidgetP
         
         <div className="flex items-center gap-2">
           <button 
-            onClick={() => onUpdateConfig({ chartType: chartType === 'area' ? 'bar' : 'area' })}
+            onClick={() => updateSettings({ chartType: chartType === 'area' ? 'bar' : 'area' })}
             className="p-1.5 text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700"
             title="Darstellung umschalten"
           >
@@ -147,8 +156,8 @@ export function WeeklyTrendWidget({ config, onUpdateConfig }: WeeklyTrendWidgetP
           </button>
 
           <select 
-            value={days} 
-            onChange={(e) => onUpdateConfig({ days: Number(e.target.value) })}
+            value={timeRange} 
+            onChange={(e) => updateSettings({ timeRange: Number(e.target.value) })}
             className="text-[10px] font-black uppercase tracking-widest bg-slate-50 dark:bg-slate-900 border-none rounded-lg px-3 py-1.5 ring-1 ring-slate-200 dark:ring-slate-700 focus:ring-2 focus:ring-indigo-500 cursor-pointer"
           >
             <option value={1}>Heute</option>

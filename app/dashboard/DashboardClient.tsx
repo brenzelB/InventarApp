@@ -67,8 +67,17 @@ export function DashboardClient({ userId, initialLayout }: DashboardClientProps)
   };
 
   const handleLayoutChange = (newLayout: Layout[], allLayouts: { [key: string]: Layout[] }) => {
+    // Preserve custom settings during layout changes
+    const layoutWithSettings = newLayout.map(newItem => {
+      const existingItem = layout.find(oldItem => oldItem.i === newItem.i);
+      return {
+        ...newItem,
+        settings: existingItem ? (existingItem as any).settings : undefined
+      };
+    });
+    
     setCurrentLayouts(allLayouts);
-    setLayout(newLayout);
+    setLayout(layoutWithSettings);
   };
 
   const handleSave = async () => {
