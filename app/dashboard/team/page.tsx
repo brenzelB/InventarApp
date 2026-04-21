@@ -112,7 +112,7 @@ export default function TeamPage() {
         throw new Error(result.error);
       }
 
-      setMessage({ text: `Einladung an ${inviteEmail} wurde gesendet!`, type: 'success' });
+      setMessage({ text: 'Einladung wurde erfolgreich versendet!', type: 'success' });
       setInviteEmail("");
       setInviteName("");
       fetchTeamData();
