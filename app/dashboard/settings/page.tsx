@@ -133,7 +133,7 @@ export default function SettingsPage() {
           </div>
           
           <div className="space-y-4 flex-1">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-4 items-end">
               <div>
                 <label className="block text-xs font-black text-slate-400 uppercase tracking-widest mb-2">Standard-Einheit</label>
                 <select 
