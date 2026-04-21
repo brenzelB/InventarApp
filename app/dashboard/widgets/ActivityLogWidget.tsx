@@ -39,7 +39,7 @@ export function ActivityLogWidget() {
         Aktivitäts-Log
       </h3>
       
-      <div className="flex-1 overflow-auto">
+      <div className="flex-1 overflow-auto max-h-[400px] pr-4 custom-scrollbar scrollbar-gutter-stable">
         {history.length === 0 ? (
           <div className="h-full flex items-center justify-center text-sm text-slate-500">
             Keine Aktivitäten vorhanden.
