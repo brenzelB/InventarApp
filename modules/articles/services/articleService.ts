@@ -237,7 +237,13 @@ export const articleService = {
       .select("*, article:articles(name)")
       .order("created_at", { ascending: false })
       .limit(limit);
-    if (error) throw error;
+
+    if (error) {
+      console.error("Error fetching history:", error);
+      return [];
+    }
+
+    return data || [];
   },
 
   async getHistoryTrend(days: number = 7): Promise<{ created_at: string; amount: number; type: HistoryType }[]> {
