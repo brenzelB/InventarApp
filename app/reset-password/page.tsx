@@ -6,11 +6,13 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { supabase } from "@/lib/supabaseClient";
 import { PasswordInput, getPasswordStrength } from "@/components/PasswordInput";
+import { useToast } from "@/hooks/useToast";
 
 type PageState = "loading" | "ready" | "success" | "error";
 
 export default function ResetPasswordPage() {
   const { resetPassword } = useAuth();
+  const { success: toastSuccess, error: toastError } = useToast();
   const router = useRouter();
   const [pageState, setPageState] = useState<PageState>("loading");
   const [password, setPassword] = useState("");
@@ -18,15 +20,16 @@ export default function ResetPasswordPage() {
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
-  // Supabase setzt automatisch eine Session wenn der Recovery-Token gültig ist
+  // Supabase setzt automatisch eine Session wenn der Recovery-Token oder Invite-Link gültig ist
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
-      if (event === "PASSWORD_RECOVERY") {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log("[ResetPassword] Auth event:", event, !!session);
+      if (event === "PASSWORD_RECOVERY" || session) {
         setPageState("ready");
       }
     });
 
-    // Fallback: Falls Session schon gesetzt (Page-Reload)
+    // Fallback: Falls Session schon gesetzt (Page-Reload oder Invite-Link)
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session) {
         setPageState("ready");
@@ -63,7 +66,9 @@ export default function ResetPasswordPage() {
     setSubmitting(false);
     if (result.error) {
       setError(result.error);
+      toastError("Fehler beim Speichern: " + result.error);
     } else {
+      toastSuccess("Passwort erfolgreich gesetzt! Du kannst dich jetzt jederzeit einloggen.");
       setPageState("success");
       // Automatischer Login nach 2 Sekunden
       setTimeout(() => router.push("/dashboard"), 2000);
@@ -135,9 +140,12 @@ export default function ResetPasswordPage() {
   return (
     <div className="flex min-h-[60vh] flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
-          Neues Passwort setzen
+        <h2 className="mt-6 text-center text-3xl font-black tracking-tight text-slate-900 dark:text-white uppercase tracking-tighter">
+          Passwort festlegen
         </h2>
+        <p className="mt-2 text-center text-sm font-medium text-slate-500 dark:text-slate-400">
+          Wähle ein sicheres Passwort für deinen Account.
+        </p>
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
