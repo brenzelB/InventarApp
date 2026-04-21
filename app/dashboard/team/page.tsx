@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useAuth, UserRole } from "@/hooks/useAuth";
 import { supabase } from "@/lib/supabaseClient";
-import { inviteTeamMember, deleteTeamMember } from "./actions";
+import { inviteTeamMember, deleteTeamMember, updateTeamMemberRole } from "./actions";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/useToast";
 import { 
@@ -194,11 +194,14 @@ export default function TeamPage() {
 
   const handleUpdateRole = async (id: string, newRole: 'admin' | 'editor' | 'viewer') => {
     try {
-      const { error } = await supabase.from('profiles').update({ role: newRole }).eq('id', id);
-      if (error) throw error;
+      const result = await updateTeamMemberRole(id, newRole);
+      if (!result.success) throw new Error(result.error);
+      
+      toastSuccess(`Rolle erfolgreich zu ${newRole.toUpperCase()} geändert.`);
       fetchTeamData();
     } catch (err: any) {
-      alert("Rollen-Update fehlgeschlagen: " + err.message);
+      console.error("[Team] Role update failed:", err);
+      toastError("Rollen-Update fehlgeschlagen: " + err.message);
     }
   };
 

@@ -150,3 +150,27 @@ export async function deleteTeamMember(userId: string) {
     return { success: false, error: "Ein Fehler beim Löschen ist aufgetreten." };
   }
 }
+
+export async function updateTeamMemberRole(userId: string, newRole: UserRole) {
+  if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    return { success: false, error: 'Service Role Key fehlt.' };
+  }
+
+  try {
+    console.log(`[Team] Role update request: ${userId} -> ${newRole}`);
+    
+    const { error } = await supabaseAdmin
+      .from('profiles')
+      .update({ role: newRole })
+      .eq('id', userId);
+
+    if (error) throw error;
+
+    revalidatePath("/dashboard/team");
+    return { success: true };
+  } catch (err: any) {
+    console.error("[Team] Role update error:", err);
+    return { success: false, error: err.message || "Rollen-Update fehlgeschlagen." };
+  }
+}
+
