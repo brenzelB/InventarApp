@@ -35,6 +35,7 @@ export const importExportService = {
         'Bestand': a.bestand,
         'Einheit': a.unit,
         'Gruppe': a.group?.name || 'Keine Gruppe',
+        'Steuersatz (%)': a.tax_rate || 19,
         'Marge (%)': marge,
         'Gesamtwert (€)': gesamtwert
       };
@@ -102,7 +103,8 @@ export const importExportService = {
       'Bestand', 
       'Mindestbestand',
       'Einheit',
-      'Gruppe'
+      'Gruppe',
+      'Steuersatz (%)'
     ]];
     
     const worksheet = XLSX.utils.aoa_to_sheet(headers);
@@ -168,7 +170,8 @@ export const importExportService = {
                 bestand: parseFloat(row['Bestand'] || 0),
                 mindestbestand: parseFloat(row['Mindestbestand'] || 0),
                 unit: row['Einheit']?.toString() || row['Unit']?.toString() || 'Stück',
-                group_id: groupId
+                group_id: groupId,
+                tax_rate: Number(row['Steuersatz (%)'] || row['Steuersatz'] || row['tax_rate']) || 19,
               });
             } catch (err: any) {
               errors.push(`Fehler in Zeile mit SKU ${row['SKU']}: ${err.message}`);
