@@ -10,6 +10,7 @@ import {
   BarChart2, Layout as LayoutIcon, RefreshCcw, TrendingUp 
 } from "lucide-react";
 import { articleService } from "@/modules/articles/services/articleService";
+import { useSupabaseRealtime } from "@/hooks/useSupabaseRealtime";
 
 interface WeeklyTrendWidgetProps {
   config: {
@@ -31,6 +32,10 @@ export function WeeklyTrendWidget({ config, onUpdateConfig }: WeeklyTrendWidgetP
   useEffect(() => {
     console.log("📂 GELADENE WIDGET SETTINGS:", config);
   }, [config]);
+
+  // Realtime Updates for Chart Data
+  useSupabaseRealtime('articles', () => loadTrend());
+  useSupabaseRealtime('article_history', () => loadTrend());
 
   const loadTrend = async () => {
     try {

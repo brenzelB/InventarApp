@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { Article } from "../types";
 import { articleService } from "../services/articleService";
+import { useSupabaseRealtime } from "@/hooks/useSupabaseRealtime";
 
 export function useArticles() {
   const [articles, setArticles] = useState<Article[]>([]);
@@ -21,6 +22,9 @@ export function useArticles() {
       setLoading(false);
     }
   }, []);
+
+  // Realtime Update for all components using this hook
+  useSupabaseRealtime('articles', fetchArticles);
 
   useEffect(() => {
     fetchArticles();
