@@ -5,26 +5,39 @@ import { ArticleHistoryEntry } from "@/modules/articles/types";
 import { articleService } from "@/modules/articles/services/articleService";
 import { Activity, ArrowUpRight, ArrowDownRight, Edit2 } from "lucide-react";
 import Link from "next/link";
+import { useSupabaseRealtime } from "@/hooks/useSupabaseRealtime";
 
 export function ActivityLogWidget() {
   const [history, setHistory] = useState<(ArticleHistoryEntry & { article?: { name: string } })[]>([]);
   const [loading, setLoading] = useState(true);
+  const [lastNewId, setLastNewId] = useState<string | null>(null);
+
+  const load = async () => {
+    try {
+      const data = await articleService.getRecentHistory(10);
+      setHistory(data);
+    } catch (err: any) {
+      console.error("Failed to load history", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    async function load() {
-      try {
-        const data = await articleService.getRecentHistory(10);
-        setHistory(data);
-      } catch (err: any) {
-        console.error("Failed to load history", err);
-      } finally {
-        setLoading(false);
-      }
-    }
     load();
   }, []);
 
+  // Realtime Subscription
+  useSupabaseRealtime('article_history', (payload) => {
+    load(); 
+    if (payload.eventType === 'INSERT') {
+      setLastNewId(payload.new.id);
+      setTimeout(() => setLastNewId(null), 2000);
+    }
+  }, 'INSERT');
+
   if (loading) {
+// ... existing loading code ...
     return (
       <div className="h-full w-full bg-white dark:bg-slate-800 rounded-xl p-4 shadow flex items-center justify-center animate-pulse">
         <div className="h-4 w-20 bg-slate-200 dark:bg-slate-700 rounded"></div>
@@ -50,9 +63,9 @@ export function ActivityLogWidget() {
                const diff = entry.new_stock - entry.old_stock;
                const isInput = entry.type === 'input' && diff > 0;
                const isOutput = entry.type === 'output' || diff < 0;
-               return (
-                <li key={entry.id} className="flex items-start gap-3">
-                  <div className={`mt-0.5 w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 ${
+                return (
+                  <li key={entry.id} className={`flex items-start gap-3 p-2 rounded-lg transition-all ${entry.id === lastNewId ? 'animate-flash-glow' : ''}`}>
+                    <div className={`mt-0.5 w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 ${
                     isInput ? 'bg-emerald-100 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400' : 
                     isOutput ? 'bg-rose-100 text-rose-600 dark:bg-rose-900/30 dark:text-rose-400' : 
                     'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400'

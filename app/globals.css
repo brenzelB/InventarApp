@@ -48,4 +48,25 @@ body {
   .scrollbar-gutter-stable {
     scrollbar-gutter: stable;
   }
+
+  /* Realtime Flash Glow Animation */
+  .animate-flash-glow {
+    animation: flash-glow 2s ease-out;
+  }
+
+  @keyframes flash-glow {
+    0% { background-color: rgba(99, 102, 241, 0.2); }
+    100% { background-color: transparent; }
+  }
+
+  /* Realtime Pulse Value Animation */
+  .animate-pulse-value {
+    animation: pulse-value 1.5s ease-in-out;
+  }
+
+  @keyframes pulse-value {
+    0% { transform: scale(1); filter: brightness(1); }
+    50% { transform: scale(1.05); filter: brightness(1.2); color: #6366f1; }
+    100% { transform: scale(1); filter: brightness(1); }
+  }
 }

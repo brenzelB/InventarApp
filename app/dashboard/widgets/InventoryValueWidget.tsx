@@ -3,9 +3,18 @@
 import { useMemo } from "react";
 import { useArticles } from "@/modules/articles/hooks/useArticles";
 import { Lock, Tag, Coins, ArrowUpRight, Percent } from "lucide-react";
+import { useSupabaseRealtime } from "@/hooks/useSupabaseRealtime";
+import { useState } from "react";
 
 export function InventoryValueWidget() {
-  const { articles, loading } = useArticles();
+  const { articles, loading, refetch } = useArticles();
+  const [isPulsing, setIsPulsing] = useState(false);
+
+  useSupabaseRealtime('articles', () => {
+    refetch();
+    setIsPulsing(true);
+    setTimeout(() => setIsPulsing(false), 1500);
+  });
 
   const stats = useMemo(() => {
     if (!articles || articles.length === 0) return { buy: 0, sell: 0, profit: 0, margin: 0 };
@@ -43,7 +52,7 @@ export function InventoryValueWidget() {
   }
 
   return (
-    <div className="h-full w-full bg-white dark:bg-slate-800 rounded-xl p-6 shadow ring-1 ring-slate-200 dark:ring-slate-700 flex flex-col gap-4 no-drag">
+    <div className={`h-full w-full bg-white dark:bg-slate-800 rounded-xl p-6 shadow ring-1 ring-slate-200 dark:ring-slate-700 flex flex-col gap-4 no-drag transition-all duration-500 ${isPulsing ? 'ring-indigo-500 ring-4' : ''}`}>
       <div className="flex items-center justify-between">
         <h3 className="text-sm font-bold text-slate-800 dark:text-white uppercase tracking-widest flex items-center gap-2">
           <Coins className="w-4 h-4 text-indigo-500" />
@@ -68,7 +77,7 @@ export function InventoryValueWidget() {
 
       <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Purchase Value Section */}
-        <div className="bg-gradient-to-br from-indigo-500 to-indigo-700 rounded-2xl p-4 flex flex-col justify-between shadow-lg shadow-indigo-500/20 relative overflow-hidden group">
+        <div className={`bg-gradient-to-br from-indigo-500 to-indigo-700 rounded-2xl p-4 flex flex-col justify-between shadow-lg shadow-indigo-500/20 relative overflow-hidden group transition-all ${isPulsing ? 'animate-pulse-value' : ''}`}>
           <div>
             <p className="text-[10px] font-bold text-indigo-100 uppercase tracking-widest mb-1 italic opacity-80">Einkaufswert (EK)</p>
             <div className="flex items-baseline gap-1">
@@ -82,7 +91,7 @@ export function InventoryValueWidget() {
         </div>
 
         {/* Sales Value Section */}
-        <div className="bg-gradient-to-br from-emerald-500 to-emerald-700 rounded-2xl p-4 flex flex-col justify-between shadow-lg shadow-emerald-500/20 relative overflow-hidden group">
+        <div className={`bg-gradient-to-br from-emerald-500 to-emerald-700 rounded-2xl p-4 flex flex-col justify-between shadow-lg shadow-emerald-500/20 relative overflow-hidden group transition-all ${isPulsing ? 'animate-pulse-value' : ''}`}>
           <div>
             <p className="text-[10px] font-bold text-emerald-100 uppercase tracking-widest mb-1 italic opacity-80">Verkaufswert (VK)</p>
             <div className="flex items-baseline gap-1">
