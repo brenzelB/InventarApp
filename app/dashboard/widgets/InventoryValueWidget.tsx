@@ -1,10 +1,10 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { useArticles } from "@/modules/articles/hooks/useArticles";
 import { Lock, Tag, Coins, ArrowUpRight, Percent } from "lucide-react";
 import { useSupabaseRealtime } from "@/hooks/useSupabaseRealtime";
-import { useState } from "react";
+
 
 export function InventoryValueWidget({ config, onUpdateConfig }: { config: any, onUpdateConfig: (settings: any) => void }) {
   const { articles, loading, refetch } = useArticles();
