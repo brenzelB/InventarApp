@@ -27,7 +27,36 @@ export async function inviteTeamMember(email: string, role: UserRole, invitedBy:
 
     console.log('INVITE_RAW_RESULT', JSON.stringify(result, null, 2));
 
-    const { data: inviteData, error: inviteError } = result;
+    let inviteData = result.data;
+    let inviteError = result.error;
+    let emailSent = true;
+
+    // --- SMTP 500 Fallback Logic ---
+    if (inviteError && (inviteError.status === 500 || inviteError.message.includes('unexpected_failure'))) {
+      console.warn("[Server Action] SMTP Failure detected. Attempting direct user creation fallback...");
+      
+      const fallbackResult = await supabaseAdmin.auth.admin.createUser({
+        email: email,
+        email_confirm: true,
+        user_metadata: {
+          display_name: metadata.name,
+          role: role
+        },
+        password: "TempPass!" + Math.random().toString(36).slice(-8)
+      });
+
+      console.log('FALLBACK_RESULT', JSON.stringify(fallbackResult, null, 2));
+
+      if (fallbackResult.error) {
+        console.error("[Server Action] Fallback also failed:", fallbackResult.error);
+        return { success: false, error: "SMTP Fehler 500 und Fallback fehlgeschlagen: " + fallbackResult.error.message, status: 500, raw: fallbackResult.error };
+      }
+
+      inviteData = fallbackResult.data;
+      inviteError = null;
+      emailSent = false;
+    }
+    // --- End Fallback ---
 
     if (inviteError) {
       console.error("[Server Action] FULL ERROR:", JSON.stringify(inviteError, null, 2));
@@ -39,21 +68,34 @@ export async function inviteTeamMember(email: string, role: UserRole, invitedBy:
     }
 
     // 2. Create Profile (Explicitly so they show up in the list)
-    const profilePayload = {
+    const profilePayload: any = {
       id: inviteData.user.id,
       email: email.toLowerCase(),
       display_name: metadata.name,
+      full_name: metadata.name, // Added for compatibility with different schema variations
       role: role
     };
-    console.log("[Server Action] Profile Payload:", JSON.stringify(profilePayload, null, 2));
+    
+    console.log("[Server Action] Attempting Profile Upsert:", JSON.stringify(profilePayload, null, 2));
 
     const { error: profileError } = await supabaseAdmin
       .from('profiles')
-      .upsert(profilePayload, { onConflict: 'email' });
+      .upsert(profilePayload, { 
+        onConflict: 'id', // Use ID as primary conflict resolution
+        ignoreDuplicates: false 
+      });
 
     if (profileError) {
-      console.error("[Server Action] Profile FULL ERROR:", JSON.stringify(profileError, null, 2));
-      return { success: false, error: "Profil-Fehler: " + profileError.message, status: 500, raw: profileError };
+      console.error("[Server Action] Profile Upsert Error:", JSON.stringify(profileError, null, 2));
+      // Attempt fallback to email conflict if ID conflict fails for some reason
+      const { error: retryError } = await supabaseAdmin
+        .from('profiles')
+        .upsert(profilePayload, { onConflict: 'email' });
+        
+      if (retryError) {
+        console.error("[Server Action] Profile Retry Error:", JSON.stringify(retryError, null, 2));
+        return { success: false, error: "Profil-Fehler: " + retryError.message, status: 500, raw: retryError };
+      }
     }
 
     // 3. Track in Invitations Table
@@ -68,7 +110,7 @@ export async function inviteTeamMember(email: string, role: UserRole, invitedBy:
 
     revalidatePath("/dashboard/team");
 
-    return { success: true, user: inviteData.user, status: 200 };
+    return { success: true, user: inviteData.user, status: 200, emailSent };
   } catch (err: any) {
     console.error("[Server Action] CRITICAL CATCH:", err);
     return { success: false, error: err.message || "Unerwarteter Fehler", status: 500 };
