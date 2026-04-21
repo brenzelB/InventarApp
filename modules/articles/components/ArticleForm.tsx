@@ -30,12 +30,19 @@ const defaultData: ArticleFormData = {
   unit: 'Stück',
 };
 
+const UNIT_CATEGORIES = [
+  { label: 'Allgemein', units: ['Stück'] },
+  { label: 'Gewicht', units: ['kg', 'g'] },
+  { label: 'Flüssigkeit', units: ['l', 'ml'] }
+];
+
+const getStep = (unit: string) => (unit === 'kg' || unit === 'l' ? '0.1' : '1');
+
 export function ArticleForm({ initialData, articleId, qrCode, onUpdate }: ArticleFormProps) {
   const [formData, setFormData] = useState<ArticleFormData>(initialData || defaultData);
   const [groups, setGroups] = useState<Group[]>([]);
   const { create, update, loading, error } = useArticleMutations();
   const [success, setSuccess] = useState(false);
-  const [isUnitOpen, setIsUnitOpen] = useState(false);
   const { role } = useAuth();
   const { success: toastSuccess, error: toastError } = useToast();
   const router = useRouter();
@@ -157,46 +164,34 @@ export function ArticleForm({ initialData, articleId, qrCode, onUpdate }: Articl
           <input type="text" name="lagerort" value={formData.lagerort || ''} onChange={handleChange} className="mt-2 block w-full rounded-md border-0 py-2.5 px-3 text-slate-900 dark:text-white dark:bg-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:opacity-50" placeholder="z.B. Regal A, Fach 3" disabled={loading || isReadOnly}/>
         </div>
 
-        <div className="relative">
-          <label className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-200">Einheit *</label>
-          <div className="mt-2 relative">
-            <button
-              type="button"
-              onClick={() => !isReadOnly && setIsUnitOpen(!isUnitOpen)}
-              disabled={loading || isReadOnly}
-              className="relative w-full bg-slate-50 dark:bg-slate-900 border-0 rounded-md py-2.5 pl-3 pr-10 text-left text-slate-900 dark:text-white shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:opacity-50 transition-all hover:bg-slate-100 dark:hover:bg-slate-800"
-            >
-              <span className="block truncate font-bold">{formData.unit}</span>
-              <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                <ChevronDown className="h-5 w-5 text-slate-400" aria-hidden="true" />
-              </span>
-            </button>
-
-            {isUnitOpen && (
-              <div className="absolute z-[100] mt-1 max-h-60 w-full overflow-auto rounded-xl bg-white dark:bg-slate-800 py-1 text-base shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm animate-in fade-in zoom-in-95 duration-200">
-                {['Stück', 'kg', 'g', 'l', 'ml'].map((u) => (
-                  <button
-                    key={u}
-                    type="button"
-                    className={`
-                      relative w-full cursor-default select-none py-2.5 pl-3 pr-9 text-left transition-colors
-                      ${formData.unit === u ? 'bg-indigo-50 dark:bg-indigo-900/40 text-indigo-600' : 'text-slate-900 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50'}
-                    `}
-                    onClick={() => {
-                      setFormData(prev => ({ ...prev, unit: u }));
-                      setIsUnitOpen(false);
-                    }}
-                  >
-                    <span className={`block truncate ${formData.unit === u ? 'font-black' : 'font-medium'}`}>{u}</span>
-                    {formData.unit === u && (
-                      <span className="absolute inset-y-0 right-0 flex items-center pr-4 text-indigo-600">
-                        <Check className="h-4 w-4" />
-                      </span>
-                    )}
-                  </button>
-                ))}
+        <div className="md:col-span-2 space-y-6">
+          <label className="block text-sm font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Einheit wählen</label>
+          
+          <div className="space-y-6">
+            {UNIT_CATEGORIES.map((cat) => (
+              <div key={cat.label} className="space-y-3">
+                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">{cat.label}</p>
+                <div className="flex flex-wrap gap-2">
+                  {cat.units.map((u) => (
+                    <button
+                      key={u}
+                      type="button"
+                      disabled={loading || isReadOnly}
+                      onClick={() => setFormData(prev => ({ ...prev, unit: u }))}
+                      className={`
+                        flex-1 min-w-[80px] py-3 px-4 rounded-xl text-sm font-black transition-all active:scale-95 border-2
+                        ${formData.unit === u 
+                          ? 'bg-indigo-600 border-indigo-600 text-white shadow-lg shadow-indigo-200 dark:shadow-none' 
+                          : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-indigo-300 dark:hover:border-indigo-800'}
+                        disabled:opacity-50 disabled:cursor-not-allowed
+                      `}
+                    >
+                      {u}
+                    </button>
+                  ))}
+                </div>
               </div>
-            )}
+            ))}
           </div>
         </div>
       </div>
@@ -225,7 +220,7 @@ export function ArticleForm({ initialData, articleId, qrCode, onUpdate }: Articl
             <input 
               required 
               type="number" 
-              step="0.01" 
+              step={getStep(formData.unit)} 
               name="bestand" 
               value={formData.bestand} 
               onChange={handleChange} 
@@ -240,7 +235,7 @@ export function ArticleForm({ initialData, articleId, qrCode, onUpdate }: Articl
 
         <div>
           <label className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-200">Mindestbestand *</label>
-          <input required type="number" step="0.01" name="mindestbestand" value={formData.mindestbestand} onChange={handleChange} className="mt-2 block w-full rounded-md border-0 py-2.5 px-3 text-slate-900 dark:text-white dark:bg-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:opacity-50" disabled={loading || isReadOnly}/>
+          <input required type="number" step={getStep(formData.unit)} name="mindestbestand" value={formData.mindestbestand} onChange={handleChange} className="mt-2 block w-full rounded-md border-0 py-2.5 px-3 text-slate-900 dark:text-white dark:bg-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:opacity-50" disabled={loading || isReadOnly}/>
         </div>
       </div>
 
