@@ -97,13 +97,21 @@ export default function TeamPage() {
 
   const handleInvite = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!inviteEmail) return;
+    if (!inviteName.trim()) {
+      toastError("Bitte gib einen Namen für den Nutzer ein.");
+      return;
+    }
+    if (!inviteEmail.trim()) {
+      toastError("Bitte gib eine E-Mail Adresse ein.");
+      return;
+    }
     
     setIsInviting(true);
     setMessage(null);
 
     try {
-      console.log("[Team] Sending invitation to:", inviteEmail);
+      console.log("[Team] Starting invitation process for:", inviteEmail);
+      console.log("[Team] Invitation Data:", { inviteEmail, inviteName, inviteRole });
       
       const result = await inviteTeamMember(
         inviteEmail.trim().toLowerCase(),
@@ -112,7 +120,14 @@ export default function TeamPage() {
         { name: inviteName.trim() }
       );
 
+      console.log("[Team] Server Action Result:", result);
+
       if (!result.success) {
+        // Check for rate limit in the error status or message
+        if (result.status === 429 || result.error?.includes('429') || result.error?.toLowerCase().includes('rate limit')) {
+          toastError("Supabase Limit erreicht. Bitte in einer Stunde erneut versuchen oder eigene Domain verifizieren.");
+          throw new Error("Rate-Limit erreicht.");
+        }
         throw new Error(result.error);
       }
 
@@ -398,7 +413,7 @@ export default function TeamPage() {
 
               <button
                 type="submit"
-                disabled={isInviting || !inviteEmail || !inviteName}
+                disabled={isInviting}
                 className="w-full bg-white text-indigo-600 rounded-2xl py-5 text-xs font-black uppercase tracking-[0.3em] shadow-xl hover:bg-slate-50 hover:scale-[1.02] active:scale-95 transition-all disabled:opacity-50 flex items-center justify-center gap-4 group"
               >
                 {isInviting ? <Loader2 className="w-5 h-5 animate-spin" /> : <UserPlus className="w-5 h-5 group-hover:rotate-12 transition-transform" />}

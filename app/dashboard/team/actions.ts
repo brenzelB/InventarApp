@@ -10,7 +10,7 @@ export async function inviteTeamMember(email: string, role: UserRole, invitedBy:
   }
 
   try {
-    // 1. Auth Admin Invitation
+    console.log("[Server Action] Attempting invite for:", email);
     const { data: inviteData, error: inviteError } = await supabaseAdmin.auth.admin.inviteUserByEmail(
       email,
       {
@@ -23,7 +23,8 @@ export async function inviteTeamMember(email: string, role: UserRole, invitedBy:
     );
 
     if (inviteError) {
-      return { success: false, error: inviteError.message };
+      console.error("[Server Action] Supabase Auth Error:", inviteError.message, inviteError.status);
+      return { success: false, error: inviteError.message, status: inviteError.status };
     }
 
     // 2. Track in Invitations Table
