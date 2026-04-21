@@ -5,38 +5,31 @@ import { UserRole } from "@/hooks/useAuth";
 import { revalidatePath } from "next/cache";
 
 export async function inviteTeamMember(email: string, role: UserRole, invitedBy: string, metadata: { name: string }) {
-  console.log(">>> [DEBUG] Starte Einladungs-Prozess für:", email);
-  console.log(">>> [DEBUG] Admin-Key vorhanden:", !!process.env.SUPABASE_SERVICE_ROLE_KEY);
-  console.log(">>> [DEBUG] Supabase URL:", process.env.NEXT_PUBLIC_SUPABASE_URL ? "Vorhanden" : "FEHLT!");
-
   try {
-    // 1. Auth Admin Invitation
-    console.log(">>> [DEBUG] Rufe auth.admin.inviteUserByEmail auf...");
+    console.log(`[Team] Start invitation: ${email} (Role: ${role})`);
+
+    // 1. Minimal Auth Admin Invitation
+    // Using minimal metadata for maximum stability after trigger fix
     const { data: inviteData, error: inviteError } = await supabaseAdmin.auth.admin.inviteUserByEmail(
       email,
       {
         data: {
-          display_name: metadata.name,
-          role: role
+          role: role,
+          display_name: metadata.name
         },
         redirectTo: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/dashboard`
       }
     );
 
     if (inviteError) {
-      console.error(">>> [DEBUG] Auth Admin Fehler:", inviteError);
-      // Gib das KOMPLETTE Error-Objekt als String zurück
-      return { 
-        success: false, 
-        error: `AUTH_API_FEHLER: ${JSON.stringify(inviteError, null, 2)}` 
-      };
+      console.error("[Team] Auth invitation error:", inviteError.message);
+      return { success: false, error: inviteError.message };
     }
 
-    console.log(">>> [DEBUG] Auth Einladung erfolgreich gesendet. User ID:", inviteData.user?.id);
+    // SUCCESS PRIORITY: If we have a user, the primary goal is achieved
+    const user = inviteData.user;
 
-    // 2. Track in Database (DEAKTIVIERT ALS FALLBACK FÜR DEBUGGING)
-    /*
-    console.log(">>> [DEBUG] Schreibe in invitations Tabelle...");
+    // 2. Track the invitation in our custom invitations table (Stabilized)
     const { error: dbError } = await supabaseAdmin
       .from('invitations')
       .insert({
@@ -47,24 +40,16 @@ export async function inviteTeamMember(email: string, role: UserRole, invitedBy:
       });
 
     if (dbError) {
-      console.error(">>> [DEBUG] Database Tracking Fehler:", dbError);
-      return { 
-        success: false, 
-        error: `DB_TRACKING_FEHLER: ${JSON.stringify(dbError, null, 2)}` 
-      };
+      // Log DB error but don't fail as the invite was already sent successfully
+      console.error("[Team] Database tracking warning:", dbError.message);
     }
-    */
-    console.log(">>> [DEBUG] Database Tracking wurde übersprungen (Simplified Mode)");
 
     // Clear caches for the team page
     revalidatePath("/dashboard/team");
 
-    return { success: true, user: inviteData.user };
+    return { success: true, user };
   } catch (err: any) {
-    console.error(">>> [DEBUG] Kritischer Catch-Fehler:", err);
-    return { 
-      success: false, 
-      error: `KRITISCHER_EXCEPTION_FEHLER: ${err.message || JSON.stringify(err)}` 
-    };
+    console.error("[Team] Critical error during invitation:", err);
+    return { success: false, error: err.message || "Ein unerwarteter Fehler ist aufgetreten." };
   }
 }
