@@ -142,5 +142,3 @@ export function InventoryValueWidget() {
     </div>
   );
 }
-  );
-}
