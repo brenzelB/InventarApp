@@ -35,10 +35,10 @@ export function WeeklyTrendWidget({ config, onUpdateConfig }: WeeklyTrendWidgetP
   const loadTrend = async () => {
     try {
       setLoading(true);
-      const days = Number(timeRange);
+      const numDays = Number(timeRange);
       
       // 1. Get History
-      const trend = await articleService.getHistoryTrend(days);
+      const trend = await articleService.getHistoryTrend(numDays);
       
       // 2. Get Current Total Stock for all articles
       const articles = await articleService.getArticles();
@@ -46,7 +46,7 @@ export function WeeklyTrendWidget({ config, onUpdateConfig }: WeeklyTrendWidgetP
 
       const grouped: Record<string, { input: number; output: number; total: number }> = {};
       
-      if (days === 1) {
+      if (numDays === 1) {
         const baseDate = new Date();
         baseDate.setHours(0, 0, 0, 0);
 
@@ -69,11 +69,11 @@ export function WeeklyTrendWidget({ config, onUpdateConfig }: WeeklyTrendWidgetP
           }
         });
       } else {
-        for (let i = days - 1; i >= 0; i--) {
+        for (let i = numDays - 1; i >= 0; i--) {
           const d = new Date();
           d.setDate(d.getDate() - i);
           const dayStr = d.toLocaleDateString("de-DE", { 
-            weekday: days <= 7 ? 'short' : undefined, 
+            weekday: numDays <= 7 ? 'short' : undefined, 
             day: '2-digit', 
             month: '2-digit' 
           });
@@ -83,7 +83,7 @@ export function WeeklyTrendWidget({ config, onUpdateConfig }: WeeklyTrendWidgetP
         trend.forEach(entry => {
           const d = new Date(entry.created_at);
           const dayStr = d.toLocaleDateString("de-DE", { 
-            weekday: days <= 7 ? 'short' : undefined, 
+            weekday: numDays <= 7 ? 'short' : undefined, 
             day: '2-digit', 
             month: '2-digit' 
           });
@@ -193,7 +193,7 @@ export function WeeklyTrendWidget({ config, onUpdateConfig }: WeeklyTrendWidgetP
                 tickLine={false} 
                 tick={{ fontSize: 9, fill: '#94a3b8', fontWeight: 500 }} 
                 dy={12}
-                interval={days === 1 ? 2 : days > 7 ? 'preserveStartEnd' : 0}
+                interval={Number(timeRange) === 1 ? 2 : Number(timeRange) > 7 ? 'preserveStartEnd' : 0}
               />
               <YAxis 
                 axisLine={false} 
