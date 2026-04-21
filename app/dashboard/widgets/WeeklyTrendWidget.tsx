@@ -1,12 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
-import { RefreshCcw, TrendingUp } from "lucide-react";
-import { articleService } from "@/modules/articles/services/articleService";
-
-import { AreaChart, Area, BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ComposedChart, Legend } from "recharts";
-import { BarChart2, Layout as LayoutIcon, RefreshCcw, TrendingUp } from "lucide-react";
+import { 
+  AreaChart, Area, BarChart, Bar, LineChart, Line, 
+  XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, 
+  ComposedChart, Legend 
+} from "recharts";
+import { 
+  BarChart2, Layout as LayoutIcon, RefreshCcw, TrendingUp 
+} from "lucide-react";
 import { articleService } from "@/modules/articles/services/articleService";
 
 interface WeeklyTrendWidgetProps {
