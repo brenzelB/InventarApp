@@ -53,7 +53,10 @@ export default function ArticlesPage() {
         case "price-desc": return b.verkaufspreis - a.verkaufspreis;
         case "stock-asc": return a.bestand - b.bestand;
         case "stock-desc": return b.bestand - a.bestand;
-        case "newest": return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+        case "newest": 
+          const dateA = a.created_at ? new Date(a.created_at).getTime() : 0;
+          const dateB = b.created_at ? new Date(b.created_at).getTime() : 0;
+          return dateB - dateA;
         default: return 0;
       }
     });
