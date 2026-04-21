@@ -29,6 +29,7 @@ const defaultData: ArticleFormData = {
   group_id: null,
   lagerort: '',
   unit: 'Stück',
+  tax_rate: 19,
 };
 
 const ALL_UNITS = ['Stück', 'kg', 'g', 'l', 'ml'];
@@ -179,6 +180,21 @@ export function ArticleForm({ initialData, articleId, qrCode, onUpdate }: Articl
         <div>
           <label className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-200">Verkaufspreis (€) *</label>
           <input required type="number" step="0.01" min="0" name="verkaufspreis" value={formData.verkaufspreis} onChange={handleChange} className="mt-2 block w-full rounded-md border-0 py-1.5 px-3 text-slate-900 dark:text-white dark:bg-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:opacity-50" disabled={loading || isReadOnly}/>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-200">Steuersatz (%) *</label>
+          <select 
+            name="tax_rate" 
+            value={formData.tax_rate} 
+            onChange={handleChange}
+            className="mt-2 block w-full rounded-md border-0 py-1.5 px-3 text-slate-900 dark:text-white dark:bg-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:opacity-50 appearance-none bg-no-repeat bg-[right_0.5rem_center] bg-[length:1.2em_1.2em]"
+            disabled={loading || isReadOnly}
+          >
+            <option value={19}>19 % (Standard)</option>
+            <option value={7}>7 % (Ermäßigt)</option>
+            <option value={0}>0 % (Steuerfrei)</option>
+          </select>
         </div>
       </div>
 

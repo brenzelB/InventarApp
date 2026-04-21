@@ -22,6 +22,7 @@ export interface Article {
   group?: { name: string } | null;
   lagerort?: string | null;
   unit: string;
+  tax_rate: number;
 }
 
 export interface ArticleFormData {
@@ -36,6 +37,7 @@ export interface ArticleFormData {
   group_id?: string | null;
   lagerort?: string;
   unit: string;
+  tax_rate: number;
 }
 
 export type HistoryType = 'input' | 'output';

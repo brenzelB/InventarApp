@@ -66,7 +66,7 @@ export const articleService = {
     }
     const { data, error } = await supabase
       .from("articles")
-      .select("id, name, sku, description, herstellpreis, verkaufspreis, purchase_price, bestand, mindestbestand, unit, lagerort, qr_code, group_id, created_at, updated_at, group:groups(name)")
+      .select("id, name, sku, description, herstellpreis, verkaufspreis, purchase_price, bestand, mindestbestand, unit, lagerort, qr_code, group_id, created_at, updated_at, tax_rate, group:groups(name)")
       .order("created_at", { ascending: false });
     if (error) throw error;
     return (data as any) as Article[];
@@ -109,6 +109,7 @@ export const articleService = {
         group: groupData ? { name: groupData.name } : null,
         created_at: now,
         updated_at: now,
+        tax_rate: article.tax_rate || 19,
       };
       const articles = getMockArticles();
       articles.unshift(newArticle);

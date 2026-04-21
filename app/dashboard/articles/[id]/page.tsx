@@ -232,7 +232,8 @@ export default function ArticleDetailPage({ params }: { params: { id: string } }
                   mindestbestand: article.mindestbestand,
                   group_id: article.group_id || null,
                   lagerort: article.lagerort || "",
-                  unit: article.unit || 'Stück'
+                  unit: article.unit || 'Stück',
+                  tax_rate: article.tax_rate || 19
                 }} 
                 qrCode={article.qr_code} 
                 onUpdate={updateArticle}
@@ -261,6 +262,9 @@ export default function ArticleDetailPage({ params }: { params: { id: string } }
               <div className="flex justify-between items-center text-sm">
                 <span className="text-slate-500">Verkaufspreis</span>
                 <span className="font-bold text-slate-900 dark:text-slate-200">{Number(article.verkaufspreis).toFixed(2)} €</span>
+              </div>
+              <div className="flex justify-between items-center text-[10px] text-slate-400 font-bold uppercase tracking-widest pt-1">
+                <span>Inkl. {article.tax_rate || 19}% MwSt.</span>
               </div>
               <div className="pt-4 border-t border-slate-50 dark:border-slate-700 flex justify-between items-center">
                 <span className="text-xs font-bold text-indigo-600 uppercase">Marge</span>
