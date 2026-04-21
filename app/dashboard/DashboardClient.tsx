@@ -6,9 +6,9 @@ import { Pencil, Save, X, Loader2 } from "lucide-react";
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 
-import { StockStatusWidget } from "./widgets/StockStatusWidget";
-import { CriticalStockWidget } from "./widgets/CriticalStockWidget";
-import { ActivityLogWidget } from "./widgets/ActivityLogWidget";
+import { Plus } from "lucide-react";
+import { WidgetMarketplace } from "./WidgetMarketplace";
+import { WIDGET_COMPONENTS, WidgetMeta } from "./widgets/registry";
 import { saveDashboardLayout } from "./actions";
 import { useToast } from "@/hooks/useToast";
 
@@ -28,6 +28,7 @@ const DEFAULT_LAYOUT: Layout[] = [
 export function DashboardClient({ userId, initialLayout }: DashboardClientProps) {
   const { success: toastSuccess, error: toastError } = useToast();
   const [isEditing, setIsEditing] = useState(false);
+  const [isMarketplaceOpen, setIsMarketplaceOpen] = useState(false);
   const [layout, setLayout] = useState<Layout[]>(initialLayout && initialLayout.length > 0 ? initialLayout : DEFAULT_LAYOUT);
   const [currentLayouts, setCurrentLayouts] = useState<{ [key: string]: Layout[] }>({ lg: layout });
   const [isSaving, setIsSaving] = useState(false);
@@ -36,6 +37,34 @@ export function DashboardClient({ userId, initialLayout }: DashboardClientProps)
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  const handleAddWidget = (widget: WidgetMeta) => {
+    // Find the next available Y position by looking at current max Y
+    let maxY = 0;
+    layout.forEach(item => {
+      if (item.y + item.h > maxY) {
+        maxY = item.y + item.h;
+      }
+    });
+
+    const newItem: Layout = {
+      i: widget.id,
+      x: 0,
+      y: maxY,
+      w: widget.defaultW,
+      h: widget.defaultH,
+    };
+
+    const newLayout = [...layout, newItem];
+    setLayout(newLayout);
+    setCurrentLayouts({ lg: newLayout });
+  };
+
+  const handleRemoveWidget = (widgetId: string) => {
+    const newLayout = layout.filter(item => item.i !== widgetId);
+    setLayout(newLayout);
+    setCurrentLayouts({ lg: newLayout });
+  };
 
   const handleLayoutChange = (newLayout: Layout[], allLayouts: { [key: string]: Layout[] }) => {
     setCurrentLayouts(allLayouts);
@@ -75,6 +104,13 @@ export function DashboardClient({ userId, initialLayout }: DashboardClientProps)
           </h2>
         </div>
         <div className="mt-4 md:mt-0 flex gap-4">
+          <button
+            onClick={() => setIsMarketplaceOpen(true)}
+            className="inline-flex items-center gap-2 rounded-xl bg-indigo-50 dark:bg-indigo-900/30 px-4 py-2 text-sm font-bold text-indigo-600 dark:text-indigo-400 shadow-sm hover:bg-indigo-100 transition-colors"
+          >
+            <Plus className="w-4 h-4" /> Widget hinzufügen
+          </button>
+          
           {isEditing ? (
             <>
               <button
@@ -122,20 +158,27 @@ export function DashboardClient({ userId, initialLayout }: DashboardClientProps)
             useCSSTransforms={true}
             draggableCancel=".no-drag"
           >
-            <div key="stock-status" className={`transition-shadow ${isEditing ? 'cursor-grab active:cursor-grabbing ring-2 ring-indigo-500 ring-offset-2 ring-offset-slate-50 dark:ring-offset-slate-900 rounded-xl' : ''}`}>
-              <StockStatusWidget />
-            </div>
-            
-            <div key="critical-stock" className={`transition-shadow ${isEditing ? 'cursor-grab active:cursor-grabbing ring-2 ring-indigo-500 ring-offset-2 ring-offset-slate-50 dark:ring-offset-slate-900 rounded-xl' : ''}`}>
-              <CriticalStockWidget />
-            </div>
+            {layout.map(item => {
+              const widgetComponent = WIDGET_COMPONENTS[item.i];
+              if (!widgetComponent) return null;
 
-            <div key="activity-log" className={`transition-shadow ${isEditing ? 'cursor-grab active:cursor-grabbing ring-2 ring-indigo-500 ring-offset-2 ring-offset-slate-50 dark:ring-offset-slate-900 rounded-xl' : ''}`}>
-              <ActivityLogWidget />
-            </div>
+              return (
+                <div key={item.i} className={`transition-shadow ${isEditing ? 'cursor-grab active:cursor-grabbing ring-2 ring-indigo-500 ring-offset-2 ring-offset-slate-50 dark:ring-offset-slate-900 rounded-xl' : ''}`}>
+                  {widgetComponent}
+                </div>
+              );
+            })}
           </ResponsiveGridLayout>
         </div>
       </div>
+
+      <WidgetMarketplace 
+        isOpen={isMarketplaceOpen}
+        onClose={() => setIsMarketplaceOpen(false)}
+        activeWidgetIds={layout.map(item => item.i)}
+        onAddWidget={handleAddWidget}
+        onRemoveWidget={handleRemoveWidget}
+      />
     </div>
   );
 }
