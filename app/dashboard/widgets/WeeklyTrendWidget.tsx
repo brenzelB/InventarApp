@@ -13,10 +13,11 @@ import { articleService } from "@/modules/articles/services/articleService";
 
 interface WeeklyTrendWidgetProps {
   config: {
+    timeRange?: string | number;
+    chartType?: 'area' | 'bar' | 'line';
     days?: number;
-    chartType?: 'area' | 'bar';
   };
-  onUpdateConfig: (settings: any) => void;
+  onUpdateConfig?: (newConfig: any) => void;
 }
 
 export function WeeklyTrendWidget({ config, onUpdateConfig }: WeeklyTrendWidgetProps) {
@@ -24,7 +25,7 @@ export function WeeklyTrendWidget({ config, onUpdateConfig }: WeeklyTrendWidgetP
   const [loading, setLoading] = useState(true);
   
   // Robust initialization and logging
-  const timeRange = config.timeRange || 7;
+  const timeRange = config.timeRange || config.days || '7';
   const chartType = config.chartType || 'area';
 
   useEffect(() => {
@@ -126,7 +127,7 @@ export function WeeklyTrendWidget({ config, onUpdateConfig }: WeeklyTrendWidgetP
 
   const updateSettings = (newSettings: any) => {
     console.log("💾 SPEICHERE WIDGET SETTINGS:", newSettings);
-    onUpdateConfig(newSettings);
+    onUpdateConfig?.(newSettings);
   };
 
   return (
