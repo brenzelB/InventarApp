@@ -38,8 +38,11 @@ export async function inviteTeamMember(email: string, role: UserRole, invitedBy:
       });
 
     if (dbError) {
-      console.error("[Server Action] Database tracking error (Warning only):", dbError.message);
-      // We don't fail here because the email was already sent
+      console.error("[Server Action] Database error recording invitation:", dbError.message);
+      return { 
+        success: false, 
+        error: `Postgres/DB Fehler: ${dbError.message}` 
+      };
     }
 
     // Clear caches for the team page
@@ -47,7 +50,10 @@ export async function inviteTeamMember(email: string, role: UserRole, invitedBy:
 
     return { success: true, user: inviteData.user };
   } catch (err: any) {
-    console.error("[Server Action] Critical error during invitation:", err);
-    return { success: false, error: err.message || "Ein unerwarteter Fehler ist aufgetreten." };
+    console.error("[Server Action] Critical error during invitation action:", err);
+    return { 
+      success: false, 
+      error: `Kritischer Fehler: ${err.message || "Ein unerwarteter Fehler ist aufgetreten."}` 
+    };
   }
 }
