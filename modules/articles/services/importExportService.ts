@@ -32,6 +32,7 @@ export const importExportService = {
         'Herstellpreis': a.herstellpreis,
         'Verkaufspreis': a.verkaufspreis,
         'Bestand': a.bestand,
+        'Einheit': a.unit,
         'Gruppe': a.group?.name || 'Keine Gruppe',
         'Marge (%)': marge,
         'Gesamtwert (€)': gesamtwert
@@ -67,7 +68,7 @@ export const importExportService = {
       a.lagerort || '—',
       `${a.herstellpreis.toFixed(2)} €`,
       `${a.verkaufspreis.toFixed(2)} €`,
-      a.bestand.toString(),
+      `${a.bestand.toString()} ${a.unit || 'Stk'}`,
       a.group?.name || '—',
       a.verkaufspreis > 0 ? ((a.verkaufspreis - a.herstellpreis) / a.verkaufspreis * 100).toFixed(0) + '%' : '0%',
       `${(a.bestand * a.verkaufspreis).toFixed(2)} €`
@@ -98,6 +99,7 @@ export const importExportService = {
       'Verkaufspreis', 
       'Bestand', 
       'Mindestbestand',
+      'Einheit',
       'Gruppe'
     ]];
     
@@ -160,8 +162,9 @@ export const importExportService = {
                 lagerort: row['Lagerort']?.toString() || '',
                 herstellpreis: parseFloat(row['Herstellpreis']) || 0,
                 verkaufspreis: parseFloat(row['Verkaufspreis']) || 0,
-                bestand: parseInt(row['Bestand']) || 0,
-                mindestbestand: parseInt(row['Mindestbestand']) || 0,
+                bestand: parseFloat(row['Bestand']) || 0,
+                mindestbestand: parseFloat(row['Mindestbestand']) || 0,
+                unit: row['Einheit']?.toString() || row['Unit']?.toString() || 'Stück',
                 group_id: groupId
               });
             } catch (err: any) {
