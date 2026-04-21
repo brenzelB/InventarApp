@@ -27,10 +27,29 @@ export async function inviteTeamMember(email: string, role: UserRole, invitedBy:
 
     if (inviteError) {
       console.error("[Server Action] Supabase Auth Error:", inviteError.message, inviteError.status);
-      return { success: false, error: inviteError.message, status: inviteError.status };
+      return { success: false, error: inviteError.message, status: inviteError.status || 500 };
     }
 
-    // 2. Track in Invitations Table
+    if (!inviteData?.user) {
+      return { success: false, error: "Supabase hat keinen Nutzer erstellt.", status: 500 };
+    }
+
+    // 2. Create Profile (Explicitly so they show up in the list)
+    const { error: profileError } = await supabaseAdmin
+      .from('profiles')
+      .upsert({
+        id: inviteData.user.id,
+        email: email.toLowerCase(),
+        display_name: metadata.name,
+        role: role
+      }, { onConflict: 'email' });
+
+    if (profileError) {
+      console.error("[Server Action] Profile Error:", profileError);
+      return { success: false, error: "Profil-Fehler: " + profileError.message, status: 500 };
+    }
+
+    // 3. Track in Invitations Table
     const { error: dbError } = await supabaseAdmin
       .from('invitations')
       .insert({
@@ -42,9 +61,10 @@ export async function inviteTeamMember(email: string, role: UserRole, invitedBy:
 
     revalidatePath("/dashboard/team");
 
-    return { success: true, user: inviteData.user };
+    return { success: true, user: inviteData.user, status: 200 };
   } catch (err: any) {
-    return { success: false, error: "Ein unerwarteter Fehler ist aufgetreten." };
+    console.error("[Server Action] Catch Error:", err);
+    return { success: false, error: err.message || "Unerwarteter Fehler", status: 500 };
   }
 }
 

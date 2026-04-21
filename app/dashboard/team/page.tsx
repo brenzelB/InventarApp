@@ -137,15 +137,20 @@ export default function TeamPage() {
 
       console.log("[Team] Result received:", result);
 
+      // FORCE FEEDBACK: Explicitly show status
+      if (result.status) {
+        toastSuccess(`Antwort erhalten (Status: ${result.status})`);
+      }
+
       if (!result.success) {
         if (result.status === 429 || result.error?.includes('429') || result.error?.toLowerCase().includes('rate limit')) {
           toastError("Supabase-Limit erreicht (max. 3/Std). Bitte später versuchen.");
           throw new Error("Rate-Limit erreicht.");
         }
-        throw new Error(result.error);
+        throw new Error(result.error || "Unbekannter Fehler");
       }
 
-      toastSuccess('Einladung wurde vorbereitet.');
+      toastSuccess(`Einladung an ${inviteEmail} wurde erfolgreich gesendet!`);
       setInviteEmail("");
       setInviteName("");
       fetchTeamData();
