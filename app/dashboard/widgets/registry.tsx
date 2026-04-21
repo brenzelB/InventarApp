@@ -42,11 +42,11 @@ export const WIDGET_REGISTRY: WidgetMeta[] = [
   },
   {
     id: "inventory-value",
-    title: "Inventar-Wert",
-    description: "Zeigt den gesamten gebundenen Kapitalwert (Bestand × Einkaufspreis).",
+    title: "Finanz-Übersicht",
+    description: "Analysiert EK, VK und Marge des gesamten Lagerbestands.",
     icon: TrendingUp,
     defaultW: 4,
-    defaultH: 2,
+    defaultH: 3,
   },
   {
     id: "quick-book",
@@ -58,11 +58,11 @@ export const WIDGET_REGISTRY: WidgetMeta[] = [
   },
   {
     id: "weekly-trend",
-    title: "Wochen-Trend",
-    description: "Visualisiert die Bestandsbewegungen der letzten 7 Tage.",
-    icon: Activity,
-    defaultW: 8,
-    defaultH: 3,
+    title: "Bestands-Trend 2.0",
+    description: "Visualisiert Bestandsverlauf und kumulierte Historie.",
+    icon: TrendingUp,
+    defaultW: 10,
+    defaultH: 4,
   }
 ];
 
