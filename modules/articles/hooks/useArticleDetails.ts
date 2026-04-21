@@ -62,13 +62,13 @@ export function useArticleDetails(id: string) {
     try {
       setIsAdjusting(true);
       
-      const currentStock = Number.isFinite(article.bestand) ? Math.floor(article.bestand) : 0;
-      const cleanAmount = Number.isFinite(amount) ? Math.floor(amount) : 0;
+      const currentStock = Number.isFinite(article.bestand) ? Number(article.bestand) : 0;
+      const cleanAmount = Number.isFinite(amount) ? Number(amount) : 0;
       
-      // Radical Fallback as requested
-      const calculatedNewStock = (currentStock + cleanAmount) || currentStock;
+      const finalAdjustment = type === 'output' ? -cleanAmount : cleanAmount;
+      const calculatedNewStock = Math.max(0, currentStock + finalAdjustment);
 
-      console.log("DEBUG_STOCK:", { id, currentStock, amount: cleanAmount, target: calculatedNewStock });
+      console.log("DEBUG_STOCK:", { id, currentStock, adjustment: finalAdjustment, target: calculatedNewStock });
 
       // 1. Haupt-Update
       await articleService.updateArticle(id, { bestand: calculatedNewStock });
