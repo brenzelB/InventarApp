@@ -16,6 +16,10 @@ export function InventoryValueWidget() {
     }, 0);
   }, [articles]);
 
+  if (articles && articles.length > 0) {
+    console.log("DASHBOARD_DATA_SAMPLE:", articles[0]);
+  }
+
   if (loading) {
     return (
       <div className="h-full w-full bg-white dark:bg-slate-800 rounded-xl p-6 shadow flex flex-col justify-center animate-pulse">

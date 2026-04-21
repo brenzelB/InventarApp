@@ -62,11 +62,12 @@ export const articleService = {
 
   async getArticles() {
     if (isMockMode) {
+      console.log("[ArticleService] Running in MOCK MODE - using local storage.");
       return getMockArticles();
     }
     const { data, error } = await supabase
       .from("articles")
-      .select("*, group:groups(name)")
+      .select("id, name, sku, description, herstellpreis, verkaufspreis, purchase_price, bestand, mindestbestand, unit, lagerort, qr_code, group_id, group:groups(name)")
       .order("created_at", { ascending: false });
     if (error) throw error;
     return data as Article[];
