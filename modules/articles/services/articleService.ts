@@ -67,10 +67,10 @@ export const articleService = {
     }
     const { data, error } = await supabase
       .from("articles")
-      .select("id, name, sku, description, herstellpreis, verkaufspreis, purchase_price, bestand, mindestbestand, unit, lagerort, qr_code, group_id, group:groups(name)")
+      .select("id, name, sku, description, herstellpreis, verkaufspreis, purchase_price, bestand, mindestbestand, unit, lagerort, qr_code, group_id, created_at, updated_at, group:groups(name)")
       .order("created_at", { ascending: false });
     if (error) throw error;
-    return data as Article[];
+    return (data as any) as Article[];
   },
 
   async getArticleById(id: string) {

@@ -15,8 +15,8 @@ export interface Article {
   purchase_price: number;
   bestand: number;
   mindestbestand: number;
-  created_at: string;
-  updated_at: string;
+  created_at?: string;
+  updated_at?: string;
   qr_code: string | null;
   group_id?: string | null;
   group?: { name: string } | null;
