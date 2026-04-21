@@ -12,6 +12,7 @@ export interface Article {
   description: string | null;
   herstellpreis: number;
   verkaufspreis: number;
+  purchase_price: number;
   bestand: number;
   mindestbestand: number;
   created_at: string;
@@ -29,6 +30,7 @@ export interface ArticleFormData {
   description: string;
   herstellpreis: number;
   verkaufspreis: number;
+  purchase_price: number;
   bestand: number;
   mindestbestand: number;
   group_id?: string | null;

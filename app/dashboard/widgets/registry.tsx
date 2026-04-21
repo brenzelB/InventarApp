@@ -2,7 +2,9 @@ import { Package, AlertOctagon, Activity, TrendingUp, Users } from "lucide-react
 import { StockStatusWidget } from "./StockStatusWidget";
 import { CriticalStockWidget } from "./CriticalStockWidget";
 import { ActivityLogWidget } from "./ActivityLogWidget";
-import { PlaceholderWidget } from "./PlaceholderWidget";
+import { InventoryValueWidget } from "./InventoryValueWidget";
+import { QuickBookWidget } from "./QuickBookWidget";
+import { WeeklyTrendWidget } from "./WeeklyTrendWidget";
 
 export interface WidgetMeta {
   id: string;
@@ -39,19 +41,27 @@ export const WIDGET_REGISTRY: WidgetMeta[] = [
     defaultH: 3,
   },
   {
-    id: "financial-overview",
-    title: "Finanz-Übersicht",
-    description: "Platzhalter: Zusammenfassung von Kapitalbindung und Lagerwert.",
+    id: "inventory-value",
+    title: "Inventar-Wert",
+    description: "Zeigt den gesamten gebundenen Kapitalwert (Bestand × Einkaufspreis).",
     icon: TrendingUp,
-    defaultW: 6,
+    defaultW: 4,
+    defaultH: 2,
+  },
+  {
+    id: "quick-book",
+    title: "Express-Buchung",
+    description: "Ermöglicht das schnelle Ein- und Auslagern direkt aus dem Dashboard.",
+    icon: Package,
+    defaultW: 4,
     defaultH: 3,
   },
   {
-    id: "team-activity",
-    title: "Team Leistung",
-    description: "Platzhalter: Zeigt an, welches Teammitglied am meisten einbucht.",
-    icon: Users,
-    defaultW: 4,
+    id: "weekly-trend",
+    title: "Wochen-Trend",
+    description: "Visualisiert die Bestandsbewegungen der letzten 7 Tage.",
+    icon: Activity,
+    defaultW: 8,
     defaultH: 3,
   }
 ];
@@ -60,6 +70,7 @@ export const WIDGET_COMPONENTS: Record<string, React.ReactNode> = {
   "stock-status": <StockStatusWidget />,
   "critical-stock": <CriticalStockWidget />,
   "activity-log": <ActivityLogWidget />,
-  "financial-overview": <PlaceholderWidget title="Finanz-Übersicht" />,
-  "team-activity": <PlaceholderWidget title="Team Leistung" />
+  "inventory-value": <InventoryValueWidget />,
+  "quick-book": <QuickBookWidget />,
+  "weekly-trend": <WeeklyTrendWidget />,
 };

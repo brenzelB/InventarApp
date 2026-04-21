@@ -227,6 +227,7 @@ export default function ArticleDetailPage({ params }: { params: { id: string } }
                   description: article.description || '',
                   herstellpreis: article.herstellpreis,
                   verkaufspreis: article.verkaufspreis,
+                  purchase_price: article.purchase_price || 0,
                   bestand: article.bestand,
                   mindestbestand: article.mindestbestand,
                   group_id: article.group_id || null,
@@ -252,6 +253,10 @@ export default function ArticleDetailPage({ params }: { params: { id: string } }
               <div className="flex justify-between items-center text-sm">
                 <span className="text-slate-500">Herstellpreis</span>
                 <span className="font-bold text-slate-900 dark:text-slate-200">{Number(article.herstellpreis).toFixed(2)} €</span>
+              </div>
+              <div className="flex justify-between items-center text-sm">
+                <span className="text-slate-500">Einkaufspreis</span>
+                <span className="font-bold text-slate-900 dark:text-slate-200">{Number(article.purchase_price || 0).toFixed(2)} €</span>
               </div>
               <div className="flex justify-between items-center text-sm">
                 <span className="text-slate-500">Verkaufspreis</span>

@@ -238,7 +238,32 @@ export const articleService = {
       .order("created_at", { ascending: false })
       .limit(limit);
     if (error) throw error;
-    return data;
+  },
+
+  async getHistoryTrend(days: number = 7): Promise<{ created_at: string; amount: number; type: HistoryType }[]> {
+    if (isMockMode) {
+      // Basic mock implementation for trend
+      const allHistory = await this.getRecentHistory(100);
+      const limitDate = new Date();
+      limitDate.setDate(limitDate.getDate() - days);
+      return allHistory.filter(h => new Date(h.created_at) >= limitDate).map(h => ({
+        created_at: h.created_at,
+        amount: (h as any).amount || 1, // Fallback if mock amount is missing
+        type: h.type
+      }));
+    }
+
+    const limitDate = new Date();
+    limitDate.setDate(limitDate.getDate() - days);
+
+    const { data, error } = await supabase
+      .from("article_history")
+      .select("created_at, amount, type")
+      .gte("created_at", limitDate.toISOString())
+      .order("created_at", { ascending: true });
+
+    if (error) throw error;
+    return data as any[];
   },
 
   async addHistoryEntry(articleId: string, old_stock: number, new_stock: number, type: HistoryType, amount: number) {
