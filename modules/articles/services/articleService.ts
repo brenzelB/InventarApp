@@ -148,10 +148,9 @@ export const articleService = {
       return articles[index];
     }
 
-    // Daten-Sanierung für Supabase (Ganzzahlen sicherstellen)
+    // Daten-Sanierung für Supabase
     const updateData = { ...article };
-    if (updateData.bestand !== undefined) updateData.bestand = Math.floor(updateData.bestand);
-    if (updateData.mindestbestand !== undefined) updateData.mindestbestand = Math.floor(updateData.mindestbestand);
+    // Math.floor ENTFERNT für Kommazahlen-Unterstützung
 
     const { data, error } = await supabase
       .from("articles")
@@ -244,9 +243,9 @@ export const articleService = {
       throw new Error("Ungültiger Bestandswert für die Historie.");
     }
 
-    // Finaler Radical Fix für Not-Null Constraint
-    const safeOldStock = Number.isFinite(old_stock) ? Math.floor(old_stock) : 0;
-    const safeNewStock = Number.isFinite(new_stock) ? Math.floor(new_stock) : safeOldStock;
+    // Präzision beibehalten für Kommazahlen
+    const safeOldStock = Number.isFinite(old_stock) ? old_stock : 0;
+    const safeNewStock = Number.isFinite(new_stock) ? new_stock : safeOldStock;
 
     const { data, error } = await supabase
       .from("article_history")

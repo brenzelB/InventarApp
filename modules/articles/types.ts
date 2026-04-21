@@ -20,6 +20,7 @@ export interface Article {
   group_id?: string | null;
   group?: { name: string } | null;
   lagerort?: string | null;
+  unit: string;
 }
 
 export interface ArticleFormData {
@@ -32,6 +33,7 @@ export interface ArticleFormData {
   mindestbestand: number;
   group_id?: string | null;
   lagerort?: string;
+  unit: string;
 }
 
 export type HistoryType = 'input' | 'output';

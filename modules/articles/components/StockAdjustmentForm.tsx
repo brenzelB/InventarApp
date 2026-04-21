@@ -85,7 +85,8 @@ export function StockAdjustmentForm({ onAdjust, loading }: StockAdjustmentFormPr
           <label className="block text-xs font-medium text-slate-500 mb-1.5 uppercase tracking-wider">Menge</label>
           <input
             type="number"
-            min="1"
+            step="0.01"
+            min="0.01"
             value={amount}
             onChange={(e) => { setAmount(Number(e.target.value)); setShowSuccess(false); }}
             className="block w-full rounded-lg border-0 py-2.5 px-3 text-slate-900 dark:text-white dark:bg-slate-800 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-700 focus:ring-2 focus:ring-indigo-600 sm:text-sm"

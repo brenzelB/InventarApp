@@ -26,6 +26,7 @@ const defaultData: ArticleFormData = {
   mindestbestand: 0,
   group_id: null,
   lagerort: '',
+  unit: 'Stück',
 };
 
 export function ArticleForm({ initialData, articleId, qrCode, onUpdate }: ArticleFormProps) {
@@ -147,9 +148,29 @@ export function ArticleForm({ initialData, articleId, qrCode, onUpdate }: Articl
         </div>
       </div>
 
-      <div>
-        <label className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-200">Lagerort (z.B. Regal A, Fach 3)</label>
-        <input type="text" name="lagerort" value={formData.lagerort || ''} onChange={handleChange} className="mt-2 block w-full rounded-md border-0 py-1.5 px-3 text-slate-900 dark:text-white dark:bg-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:opacity-50" placeholder="z.B. Regal A, Fach 3" disabled={loading || isReadOnly}/>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-200">Lagerort (z.B. Regal A, Fach 3)</label>
+          <input type="text" name="lagerort" value={formData.lagerort || ''} onChange={handleChange} className="mt-2 block w-full rounded-md border-0 py-1.5 px-3 text-slate-900 dark:text-white dark:bg-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:opacity-50" placeholder="z.B. Regal A, Fach 3" disabled={loading || isReadOnly}/>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-200">Einheit *</label>
+          <select 
+            required
+            name="unit" 
+            value={formData.unit || 'Stück'} 
+            onChange={handleChange}
+            className="mt-2 block w-full rounded-md border-0 py-1.5 px-3 text-slate-900 dark:text-white dark:bg-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:opacity-50"
+            disabled={loading || isReadOnly}
+          >
+            <option value="Stück">Stück</option>
+            <option value="kg">kg</option>
+            <option value="g">g</option>
+            <option value="l">l</option>
+            <option value="ml">ml</option>
+          </select>
+        </div>
       </div>
 
       <div>
@@ -172,12 +193,12 @@ export function ArticleForm({ initialData, articleId, qrCode, onUpdate }: Articl
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-200">Bestand *</label>
-          <input required type="number" name="bestand" value={formData.bestand} onChange={handleChange} className="mt-2 block w-full rounded-md border-0 py-1.5 px-3 text-slate-900 dark:text-white dark:bg-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:opacity-50" disabled={loading || isReadOnly}/>
+          <input required type="number" step="0.01" name="bestand" value={formData.bestand} onChange={handleChange} className="mt-2 block w-full rounded-md border-0 py-1.5 px-3 text-slate-900 dark:text-white dark:bg-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:opacity-50" disabled={loading || isReadOnly}/>
         </div>
 
         <div>
           <label className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-200">Mindestbestand *</label>
-          <input required type="number" name="mindestbestand" value={formData.mindestbestand} onChange={handleChange} className="mt-2 block w-full rounded-md border-0 py-1.5 px-3 text-slate-900 dark:text-white dark:bg-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:opacity-50" disabled={loading || isReadOnly}/>
+          <input required type="number" step="0.01" name="mindestbestand" value={formData.mindestbestand} onChange={handleChange} className="mt-2 block w-full rounded-md border-0 py-1.5 px-3 text-slate-900 dark:text-white dark:bg-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:opacity-50" disabled={loading || isReadOnly}/>
         </div>
       </div>
 

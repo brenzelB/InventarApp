@@ -133,7 +133,7 @@ export default function ArticleDetailPage({ params }: { params: { id: string } }
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div className="bg-white dark:bg-slate-800 p-6 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm">
                   <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Aktueller Bestand</p>
-                  <p className={`text-3xl font-black ${isLowStock ? 'text-red-500' : 'text-slate-900 dark:text-white'}`}>{article.bestand}</p>
+                  <p className={`text-3xl font-black ${isLowStock ? 'text-red-500' : 'text-slate-900 dark:text-white'}`}>{article.bestand} {article.unit || 'Stück'}</p>
                 </div>
                 <div className="bg-white dark:bg-slate-800 p-6 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm">
                   <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Verkaufspreis</p>
@@ -230,7 +230,8 @@ export default function ArticleDetailPage({ params }: { params: { id: string } }
                   bestand: article.bestand,
                   mindestbestand: article.mindestbestand,
                   group_id: article.group_id || null,
-                  lagerort: article.lagerort || ""
+                  lagerort: article.lagerort || "",
+                  unit: article.unit || 'Stück'
                 }} 
                 qrCode={article.qr_code} 
                 onUpdate={updateArticle}
