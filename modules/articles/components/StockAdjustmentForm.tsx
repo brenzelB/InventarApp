@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { PackageOpen, Plus, Minus, RotateCcw, Loader2, Check } from 'lucide-react';
 import { useEffect } from 'react';
+import { useToast } from '@/hooks/useToast';
 
 interface StockAdjustmentFormProps {
   onAdjust: (amount: number, type: 'input' | 'output') => Promise<void>;
@@ -14,6 +15,7 @@ export function StockAdjustmentForm({ onAdjust, loading }: StockAdjustmentFormPr
   const [type, setType] = useState<'input' | 'output'>('input');
   const [showSuccess, setShowSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { success: toastSuccess, error: toastError } = useToast();
 
   // Clear messages after delay
   useEffect(() => {
@@ -40,8 +42,10 @@ export function StockAdjustmentForm({ onAdjust, loading }: StockAdjustmentFormPr
       setError(null);
       await onAdjust(finalAmount, type);
       setShowSuccess(true);
+      toastSuccess(`Lagerbuchung (${type === 'input' ? '+' : '-'}${amount}) erfolgreich ausgeführt.`);
     } catch (err: any) {
       setError(err.message || "Buchung fehlgeschlagen");
+      toastError(err.message || "Buchung fehlgeschlagen");
       console.error(err);
     }
   };

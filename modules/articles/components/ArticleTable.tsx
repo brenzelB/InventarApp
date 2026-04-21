@@ -5,8 +5,10 @@ import { Article } from '../types';
 import { articleService } from '../services/articleService';
 import { useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
+import { useToast } from '@/hooks/useToast';
+import { useRouter } from 'next/navigation';
 import { QRCodeView } from "@/components/QRCodeView";
-import { Pencil, Trash2 } from 'lucide-react';
+import { Pencil, Trash2, Plus, Minus, Loader2 } from 'lucide-react';
 
 interface ArticleTableProps {
   articles: Article[];
@@ -15,18 +17,41 @@ interface ArticleTableProps {
 
 export function ArticleTable({ articles, onDelete }: ArticleTableProps) {
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [updatingId, setUpdatingId] = useState<string | null>(null);
   const { role } = useAuth();
+  const { success: toastSuccess, error: toastError } = useToast();
+  const router = useRouter();
 
   const handleDelete = async (id: string) => {
     if (!confirm('Artikel wirklich löschen?')) return;
     setDeletingId(id);
     try {
       await articleService.deleteArticle(id);
+      toastSuccess("Artikel wurde erfolgreich gelöscht.");
       onDelete();
     } catch (err: any) {
-      alert(err.message || 'Fehler beim Löschen des Artikels.');
+      toastError(err.message || 'Fehler beim Löschen.');
     } finally {
       setDeletingId(null);
+    }
+  };
+
+  const handleQuickAdjust = async (article: Article, delta: number) => {
+    if (role === 'viewer') return;
+    if (updatingId) return;
+
+    const newBestand = Math.max(0, article.bestand + delta);
+    if (newBestand === article.bestand) return;
+
+    setUpdatingId(article.id);
+    try {
+      await articleService.updateArticle(article.id, { bestand: newBestand });
+      toastSuccess(`${article.name}: Bestand auf ${newBestand} ${article.unit} aktualisiert.`);
+      onDelete(); // Refresh list
+    } catch (err: any) {
+      toastError("Fehler beim Aktualisieren: " + err.message);
+    } finally {
+      setUpdatingId(null);
     }
   };
 
@@ -58,8 +83,15 @@ export function ArticleTable({ articles, onDelete }: ArticleTableProps) {
           </tr>
         </thead>
         <tbody className="divide-y divide-slate-200 dark:divide-slate-700 bg-white dark:bg-slate-800">
-          {articles.map((article) => (
-            <tr key={article.id} className="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+          {articles.map((article, index) => (
+            <tr 
+              key={article.id} 
+              className={`
+                hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-all groups
+                animate-in fade-in slide-in-from-left-4 duration-500
+              `}
+              style={{ animationDelay: `${index * 50}ms` }}
+            >
               <td className="whitespace-nowrap py-4 pl-4 pr-3 sm:pl-6 w-16">
                 <QRCodeView svgString={article.qr_code} name={article.name} articleId={article.id} size="sm" />
               </td>
@@ -79,9 +111,39 @@ export function ArticleTable({ articles, onDelete }: ArticleTableProps) {
               <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-500 dark:text-slate-400 font-mono">{article.sku}</td>
               <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-500 dark:text-slate-400">{article.lagerort || "—"}</td>
               <td className="whitespace-nowrap px-3 py-4 text-sm text-right">
-                <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset ${article.bestand <= article.mindestbestand ? 'bg-red-50 text-red-700 ring-red-600/10 dark:bg-red-900/30 dark:text-red-400 dark:ring-red-400/20' : 'bg-green-50 text-green-700 ring-green-600/20 dark:bg-green-900/30 dark:text-green-400 dark:ring-green-400/20'}`}>
-                  {article.bestand} {article.unit || 'Stück'}
-                </span>
+                <div className="flex items-center justify-end gap-2 group/stock">
+                  {role !== 'viewer' && (
+                    <div className="flex items-center bg-slate-100 dark:bg-slate-900 rounded-lg p-0.5 opacity-0 group-hover/stock:opacity-100 transition-opacity">
+                      <button 
+                        onClick={() => handleQuickAdjust(article, -1)}
+                        className="p-1 hover:text-red-600 transition-colors"
+                        disabled={updatingId === article.id}
+                      >
+                        <Minus size={14} />
+                      </button>
+                      <button 
+                        onClick={() => handleQuickAdjust(article, 1)}
+                        className="p-1 hover:text-green-600 transition-colors"
+                        disabled={updatingId === article.id}
+                      >
+                        <Plus size={14} />
+                      </button>
+                    </div>
+                  )}
+
+                  <span className={`
+                    inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-black ring-1 ring-inset transition-all
+                    ${updatingId === article.id ? 'opacity-50 blur-[1px]' : ''}
+                    ${article.bestand <= article.mindestbestand 
+                      ? 'bg-red-50 text-red-700 ring-red-600/10 dark:bg-red-900/30 dark:text-red-400 dark:ring-red-400/20' 
+                      : 'bg-green-50 text-green-700 ring-green-600/20 dark:bg-green-900/30 dark:text-green-400 dark:ring-green-400/20'}
+                  `}>
+                    {updatingId === article.id ? (
+                      <Loader2 className="w-3 h-3 animate-spin mr-1" />
+                    ) : null}
+                    {article.bestand} {article.unit || 'Stück'}
+                  </span>
+                </div>
               </td>
               <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-500 dark:text-slate-400 text-right tabular-nums">
                 {Number(article.verkaufspreis).toFixed(2)} €

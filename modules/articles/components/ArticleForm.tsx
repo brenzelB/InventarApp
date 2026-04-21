@@ -6,8 +6,9 @@ import { useArticleMutations } from '../hooks/useArticleMutations';
 import { groupService } from '../services/groupService';
 import { useRouter } from 'next/navigation';
 import { QRCodeView } from "@/components/QRCodeView";
-import { AlertTriangle } from 'lucide-react';
+import { AlertTriangle, ChevronDown, Check } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
+import { useToast } from '@/hooks/useToast';
 
 interface ArticleFormProps {
   initialData?: ArticleFormData;
@@ -34,7 +35,9 @@ export function ArticleForm({ initialData, articleId, qrCode, onUpdate }: Articl
   const [groups, setGroups] = useState<Group[]>([]);
   const { create, update, loading, error } = useArticleMutations();
   const [success, setSuccess] = useState(false);
+  const [isUnitOpen, setIsUnitOpen] = useState(false);
   const { role } = useAuth();
+  const { success: toastSuccess, error: toastError } = useToast();
   const router = useRouter();
   
   const isReadOnly = role === 'viewer';
@@ -57,7 +60,7 @@ export function ArticleForm({ initialData, articleId, qrCode, onUpdate }: Articl
     console.log("[Form] Form submission started for article:", articleId || "New");
 
     if (formData.herstellpreis < 0 || formData.verkaufspreis < 0) {
-      alert("Preise dürfen nicht negativ sein.");
+      toastError("Preise dürfen nicht negativ sein.");
       return;
     }
 
@@ -76,7 +79,7 @@ export function ArticleForm({ initialData, articleId, qrCode, onUpdate }: Articl
         
         if (res) {
           setSuccess(true);
-          console.log("[Form] Success! Redirecting in 1.5s...");
+          toastSuccess("Artikel erfolgreich aktualisiert.");
           setTimeout(() => router.push('/dashboard/articles'), 1500);
         }
       } else {
@@ -148,28 +151,53 @@ export function ArticleForm({ initialData, articleId, qrCode, onUpdate }: Articl
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-in fade-in slide-in-from-bottom-2 duration-700 delay-150">
         <div>
           <label className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-200">Lagerort (z.B. Regal A, Fach 3)</label>
-          <input type="text" name="lagerort" value={formData.lagerort || ''} onChange={handleChange} className="mt-2 block w-full rounded-md border-0 py-1.5 px-3 text-slate-900 dark:text-white dark:bg-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:opacity-50" placeholder="z.B. Regal A, Fach 3" disabled={loading || isReadOnly}/>
+          <input type="text" name="lagerort" value={formData.lagerort || ''} onChange={handleChange} className="mt-2 block w-full rounded-md border-0 py-2.5 px-3 text-slate-900 dark:text-white dark:bg-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:opacity-50" placeholder="z.B. Regal A, Fach 3" disabled={loading || isReadOnly}/>
         </div>
 
-        <div>
+        <div className="relative">
           <label className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-200">Einheit *</label>
-          <select 
-            required
-            name="unit" 
-            value={formData.unit || 'Stück'} 
-            onChange={handleChange}
-            className="mt-2 block w-full rounded-md border-0 py-1.5 px-3 text-slate-900 dark:text-white dark:bg-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:opacity-50"
-            disabled={loading || isReadOnly}
-          >
-            <option value="Stück">Stück</option>
-            <option value="kg">kg</option>
-            <option value="g">g</option>
-            <option value="l">l</option>
-            <option value="ml">ml</option>
-          </select>
+          <div className="mt-2 relative">
+            <button
+              type="button"
+              onClick={() => !isReadOnly && setIsUnitOpen(!isUnitOpen)}
+              disabled={loading || isReadOnly}
+              className="relative w-full bg-slate-50 dark:bg-slate-900 border-0 rounded-md py-2.5 pl-3 pr-10 text-left text-slate-900 dark:text-white shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:opacity-50 transition-all hover:bg-slate-100 dark:hover:bg-slate-800"
+            >
+              <span className="block truncate font-bold">{formData.unit}</span>
+              <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                <ChevronDown className="h-5 w-5 text-slate-400" aria-hidden="true" />
+              </span>
+            </button>
+
+            {isUnitOpen && (
+              <div className="absolute z-[100] mt-1 max-h-60 w-full overflow-auto rounded-xl bg-white dark:bg-slate-800 py-1 text-base shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm animate-in fade-in zoom-in-95 duration-200">
+                {['Stück', 'kg', 'g', 'l', 'ml'].map((u) => (
+                  <button
+                    key={u}
+                    type="button"
+                    className={`
+                      relative w-full cursor-default select-none py-2.5 pl-3 pr-9 text-left transition-colors
+                      ${formData.unit === u ? 'bg-indigo-50 dark:bg-indigo-900/40 text-indigo-600' : 'text-slate-900 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50'}
+                    `}
+                    onClick={() => {
+                      setFormData(prev => ({ ...prev, unit: u }));
+                      setIsUnitOpen(false);
+                    }}
+                  >
+                    <span className={`block truncate ${formData.unit === u ? 'font-black' : 'font-medium'}`}>{u}</span>
+                    {formData.unit === u && (
+                      <span className="absolute inset-y-0 right-0 flex items-center pr-4 text-indigo-600">
+                        <Check className="h-4 w-4" />
+                      </span>
+                    )}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
@@ -190,15 +218,29 @@ export function ArticleForm({ initialData, articleId, qrCode, onUpdate }: Articl
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-in fade-in slide-in-from-bottom-2 duration-700 delay-300">
+        <div className="relative">
           <label className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-200">Bestand *</label>
-          <input required type="number" step="0.01" name="bestand" value={formData.bestand} onChange={handleChange} className="mt-2 block w-full rounded-md border-0 py-1.5 px-3 text-slate-900 dark:text-white dark:bg-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:opacity-50" disabled={loading || isReadOnly}/>
+          <div className="relative mt-2">
+            <input 
+              required 
+              type="number" 
+              step="0.01" 
+              name="bestand" 
+              value={formData.bestand} 
+              onChange={handleChange} 
+              className="block w-full rounded-md border-0 py-2.5 pl-3 pr-16 text-slate-900 dark:text-white dark:bg-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:opacity-50" 
+              disabled={loading || isReadOnly}
+            />
+            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+              <span className="text-slate-400 sm:text-sm font-black uppercase">{formData.unit}</span>
+            </div>
+          </div>
         </div>
 
         <div>
           <label className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-200">Mindestbestand *</label>
-          <input required type="number" step="0.01" name="mindestbestand" value={formData.mindestbestand} onChange={handleChange} className="mt-2 block w-full rounded-md border-0 py-1.5 px-3 text-slate-900 dark:text-white dark:bg-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:opacity-50" disabled={loading || isReadOnly}/>
+          <input required type="number" step="0.01" name="mindestbestand" value={formData.mindestbestand} onChange={handleChange} className="mt-2 block w-full rounded-md border-0 py-2.5 px-3 text-slate-900 dark:text-white dark:bg-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:opacity-50" disabled={loading || isReadOnly}/>
         </div>
       </div>
 

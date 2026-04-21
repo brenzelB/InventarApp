@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from 'react';
-import { MessageSquare, Send, User } from 'lucide-react';
+import { MessageSquare, Send, User, Calendar, Trash2 } from 'lucide-react';
+import { useToast } from '@/hooks/useToast';
 import { ArticleComment } from '../types';
 
 interface ArticleCommentsProps {
@@ -12,6 +13,7 @@ interface ArticleCommentsProps {
 export function ArticleComments({ comments, onAddComment }: ArticleCommentsProps) {
   const [newComment, setNewComment] = useState('');
   const [loading, setLoading] = useState(false);
+  const { success: toastSuccess, error: toastError } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,8 +23,9 @@ export function ArticleComments({ comments, onAddComment }: ArticleCommentsProps
     try {
       await onAddComment(newComment.trim());
       setNewComment('');
-    } catch (err) {
-      alert("Fehler beim Speichern des Kommentars.");
+      toastSuccess("Kommentar wurde hinzugefügt.");
+    } catch (err: any) {
+      toastError(err.message || "Fehler beim Senden.");
     } finally {
       setLoading(false);
     }

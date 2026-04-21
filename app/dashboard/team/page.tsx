@@ -5,6 +5,7 @@ import { useAuth, UserRole } from "@/hooks/useAuth";
 import { supabase } from "@/lib/supabaseClient";
 import { inviteTeamMember, deleteTeamMember } from "./actions";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/hooks/useToast";
 import { 
   Users, 
   User,
@@ -41,6 +42,7 @@ interface Invitation {
 export default function TeamPage() {
   const router = useRouter();
   const { user, role, loading: authLoading } = useAuth();
+  const { success: toastSuccess, error: toastError } = useToast();
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [invitations, setInvitations] = useState<Invitation[]>([]);
   const [loading, setLoading] = useState(true);
@@ -114,13 +116,13 @@ export default function TeamPage() {
         throw new Error(result.error);
       }
 
-      setMessage({ text: 'Einladung wurde vorbereitet. Falls keine E-Mail ankommt, wurde das Stunden-Limit von Supabase erreicht.', type: 'success' });
+      toastSuccess('Einladung wurde vorbereitet.');
       setInviteEmail("");
       setInviteName("");
       fetchTeamData();
     } catch (err: any) {
       console.error("[Team] Invitation failed:", err);
-      setMessage({ text: "Einladung fehlgeschlagen: " + (err.message || "Server-Fehler"), type: 'error' });
+      toastError("Einladung fehlgeschlagen: " + (err.message || "Server-Fehler"));
     } finally {
       setIsInviting(false);
     }
@@ -128,7 +130,7 @@ export default function TeamPage() {
 
   const handleDeleteMember = async (id: string, email: string) => {
     if (id === user?.id) {
-       alert("Du kannst dich nicht selbst löschen.");
+       toastError("Du kannst dich nicht selbst löschen.");
        return;
     }
     if (!confirm(`Mitglied ${email} wirklich entfernen?`)) return;
@@ -137,12 +139,12 @@ export default function TeamPage() {
       const result = await deleteTeamMember(id);
       if (!result.success) throw new Error(result.error);
       
-      setMessage({ text: "Mitglied erfolgreich entfernt.", type: 'success' });
+      toastSuccess("Mitglied erfolgreich entfernt.");
       router.refresh();
       fetchTeamData();
     } catch (err: any) {
       console.error("[Team] Member deletion failed:", err);
-      setMessage({ text: "Löschen fehlgeschlagen: " + err.message, type: 'error' });
+      toastError("Löschen fehlgeschlagen: " + err.message);
     }
   };
 
