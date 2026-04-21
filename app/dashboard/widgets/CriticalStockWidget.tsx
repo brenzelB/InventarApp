@@ -1,19 +1,55 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useEffect, useState } from "react";
 import { useArticles } from "@/modules/articles/hooks/useArticles";
 import { AlertOctagon } from "lucide-react";
 import Link from "next/link";
+import { getSettings } from "@/app/dashboard/settings/actions";
 
 export function CriticalStockWidget() {
-  const { articles, loading } = useArticles();
+  const { articles, loading: articlesLoading, refetch } = useArticles();
+  const [threshold, setThreshold] = useState<number>(0);
+  const [settingsLoading, setSettingsLoading] = useState(true);
+
+  // Force a fresh fetch when the dashboard mounts and load the global threshold
+  useEffect(() => {
+    async function loadData() {
+      refetch(); // Trigger SWR / client fetch
+      const res = await getSettings();
+      if (res.success && res.settings?.warning_threshold) {
+        setThreshold(Number(res.settings.warning_threshold) || 0);
+      }
+      setSettingsLoading(false);
+    }
+    loadData();
+  }, [refetch]);
 
   const criticalItems = useMemo(() => {
-    return articles
-      .filter(a => a.bestand < a.mindestbestand)
-      .sort((a, b) => (a.bestand - a.mindestbestand) - (b.bestand - b.mindestbestand))
+    if (!articles) return [];
+
+    const computedItems = articles.filter(a => {
+      const quantity = Number(a.bestand) || 0;
+      const minStock = Number(a.mindestbestand) || 0;
+      
+      // Calculate effective minimum: minimum_stock * (1 + threshold/100)
+      const effectiveLimit = minStock * (1 + (threshold / 100));
+      return quantity <= effectiveLimit;
+    });
+
+    console.log("LOW_STOCK_DATA:", computedItems);
+
+    return computedItems
+      .sort((a, b) => {
+        const qA = Number(a.bestand) || 0;
+        const mA = Number(a.mindestbestand) || 0;
+        const qB = Number(b.bestand) || 0;
+        const mB = Number(b.mindestbestand) || 0;
+        return (qA - mA) - (qB - mB);
+      })
       .slice(0, 5);
-  }, [articles]);
+  }, [articles, threshold]);
+
+  const loading = articlesLoading || settingsLoading;
 
   if (loading) {
     return (
