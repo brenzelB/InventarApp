@@ -176,7 +176,7 @@ export function ArticleForm({ initialData, articleId, qrCode, onUpdate }: Articl
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 animate-in fade-in slide-in-from-bottom-2 duration-700 delay-300">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-end animate-in fade-in slide-in-from-bottom-2 duration-700 delay-300">
         <div className="relative">
           <label className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-200">Bestand *</label>
           <div className="relative mt-2">
@@ -196,9 +196,9 @@ export function ArticleForm({ initialData, articleId, qrCode, onUpdate }: Articl
           </div>
         </div>
 
-        <div className="space-y-2">
+        <div className="space-y-4">
           <label className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-200">Einheit *</label>
-          <div className="grid grid-cols-5 gap-1 pt-0.5">
+          <div className="grid grid-cols-5 gap-1">
             {ALL_UNITS.map((u) => (
               <button
                 key={u}
@@ -207,10 +207,10 @@ export function ArticleForm({ initialData, articleId, qrCode, onUpdate }: Articl
                 onClick={() => setFormData(prev => ({ ...prev, unit: u }))}
                 title={u}
                 className={`
-                  h-10 flex items-center justify-center rounded-md text-[10px] font-black uppercase transition-all active:scale-95 border ring-1 ring-inset
+                  h-[44px] flex items-center justify-center rounded-md text-[10px] font-black uppercase transition-all active:scale-95 ring-1 ring-inset
                   ${formData.unit === u 
-                    ? 'bg-indigo-600 border-indigo-600 text-white ring-indigo-500 shadow-sm' 
-                    : 'bg-slate-50 dark:bg-slate-900 border-slate-300 dark:border-slate-600 text-slate-500 dark:text-slate-400 ring-transparent hover:border-slate-400 dark:hover:border-slate-500'}
+                    ? 'bg-indigo-600 ring-indigo-600 text-white shadow-md' 
+                    : 'bg-slate-50 dark:bg-slate-910/50 dark:bg-slate-900 ring-slate-300 dark:ring-slate-600 text-slate-500 dark:text-slate-400 hover:ring-slate-400 dark:hover:ring-slate-500'}
                   disabled:opacity-50 disabled:cursor-not-allowed
                 `}
               >
