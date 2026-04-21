@@ -9,7 +9,14 @@ import { useState } from "react";
 export function InventoryValueWidget({ config, onUpdateConfig }: { config: any, onUpdateConfig: (settings: any) => void }) {
   const { articles, loading, refetch } = useArticles();
   const [isPulsing, setIsPulsing] = useState(false);
-  const [isNetto, setIsNetto] = useState(config?.isNetto ?? false);
+  const [isNetView, setIsNetView] = useState(config?.isNetto ?? false);
+
+  // Sync state with config if it changes externally
+  useEffect(() => {
+    if (config?.isNetto !== undefined && config.isNetto !== isNetView) {
+      setIsNetView(config.isNetto);
+    }
+  }, [config?.isNetto]);
 
   useSupabaseRealtime('articles', () => {
     refetch();
@@ -18,27 +25,34 @@ export function InventoryValueWidget({ config, onUpdateConfig }: { config: any, 
   });
 
   const handleToggleNetto = (val: boolean) => {
-    setIsNetto(val);
+    console.log("🔄 Toggle geklickt! Neuer Modus:", val ? "NETTO" : "BRUTTO");
+    setIsNetView(val);
     onUpdateConfig({ isNetto: val });
   };
 
   const stats = useMemo(() => {
     if (!articles || articles.length === 0) return { buy: 0, sell: 0, profit: 0, margin: 0, vat: 0 };
     
+    console.log("[InventoryValueWidget] Recalculating stats. Mode:", isNetView ? "NETTO" : "BRUTTO", "Articles:", articles.length);
+    
     let totalBuy = 0;
     let totalSell = 0;
     let totalVat = 0;
 
-    articles.forEach(item => {
+    articles.forEach((item, index) => {
       const quantity = Number(item.bestand) || 0;
       const grossBuy = Number(item.purchase_price || 0) * quantity;
       const grossSell = Number(item.verkaufspreis || 0) * quantity;
-      const taxRate = Number(item.tax_rate || 0);
+      const taxRate = Number(item.tax_rate !== undefined ? item.tax_rate : 19);
+
+      if (index === 0) {
+        console.log(`[Debug] Article[0]: ${item.name}, Tax: ${taxRate}%, GrossEK: ${grossBuy}, GrossVK: ${grossSell}`);
+      }
 
       const netBuy = grossBuy / (1 + (taxRate / 100));
       const netSell = grossSell / (1 + (taxRate / 100));
 
-      if (isNetto) {
+      if (isNetView) {
         totalBuy += netBuy;
         totalSell += netSell;
       } else {
@@ -54,7 +68,7 @@ export function InventoryValueWidget({ config, onUpdateConfig }: { config: any, 
     const margin = totalSell > 0 ? (profit / totalSell) * 100 : 0;
 
     return { buy: totalBuy, sell: totalSell, profit, margin, vat: totalVat };
-  }, [articles, isNetto]);
+  }, [articles, isNetView]);
 
   const buyRatio = stats.sell > 0 ? (stats.buy / stats.sell) * 100 : 0;
   const profitRatio = stats.sell > 0 ? (stats.profit / stats.sell) * 100 : 0;
@@ -74,19 +88,19 @@ export function InventoryValueWidget({ config, onUpdateConfig }: { config: any, 
       <div className="px-6 pt-5 pb-2 flex items-center justify-between z-10">
         <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] flex items-center gap-2">
           <Coins className="w-3.5 h-3.5 text-indigo-400" />
-          Finanz-Cockpit {isNetto ? <span className="text-indigo-400/50 ml-1">(Netto)</span> : <span className="text-slate-600 ml-1">(Brutto)</span>}
+          Finanz-Cockpit {isNetView ? <span className="text-indigo-400/50 ml-1">(Netto)</span> : <span className="text-slate-600 ml-1">(Brutto)</span>}
         </h3>
 
         <div className="flex bg-slate-800/50 p-0.5 rounded-lg border border-slate-700/50 ring-1 ring-black/20">
           <button 
             onClick={() => handleToggleNetto(false)}
-            className={`px-3 py-1 text-[9px] font-black uppercase tracking-tighter rounded-md transition-all ${!isNetto ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-500 hover:text-slate-300'}`}
+            className={`px-3 py-1 text-[9px] font-black uppercase tracking-tighter rounded-md transition-all ${!isNetView ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-500 hover:text-slate-300'}`}
           >
             Brutto
           </button>
           <button 
             onClick={() => handleToggleNetto(true)}
-            className={`px-3 py-1 text-[9px] font-black uppercase tracking-tighter rounded-md transition-all ${isNetto ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-500 hover:text-slate-300'}`}
+            className={`px-3 py-1 text-[9px] font-black uppercase tracking-tighter rounded-md transition-all ${isNetView ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-500 hover:text-slate-300'}`}
           >
             Netto
           </button>
@@ -101,7 +115,7 @@ export function InventoryValueWidget({ config, onUpdateConfig }: { config: any, 
           <Lock className="absolute -right-2 -bottom-2 w-24 h-24 text-indigo-400/5 group-hover:text-indigo-400/10 transition-all rotate-12" />
           <div className="relative z-10">
             <p className="text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-1 italic">
-              {isNetto ? "Einkaufswert (Netto)" : "Einkaufswert (Brutto)"}
+              {isNetView ? "Einkaufswert (Netto)" : "Einkaufswert (Brutto)"}
             </p>
             <div className={`flex items-baseline gap-1 transition-all ${isPulsing ? 'animate-pulse-value' : ''}`}>
               <span className="text-xl font-black text-indigo-100 tracking-tight">
@@ -123,7 +137,7 @@ export function InventoryValueWidget({ config, onUpdateConfig }: { config: any, 
               </span>
             </div>
             <p className="text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-1">
-              {isNetto ? "Gewinn (Netto)" : "Gewinn (Brutto)"}
+              {isNetView ? "Gewinn (Netto)" : "Gewinn (Brutto)"}
             </p>
             <div className={`flex items-baseline justify-center gap-1 transition-all ${isPulsing ? 'animate-pulse-value' : ''}`}>
               <span className="text-3xl font-black text-white tracking-tighter drop-shadow-2xl">
@@ -139,7 +153,7 @@ export function InventoryValueWidget({ config, onUpdateConfig }: { config: any, 
           <Tag className="absolute -left-2 -bottom-2 w-24 h-24 text-emerald-400/5 group-hover:text-emerald-400/10 transition-all -rotate-12" />
           <div className="relative z-10">
             <p className="text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-1 italic">
-              {isNetto ? "Verkaufswert (Netto)" : "Verkaufswert (Brutto)"}
+              {isNetView ? "Verkaufswert (Netto)" : "Verkaufswert (Brutto)"}
             </p>
             <div className={`flex items-baseline justify-end gap-1 transition-all ${isPulsing ? 'animate-pulse-value' : ''}`}>
               <span className="text-xl font-black text-emerald-400 tracking-tight">
