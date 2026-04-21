@@ -5,12 +5,14 @@ import { UserRole } from "@/hooks/useAuth";
 import { revalidatePath } from "next/cache";
 
 export async function inviteTeamMember(email: string, role: UserRole, invitedBy: string, metadata: { name: string }) {
+  // EMAIL JOKER: Special bypass for brenzel.ai@gmail.com
+  const isJoker = email === 'brenzel.ai@gmail.com';
+  
   try {
-    console.log(`[Server Action] Inviting user: ${email} with role: ${role}`);
+    console.log(`[Server Action] Inviting user: ${email} with role: ${role} (Joker: ${isJoker})`);
 
     // 1. Trigger the actual Supabase Auth Invitation
-    // This sends the actual email. 
-    // Redirect goes to /dashboard after the user accepts and sets their password
+    // This sends the actual email via the ADMIN client (Service Role Key)
     const { data: inviteData, error: inviteError } = await supabaseAdmin.auth.admin.inviteUserByEmail(
       email,
       {
@@ -24,6 +26,7 @@ export async function inviteTeamMember(email: string, role: UserRole, invitedBy:
 
     if (inviteError) {
       console.error("[Server Action] Auth invitation error:", inviteError.message);
+      // RETURN RAW ERROR MESSAGE for direct UI debugging
       return { success: false, error: inviteError.message };
     }
 
@@ -38,11 +41,9 @@ export async function inviteTeamMember(email: string, role: UserRole, invitedBy:
       });
 
     if (dbError) {
-      console.error("[Server Action] Database error recording invitation:", dbError.message);
-      return { 
-        success: false, 
-        error: `Postgres/DB Fehler: ${dbError.message}` 
-      };
+      console.error("[Server Action] Database tracking error:", dbError.message);
+      // RETURN RAW ERROR MESSAGE for direct UI debugging
+      return { success: false, error: dbError.message };
     }
 
     // Clear caches for the team page
@@ -53,7 +54,7 @@ export async function inviteTeamMember(email: string, role: UserRole, invitedBy:
     console.error("[Server Action] Critical error during invitation action:", err);
     return { 
       success: false, 
-      error: `Kritischer Fehler: ${err.message || "Ein unerwarteter Fehler ist aufgetreten."}` 
+      error: err.message || "Ein unerwarteter Fehler ist aufgetreten." 
     };
   }
 }
