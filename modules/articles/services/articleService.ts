@@ -220,6 +220,27 @@ export const articleService = {
     return data;
   },
 
+  async getRecentHistory(limit: number = 5): Promise<(ArticleHistoryEntry & { article?: { name: string } })[]> {
+    if (isMockMode) {
+      let allHistory: any[] = [];
+      const articles = getMockArticles();
+      articles.forEach(a => {
+        const h = JSON.parse(localStorage.getItem(`mock_history_${a.id}`) || "[]");
+        allHistory = [...allHistory, ...h.map((entry: any) => ({ ...entry, article: { name: a.name } }))];
+      });
+      allHistory.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+      return allHistory.slice(0, limit);
+    }
+    
+    const { data, error } = await supabase
+      .from("article_history")
+      .select("*, article:articles(name)")
+      .order("created_at", { ascending: false })
+      .limit(limit);
+    if (error) throw error;
+    return data;
+  },
+
   async addHistoryEntry(articleId: string, old_stock: number, new_stock: number, type: HistoryType, amount: number) {
     if (isMockMode) {
       const history = await this.getArticleHistory(articleId);
