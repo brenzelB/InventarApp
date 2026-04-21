@@ -18,23 +18,29 @@ export function WeeklyTrendWidget() {
       const grouped: Record<string, { input: number; output: number }> = {};
       
       if (days === 1) {
-        // Hourly grouping for today
-        for (let i = 23; i >= 0; i--) {
-          const d = new Date();
-          d.setHours(d.getHours() - i, 0, 0, 0);
+        // Fixed 24h scale (00:00 - 23:00)
+        const baseDate = new Date();
+        baseDate.setHours(0, 0, 0, 0);
+
+        for (let i = 0; i < 24; i++) {
+          const d = new Date(baseDate);
+          d.setHours(i);
           const timeStr = d.toLocaleTimeString("de-DE", { hour: '2-digit', minute: '2-digit' });
           grouped[timeStr] = { input: 0, output: 0 };
         }
 
         trend.forEach(entry => {
           const d = new Date(entry.created_at);
-          d.setMinutes(0, 0, 0); // Floor to hour
-          const timeStr = d.toLocaleTimeString("de-DE", { hour: '2-digit', minute: '2-digit' });
-          if (grouped[timeStr] !== undefined) {
-            if (entry.type === 'input') {
-              grouped[timeStr].input += Math.abs(entry.amount);
-            } else {
-              grouped[timeStr].output += Math.abs(entry.amount);
+          // Only show today's data in "1 Day" mode
+          if (d.toDateString() === baseDate.toDateString()) {
+            d.setMinutes(0, 0, 0);
+            const timeStr = d.toLocaleTimeString("de-DE", { hour: '2-digit', minute: '2-digit' });
+            if (grouped[timeStr] !== undefined) {
+              if (entry.type === 'input') {
+                grouped[timeStr].input += Math.abs(entry.amount);
+              } else {
+                grouped[timeStr].output += Math.abs(entry.amount);
+              }
             }
           }
         });
