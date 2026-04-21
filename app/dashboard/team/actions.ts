@@ -22,7 +22,7 @@ export async function inviteTeamMember(email: string, role: UserRole, invitedBy:
           display_name: metadata.name,
           role: role
         },
-        redirectTo: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/dashboard`
+        redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://inventar-app-pi.vercel.app'}/dashboard`
       }
     );
 
