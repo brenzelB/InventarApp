@@ -12,7 +12,8 @@ import {
   ChevronRight,
   X,
   Users,
-  User
+  User,
+  Settings
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -41,8 +42,9 @@ export default function Sidebar({ isOpen, setIsOpen, isCollapsed, setIsCollapsed
   const showTeam = role === 'admin' || user?.email === 'brenzel.ai@gmail.com';
 
   if (showTeam) {
-    console.log("[Sidebar] Zugriff gewährt (showTeam = true), füge Team hinzu");
+    console.log("[Sidebar] Zugriff gewährt (showTeam = true), füge Team & Einstellungen hinzu");
     navItems.push({ name: 'Team', href: '/dashboard/team', icon: Users });
+    navItems.push({ name: 'Einstellungen', href: '/dashboard/settings', icon: Settings });
   }
 
   return (
