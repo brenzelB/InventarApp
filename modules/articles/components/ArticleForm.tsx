@@ -27,14 +27,7 @@ const defaultData: ArticleFormData = {
   mindestbestand: 0,
   group_id: null,
   lagerort: '',
-  unit: 'Stück',
-};
-
-const UNIT_CATEGORIES = [
-  { label: 'Allgemein', units: ['Stück'] },
-  { label: 'Gewicht', units: ['kg', 'g'] },
-  { label: 'Flüssigkeit', units: ['l', 'ml'] }
-];
+const ALL_UNITS = ['Stück', 'kg', 'g', 'l', 'ml'];
 
 const getStep = (unit: string) => (unit === 'kg' || unit === 'l' ? '0.1' : '1');
 
@@ -158,42 +151,9 @@ export function ArticleForm({ initialData, articleId, qrCode, onUpdate }: Articl
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-in fade-in slide-in-from-bottom-2 duration-700 delay-150">
-        <div>
-          <label className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-200">Lagerort (z.B. Regal A, Fach 3)</label>
-          <input type="text" name="lagerort" value={formData.lagerort || ''} onChange={handleChange} className="mt-2 block w-full rounded-md border-0 py-2 px-3 text-slate-900 dark:text-white dark:bg-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:opacity-50" placeholder="z.B. Regal A, Fach 3" disabled={loading || isReadOnly}/>
-        </div>
-
-        <div className="space-y-4">
-          <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500 mb-1">Einheit wählen</label>
-          
-          <div className="space-y-2">
-            {UNIT_CATEGORIES.map((cat) => (
-              <div key={cat.label} className="flex items-center border-b border-slate-50 dark:border-slate-800/50 pb-2 last:border-0 last:pb-0">
-                <p className="w-16 text-[9px] font-black text-slate-400 uppercase tracking-widest flex-shrink-0">{cat.label}:</p>
-                <div className="flex flex-wrap gap-1.5">
-                  {cat.units.map((u) => (
-                    <button
-                      key={u}
-                      type="button"
-                      disabled={loading || isReadOnly}
-                      onClick={() => setFormData(prev => ({ ...prev, unit: u }))}
-                      className={`
-                        px-3 py-1 rounded-full text-[10px] font-black uppercase transition-all active:scale-90 border
-                        ${formData.unit === u 
-                          ? 'bg-indigo-600 border-indigo-600 text-white shadow-md' 
-                          : 'bg-transparent border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-500 hover:border-slate-300 dark:hover:border-slate-700'}
-                        disabled:opacity-50 disabled:cursor-not-allowed
-                      `}
-                    >
-                      {u}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+      <div className="animate-in fade-in slide-in-from-bottom-2 duration-700 delay-150">
+        <label className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-200">Lagerort (z.B. Regal A, Fach 3)</label>
+        <input type="text" name="lagerort" value={formData.lagerort || ''} onChange={handleChange} className="mt-2 block w-full rounded-md border-0 py-2.5 px-3 text-slate-900 dark:text-white dark:bg-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:opacity-50" placeholder="z.B. Regal A, Fach 3" disabled={loading || isReadOnly}/>
       </div>
 
       <div>
@@ -213,7 +173,7 @@ export function ArticleForm({ initialData, articleId, qrCode, onUpdate }: Articl
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-in fade-in slide-in-from-bottom-2 duration-700 delay-300">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 animate-in fade-in slide-in-from-bottom-2 duration-700 delay-300">
         <div className="relative">
           <label className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-200">Bestand *</label>
           <div className="relative mt-2">
@@ -236,6 +196,30 @@ export function ArticleForm({ initialData, articleId, qrCode, onUpdate }: Articl
         <div>
           <label className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-200">Mindestbestand *</label>
           <input required type="number" step={getStep(formData.unit)} name="mindestbestand" value={formData.mindestbestand} onChange={handleChange} className="mt-2 block w-full rounded-md border-0 py-2.5 px-3 text-slate-900 dark:text-white dark:bg-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:opacity-50" disabled={loading || isReadOnly}/>
+        </div>
+
+        <div className="space-y-2">
+          <label className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-200">Einheit *</label>
+          <div className="grid grid-cols-5 gap-1 pt-0.5">
+            {ALL_UNITS.map((u) => (
+              <button
+                key={u}
+                type="button"
+                disabled={loading || isReadOnly}
+                onClick={() => setFormData(prev => ({ ...prev, unit: u }))}
+                title={u}
+                className={`
+                  h-10 flex items-center justify-center rounded-md text-[10px] font-black uppercase transition-all active:scale-95 border ring-1 ring-inset
+                  ${formData.unit === u 
+                    ? 'bg-indigo-600 border-indigo-600 text-white ring-indigo-500 shadow-sm' 
+                    : 'bg-slate-50 dark:bg-slate-900 border-slate-300 dark:border-slate-600 text-slate-500 dark:text-slate-400 ring-transparent hover:border-slate-400 dark:hover:border-slate-500'}
+                  disabled:opacity-50 disabled:cursor-not-allowed
+                `}
+              >
+                {u}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
