@@ -22,15 +22,18 @@ export function QuickBookWidget() {
 
     try {
       const currentStock = Number.isFinite(article.bestand) ? Number(article.bestand) : 0;
-      const cleanAmount = Number.isFinite(amount) ? Number(amount) : 0;
+      const absAmount = Math.abs(amount);
       
-      const finalAdjustment = type === 'output' ? -cleanAmount : cleanAmount;
-      const calculatedNewStock = Math.max(0, currentStock + finalAdjustment);
+      const calculatedNewStock = type === 'output' 
+        ? Math.max(0, currentStock - absAmount) 
+        : currentStock + absAmount;
 
-      console.log("[QuickBook] Adjustment:", { article: article.name, currentStock, adjustment: finalAdjustment, result: calculatedNewStock });
+      console.log("BERECHNETER BESTAND FÜR DB (WIDGET):", calculatedNewStock);
+      console.log("[QuickBook] Adjustment:", { article: article.name, currentStock, originalAmount: amount, absAmount, type, result: calculatedNewStock });
 
       await articleService.updateArticle(article.id, { bestand: calculatedNewStock });
-      await articleService.addHistoryEntry(article.id, currentStock, calculatedNewStock, type, cleanAmount);
+      const signedAmount = type === 'output' ? -absAmount : absAmount;
+      await articleService.addHistoryEntry(article.id, currentStock, calculatedNewStock, type, signedAmount);
       
       // Update local state implicitly via SWR
       await refetch();

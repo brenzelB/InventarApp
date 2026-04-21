@@ -63,12 +63,14 @@ export function useArticleDetails(id: string) {
       setIsAdjusting(true);
       
       const currentStock = Number.isFinite(article.bestand) ? Number(article.bestand) : 0;
-      const cleanAmount = Number.isFinite(amount) ? Number(amount) : 0;
+      const absAmount = Math.abs(amount);
       
-      const finalAdjustment = type === 'output' ? -cleanAmount : cleanAmount;
-      const calculatedNewStock = Math.max(0, currentStock + finalAdjustment);
+      const calculatedNewStock = type === 'output' 
+        ? Math.max(0, currentStock - absAmount) 
+        : currentStock + absAmount;
 
-      console.log("DEBUG_STOCK:", { id, currentStock, adjustment: finalAdjustment, target: calculatedNewStock });
+      console.log("BERECHNETER BESTAND FÜR DB:", calculatedNewStock);
+      console.log("DEBUG_STOCK:", { id, currentStock, originalAmount: amount, absAmount, type, target: calculatedNewStock });
 
       // 1. Haupt-Update
       await articleService.updateArticle(id, { bestand: calculatedNewStock });
@@ -76,7 +78,8 @@ export function useArticleDetails(id: string) {
       
       // 2. Historie loggen
       try {
-        await articleService.addHistoryEntry(id, currentStock, calculatedNewStock, type, cleanAmount);
+        const signedAmount = type === 'output' ? -absAmount : absAmount;
+        await articleService.addHistoryEntry(id, currentStock, calculatedNewStock, type, signedAmount);
         const freshHistory = await articleService.getArticleHistory(id);
         setHistory(freshHistory);
       } catch (hErr) {
