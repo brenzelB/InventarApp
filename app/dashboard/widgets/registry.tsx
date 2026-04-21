@@ -66,11 +66,11 @@ export const WIDGET_REGISTRY: WidgetMeta[] = [
   }
 ];
 
-export const WIDGET_COMPONENTS: Record<string, React.ReactNode> = {
-  "stock-status": <StockStatusWidget />,
-  "critical-stock": <CriticalStockWidget />,
-  "activity-log": <ActivityLogWidget />,
-  "inventory-value": <InventoryValueWidget />,
-  "quick-book": <QuickBookWidget />,
-  "weekly-trend": <WeeklyTrendWidget />,
+export const WIDGET_COMPONENTS: Record<string, React.ComponentType<any>> = {
+  "stock-status": StockStatusWidget,
+  "critical-stock": CriticalStockWidget,
+  "activity-log": ActivityLogWidget,
+  "inventory-value": InventoryValueWidget,
+  "quick-book": QuickBookWidget,
+  "weekly-trend": WeeklyTrendWidget,
 };

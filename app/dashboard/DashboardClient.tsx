@@ -93,6 +93,21 @@ export function DashboardClient({ userId, initialLayout }: DashboardClientProps)
     setIsEditing(false);
   };
 
+  const handleUpdateWidgetConfig = async (widgetId: string, settings: any) => {
+    const newLayout = layout.map(item => 
+      item.i === widgetId ? { ...item, settings: { ...(item as any).settings, ...settings } } : item
+    );
+    setLayout(newLayout);
+    setCurrentLayouts({ lg: newLayout });
+    
+    // Auto-save settings changes to DB
+    try {
+      await saveDashboardLayout(userId, newLayout);
+    } catch (err) {
+      console.error("Failed to auto-save widget settings:", err);
+    }
+  };
+
   if (!mounted) return null; // Avoid hydration mismatch
 
   return (
@@ -159,12 +174,15 @@ export function DashboardClient({ userId, initialLayout }: DashboardClientProps)
             draggableCancel=".no-drag"
           >
             {layout.map(item => {
-              const widgetComponent = WIDGET_COMPONENTS[item.i];
-              if (!widgetComponent) return null;
+              const WidgetComponent = WIDGET_COMPONENTS[item.i];
+              if (!WidgetComponent) return null;
 
               return (
                 <div key={item.i} className={`transition-shadow ${isEditing ? 'cursor-grab active:cursor-grabbing ring-2 ring-indigo-500 ring-offset-2 ring-offset-slate-50 dark:ring-offset-slate-900 rounded-xl' : ''}`}>
-                  {widgetComponent}
+                  <WidgetComponent 
+                    config={(item as any).settings || {}} 
+                    onUpdateConfig={(s: any) => handleUpdateWidgetConfig(item.i, s)} 
+                  />
                 </div>
               );
             })}
