@@ -6,10 +6,10 @@ import { Lock, Tag, Coins, ArrowUpRight, Percent } from "lucide-react";
 import { useSupabaseRealtime } from "@/hooks/useSupabaseRealtime";
 import { useState } from "react";
 
-export function InventoryValueWidget() {
+export function InventoryValueWidget({ config, onUpdateConfig }: { config: any, onUpdateConfig: (settings: any) => void }) {
   const { articles, loading, refetch } = useArticles();
   const [isPulsing, setIsPulsing] = useState(false);
-  const [isNetto, setIsNetto] = useState(false);
+  const [isNetto, setIsNetto] = useState(config?.isNetto ?? false);
 
   useSupabaseRealtime('articles', () => {
     refetch();
@@ -17,26 +17,44 @@ export function InventoryValueWidget() {
     setTimeout(() => setIsPulsing(false), 1500);
   });
 
+  const handleToggleNetto = (val: boolean) => {
+    setIsNetto(val);
+    onUpdateConfig({ isNetto: val });
+  };
+
   const stats = useMemo(() => {
-    if (!articles || articles.length === 0) return { buy: 0, sell: 0, profit: 0, margin: 0 };
+    if (!articles || articles.length === 0) return { buy: 0, sell: 0, profit: 0, margin: 0, vat: 0 };
     
-    const buy = articles.reduce((sum, item) => {
+    let totalBuy = 0;
+    let totalSell = 0;
+    let totalVat = 0;
+
+    articles.forEach(item => {
       const quantity = Number(item.bestand) || 0;
-      const price = Number(item.purchase_price || 0);
-      return sum + (quantity * price);
-    }, 0);
+      const grossBuy = Number(item.purchase_price || 0) * quantity;
+      const grossSell = Number(item.verkaufspreis || 0) * quantity;
+      const taxRate = Number(item.tax_rate || 0);
 
-    const sell = articles.reduce((sum, item) => {
-      const quantity = Number(item.bestand) || 0;
-      const price = Number(item.verkaufspreis || 0);
-      return sum + (quantity * price);
-    }, 0);
+      const netBuy = grossBuy / (1 + (taxRate / 100));
+      const netSell = grossSell / (1 + (taxRate / 100));
 
-    const profit = sell - buy;
-    const margin = sell > 0 ? (profit / sell) * 100 : 0;
+      if (isNetto) {
+        totalBuy += netBuy;
+        totalSell += netSell;
+      } else {
+        totalBuy += grossBuy;
+        totalSell += grossSell;
+      }
 
-    return { buy, sell, profit, margin };
-  }, [articles]);
+      // Gebundene Umsatzsteuer is the difference between Gross and Net Sales Value
+      totalVat += (grossSell - netSell);
+    });
+
+    const profit = totalSell - totalBuy;
+    const margin = totalSell > 0 ? (profit / totalSell) * 100 : 0;
+
+    return { buy: totalBuy, sell: totalSell, profit, margin, vat: totalVat };
+  }, [articles, isNetto]);
 
   const buyRatio = stats.sell > 0 ? (stats.buy / stats.sell) * 100 : 0;
   const profitRatio = stats.sell > 0 ? (stats.profit / stats.sell) * 100 : 0;
@@ -56,18 +74,18 @@ export function InventoryValueWidget() {
       <div className="px-6 pt-5 pb-2 flex items-center justify-between z-10">
         <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] flex items-center gap-2">
           <Coins className="w-3.5 h-3.5 text-indigo-400" />
-          Finanz-Cockpit
+          Finanz-Cockpit {isNetto ? <span className="text-indigo-400/50 ml-1">(Netto)</span> : <span className="text-slate-600 ml-1">(Brutto)</span>}
         </h3>
 
         <div className="flex bg-slate-800/50 p-0.5 rounded-lg border border-slate-700/50 ring-1 ring-black/20">
           <button 
-            onClick={() => setIsNetto(false)}
+            onClick={() => handleToggleNetto(false)}
             className={`px-3 py-1 text-[9px] font-black uppercase tracking-tighter rounded-md transition-all ${!isNetto ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-500 hover:text-slate-300'}`}
           >
             Brutto
           </button>
           <button 
-            onClick={() => setIsNetto(true)}
+            onClick={() => handleToggleNetto(true)}
             className={`px-3 py-1 text-[9px] font-black uppercase tracking-tighter rounded-md transition-all ${isNetto ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-500 hover:text-slate-300'}`}
           >
             Netto
@@ -82,7 +100,9 @@ export function InventoryValueWidget() {
         <div className="relative group p-6 flex flex-col justify-center border-l-2 border-indigo-500/0 hover:border-indigo-500 transition-all overflow-hidden shadow-[inset_4px_0_12px_-4px_rgba(99,102,241,0)] hover:shadow-[inset_4px_0_12px_-4px_rgba(99,102,241,0.2)]">
           <Lock className="absolute -right-2 -bottom-2 w-24 h-24 text-indigo-400/5 group-hover:text-indigo-400/10 transition-all rotate-12" />
           <div className="relative z-10">
-            <p className="text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-1 italic">Einkaufswert</p>
+            <p className="text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-1 italic">
+              {isNetto ? "Einkaufswert (Netto)" : "Einkaufswert (Brutto)"}
+            </p>
             <div className={`flex items-baseline gap-1 transition-all ${isPulsing ? 'animate-pulse-value' : ''}`}>
               <span className="text-xl font-black text-indigo-100 tracking-tight">
                 {stats.buy.toLocaleString('de-DE', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
@@ -102,7 +122,9 @@ export function InventoryValueWidget() {
                 {stats.margin.toFixed(1)}% Marge
               </span>
             </div>
-            <p className="text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-1">Gewinn (Est.)</p>
+            <p className="text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-1">
+              {isNetto ? "Gewinn (Netto)" : "Gewinn (Brutto)"}
+            </p>
             <div className={`flex items-baseline justify-center gap-1 transition-all ${isPulsing ? 'animate-pulse-value' : ''}`}>
               <span className="text-3xl font-black text-white tracking-tighter drop-shadow-2xl">
                 {stats.profit.toLocaleString('de-DE', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
@@ -116,7 +138,9 @@ export function InventoryValueWidget() {
         <div className="relative group p-6 flex flex-col justify-center text-right border-r-2 border-emerald-500/0 hover:border-emerald-500 transition-all overflow-hidden shadow-[inset_-4px_0_12px_-4px_rgba(16,185,129,0)] hover:shadow-[inset_-4px_0_12px_-4px_rgba(16,185,129,0.2)]">
           <Tag className="absolute -left-2 -bottom-2 w-24 h-24 text-emerald-400/5 group-hover:text-emerald-400/10 transition-all -rotate-12" />
           <div className="relative z-10">
-            <p className="text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-1 italic">Verkaufswert</p>
+            <p className="text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-1 italic">
+              {isNetto ? "Verkaufswert (Netto)" : "Verkaufswert (Brutto)"}
+            </p>
             <div className={`flex items-baseline justify-end gap-1 transition-all ${isPulsing ? 'animate-pulse-value' : ''}`}>
               <span className="text-xl font-black text-emerald-400 tracking-tight">
                 {stats.sell.toLocaleString('de-DE', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
@@ -128,17 +152,38 @@ export function InventoryValueWidget() {
 
       </div>
 
+      {/* VAT Info & Ratio Bar */}
+      <div className="bg-slate-900/50 border-t border-slate-800/50 px-6 py-2 flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse"></div>
+          <span className="text-[8px] font-bold text-slate-500 uppercase tracking-wider">
+            Gebundene USt: <span className="text-slate-300">{stats.vat.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €</span>
+          </span>
+        </div>
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-1">
+            <div className="w-2 h-1 bg-indigo-500 rounded-full"></div>
+            <span className="text-[7px] font-bold text-slate-600 uppercase">EK-Anteil</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <div className="w-2 h-1 bg-emerald-500 rounded-full"></div>
+            <span className="text-[7px] font-bold text-slate-600 uppercase">Rohgewinn</span>
+          </div>
+        </div>
+      </div>
+
       {/* Ratio Bar */}
-      <div className="h-1 flex w-full bg-slate-800">
+      <div className="h-1.5 flex w-full bg-slate-800 relative group/bar hover:h-2 transition-all cursor-crosshair">
         <div 
-          className="h-full bg-indigo-500 transition-all duration-1000 ease-out shadow-[0_0_8px_rgba(99,102,241,0.5)]" 
+          className="h-full bg-indigo-500 transition-all duration-1000 ease-out shadow-[0_0_12px_rgba(99,102,241,0.6)]" 
           style={{ width: `${buyRatio}%` }}
         />
         <div 
-          className="h-full bg-emerald-500 transition-all duration-1000 ease-out shadow-[0_0_8px_rgba(16,185,129,0.5)]" 
+          className="h-full bg-emerald-500 transition-all duration-1000 ease-out shadow-[0_0_12px_rgba(16,185,129,0.6)]" 
           style={{ width: `${profitRatio}%` }}
         />
       </div>
+
     </div>
   );
 }
