@@ -11,8 +11,10 @@ export async function inviteTeamMember(email: string, role: UserRole, invitedBy:
   }
 
   try {
-    console.log("[Server Action] Attempting invite for:", email);
-    const { data: inviteData, error: inviteError } = await supabaseAdmin.auth.admin.inviteUserByEmail(
+    const keyPrefix = process.env.SUPABASE_SERVICE_ROLE_KEY?.substring(0, 10);
+    console.log("[Server Action] Attempting invite for:", email, "Role Key Prefix:", keyPrefix);
+
+    const result = await supabaseAdmin.auth.admin.inviteUserByEmail(
       email,
       {
         data: {
@@ -23,30 +25,35 @@ export async function inviteTeamMember(email: string, role: UserRole, invitedBy:
       }
     );
 
-    console.log('INVITE_RESPONSE', { inviteData, inviteError });
+    console.log('INVITE_RAW_RESULT', JSON.stringify(result, null, 2));
+
+    const { data: inviteData, error: inviteError } = result;
 
     if (inviteError) {
-      console.error("[Server Action] Supabase Auth Error:", inviteError.message, inviteError.status);
-      return { success: false, error: inviteError.message, status: inviteError.status || 500 };
+      console.error("[Server Action] FULL ERROR:", JSON.stringify(inviteError, null, 2));
+      return { success: false, error: inviteError.message, status: inviteError.status || 500, raw: inviteError };
     }
 
     if (!inviteData?.user) {
-      return { success: false, error: "Supabase hat keinen Nutzer erstellt.", status: 500 };
+      return { success: false, error: "Supabase hat keinen Nutzer erstellt (Data.user ist leer).", status: 500 };
     }
 
     // 2. Create Profile (Explicitly so they show up in the list)
+    const profilePayload = {
+      id: inviteData.user.id,
+      email: email.toLowerCase(),
+      display_name: metadata.name,
+      role: role
+    };
+    console.log("[Server Action] Profile Payload:", JSON.stringify(profilePayload, null, 2));
+
     const { error: profileError } = await supabaseAdmin
       .from('profiles')
-      .upsert({
-        id: inviteData.user.id,
-        email: email.toLowerCase(),
-        display_name: metadata.name,
-        role: role
-      }, { onConflict: 'email' });
+      .upsert(profilePayload, { onConflict: 'email' });
 
     if (profileError) {
-      console.error("[Server Action] Profile Error:", profileError);
-      return { success: false, error: "Profil-Fehler: " + profileError.message, status: 500 };
+      console.error("[Server Action] Profile FULL ERROR:", JSON.stringify(profileError, null, 2));
+      return { success: false, error: "Profil-Fehler: " + profileError.message, status: 500, raw: profileError };
     }
 
     // 3. Track in Invitations Table
@@ -63,7 +70,7 @@ export async function inviteTeamMember(email: string, role: UserRole, invitedBy:
 
     return { success: true, user: inviteData.user, status: 200 };
   } catch (err: any) {
-    console.error("[Server Action] Catch Error:", err);
+    console.error("[Server Action] CRITICAL CATCH:", err);
     return { success: false, error: err.message || "Unerwarteter Fehler", status: 500 };
   }
 }

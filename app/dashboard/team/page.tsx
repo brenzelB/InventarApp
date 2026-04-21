@@ -135,18 +135,15 @@ export default function TeamPage() {
         timeoutPromise
       ]) as any;
 
-      console.log("[Team] Result received:", result);
-
-      // FORCE FEEDBACK: Explicitly show status
-      if (result.status) {
-        toastSuccess(`Antwort erhalten (Status: ${result.status})`);
-      }
-
       if (!result.success) {
         if (result.status === 429 || result.error?.includes('429') || result.error?.toLowerCase().includes('rate limit')) {
           toastError("Supabase-Limit erreicht (max. 3/Std). Bitte später versuchen.");
           throw new Error("Rate-Limit erreicht.");
         }
+        
+        // Show more detailed error if available
+        const detail = result.raw ? ` (${JSON.stringify(result.raw)})` : "";
+        toastError(`Einladung fehlgeschlagen: ${result.error}${detail}`);
         throw new Error(result.error || "Unbekannter Fehler");
       }
 
@@ -156,7 +153,10 @@ export default function TeamPage() {
       fetchTeamData();
     } catch (err: any) {
       console.error("[Team] Invitation failed:", err);
-      toastError("Einladung fehlgeschlagen: " + (err.message || "Server-Fehler"));
+      // Already toasted in !result.success if it came from the server
+      if (!err.message.includes("Rate-Limit")) {
+        toastError("Fehler: " + (err.message || "Unbekannter Fehler"));
+      }
     } finally {
       setIsInviting(false);
     }
