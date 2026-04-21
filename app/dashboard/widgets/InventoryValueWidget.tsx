@@ -11,7 +11,7 @@ export function InventoryValueWidget() {
     if (!articles) return 0;
     return articles.reduce((sum, item) => {
       const quantity = Number(item.bestand) || 0;
-      const price = Number(item.purchase_price) || 0;
+      const price = Number(item.purchase_price || 0); // Explicit null-fix
       return sum + (quantity * price);
     }, 0);
   }, [articles]);

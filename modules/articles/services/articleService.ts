@@ -42,9 +42,24 @@ async function fetchQrFromApi(articleId: string, origin?: string): Promise<strin
 }
 
 // ──────────────────────────────────────────────────────────────
-// Service
+// Service mit einfacher Reaktivität (Observer-Pattern)
 // ──────────────────────────────────────────────────────────────
+type ArticleChangeListener = () => void;
+let listeners: ArticleChangeListener[] = [];
+
 export const articleService = {
+  subscribe(listener: ArticleChangeListener) {
+    listeners.push(listener);
+    return () => {
+      listeners = listeners.filter(l => l !== listener);
+    };
+  },
+
+  notify() {
+    console.log("[ArticleService] Notifying subscribers of change...");
+    listeners.forEach(l => l());
+  },
+
   async getArticles() {
     if (isMockMode) {
       return getMockArticles();
@@ -122,8 +137,11 @@ export const articleService = {
         .select("*, group:groups(name)")
         .eq("id", createdArticle.id)
         .single();
-      return (updated ?? createdArticle) as Article;
+      const finalArticle = (updated ?? createdArticle) as Article;
+      this.notify();
+      return finalArticle;
     } catch {
+      this.notify();
       return createdArticle;
     }
   },
@@ -145,6 +163,7 @@ export const articleService = {
         updated_at: new Date().toISOString(),
       };
       saveMockArticles(articles);
+      this.notify();
       return articles[index];
     }
 
@@ -159,6 +178,7 @@ export const articleService = {
       .select("*, group:groups(name)")
       .single();
     if (error) throw error;
+    this.notify();
     return data as Article;
   },
 
@@ -169,10 +189,12 @@ export const articleService = {
       // Auch History und Kommentare löschen
       localStorage.removeItem(`mock_history_${id}`);
       localStorage.removeItem(`mock_comments_${id}`);
+      this.notify();
       return;
     }
     const { error } = await supabase.from("articles").delete().eq("id", id);
     if (error) throw error;
+    this.notify();
   },
 
   async updateArticlesGroup(articleIds: string[], groupId: string | null) {
@@ -193,6 +215,7 @@ export const articleService = {
         return art;
       });
       saveMockArticles(updatedArticles);
+      this.notify();
       return;
     }
 
@@ -201,6 +224,7 @@ export const articleService = {
       .update({ group_id: groupId })
       .in("id", articleIds);
     if (error) throw error;
+    this.notify();
   },
 
   // ──────────────────────────────────────────────────────────────

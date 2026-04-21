@@ -24,6 +24,11 @@ export function useArticles() {
 
   useEffect(() => {
     fetchArticles();
+    // Reaktivität: Auf Änderungen im Service hören
+    const unsubscribe = articleService.subscribe(() => {
+      fetchArticles();
+    });
+    return () => unsubscribe();
   }, [fetchArticles]);
 
   return { articles, loading, error, refetch: fetchArticles, setArticles };

@@ -18,6 +18,8 @@ interface ArticleTableProps {
 export function ArticleTable({ articles, onDelete }: ArticleTableProps) {
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [updatingId, setUpdatingId] = useState<string | null>(null);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editValue, setEditValue] = useState<string>("");
   const { role } = useAuth();
   const { success: toastSuccess, error: toastError } = useToast();
   const router = useRouter();
@@ -55,6 +57,30 @@ export function ArticleTable({ articles, onDelete }: ArticleTableProps) {
     }
   };
 
+  const startEditing = (article: Article) => {
+    if (role === 'viewer') return;
+    setEditingId(article.id);
+    setEditValue(article.purchase_price?.toString() || "0");
+  };
+
+  const handlePriceSave = async (id: string) => {
+    const newValue = parseFloat(editValue);
+    if (isNaN(newValue)) return;
+
+    setUpdatingId(id);
+    setEditingId(null);
+    try {
+      await articleService.updateArticle(id, { purchase_price: newValue });
+      toastSuccess("Einkaufspreis aktualisiert.");
+      // No need for onDelete() here if useArticles is reactive, but keeping it for safety
+      onDelete(); 
+    } catch (err: any) {
+      toastError("Fehler: " + err.message);
+    } finally {
+      setUpdatingId(null);
+    }
+  };
+
   if (articles.length === 0) {
     return (
       <div className="text-center py-12 bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700">
@@ -78,7 +104,8 @@ export function ArticleTable({ articles, onDelete }: ArticleTableProps) {
             <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-slate-900 dark:text-slate-200">SKU</th>
             <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-slate-900 dark:text-slate-200">Lagerort</th>
             <th scope="col" className="px-3 py-3.5 text-right text-sm font-semibold text-slate-900 dark:text-slate-200">Bestand</th>
-            <th scope="col" className="px-3 py-3.5 text-right text-sm font-semibold text-slate-900 dark:text-slate-200">Preis</th>
+            <th scope="col" className="px-3 py-3.5 text-right text-sm font-semibold text-slate-900 dark:text-slate-200">EK-Preis</th>
+            <th scope="col" className="px-3 py-3.5 text-right text-sm font-semibold text-slate-900 dark:text-slate-200">VK-Preis</th>
             <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-slate-900 dark:text-slate-200 w-px whitespace-nowrap">Aktionen</th>
           </tr>
         </thead>
@@ -144,6 +171,31 @@ export function ArticleTable({ articles, onDelete }: ArticleTableProps) {
                     {article.bestand} {article.unit || 'Stück'}
                   </span>
                 </div>
+              </td>
+              <td className="whitespace-nowrap px-3 py-4 text-sm text-right tabular-nums">
+                {editingId === article.id ? (
+                  <input
+                    autoFocus
+                    type="number"
+                    step="0.01"
+                    className="w-20 rounded border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-right py-1 px-2 text-xs focus:ring-indigo-500"
+                    value={editValue}
+                    onChange={(e) => setEditValue(e.target.value)}
+                    onBlur={() => handlePriceSave(article.id)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') handlePriceSave(article.id);
+                      if (e.key === 'Escape') setEditingId(null);
+                    }}
+                  />
+                ) : (
+                  <button 
+                    onClick={() => startEditing(article)}
+                    disabled={updatingId === article.id}
+                    className="hover:text-indigo-600 dark:hover:text-indigo-400 font-medium transition-colors"
+                  >
+                    {Number(article.purchase_price || 0).toFixed(2)} €
+                  </button>
+                )}
               </td>
               <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-500 dark:text-slate-400 text-right tabular-nums">
                 {Number(article.verkaufspreis).toFixed(2)} €
