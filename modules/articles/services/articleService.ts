@@ -62,7 +62,6 @@ export const articleService = {
 
   async getArticles() {
     if (isMockMode) {
-      console.log("[ArticleService] Running in MOCK MODE - using local storage.");
       return getMockArticles();
     }
     const { data, error } = await supabase
