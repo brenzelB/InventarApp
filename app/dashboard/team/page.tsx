@@ -3,7 +3,8 @@
 import { useState, useEffect, useCallback } from "react";
 import { useAuth, UserRole } from "@/hooks/useAuth";
 import { supabase } from "@/lib/supabaseClient";
-import { inviteTeamMember } from "./actions";
+import { inviteTeamMember, deleteTeamMember } from "./actions";
+import { useRouter } from "next/navigation";
 import { 
   Users, 
   User,
@@ -38,6 +39,7 @@ interface Invitation {
 }
 
 export default function TeamPage() {
+  const router = useRouter();
   const { user, role, loading: authLoading } = useAuth();
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [invitations, setInvitations] = useState<Invitation[]>([]);
@@ -132,11 +134,15 @@ export default function TeamPage() {
     if (!confirm(`Mitglied ${email} wirklich entfernen?`)) return;
 
     try {
-      const { error } = await supabase.from('profiles').delete().eq('id', id);
-      if (error) throw error;
+      const result = await deleteTeamMember(id);
+      if (!result.success) throw new Error(result.error);
+      
+      setMessage({ text: "Mitglied erfolgreich entfernt.", type: 'success' });
+      router.refresh();
       fetchTeamData();
     } catch (err: any) {
-      alert("Löschen fehlgeschlagen: " + err.message);
+      console.error("[Team] Member deletion failed:", err);
+      setMessage({ text: "Löschen fehlgeschlagen: " + err.message, type: 'error' });
     }
   };
 

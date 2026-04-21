@@ -43,3 +43,37 @@ export async function inviteTeamMember(email: string, role: UserRole, invitedBy:
     return { success: false, error: "Ein unerwarteter Fehler ist aufgetreten." };
   }
 }
+
+export async function deleteTeamMember(userId: string) {
+  if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    return { success: false, error: 'Service Role Key fehlt in der Konfiguration.' };
+  }
+
+  try {
+    console.log(`[Team] Delete member request: ${userId}`);
+
+    // 1. Delete from Profiles (Admin Power)
+    const { error: profileError } = await supabaseAdmin
+      .from('profiles')
+      .delete()
+      .eq('id', userId);
+
+    if (profileError) {
+      console.error("[Team] Profile delete error:", profileError.message);
+      return { success: false, error: "Fehler beim Löschen des Profils: " + profileError.message };
+    }
+
+    // 2. Delete from Auth (Admin Power)
+    const { error: authError } = await supabaseAdmin.auth.admin.deleteUser(userId);
+    if (authError) {
+      console.error("[Team] Auth delete error:", authError.message);
+      // We log but continue as the profile is already gone
+    }
+
+    revalidatePath("/dashboard/team");
+    return { success: true };
+  } catch (err: any) {
+    console.error("[Team] Critical deletion error:", err);
+    return { success: false, error: "Ein Fehler beim Löschen ist aufgetreten." };
+  }
+}
