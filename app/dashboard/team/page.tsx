@@ -112,7 +112,7 @@ export default function TeamPage() {
         throw new Error(result.error);
       }
 
-      setMessage({ text: 'Einladung wurde erfolgreich versendet!', type: 'success' });
+      setMessage({ text: 'Einladung wurde vorbereitet. Falls keine E-Mail ankommt, wurde das Stunden-Limit von Supabase erreicht.', type: 'success' });
       setInviteEmail("");
       setInviteName("");
       fetchTeamData();
