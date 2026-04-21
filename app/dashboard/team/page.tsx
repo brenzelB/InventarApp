@@ -50,6 +50,7 @@ export default function TeamPage() {
   const [inviteEmail, setInviteEmail] = useState("");
   const [inviteName, setInviteName] = useState("");
   const [inviteRole, setInviteRole] = useState<'admin' | 'editor' | 'viewer'>('viewer');
+  const [inviteEmailError, setInviteEmailError] = useState(false);
   const [message, setMessage] = useState<{ text: string, type: 'success' | 'error' } | null>(null);
 
   const fetchTeamData = useCallback(async () => {
@@ -97,12 +98,19 @@ export default function TeamPage() {
 
   const handleInvite = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!inviteName.trim()) {
-      toastError("Bitte gib einen Namen für den Nutzer ein.");
+    console.log("HANDLE_INVITE_START", { email: inviteEmail, name: inviteName });
+    
+    // Client-Side Validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(inviteEmail)) {
+      setInviteEmailError(true);
+      toastError("Bitte gib eine gültige E-Mail Adresse ein.");
       return;
     }
-    if (!inviteEmail.trim()) {
-      toastError("Bitte gib eine E-Mail Adresse ein.");
+    setInviteEmailError(false);
+
+    if (!inviteName.trim()) {
+      toastError("Bitte gib einen Namen für den Nutzer ein.");
       return;
     }
     
@@ -110,22 +118,28 @@ export default function TeamPage() {
     setMessage(null);
 
     try {
-      console.log("[Team] Starting invitation process for:", inviteEmail);
-      console.log("[Team] Invitation Data:", { inviteEmail, inviteName, inviteRole });
+      console.log("[Team] Starting invitation process...");
       
-      const result = await inviteTeamMember(
-        inviteEmail.trim().toLowerCase(),
-        inviteRole,
-        user?.id || "",
-        { name: inviteName.trim() }
+      // Timeout Logic
+      const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error("Supabase Timeout")), 10000)
       );
 
-      console.log("[Team] Server Action Result:", result);
+      const result = await Promise.race([
+        inviteTeamMember(
+          inviteEmail.trim().toLowerCase(),
+          inviteRole,
+          user?.id || "",
+          { name: inviteName.trim() }
+        ),
+        timeoutPromise
+      ]) as any;
+
+      console.log("[Team] Result received:", result);
 
       if (!result.success) {
-        // Check for rate limit in the error status or message
         if (result.status === 429 || result.error?.includes('429') || result.error?.toLowerCase().includes('rate limit')) {
-          toastError("Supabase Limit erreicht. Bitte in einer Stunde erneut versuchen oder eigene Domain verifizieren.");
+          toastError("Supabase-Limit erreicht (max. 3/Std). Bitte später versuchen.");
           throw new Error("Rate-Limit erreicht.");
         }
         throw new Error(result.error);
@@ -384,9 +398,12 @@ export default function TeamPage() {
                     type="email"
                     required
                     value={inviteEmail}
-                    onChange={(e) => setInviteEmail(e.target.value)}
+                    onChange={(e) => {
+                      setInviteEmail(e.target.value);
+                      if (inviteEmailError) setInviteEmailError(false);
+                    }}
                     placeholder="name@firma.de"
-                    className="w-full bg-white/10 border border-white/20 rounded-2xl py-4 pl-12 pr-4 text-white placeholder-indigo-200 focus:outline-none focus:ring-2 focus:ring-white/50 text-sm font-bold transition-all"
+                    className={`w-full bg-white/10 border ${inviteEmailError ? 'border-red-500 ring-2 ring-red-500/50' : 'border-white/20'} rounded-2xl py-4 pl-12 pr-4 text-white placeholder-indigo-200 focus:outline-none focus:ring-2 focus:ring-white/50 text-sm font-bold transition-all`}
                   />
                 </div>
               </div>

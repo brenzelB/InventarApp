@@ -5,6 +5,7 @@ import { UserRole } from "@/hooks/useAuth";
 import { revalidatePath } from "next/cache";
 
 export async function inviteTeamMember(email: string, role: UserRole, invitedBy: string, metadata: { name: string }) {
+  console.log('INVITE_STARTED', email);
   if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
     return { success: false, error: 'Service Role Key fehlt in der Konfiguration.' };
   }
@@ -21,6 +22,8 @@ export async function inviteTeamMember(email: string, role: UserRole, invitedBy:
         redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://inventar-app-pi.vercel.app'}/dashboard`
       }
     );
+
+    console.log('INVITE_RESPONSE', { inviteData, inviteError });
 
     if (inviteError) {
       console.error("[Server Action] Supabase Auth Error:", inviteError.message, inviteError.status);
