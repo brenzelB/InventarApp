@@ -27,6 +27,9 @@ const defaultData: ArticleFormData = {
   mindestbestand: 0,
   group_id: null,
   lagerort: '',
+  unit: 'Stück',
+};
+
 const ALL_UNITS = ['Stück', 'kg', 'g', 'l', 'ml'];
 
 const getStep = (unit: string) => (unit === 'kg' || unit === 'l' ? '0.1' : '1');
@@ -193,11 +196,6 @@ export function ArticleForm({ initialData, articleId, qrCode, onUpdate }: Articl
           </div>
         </div>
 
-        <div>
-          <label className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-200">Mindestbestand *</label>
-          <input required type="number" step={getStep(formData.unit)} name="mindestbestand" value={formData.mindestbestand} onChange={handleChange} className="mt-2 block w-full rounded-md border-0 py-2.5 px-3 text-slate-900 dark:text-white dark:bg-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:opacity-50" disabled={loading || isReadOnly}/>
-        </div>
-
         <div className="space-y-2">
           <label className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-200">Einheit *</label>
           <div className="grid grid-cols-5 gap-1 pt-0.5">
@@ -220,6 +218,11 @@ export function ArticleForm({ initialData, articleId, qrCode, onUpdate }: Articl
               </button>
             ))}
           </div>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-200">Mindestbestand *</label>
+          <input required type="number" step={getStep(formData.unit)} name="mindestbestand" value={formData.mindestbestand} onChange={handleChange} className="mt-2 block w-full rounded-md border-0 py-2.5 px-3 text-slate-900 dark:text-white dark:bg-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:opacity-50" disabled={loading || isReadOnly}/>
         </div>
       </div>
 
