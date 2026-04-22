@@ -83,12 +83,12 @@ export function ArticleTable({ articles, onDelete }: ArticleTableProps) {
 
   if (articles.length === 0) {
     return (
-      <div className="text-center py-12 bg-white dark:bg-widget rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
+      <div className="text-center py-12 bg-white rounded-2xl shadow-sm border border-slate-200">
         <svg className="mx-auto h-12 w-12 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
         </svg>
-        <h3 className="mt-2 text-sm font-semibold text-slate-900 dark:text-white">Keine Artikel gefunden</h3>
-        <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">Lege deinen ersten Artikel an.</p>
+        <h3 className="mt-2 text-sm font-bold text-slate-900">Keine Artikel gefunden</h3>
+        <p className="mt-1 text-sm text-slate-500 font-medium">Lege deinen ersten Artikel an.</p>
       </div>
     );
   }
@@ -140,7 +140,7 @@ export function ArticleTable({ articles, onDelete }: ArticleTableProps) {
               <td className="whitespace-nowrap px-3 py-4 text-sm text-right">
                 <div className="flex items-center justify-end gap-2 group/stock">
                   {role !== 'viewer' && (
-                    <div className="flex items-center bg-slate-100 dark:bg-widget rounded-2xl p-0.5 opacity-0 group-hover/stock:opacity-100 transition-opacity">
+                    <div className="flex items-center bg-slate-100 rounded-2xl p-0.5 opacity-0 group-hover/stock:opacity-100 transition-opacity">
                       <button 
                         onClick={() => handleQuickAdjust(article, -1)}
                         className="p-1 hover:text-red-600 transition-colors"
@@ -159,11 +159,13 @@ export function ArticleTable({ articles, onDelete }: ArticleTableProps) {
                   )}
 
                   <span className={`
-                    inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-black ring-1 ring-inset transition-all
+                    inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-black ring-1 ring-inset transition-all
                     ${updatingId === article.id ? 'opacity-50 blur-[1px]' : ''}
-                    ${article.bestand <= article.mindestbestand 
-                      ? 'bg-red-50 text-red-700 ring-red-600/10 dark:bg-red-900/30 dark:text-red-400 dark:ring-red-400/20' 
-                      : 'bg-green-50 text-green-700 ring-green-600/20 dark:bg-green-900/30 dark:text-green-400 dark:ring-green-400/20'}
+                    ${article.bestand === 0
+                      ? 'bg-slate-100 text-slate-900 ring-slate-900/10'
+                      : article.bestand <= article.mindestbestand 
+                      ? 'bg-rose-100 text-rose-900 ring-rose-900/20' 
+                      : 'bg-emerald-100 text-emerald-900 ring-emerald-900/20'}
                   `}>
                     {updatingId === article.id ? (
                       <Loader2 className="w-3 h-3 animate-spin mr-1" />
@@ -178,7 +180,7 @@ export function ArticleTable({ articles, onDelete }: ArticleTableProps) {
                     autoFocus
                     type="number"
                     step="0.01"
-                    className="w-20 rounded border-slate-300 dark:border-slate-600 bg-white dark:bg-widget text-right py-1 px-2 text-xs focus:ring-accent"
+                    className="w-20 rounded border-slate-300 bg-white text-right py-1 px-2 text-xs focus:ring-accent font-bold"
                     value={editValue}
                     onChange={(e) => setEditValue(e.target.value)}
                     onBlur={() => handlePriceSave(article.id)}
@@ -191,13 +193,13 @@ export function ArticleTable({ articles, onDelete }: ArticleTableProps) {
                   <button 
                     onClick={() => startEditing(article)}
                     disabled={updatingId === article.id}
-                    className="hover:text-accent dark:hover:text-indigo-400 font-medium transition-colors"
+                    className="hover:text-accent font-bold transition-colors"
                   >
                     {Number(article.purchase_price || 0).toFixed(2)} €
                   </button>
                 )}
               </td>
-              <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-500 dark:text-slate-400 text-right tabular-nums">
+              <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-500 text-right tabular-nums font-medium">
                 {Number(article.verkaufspreis).toFixed(2)} €
               </td>
               <td className="whitespace-nowrap px-3 py-4 text-sm font-medium w-px">

@@ -68,20 +68,20 @@ export default function ArticlesPage() {
     <div className="space-y-8">
       <div className="md:flex md:items-center md:justify-between">
         <div className="min-w-0 flex-1">
-          <h2 className="text-3xl font-black leading-7 text-slate-900 dark:text-white sm:truncate sm:tracking-tight">
+          <h2 className="text-3xl font-black leading-7 text-slate-900 sm:truncate sm:tracking-tight">
             Artikelverwaltung
           </h2>
-          <p className="mt-2 text-sm font-medium text-slate-500 dark:text-slate-400">
+          <p className="mt-2 text-sm font-bold text-slate-500">
             Verwalte und überwache deinen gesamten Lagerbestand an einem zentralen Ort.
           </p>
         </div>
         <div className="mt-4 flex flex-wrap items-center gap-8 md:ml-4 md:mt-0">
           <ArticleActionButtons articles={filteredArticles} onRefresh={refetch} />
           
-          <div className="h-8 w-px bg-slate-200 dark:bg-slate-700 hidden sm:block mx-2" />
+          <div className="h-8 w-px bg-slate-200 hidden sm:block mx-2" />
 
           {role !== 'viewer' && (
-            <Link href="/dashboard/articles/new" className="inline-flex items-center gap-2 rounded-2xl bg-slate-900 dark:bg-white px-6 py-3 text-sm font-black text-white dark:text-slate-900 shadow-xl hover:scale-[1.02] transition-all active:scale-95 group">
+            <Link href="/dashboard/articles/new" className="inline-flex items-center gap-2 rounded-2xl bg-slate-900 px-6 py-3 text-sm font-black text-white shadow-xl hover:scale-[1.02] transition-all active:scale-95 group">
               <Plus className="w-5 h-5 group-hover:rotate-90 transition-transform" />
               Neuer Artikel
             </Link>
@@ -99,7 +99,7 @@ export default function ArticlesPage() {
       />
 
       {error && (
-        <div className="bg-red-50 dark:bg-red-900/30 p-8 rounded-2xl border border-red-100 dark:border-red-800 text-red-700 dark:text-red-400 text-sm font-medium animate-in fade-in slide-in-from-top-2 duration-300">
+        <div className="bg-red-50 p-8 rounded-2xl border border-red-100 text-red-700 text-sm font-bold animate-in fade-in slide-in-from-top-2 duration-300">
           {error}
         </div>
       )}
@@ -113,11 +113,11 @@ export default function ArticlesPage() {
         <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
           <ArticleTable articles={filteredArticles} onDelete={refetch} />
           {filteredArticles.length === 0 && articles.length > 0 && (
-            <div className="text-center py-20 bg-white dark:bg-widget rounded-3xl border border-dashed border-slate-300 dark:border-slate-700 mt-8">
-              <p className="text-slate-500 font-medium">Keine Artikel gefunden, die deinen Filtereinstellungen entsprechen.</p>
+            <div className="text-center py-20 bg-white rounded-3xl border border-dashed border-slate-300 mt-8">
+              <p className="text-slate-500 font-bold">Keine Artikel gefunden, die deinen Filtereinstellungen entsprechen.</p>
               <button 
                 onClick={() => { setSearchQuery(""); setStatusFilter("all"); }}
-                className="mt-4 text-accent font-bold hover:underline"
+                className="mt-4 text-accent font-black hover:underline"
               >
                 Filter zurücksetzen
               </button>
