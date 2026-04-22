@@ -131,9 +131,12 @@ export function DashboardClient({ userId, initialLayout }: DashboardClientProps)
         <div className="mt-4 md:mt-0 flex gap-8">
           <button
             onClick={() => setIsMarketplaceOpen(true)}
-            className="inline-flex items-center gap-2 rounded-3xl bg-indigo-50 dark:bg-indigo-900/30 px-4 py-2 text-sm font-bold text-accent dark:text-indigo-400 shadow-sm hover:bg-indigo-100 transition-colors"
+            className="group inline-flex items-center h-11 px-3 rounded-full bg-indigo-50 dark:bg-blue-900/30 text-accent dark:text-blue-400 shadow-sm hover:bg-indigo-100 dark:hover:bg-blue-800/40 transition-all duration-300 ease-in-out"
           >
-            <Plus className="w-4 h-4" /> Widget hinzufügen
+            <Plus className="w-5 h-5 flex-shrink-0" />
+            <span className="max-w-0 overflow-hidden opacity-0 group-hover:max-w-xs group-hover:opacity-100 group-hover:ml-2 transition-all duration-300 ease-in-out whitespace-nowrap text-sm font-black uppercase tracking-widest">
+              Widget hinzufügen
+            </span>
           </button>
           
           {isEditing ? (
@@ -141,25 +144,33 @@ export function DashboardClient({ userId, initialLayout }: DashboardClientProps)
               <button
                 onClick={handleCancel}
                 disabled={isSaving}
-                className="inline-flex items-center gap-2 rounded-3xl bg-slate-100 dark:bg-widget px-4 py-2 text-sm font-bold text-slate-600 dark:text-slate-300 shadow-sm hover:bg-slate-200 transition-colors"
+                className="group inline-flex items-center h-11 px-3 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 shadow-sm hover:bg-slate-200 dark:hover:bg-slate-700 transition-all duration-300 ease-in-out"
               >
-                <X className="w-4 h-4" /> Abbrechen
+                <X className="w-5 h-5 flex-shrink-0" />
+                <span className="max-w-0 overflow-hidden opacity-0 group-hover:max-w-xs group-hover:opacity-100 group-hover:ml-2 transition-all duration-300 ease-in-out whitespace-nowrap text-sm font-black uppercase tracking-widest">
+                  Abbrechen
+                </span>
               </button>
               <button
                 onClick={handleSave}
                 disabled={isSaving}
-                className="inline-flex items-center gap-2 rounded-3xl bg-emerald-600 px-4 py-2 text-sm font-bold text-white shadow-sm hover:bg-emerald-500 transition-colors disabled:opacity-50"
+                className="group inline-flex items-center h-11 px-3 rounded-full bg-emerald-600 text-white shadow-lg shadow-emerald-200 dark:shadow-none hover:bg-emerald-500 transition-all duration-300 ease-in-out disabled:opacity-50"
               >
-                {isSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
-                Speichern
+                {isSaving ? <Loader2 className="w-5 h-5 animate-spin flex-shrink-0" /> : <Save className="w-5 h-5 flex-shrink-0" />}
+                <span className="max-w-0 overflow-hidden opacity-0 group-hover:max-w-xs group-hover:opacity-100 group-hover:ml-2 transition-all duration-300 ease-in-out whitespace-nowrap text-sm font-black uppercase tracking-widest">
+                  Speichern
+                </span>
               </button>
             </>
           ) : (
             <button
               onClick={() => setIsEditing(true)}
-              className="inline-flex items-center gap-2 rounded-3xl bg-white dark:bg-widget px-4 py-2 text-sm font-bold text-slate-700 dark:text-slate-300 shadow-sm border border-slate-200 dark:border-slate-700 hover:bg-slate-50 transition-colors"
+              className="group inline-flex items-center h-11 px-3 rounded-full bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 shadow-sm border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-300 ease-in-out"
             >
-              <Pencil className="w-4 h-4" /> Layout bearbeiten
+              <Pencil className="w-5 h-5 flex-shrink-0" />
+              <span className="max-w-0 overflow-hidden opacity-0 group-hover:max-w-xs group-hover:opacity-100 group-hover:ml-2 transition-all duration-300 ease-in-out whitespace-nowrap text-sm font-black uppercase tracking-widest">
+                Layout bearbeiten
+              </span>
             </button>
           )}
         </div>
