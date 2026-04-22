@@ -51,14 +51,14 @@ export function StockAdjustmentForm({ onAdjust, loading }: StockAdjustmentFormPr
   };
 
   return (
-    <div className="bg-slate-50 dark:bg-widget/40 p-5 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-sm">
+    <div className="bg-slate-50 p-5 rounded-3xl border border-slate-200 shadow-sm">
       <div className="flex items-center gap-2 mb-4">
         <PackageOpen className="w-5 h-5 text-accent" />
-        <h3 className="font-semibold text-slate-800 dark:text-white text-sm">Bestand anpassen</h3>
+        <h3 className="font-bold text-slate-900 text-sm">Bestand anpassen</h3>
       </div>
 
       <div className="space-y-6">
-        <div className="grid grid-cols-2 bg-white dark:bg-widget p-1 rounded-2xl border border-slate-200 dark:border-slate-700 gap-1">
+        <div className="grid grid-cols-2 bg-white p-1 rounded-2xl border border-slate-200 gap-1">
           <button
             type="button"
             onClick={() => { setType('input'); setShowSuccess(false); }}
@@ -93,7 +93,7 @@ export function StockAdjustmentForm({ onAdjust, loading }: StockAdjustmentFormPr
             min="0.01"
             value={amount}
             onChange={(e) => { setAmount(Number(e.target.value)); setShowSuccess(false); }}
-            className="block w-full rounded-2xl border-0 py-2.5 px-3 text-slate-900 dark:text-white dark:bg-widget shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-700 focus:ring-2 focus:ring-accent sm:text-sm"
+            className="block w-full rounded-2xl border-0 py-2.5 px-3 text-slate-900 bg-white shadow-sm ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-accent sm:text-sm font-bold"
             required
           />
         </div>
@@ -102,12 +102,12 @@ export function StockAdjustmentForm({ onAdjust, loading }: StockAdjustmentFormPr
           type="button"
           onClick={handleButtonClick}
           disabled={loading}
-          className={`w-full py-3 rounded-2xl text-sm font-bold shadow-sm border border-slate-200 dark:border-white/10 transition-all active:scale-[0.98] flex items-center justify-center gap-2 ${
+          className={`w-full py-3 rounded-2xl text-sm font-black uppercase tracking-widest shadow-sm border border-slate-200 transition-all active:scale-[0.98] flex items-center justify-center gap-2 ${
             showSuccess 
             ? 'bg-green-600 text-white animate-pulse' 
             : error
             ? 'bg-red-600 text-white'
-            : 'bg-accent hover:bg-accent-hover text-white shadow-indigo-200 dark:shadow-none'
+            : 'bg-accent hover:bg-accent-hover text-white shadow-indigo-200'
           } disabled:opacity-50 disabled:cursor-not-allowed`}
         >
           {loading ? (
