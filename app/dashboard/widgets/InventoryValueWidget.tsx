@@ -6,7 +6,7 @@ import { Lock, Tag, Coins, ArrowUpRight, Percent } from "lucide-react";
 import { useSupabaseRealtime } from "@/hooks/useSupabaseRealtime";
 
 
-export function InventoryValueWidget({ config, onUpdateConfig }: { config: any, onUpdateConfig: (settings: any) => void }) {
+export const InventoryValueWidget = ({ config, onUpdateConfig }: { config: any, onUpdateConfig: (settings: any) => void }) => {
   const { articles, loading, refetch } = useArticles();
   const [isPulsing, setIsPulsing] = useState(false);
   const [isNetView, setIsNetView] = useState(config?.isNetto ?? false);
@@ -171,6 +171,6 @@ export function InventoryValueWidget({ config, onUpdateConfig }: { config: any, 
 
     </div>
   );
-   </div>
-  );
-}
+};
+
+export default InventoryValueWidget;

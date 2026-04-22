@@ -70,8 +70,7 @@ export const WIDGET_COMPONENTS: Record<string, React.ComponentType<any>> = {
   "stock-status": StockStatusWidget,
   "critical-stock": CriticalStockWidget,
   "activity-log": ActivityLogWidget,
-  "warenwert": WarenwertWidget,
-  "profit-calc": ProfitCalcWidget,
+  "inventory-value": InventoryValueWidget,
   "quick-book": QuickBookWidget,
   "weekly-trend": WeeklyTrendWidget,
 };
