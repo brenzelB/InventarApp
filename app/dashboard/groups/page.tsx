@@ -200,7 +200,7 @@ export default function GroupsPage() {
       </div>
 
       {!selectedGroup && (
-        <div className="bg-white dark:bg-widget p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm">
+        <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm ring-1 ring-slate-100/50">
           <form onSubmit={handleCreateGroup} className="flex gap-8">
             <div className="relative flex-1">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -213,7 +213,7 @@ export default function GroupsPage() {
                 onChange={(e) => setNewGroupName(e.target.value)}
                 placeholder="Neue Gruppe (z.B. Büromaterial)..."
                 disabled={isSubmitting}
-                className="block w-full pl-10 pr-3 py-2.5 border border-slate-200 rounded-2xl bg-slate-50 text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-accent sm:text-sm transition-all"
+                className="block w-full pl-10 pr-3 py-2.5 border border-slate-200 rounded-2xl bg-slate-50 text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-accent sm:text-sm transition-all font-bold"
               />
             </div>
             <button
@@ -243,11 +243,11 @@ export default function GroupsPage() {
       ) : selectedGroup ? (
         /* DETAIL VIEW */
         <div className="space-y-6 animate-in fade-in zoom-in-95 duration-500">
-          <div className="bg-white dark:bg-widget rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm overflow-hidden">
-            <div className="px-6 py-4 border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-widget/30">
-              <h3 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+          <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden ring-1 ring-slate-100/50">
+            <div className="px-6 py-4 border-b border-slate-100 bg-slate-50/50">
+              <h3 className="text-lg font-black text-slate-900 flex items-center gap-2 uppercase tracking-tight">
                 Zugeordnete Artikel
-                <span className="ml-2 px-2 py-0.5 bg-indigo-100 dark:bg-indigo-500/20 text-accent dark:text-indigo-400 rounded-full text-xs font-black">
+                <span className="ml-2 px-2.5 py-0.5 bg-indigo-50 text-accent rounded-full text-[10px] font-black uppercase ring-1 ring-accent/10">
                   {getGroupArticles(selectedGroup.id).length}
                 </span>
               </h3>
@@ -263,10 +263,10 @@ export default function GroupsPage() {
                     <th className="w-10"></th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100 dark:divide-slate-700">
+                <tbody className="divide-y divide-slate-100">
                   {getGroupArticles(selectedGroup.id).length === 0 ? (
                     <tr>
-                      <td colSpan={5} className="px-6 py-12 text-center text-slate-400 italic text-sm">
+                      <td colSpan={5} className="px-6 py-12 text-center text-slate-500 font-bold italic text-sm">
                         Keine Artikel in dieser Gruppe gefunden. Klicke auf 'Gruppe verwalten', um Artikel zuzuweisen.
                       </td>
                     </tr>
@@ -275,24 +275,24 @@ export default function GroupsPage() {
                       <tr 
                         key={article.id} 
                         onClick={() => router.push(`/dashboard/articles/${article.id}?fromGroup=${selectedGroup.id}`)}
-                        className="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-all cursor-pointer group/row"
+                        className="hover:bg-slate-50 transition-all cursor-pointer group/row"
                       >
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-slate-900 dark:text-white group-hover/row:text-accent transition-colors">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-black text-slate-900 group-hover/row:text-accent transition-colors">
                           {article.name}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-slate-500 dark:text-slate-400">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-mono font-bold text-slate-500">
                           {article.sku}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-right">
-                          <span className={`inline-flex px-2 py-1 rounded-2xl text-xs font-black ${article.bestand <= article.mindestbestand ? 'bg-red-100 text-red-600 dark:bg-red-500/20' : 'bg-green-100 text-green-600 dark:bg-green-500/20'}`}>
+                          <span className={`inline-flex px-2 py-1 rounded-2xl text-[10px] font-black uppercase tracking-wider ${article.bestand <= article.mindestbestand ? 'bg-red-50 text-red-700 ring-1 ring-red-600/10' : 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-600/10'}`}>
                             {article.bestand}
                           </span>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-slate-600 dark:text-slate-300">
+                        <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-black text-slate-900">
                           {Number(article.verkaufspreis).toFixed(2)} €
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-right">
-                          <Eye className="w-4 h-4 text-slate-300 group-hover/row:text-accent transition-colors" />
+                          <Eye className="w-4 h-4 text-slate-400 group-hover/row:text-accent transition-colors" />
                         </td>
                       </tr>
                     ))
@@ -303,9 +303,9 @@ export default function GroupsPage() {
           </div>
         </div>
       ) : groups.length === 0 ? (
-        <div className="text-center py-20 bg-slate-50 dark:bg-widget/50 rounded-3xl border border-dashed border-slate-200 dark:border-slate-700">
+        <div className="text-center py-20 bg-slate-50 rounded-3xl border border-dashed border-slate-200 ring-1 ring-slate-100/50">
           <Folder className="w-12 h-12 text-slate-300 mx-auto mb-4" />
-          <p className="text-slate-500 font-medium">Noch keine Gruppen erstellt.</p>
+          <p className="text-slate-500 font-bold">Noch keine Gruppen erstellt.</p>
         </div>
       ) : viewMode === 'grid' ? (
         /* GRID VIEW */
@@ -314,33 +314,33 @@ export default function GroupsPage() {
             <div 
               key={group.id} 
               onClick={() => setSelectedGroup(group)}
-              className="bg-white dark:bg-widget p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-xl hover:scale-[1.02] transition-all cursor-pointer group relative overflow-hidden"
+              className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl hover:scale-[1.02] transition-all cursor-pointer group relative overflow-hidden ring-1 ring-slate-100/50"
             >
               <div className="flex items-center justify-between mb-4">
-                <div className="p-2 bg-indigo-50 dark:bg-indigo-900/30 rounded-3xl">
-                  <Folder className="w-5 h-5 text-accent dark:text-indigo-400" />
+                <div className="p-2 bg-indigo-50 rounded-3xl ring-1 ring-accent/10">
+                  <Folder className="w-5 h-5 text-accent" />
                 </div>
                 <div className="flex gap-2">
                   <button 
                     onClick={(e) => handleEditClick(e, group)}
-                    className="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-2xl text-slate-500 transition-colors"
+                    className="p-2 hover:bg-slate-100 rounded-2xl text-slate-500 transition-colors"
                   >
                     <Edit3 className="w-4 h-4" />
                   </button>
                   <button 
                     onClick={(e) => handleDeleteGroup(e, group.id)}
-                    className="p-2 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-2xl text-red-500 transition-colors"
+                    className="p-2 hover:bg-red-50 rounded-2xl text-red-500 transition-colors"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
                 </div>
               </div>
 
-              <h3 className="text-lg font-bold text-slate-900 dark:text-white truncate">
+              <h3 className="text-lg font-black text-slate-900 truncate">
                 {group.name}
               </h3>
               <div className="mt-1 flex items-center justify-between">
-                <p className="text-sm font-bold text-slate-400 uppercase tracking-tight">
+                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
                   {getArticleCount(group.id)} Artikel
                 </p>
                 <ChevronRight className="w-4 h-4 text-slate-300 group-hover:text-accent transition-colors" />
@@ -359,21 +359,21 @@ export default function GroupsPage() {
                 <th scope="col" className="px-6 py-4 text-right text-[11px] font-black text-slate-900 uppercase tracking-widest">Aktionen</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100 dark:divide-slate-700">
+            <tbody className="divide-y divide-slate-100">
               {groups.map((group) => (
                 <tr 
                   key={group.id} 
                   onClick={() => setSelectedGroup(group)}
-                  className="hover:bg-slate-50/50 dark:hover:bg-slate-700/30 transition-colors cursor-pointer group"
+                  className="hover:bg-slate-50/50 transition-colors cursor-pointer group"
                 >
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-black text-slate-900">
                     <div className="flex items-center">
                       <Folder className="w-4 h-4 text-accent mr-3" />
-                      <span className="text-sm font-bold text-slate-900 dark:text-white">{group.name}</span>
+                      {group.name}
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300">
+                    <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-black bg-indigo-50 text-accent uppercase tracking-widest ring-1 ring-accent/10">
                       {getArticleCount(group.id)} Artikel
                     </span>
                   </td>
@@ -381,13 +381,13 @@ export default function GroupsPage() {
                     <div className="flex justify-end gap-2">
                       <button 
                         onClick={(e) => handleEditClick(e, group)}
-                        className="p-2 text-slate-400 hover:text-accent hover:bg-indigo-50 dark:hover:bg-indigo-900/30 rounded-2xl transition-all"
+                        className="p-2 text-slate-900 hover:text-accent hover:bg-indigo-50 rounded-2xl transition-all"
                       >
                         <Edit3 className="w-4 h-4" />
                       </button>
                       <button 
                         onClick={(e) => handleDeleteGroup(e, group.id)}
-                        className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-2xl transition-all"
+                        className="p-2 text-slate-900 hover:text-red-600 hover:bg-red-50 rounded-2xl transition-all"
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
