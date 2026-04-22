@@ -173,7 +173,7 @@ export default function ArticleDetailPage({ params }: { params: { id: string } }
                   
                   <div className="flex flex-col items-center">
                     {/* Recessed QR Panel with dotted indicator */}
-                    <div className="relative p-6 bg-slate-50 rounded-[2.5rem] ring-1 ring-inset ring-slate-100/50 mb-6">
+                    <div className="relative p-6 bg-slate-50 rounded-[2.5rem] ring-1 ring-inset ring-slate-100/50">
                       {/* Red Dotted Zone Indicator */}
                       <div className="absolute inset-2 border-2 border-dashed border-red-400/20 rounded-[2rem] pointer-events-none" />
                       
@@ -181,10 +181,6 @@ export default function ArticleDetailPage({ params }: { params: { id: string } }
                         <QRCodeView svgString={article.qr_code} name={article.name} articleId={article.id} size="lg" />
                       </div>
                     </div>
-                    
-                    <button className="w-full py-4 bg-red-600 hover:bg-red-700 text-white rounded-2xl font-black text-[10px] uppercase tracking-widest transition-all shadow-lg shadow-red-100 active:scale-95">
-                      QR-Code generieren
-                    </button>
                   </div>
                 </div>
               </div>
