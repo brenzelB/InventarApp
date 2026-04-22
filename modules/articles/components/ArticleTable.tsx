@@ -31,10 +31,11 @@ import {
   SortableContext,
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
+  horizontalListSortingStrategy,
   useSortable,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
+import { restrictToVerticalAxis, restrictToHorizontalAxis } from '@dnd-kit/modifiers';
 
 interface ColumnSetting {
   key: string;
@@ -176,19 +177,19 @@ export function ArticleTable({ articles, onDelete, columnSettings, setColumnSett
 
   return (
     <div className="overflow-x-auto shadow ring-1 ring-slate-200 dark:ring-slate-700 sm:rounded-2xl">
-      <DndContext
-        sensors={sensors}
-        collisionDetection={closestCenter}
-        onDragEnd={handleDragEnd}
-        modifiers={[restrictToVerticalAxis]}
-      >
-        <table className="min-w-full divide-y divide-slate-200 dark:divide-slate-700 table-fixed border-collapse">
-          <thead className="bg-slate-50 dark:bg-slate-900">
+      <table className="min-w-full divide-y divide-slate-200 dark:divide-slate-700 table-fixed border-collapse">
+        <thead className="bg-slate-50 dark:bg-slate-900">
+          <DndContext 
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragEnd={handleDragEnd}
+            modifiers={[restrictToHorizontalAxis]}
+          >
             <tr>
               <th scope="col" className="w-8 px-3 py-4 bg-slate-50 dark:bg-slate-900"></th>
               <SortableContext
                 items={columnSettings.filter(c => c.visible).map(c => c.key)}
-                strategy={verticalListSortingStrategy} // horizontal is implied by arrayMove, verticalListSortingStrategy works for both
+                strategy={horizontalListSortingStrategy}
               >
                 {columnSettings.filter(c => c.visible).map((col) => (
                   <ResizableHeader 
@@ -199,8 +200,15 @@ export function ArticleTable({ articles, onDelete, columnSettings, setColumnSett
                 ))}
               </SortableContext>
             </tr>
-          </thead>
-          <tbody className="divide-y divide-slate-200 dark:divide-slate-700 bg-white dark:bg-slate-950">
+          </DndContext>
+        </thead>
+        <tbody className="divide-y divide-slate-200 dark:divide-slate-700 bg-white dark:bg-slate-950">
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragEnd={handleDragEnd}
+            modifiers={[restrictToVerticalAxis]}
+          >
             <SortableContext
               items={localArticles.map(a => a.id)}
               strategy={verticalListSortingStrategy}
@@ -225,9 +233,9 @@ export function ArticleTable({ articles, onDelete, columnSettings, setColumnSett
                 />
               ))}
             </SortableContext>
-          </tbody>
-        </table>
-      </DndContext>
+          </DndContext>
+        </tbody>
+      </table>
     </div>
   );
 }
