@@ -107,7 +107,7 @@ export function StockAdjustmentForm({ onAdjust, loading }: StockAdjustmentFormPr
             ? 'bg-green-600 text-white animate-pulse' 
             : error
             ? 'bg-red-600 text-white'
-            : 'bg-accent hover:bg-accent-hover text-white shadow-indigo-200 dark:shadow-none'
+            : 'bg-accent hover:bg-accent-hover text-white shadow-indigo-200 dark:shadow-[0_8px_30px_rgb(59,130,246,0.2)] dark:ring-1 dark:ring-blue-500/20 hover:dark:shadow-[0_8px_30px_rgb(59,130,246,0.4)]'
           } disabled:opacity-50 disabled:cursor-not-allowed`}
         >
           {loading ? (

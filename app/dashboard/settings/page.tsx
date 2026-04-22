@@ -122,7 +122,7 @@ export default function SettingsPage() {
                 <button 
                   onClick={() => handleUpdate('app_name', settings.app_name)}
                   disabled={saving === 'app_name'}
-                  className="p-2.5 bg-accent hover:bg-indigo-500 text-white rounded-3xl transition-all shadow-sm dark:shadow-[0_0_20px_rgba(59,130,246,0.3)] active:scale-90"
+                  className="p-2.5 bg-accent hover:bg-indigo-500 text-white rounded-3xl transition-all shadow-sm dark:shadow-[0_8px_30px_rgb(59,130,246,0.2)] dark:ring-1 dark:ring-blue-500/20 hover:dark:shadow-[0_8px_30px_rgb(59,130,246,0.4)] active:scale-90"
                 >
                   {saving === 'app_name' ? <Loader2 className="w-5 h-5 animate-spin" /> : <Save className="w-5 h-5" />}
                 </button>
@@ -184,7 +184,7 @@ export default function SettingsPage() {
                 className={`
                   flex-1 flex items-center justify-center gap-3 py-4 rounded-2xl font-bold text-sm transition-all border
                   ${theme === t.id 
-                    ? 'bg-accent text-white border-accent shadow-[0_0_20px_rgba(59,130,246,0.2)] dark:shadow-[0_0_30px_rgba(59,130,246,0.3)] scale-[1.02]' 
+                    ? 'bg-accent text-white border-accent shadow-[0_20px_50px_rgba(59,130,246,0.1)] dark:shadow-[0_8px_30px_rgb(59,130,246,0.2)] dark:ring-1 dark:ring-blue-500/20 hover:dark:shadow-[0_8px_30px_rgb(59,130,246,0.4)] scale-[1.02]' 
                     : 'bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700'}
                 `}
               >

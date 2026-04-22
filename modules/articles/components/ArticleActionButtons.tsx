@@ -56,7 +56,7 @@ export function ArticleActionButtons({ articles, onRefresh }: ArticleActionButto
       <div className="relative">
         <button 
           onClick={() => setShowExportMenu(!showExportMenu)}
-          className="flex items-center gap-2 px-4 py-2 rounded-3xl text-sm font-black text-white bg-accent hover:bg-indigo-500 shadow-md dark:shadow-[0_0_15px_rgba(59,130,246,0.4)] border border-slate-200 dark:border-slate-700 transition-all active:scale-95"
+          className="flex items-center gap-2 px-4 py-2 rounded-3xl text-sm font-black text-white bg-accent hover:bg-indigo-500 shadow-md dark:shadow-[0_8px_30px_rgb(59,130,246,0.2)] dark:ring-1 dark:ring-blue-500/20 hover:dark:shadow-[0_8px_30px_rgb(59,130,246,0.4)] border border-slate-200 dark:border-slate-700 transition-all active:scale-95"
         >
           <Download className="w-4 h-4" />
           <span>Export</span>

@@ -68,7 +68,7 @@ export function ProfitCalcWidget() {
         </div>
 
         <div className="flex-shrink-0">
-          <button className="bg-blue-500 hover:bg-blue-600 text-white font-black uppercase tracking-widest text-[10px] px-6 py-4 rounded-full transition-all hover:scale-105 active:scale-95 shadow-md dark:shadow-[0_0_15px_rgba(59,130,246,0.4)]">
+          <button className="bg-blue-500 hover:bg-blue-600 text-white font-black uppercase tracking-widest text-[10px] px-6 py-4 rounded-full transition-all hover:scale-105 active:scale-95 shadow-md dark:shadow-[0_8px_30px_rgb(59,130,246,0.2)] dark:ring-1 dark:ring-blue-500/20 hover:dark:shadow-[0_8px_30px_rgb(59,130,246,0.4)]">
             Profit
           </button>
         </div>

@@ -257,7 +257,7 @@ export function ArticleForm({ initialData, articleId, qrCode, onUpdate }: Articl
             Nur Lesezugriff
           </div>
         ) : (
-          <button type="submit" disabled={loading} className="px-4 py-2 text-sm font-semibold text-white bg-accent hover:bg-indigo-500 rounded-3xl shadow-sm transition-colors disabled:opacity-50 flex items-center">
+          <button type="submit" disabled={loading} className="px-4 py-2 text-sm font-semibold text-white bg-accent hover:bg-indigo-500 rounded-3xl shadow-sm dark:shadow-[0_8px_30px_rgb(59,130,246,0.2)] dark:ring-1 dark:ring-blue-500/20 hover:dark:shadow-[0_8px_30px_rgb(59,130,246,0.4)] transition-all disabled:opacity-50 flex items-center">
             {loading ? 'Speichere...' : 'Speichern'}
           </button>
         )}

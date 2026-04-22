@@ -150,7 +150,7 @@ export default function ProfilePage() {
                       className={`
                         p-3 rounded-2xl flex items-center justify-center transition-all
                         ${avatarId === item.id 
-                          ? 'bg-blue-600 text-white shadow-md shadow-blue-200 dark:shadow-[0_0_15px_rgba(59,130,246,0.5)]' 
+                          ? 'bg-blue-600 text-white shadow-md shadow-blue-200 dark:shadow-[0_8px_30px_rgb(59,130,246,0.2)] dark:ring-1 dark:ring-blue-500/20 hover:dark:shadow-[0_8px_30px_rgb(59,130,246,0.4)]' 
                           : 'bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-100 dark:border-slate-700'}
                       `}
                       title={item.label}
@@ -171,7 +171,7 @@ export default function ProfilePage() {
               <button
                 type="submit"
                 disabled={isUpdating}
-                className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 bg-accent text-white rounded-2xl font-black text-xs uppercase tracking-[0.2em] hover:bg-accent-hover transition-all shadow-xl shadow-indigo-200 dark:shadow-[0_0_20px_rgba(59,130,246,0.3)] disabled:opacity-50"
+                className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 bg-accent text-white rounded-2xl font-black text-xs uppercase tracking-[0.2em] hover:bg-accent-hover transition-all shadow-xl shadow-indigo-200 dark:shadow-[0_8px_30px_rgb(59,130,246,0.2)] dark:ring-1 dark:ring-blue-500/20 hover:dark:shadow-[0_8px_30px_rgb(59,130,246,0.4)] disabled:opacity-50"
               >
                 {isUpdating ? <Loader2 className="w-4 h-4 animate-spin" /> : <CheckCircle2 className="w-4 h-4" />}
                 Einstellungen speichern
@@ -200,7 +200,7 @@ export default function ProfilePage() {
 
         {/* Sidebar Widgets (Stats & Logout) */}
         <div className="space-y-8">
-          <div className="bg-gradient-to-br from-indigo-600 to-indigo-700 p-8 rounded-3xl text-white shadow-[0_0_20px_rgba(59,130,246,0.2)] dark:shadow-[0_0_30px_rgba(59,130,246,0.15)] relative overflow-hidden group">
+          <div className="bg-gradient-to-br from-indigo-600 to-indigo-700 p-8 rounded-3xl text-white shadow-[0_20px_50px_rgba(59,130,246,0.1)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.3)] dark:ring-1 dark:ring-white/10 relative overflow-hidden group">
             <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform">
                <Package className="w-24 h-24 rotate-12" />
             </div>
@@ -236,7 +236,7 @@ export default function ProfilePage() {
               <h3 className="text-xs font-black text-accent uppercase tracking-[0.2em] mb-6 relative z-10">ADMINISTRATION</h3>
               <a 
                 href="/dashboard/team"
-                className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 bg-accent text-white rounded-2xl font-black text-xs uppercase tracking-[0.2em] hover:bg-accent-hover transition-all shadow-xl shadow-indigo-100 dark:shadow-[0_0_15px_rgba(59,130,246,0.4)] relative z-10"
+                className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 bg-accent text-white rounded-2xl font-black text-xs uppercase tracking-[0.2em] hover:bg-accent-hover transition-all shadow-xl shadow-indigo-100 dark:shadow-[0_8px_30px_rgb(59,130,246,0.2)] dark:ring-1 dark:ring-blue-500/20 hover:dark:shadow-[0_8px_30px_rgb(59,130,246,0.4)] relative z-10"
               >
                 <Users className="w-4 h-4" />
                 TEAM VERWALTEN
