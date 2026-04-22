@@ -375,33 +375,33 @@ export default function TeamPage() {
 
         {/* Sidebar: Einladungs-Tool */}
         <div className="space-y-8">
-          <div className="bg-accent rounded-[2.5rem] p-10 text-white shadow-2xl dark:shadow-[0_0_30px_rgba(59,130,246,0.3)] relative overflow-hidden group">
+          <div className="bg-accent dark:bg-slate-900 rounded-[2.5rem] p-10 text-white shadow-2xl dark:shadow-none border border-transparent dark:border-slate-800 relative overflow-hidden group">
             <div className="absolute -top-10 -right-10 opacity-10 group-hover:scale-110 transition-transform duration-700">
                <UserPlus className="w-48 h-48 rotate-12" />
             </div>
-            <h3 className="text-2xl font-black mb-8 relative z-10 uppercase tracking-tighter">
+            <h3 className="text-2xl font-black mb-8 relative z-10 uppercase tracking-tighter dark:text-white">
               Nutzer einladen
             </h3>
             
             <form onSubmit={handleInvite} className="space-y-6 relative z-10">
               <div className="space-y-2">
-                <label className="text-[10px] font-semibold uppercase tracking-[0.2em] opacity-80 pl-1">Name des Nutzers</label>
+                <label className="text-[10px] font-semibold uppercase tracking-[0.2em] opacity-80 pl-1 dark:text-slate-400">Name des Nutzers</label>
                 <div className="relative">
-                  <User className="absolute left-4 top-4 w-5 h-5 text-indigo-200" />
+                  <User className="absolute left-4 top-4 w-5 h-5 text-indigo-200 dark:text-slate-500" />
                   <input
                     type="text"
                     value={inviteName}
                     onChange={(e) => setInviteName(e.target.value)}
                     placeholder="Max Mustermann"
-                    className="w-full bg-white/10 border border-white/20 rounded-2xl py-4 pl-12 pr-4 text-white placeholder-indigo-200 focus:outline-none focus:ring-2 focus:ring-white/50 text-sm font-bold transition-all"
+                    className="w-full bg-white/10 dark:bg-slate-950/50 border border-white/20 dark:border-slate-800 rounded-2xl py-4 pl-12 pr-4 text-white placeholder-indigo-200 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-white/50 dark:focus:ring-accent/50 text-sm font-bold transition-all"
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <label className="text-[10px] font-semibold uppercase tracking-[0.2em] opacity-80 pl-1">E-Mail Adresse</label>
+                <label className="text-[10px] font-semibold uppercase tracking-[0.2em] opacity-80 pl-1 dark:text-slate-400">E-Mail Adresse</label>
                 <div className="relative">
-                  <Mail className="absolute left-4 top-4 w-5 h-5 text-indigo-200" />
+                  <Mail className="absolute left-4 top-4 w-5 h-5 text-indigo-200 dark:text-slate-500" />
                   <input
                     type="email"
                     required
@@ -411,21 +411,21 @@ export default function TeamPage() {
                       if (inviteEmailError) setInviteEmailError(false);
                     }}
                     placeholder="name@firma.de"
-                    className={`w-full bg-white/10 border ${inviteEmailError ? 'border-red-500 ring-2 ring-red-500/50' : 'border-white/20'} rounded-2xl py-4 pl-12 pr-4 text-white placeholder-indigo-200 focus:outline-none focus:ring-2 focus:ring-white/50 text-sm font-bold transition-all`}
+                    className={`w-full bg-white/10 dark:bg-slate-950/50 border ${inviteEmailError ? 'border-red-500 ring-2 ring-red-500/50' : 'border-white/20 dark:border-slate-800'} rounded-2xl py-4 pl-12 pr-4 text-white placeholder-indigo-200 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-white/50 dark:focus:ring-accent/50 text-sm font-bold transition-all`}
                   />
                 </div>
               </div>
               
               <div className="space-y-2">
-                <label className="text-[10px] font-semibold uppercase tracking-[0.2em] opacity-80 pl-1">Zukünftige Rolle</label>
+                <label className="text-[10px] font-semibold uppercase tracking-[0.2em] opacity-80 pl-1 dark:text-slate-400">Zukünftige Rolle</label>
                 <select
                   value={inviteRole}
                   onChange={(e) => setInviteRole(e.target.value as any)}
-                  className="w-full bg-white/10 border border-white/20 rounded-2xl py-4 px-4 text-white focus:outline-none focus:ring-2 focus:ring-white/50 text-xs font-black uppercase tracking-widest appearance-none cursor-pointer"
+                  className="w-full bg-white/10 dark:bg-slate-950/50 border border-white/20 dark:border-slate-800 rounded-2xl py-4 px-4 text-white focus:outline-none focus:ring-2 focus:ring-white/50 dark:focus:ring-accent/50 text-xs font-black uppercase tracking-widest appearance-none cursor-pointer"
                 >
-                  <option value="viewer" className="text-slate-900">Viewer (Lesen)</option>
-                  <option value="editor" className="text-slate-900">Editor (Schreiben)</option>
-                  <option value="admin" className="text-slate-900 font-black">Admin (Vollzugriff)</option>
+                  <option value="viewer" className="text-slate-900 dark:text-slate-100 dark:bg-slate-900">Viewer (Lesen)</option>
+                  <option value="editor" className="text-slate-900 dark:text-slate-100 dark:bg-slate-900">Editor (Schreiben)</option>
+                  <option value="admin" className="text-slate-900 dark:text-slate-100 dark:bg-slate-900 font-black">Admin (Vollzugriff)</option>
                 </select>
               </div>
 
