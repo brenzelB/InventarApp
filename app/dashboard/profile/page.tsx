@@ -79,7 +79,7 @@ export default function ProfilePage() {
       {/* Profil Header */}
       <div className="flex items-center gap-8 bg-white dark:bg-slate-900/50 p-8 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm dark:shadow-none relative overflow-hidden">
         <div className="absolute top-0 right-0 p-8 opacity-5">
-           <Settings className="w-32 h-32 rotate-12" />
+           <Settings className="w-32 h-32 rotate-12 dark:text-slate-800" />
         </div>
         <div className="relative z-10 w-24 h-24 rounded-full bg-accent flex items-center justify-center text-white ring-4 ring-indigo-50 dark:ring-indigo-900/30 shadow-2xl">
           {(() => {
@@ -88,10 +88,10 @@ export default function ProfilePage() {
           })()}
         </div>
         <div className="relative z-10">
-          <h2 className="text-3xl font-black text-slate-900 leading-tight uppercase tracking-tight">
+          <h2 className="text-3xl font-black text-slate-900 dark:text-white leading-tight uppercase tracking-tight">
             {user.user_metadata?.display_name || user.email?.split('@')[0]}
           </h2>
-          <p className="text-slate-500 font-medium flex items-center gap-2 mt-1">
+          <p className="text-slate-500 dark:text-slate-400 font-medium flex items-center gap-2 mt-1">
             <Mail className="w-4 h-4 text-accent" /> {user.email}
           </p>
         </div>
@@ -150,8 +150,8 @@ export default function ProfilePage() {
                       className={`
                         p-3 rounded-2xl flex items-center justify-center transition-all
                         ${avatarId === item.id 
-                          ? 'bg-blue-600 text-white shadow-md shadow-blue-200' 
-                          : 'bg-slate-50 text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-slate-100'}
+                          ? 'bg-blue-600 text-white shadow-md shadow-blue-200 dark:shadow-[0_0_15px_rgba(59,130,246,0.5)]' 
+                          : 'bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-100 dark:border-slate-700'}
                       `}
                       title={item.label}
                     >
@@ -171,7 +171,7 @@ export default function ProfilePage() {
               <button
                 type="submit"
                 disabled={isUpdating}
-                className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 bg-accent text-white rounded-2xl font-black text-xs uppercase tracking-[0.2em] hover:bg-accent-hover transition-all shadow-xl shadow-indigo-200 dark:shadow-[0_0_15px_rgba(59,130,246,0.4)] disabled:opacity-50"
+                className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 bg-accent text-white rounded-2xl font-black text-xs uppercase tracking-[0.2em] hover:bg-accent-hover transition-all shadow-xl shadow-indigo-200 dark:shadow-[0_0_20px_rgba(59,130,246,0.3)] disabled:opacity-50"
               >
                 {isUpdating ? <Loader2 className="w-4 h-4 animate-spin" /> : <CheckCircle2 className="w-4 h-4" />}
                 Einstellungen speichern
