@@ -98,15 +98,15 @@ export function ArticleTable({ articles, onDelete }: ArticleTableProps) {
       <table className="min-w-full divide-y divide-slate-200 dark:divide-slate-700 table-auto">
         <thead className="bg-slate-50 dark:bg-slate-900">
           <tr>
-            <th scope="col" className="py-4 pl-4 pr-3 text-left text-[11px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-widest sm:pl-6 w-16">QR</th>
-            <th scope="col" className="px-3 py-4 text-left text-[11px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-widest">Name</th>
-            <th scope="col" className="px-3 py-4 text-left text-[11px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-widest">Beschreibung</th>
-            <th scope="col" className="px-3 py-4 text-left text-[11px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-widest">SKU</th>
-            <th scope="col" className="px-3 py-4 text-left text-[11px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-widest">Lagerort</th>
-            <th scope="col" className="px-3 py-4 text-right text-[11px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-widest">Bestand</th>
-            <th scope="col" className="px-3 py-4 text-right text-[11px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-widest">EK-Preis</th>
-            <th scope="col" className="px-3 py-4 text-right text-[11px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-widest">VK-Preis</th>
-            <th scope="col" className="px-3 py-4 text-left text-[11px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-widest w-px whitespace-nowrap">Aktionen</th>
+            <th scope="col" className="py-4 pl-4 pr-3 text-left text-[11px] font-black text-slate-900 dark:text-slate-400 uppercase tracking-widest sm:pl-6 w-16">QR</th>
+            <th scope="col" className="px-3 py-4 text-left text-[11px] font-black text-slate-900 dark:text-slate-400 uppercase tracking-widest">Name</th>
+            <th scope="col" className="px-3 py-4 text-left text-[11px] font-black text-slate-900 dark:text-slate-400 uppercase tracking-widest">Beschreibung</th>
+            <th scope="col" className="px-3 py-4 text-left text-[11px] font-black text-slate-900 dark:text-slate-400 uppercase tracking-widest">SKU</th>
+            <th scope="col" className="px-3 py-4 text-left text-[11px] font-black text-slate-900 dark:text-slate-400 uppercase tracking-widest">Lagerort</th>
+            <th scope="col" className="px-3 py-4 text-right text-[11px] font-black text-slate-900 dark:text-slate-400 uppercase tracking-widest">Bestand</th>
+            <th scope="col" className="px-3 py-4 text-right text-[11px] font-black text-slate-900 dark:text-slate-400 uppercase tracking-widest">EK-Preis</th>
+            <th scope="col" className="px-3 py-4 text-right text-[11px] font-black text-slate-900 dark:text-slate-400 uppercase tracking-widest">VK-Preis</th>
+            <th scope="col" className="px-3 py-4 text-left text-[11px] font-black text-slate-900 dark:text-slate-400 uppercase tracking-widest w-px whitespace-nowrap">Aktionen</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-slate-200 dark:divide-slate-700 bg-white dark:bg-slate-950">
@@ -209,7 +209,7 @@ export function ArticleTable({ articles, onDelete }: ArticleTableProps) {
                       href={`/dashboard/articles/${article.id}`} 
                       title="Bearbeiten"
                       aria-label="Artikel bearbeiten"
-                      className="p-2 text-slate-400 dark:text-slate-600 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-xl transition-all"
+                      className="p-2 text-slate-400 dark:text-slate-500 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-50 dark:hover:bg-slate-900 rounded-xl transition-all"
                     >
                       <Edit3 size={16} />
                     </Link>
@@ -220,7 +220,7 @@ export function ArticleTable({ articles, onDelete }: ArticleTableProps) {
                       disabled={deletingId === article.id}
                       title="Löschen"
                       aria-label="Artikel löschen"
-                      className="p-2 text-slate-400 dark:text-slate-600 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-900/30 rounded-xl transition-all disabled:opacity-50"
+                      className="p-2 text-slate-400 dark:text-slate-500 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-900/30 rounded-xl transition-all disabled:opacity-50"
                     >
                       {deletingId === article.id ? (
                         <span className="w-4 h-4 border-2 border-slate-200 dark:border-slate-700 border-t-rose-600 rounded-full animate-spin inline-block" />

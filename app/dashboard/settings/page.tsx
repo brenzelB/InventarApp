@@ -92,32 +92,32 @@ export default function SettingsPage() {
   return (
     <div className="max-w-4xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="flex items-center gap-3 mb-2">
-        <div className="p-2 bg-slate-100 rounded-3xl">
-          <Settings className="w-6 h-6 text-slate-700" />
+        <div className="p-2 bg-slate-100 dark:bg-slate-900 rounded-3xl">
+          <Settings className="w-6 h-6 text-slate-700 dark:text-slate-400" />
         </div>
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 uppercase tracking-tight">Einstellungen</h1>
-          <p className="text-sm font-bold text-slate-500">Globale App-Konfiguration und Datenpflege</p>
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100 uppercase tracking-tight">Einstellungen</h1>
+          <p className="text-sm font-bold text-slate-500 dark:text-slate-400">Globale App-Konfiguration und Datenpflege</p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* App Profile */}
-        <div className="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 flex flex-col h-full ring-1 ring-slate-100/50">
+        <div className="bg-white dark:bg-slate-900 rounded-3xl p-8 shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col h-full ring-1 ring-slate-100/50 dark:ring-slate-800/50">
           <div className="flex items-center gap-3 mb-6">
-            <Store className="w-5 h-5 text-slate-700" />
-            <h2 className="font-bold text-slate-900 uppercase tracking-tight text-sm">App-Profil</h2>
+            <Store className="w-5 h-5 text-slate-700 dark:text-slate-400" />
+            <h2 className="font-bold text-slate-900 dark:text-slate-100 uppercase tracking-tight text-sm">App-Profil</h2>
           </div>
           
           <div className="space-y-6 flex-1">
             <div>
-              <label className="block text-[10px] font-semibold text-slate-700 uppercase tracking-widest mb-2">Name des Inventars</label>
+              <label className="block text-[10px] font-semibold text-slate-700 dark:text-slate-400 uppercase tracking-widest mb-2">Name des Inventars</label>
               <div className="flex gap-2">
                 <input 
                   type="text" 
                   value={settings.app_name}
                   onChange={(e) => setSettings({...settings, app_name: e.target.value})}
-                  className="block w-full rounded-3xl border-0 py-2.5 px-4 text-slate-900 bg-slate-50 shadow-sm ring-1 ring-inset ring-slate-200 focus:ring-2 focus:ring-accent sm:text-sm font-bold"
+                  className="block w-full rounded-3xl border-0 py-2.5 px-4 text-slate-900 dark:text-slate-100 bg-slate-50 dark:bg-slate-950 shadow-sm ring-1 ring-inset ring-slate-200 dark:ring-slate-700 focus:ring-2 focus:ring-accent sm:text-sm font-bold placeholder:text-slate-400 dark:placeholder:text-slate-500"
                 />
                 <button 
                   onClick={() => handleUpdate('app_name', settings.app_name)}
@@ -132,36 +132,36 @@ export default function SettingsPage() {
         </div>
 
         {/* Inventory Logic */}
-        <div className="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 flex flex-col h-full ring-1 ring-slate-100/50">
+        <div className="bg-white dark:bg-slate-900 rounded-3xl p-8 shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col h-full ring-1 ring-slate-100/50 dark:ring-slate-800/50">
           <div className="flex items-center gap-3 mb-6">
-            <Activity className="w-5 h-5 text-slate-700" />
-            <h2 className="font-bold text-slate-900 uppercase tracking-tight text-sm">Inventar-Logik</h2>
+            <Activity className="w-5 h-5 text-slate-700 dark:text-slate-400" />
+            <h2 className="font-bold text-slate-900 dark:text-slate-100 uppercase tracking-tight text-sm">Inventar-Logik</h2>
           </div>
           
           <div className="space-y-6 flex-1">
             <div className="grid grid-cols-2 gap-8 items-end">
               <div>
-                <label className="block text-[10px] font-semibold text-slate-700 uppercase tracking-widest mb-2">Standard-Einheit</label>
+                <label className="block text-[10px] font-semibold text-slate-700 dark:text-slate-400 uppercase tracking-widest mb-2">Standard-Einheit</label>
                 <select 
                   value={settings.default_unit}
                   onChange={(e) => handleUpdate('default_unit', e.target.value)}
-                  className="block w-full rounded-3xl border-0 py-2.5 px-4 text-slate-900 bg-slate-50 shadow-sm ring-1 ring-inset ring-slate-200 focus:ring-2 focus:ring-accent sm:text-sm font-bold appearance-none"
+                  className="block w-full rounded-3xl border-0 py-2.5 px-4 text-slate-900 dark:text-slate-100 bg-slate-50 dark:bg-slate-950 shadow-sm ring-1 ring-inset ring-slate-200 dark:ring-slate-700 focus:ring-2 focus:ring-accent sm:text-sm font-bold appearance-none"
                 >
-                  {['Stück', 'kg', 'g', 'l', 'ml'].map(u => <option key={u} value={u}>{u}</option>)}
+                  {['Stück', 'kg', 'g', 'l', 'ml'].map(u => <option key={u} value={u} className="dark:bg-slate-900">{u}</option>)}
                 </select>
               </div>
               <div>
-                <label className="block text-[10px] font-semibold text-slate-700 uppercase tracking-widest mb-2">Warnschwelle (%)</label>
+                <label className="block text-[10px] font-semibold text-slate-700 dark:text-slate-400 uppercase tracking-widest mb-2">Warnschwelle (%)</label>
                 <input 
                   type="number" 
                   value={settings.warning_threshold}
                   onBlur={(e) => handleUpdate('warning_threshold', e.target.value)}
                   onChange={(e) => setSettings({...settings, warning_threshold: e.target.value})}
-                  className="block w-full rounded-3xl border-0 py-2.5 px-4 text-slate-900 bg-slate-50 shadow-sm ring-1 ring-inset ring-slate-200 focus:ring-2 focus:ring-accent sm:text-sm font-bold"
+                  className="block w-full rounded-3xl border-0 py-2.5 px-4 text-slate-900 dark:text-slate-100 bg-slate-50 dark:bg-slate-950 shadow-sm ring-1 ring-inset ring-slate-200 dark:ring-slate-700 focus:ring-2 focus:ring-accent sm:text-sm font-bold"
                 />
               </div>
             </div>
-            <p className="text-[10px] text-slate-500 font-bold italic mt-auto">Warnschwelle definiert, ab wie viel Prozent des Mindestbestands ein Artikel optisch hervorgehoben wird.</p>
+            <p className="text-[10px] text-slate-500 dark:text-slate-400 font-bold italic mt-auto uppercase tracking-widest">Warnschwelle definiert, ab wie viel Prozent des Mindestbestands ein Artikel optisch hervorgehoben wird.</p>
           </div>
         </div>
 
@@ -200,18 +200,18 @@ export default function SettingsPage() {
       </div>
 
       {/* Data Maintenance */}
-      <div className="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 ring-1 ring-slate-100/50">
+      <div className="bg-white dark:bg-slate-900 rounded-3xl p-8 shadow-sm border border-slate-100 dark:border-slate-800 ring-1 ring-slate-100/50 dark:ring-slate-800/50">
         <div className="flex items-center gap-3 mb-6">
-          <Database className="w-5 h-5 text-slate-700" />
-          <h2 className="font-bold text-slate-900 uppercase tracking-tight text-sm">Daten-Wartung</h2>
+          <Database className="w-5 h-5 text-slate-700 dark:text-slate-400" />
+          <h2 className="font-bold text-slate-900 dark:text-slate-100 uppercase tracking-tight text-sm">Daten-Wartung</h2>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <button 
             onClick={handleExport}
-            className="flex items-center justify-center gap-3 py-4 bg-slate-50 hover:bg-slate-100 text-slate-900 rounded-2xl font-black text-xs uppercase tracking-widest transition-all border border-slate-200 shadow-sm active:scale-[0.98]"
+            className="flex items-center justify-center gap-3 py-4 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-900 dark:text-slate-100 rounded-2xl font-black text-xs uppercase tracking-widest transition-all border border-slate-200 dark:border-slate-700 shadow-sm active:scale-[0.98]"
           >
-            <FileDown className="w-5 h-5 text-slate-700" />
+            <FileDown className="w-5 h-5 text-slate-700 dark:text-slate-400" />
             Excel-Export (.xlsx)
           </button>
 
@@ -225,10 +225,10 @@ export default function SettingsPage() {
           </button>
         </div>
         
-        <div className="mt-4 p-8 bg-amber-50 rounded-2xl border border-amber-100 flex items-start gap-4">
-          <AlertTriangle className="w-6 h-6 text-amber-600 flex-shrink-0 mt-0.5" />
-          <p className="text-xs text-amber-900 font-bold leading-relaxed">
-            <span className="font-black uppercase tracking-widest block mb-1 text-amber-600">Achtung:</span> Das Löschen der Artikel kann nicht rückgängig gemacht werden. Alle Bestände, QR-Codes und Kommentare werden vollständig entfernt.
+        <div className="mt-4 p-8 bg-amber-50 dark:bg-amber-900/20 rounded-2xl border border-amber-100 dark:border-amber-800 flex items-start gap-4">
+          <AlertTriangle className="w-6 h-6 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
+          <p className="text-xs text-amber-900 dark:text-amber-400 font-bold leading-relaxed">
+            <span className="font-black uppercase tracking-widest block mb-1 text-amber-600 dark:text-amber-400">Achtung:</span> Das Löschen der Artikel kann nicht rückgängig gemacht werden. Alle Bestände, QR-Codes und Kommentare werden vollständig entfernt.
           </p>
         </div>
       </div>

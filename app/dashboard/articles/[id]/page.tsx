@@ -199,9 +199,9 @@ export default function ArticleDetailPage({ params }: { params: { id: string } }
 
           {activeTab === 'analysis' && (
             <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-              <div className="bg-white dark:bg-widget p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm">
+              <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm">
                 <div className="flex items-center justify-between mb-8">
-                  <h3 className="text-xl font-bold text-slate-800 dark:text-white">Bestandsverlauf</h3>
+                  <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100">Bestandsverlauf</h3>
                   <TrendingUp className="w-6 h-6 text-accent" />
                 </div>
                 {history.length === 0 && (
@@ -215,7 +215,7 @@ export default function ArticleDetailPage({ params }: { params: { id: string } }
                 )}
                 <StockHistoryChart history={history} initialStock={article.bestand} />
               </div>
-              <div className="bg-white dark:bg-widget p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm">
+              <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm">
                 <ArticleHistoryList history={history} />
               </div>
             </div>

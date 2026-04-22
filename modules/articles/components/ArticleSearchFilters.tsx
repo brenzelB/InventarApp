@@ -48,9 +48,9 @@ export function ArticleSearchFilters({
             onChange={(e) => setStatusFilter(e.target.value)}
             className="block w-full pl-9 pr-8 py-2 border border-slate-300 dark:border-slate-700 rounded-3xl bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-bold focus:outline-none focus:ring-2 focus:ring-accent sm:text-sm appearance-none cursor-pointer"
           >
-            <option value="all">Alle Artikel</option>
-            <option value="low_stock">Niedriger Bestand</option>
-            <option value="out_of_stock">Ausverkauft</option>
+            <option value="all" className="dark:bg-slate-900">Alle Artikel</option>
+            <option value="low_stock" className="dark:bg-slate-900">Niedriger Bestand</option>
+            <option value="out_of_stock" className="dark:bg-slate-900">Ausverkauft</option>
           </select>
         </div>
 

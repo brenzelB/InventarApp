@@ -61,7 +61,7 @@ export default function Sidebar({ isOpen, setIsOpen, isCollapsed, setIsCollapsed
       <aside 
         className={`
           fixed top-0 left-0 z-50 h-screen transition-all duration-300 ease-in-out
-          bg-white dark:bg-slate-950 border-r border-slate-200 dark:border-slate-700
+          bg-white dark:bg-slate-950 border-r border-slate-200 dark:border-slate-800
           ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
           ${isCollapsed ? 'lg:w-20' : 'lg:w-64'}
           w-64
@@ -69,7 +69,7 @@ export default function Sidebar({ isOpen, setIsOpen, isCollapsed, setIsCollapsed
       >
         <div className="flex flex-col h-full">
           {/* Header */}
-          <div className="flex items-center justify-between h-16 px-4 border-b border-slate-200 dark:border-slate-700">
+          <div className="flex items-center justify-between h-16 px-4 border-b border-slate-200 dark:border-slate-800">
             {!isCollapsed && (
               <span className="font-bold text-xl text-accent truncate">
                 InventarApp
@@ -110,7 +110,7 @@ export default function Sidebar({ isOpen, setIsOpen, isCollapsed, setIsCollapsed
             })}
           </nav>
 
-          <div className="p-4 border-t border-slate-200 dark:border-slate-700 hidden lg:block">
+          <div className="p-4 border-t border-slate-200 dark:border-slate-800 hidden lg:block">
             <button
               onClick={() => setIsCollapsed(!isCollapsed)}
               className="flex items-center justify-center w-full p-2 rounded-3xl bg-slate-50 dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 transition-colors"

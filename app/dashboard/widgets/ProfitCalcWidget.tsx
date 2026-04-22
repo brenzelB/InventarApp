@@ -38,8 +38,8 @@ export function ProfitCalcWidget() {
   }
 
   return (
-    <div className="h-full w-full bg-white dark:bg-widget rounded-3xl p-8 shadow ring-1 ring-slate-200 dark:ring-slate-700 flex flex-col">
-      <h3 className="text-sm font-bold text-slate-500 dark:text-slate-400 flex items-center gap-2 mb-6">
+    <div className="h-full w-full bg-white dark:bg-slate-900 rounded-3xl p-8 shadow ring-1 ring-slate-200 dark:ring-slate-800 flex flex-col">
+      <h3 className="text-sm font-bold text-slate-500 dark:text-slate-100 flex items-center gap-2 mb-6">
         <div className="p-1.5 bg-blue-50 dark:bg-blue-900/30 rounded-2xl">
           <Calculator className="w-4 h-4 text-blue-500" />
         </div>
@@ -49,7 +49,7 @@ export function ProfitCalcWidget() {
       <div className="flex-1 flex gap-8 items-center">
         <div className="flex-1 grid grid-cols-2 divide-x divide-slate-100 dark:divide-slate-800">
           <div className="pr-6 flex flex-col justify-center">
-            <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.15em] mb-2">
+            <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.15em] mb-2">
               Abzug-Aktionen (Netto)
             </p>
             <div className="text-2xl font-black text-blue-600 dark:text-blue-400 tracking-tighter">
@@ -58,7 +58,7 @@ export function ProfitCalcWidget() {
           </div>
           
           <div className="pl-6 flex flex-col justify-center">
-            <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.15em] mb-2">
+            <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.15em] mb-2">
               Zuzug-Aktionen (Netto)
             </p>
             <div className="text-2xl font-black text-emerald-600 dark:text-emerald-400 tracking-tighter">

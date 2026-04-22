@@ -256,10 +256,10 @@ export default function GroupsPage() {
               <table className="min-w-full divide-y divide-slate-100 dark:divide-slate-700">
                 <thead className="bg-white dark:bg-slate-900">
                   <tr>
-                    <th className="px-6 py-4 text-left text-[11px] font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-widest">Name</th>
-                    <th className="px-6 py-4 text-left text-[11px] font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-widest">SKU</th>
-                    <th className="px-6 py-4 text-right text-[11px] font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-widest">Bestand</th>
-                    <th className="px-6 py-4 text-right text-[11px] font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-widest">Preis</th>
+                    <th className="px-6 py-4 text-left text-[11px] font-semibold text-slate-700 dark:text-slate-400 uppercase tracking-widest">Name</th>
+                    <th className="px-6 py-4 text-left text-[11px] font-semibold text-slate-700 dark:text-slate-400 uppercase tracking-widest">SKU</th>
+                    <th className="px-6 py-4 text-right text-[11px] font-semibold text-slate-700 dark:text-slate-400 uppercase tracking-widest">Bestand</th>
+                    <th className="px-6 py-4 text-right text-[11px] font-semibold text-slate-700 dark:text-slate-400 uppercase tracking-widest">Preis</th>
                     <th className="w-10"></th>
                   </tr>
                 </thead>
@@ -323,13 +323,13 @@ export default function GroupsPage() {
                 <div className="flex gap-2">
                   <button 
                     onClick={(e) => handleEditClick(e, group)}
-                    className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-2xl text-slate-500 dark:text-slate-400 transition-colors"
+                    className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-2xl text-slate-400 dark:text-slate-500 hover:text-accent dark:hover:text-accent transition-colors"
                   >
                     <Edit3 className="w-4 h-4" />
                   </button>
                   <button 
                     onClick={(e) => handleDeleteGroup(e, group.id)}
-                    className="p-2 hover:bg-red-50 dark:hover:bg-rose-900/30 rounded-2xl text-red-500 dark:text-rose-400 transition-colors"
+                    className="p-2 hover:bg-red-50 dark:hover:bg-rose-900/30 rounded-2xl text-slate-400 dark:text-slate-500 hover:text-red-500 dark:hover:text-rose-400 transition-colors"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
@@ -354,9 +354,9 @@ export default function GroupsPage() {
           <table className="min-w-full divide-y divide-slate-100 dark:divide-slate-700">
             <thead className="bg-slate-50 dark:bg-slate-900">
               <tr>
-                <th scope="col" className="px-6 py-4 text-left text-[11px] font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-widest">Gruppe</th>
-                <th scope="col" className="px-6 py-4 text-left text-[11px] font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-widest">Artikel</th>
-                <th scope="col" className="px-6 py-4 text-right text-[11px] font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-widest">Aktionen</th>
+                <th scope="col" className="px-6 py-4 text-left text-[11px] font-semibold text-slate-700 dark:text-slate-400 uppercase tracking-widest">Gruppe</th>
+                <th scope="col" className="px-6 py-4 text-left text-[11px] font-semibold text-slate-700 dark:text-slate-400 uppercase tracking-widest">Artikel</th>
+                <th scope="col" className="px-6 py-4 text-right text-[11px] font-semibold text-slate-700 dark:text-slate-400 uppercase tracking-widest">Aktionen</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 dark:divide-slate-700 bg-white dark:bg-slate-950">
@@ -381,13 +381,13 @@ export default function GroupsPage() {
                     <div className="flex justify-end gap-2">
                       <button 
                         onClick={(e) => handleEditClick(e, group)}
-                        className="p-2 text-slate-900 dark:text-slate-100 hover:text-accent dark:hover:text-accent hover:bg-indigo-50 dark:hover:bg-indigo-900/30 rounded-2xl transition-all"
+                        className="p-2 text-slate-400 dark:text-slate-500 hover:text-accent dark:hover:text-accent hover:bg-indigo-50 dark:hover:bg-indigo-900/30 rounded-2xl transition-all"
                       >
                         <Edit3 className="w-4 h-4" />
                       </button>
                       <button 
                         onClick={(e) => handleDeleteGroup(e, group.id)}
-                        className="p-2 text-slate-900 dark:text-slate-100 hover:text-red-600 dark:hover:text-rose-400 hover:bg-red-50 dark:hover:bg-rose-900/30 rounded-2xl transition-all"
+                        className="p-2 text-slate-400 dark:text-slate-500 hover:text-red-600 dark:hover:text-rose-400 hover:bg-red-50 dark:hover:bg-rose-900/30 rounded-2xl transition-all"
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
