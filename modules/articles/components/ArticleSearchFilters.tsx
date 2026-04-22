@@ -6,14 +6,14 @@ import { Article } from '../types';
 
 interface ArticleSearchFiltersProps {
   searchQuery: string;
-  setSearchQuery: (query: string) => void;
+  setSearchQuery: (val: string) => void;
   statusFilter: string;
-  setStatusFilter: (filter: string) => void;
+  setStatusFilter: (val: string) => void;
   sortBy: string;
-  setSortBy: (sort: string) => void;
+  setSortBy: (val: string) => void;
   articles: Article[];
-  visibleColumns: string[];
-  setVisibleColumns: (columns: string[]) => void;
+  columnSettings: any[];
+  setColumnSettings: (settings: any[]) => void;
 }
 
 const COLUMN_LABELS: Record<string, string> = {
@@ -38,31 +38,11 @@ export function ArticleSearchFilters({
   sortBy,
   setSortBy,
   articles,
-  visibleColumns,
-  setVisibleColumns
+  columnSettings,
+  setColumnSettings
 }: ArticleSearchFiltersProps) {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
-  // Detect dynamic columns from the first article
-  const availableFields = React.useMemo(() => {
-    if (articles.length === 0) return Object.keys(COLUMN_LABELS);
-    
-    const articleKeys = Object.keys(articles[0]);
-    const fields = articleKeys.filter(key => 
-      COLUMN_LABELS[key] && !['id', 'name', 'group_id', 'group', 'created_at', 'updated_at'].includes(key)
-    );
-    
-    // Ensure all defined labels are present if they exist in the schema
-    return Array.from(new Set([...fields, ...Object.keys(COLUMN_LABELS).filter(k => articleKeys.includes(k))]));
-  }, [articles]);
-
-  const toggleColumn = (key: string) => {
-    if (visibleColumns.includes(key)) {
-      setVisibleColumns(visibleColumns.filter(c => c !== key));
-    } else {
-      setVisibleColumns([...visibleColumns, key]);
-    }
-  };
   return (
     <div className="flex flex-col md:flex-row gap-8 items-end md:items-center justify-between bg-white dark:bg-slate-900 p-8 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm dark:shadow-none ring-1 ring-slate-100 dark:ring-slate-800/50">
       
@@ -141,27 +121,35 @@ export function ArticleSearchFilters({
                 className="fixed inset-0 z-10" 
                 onClick={() => setIsMenuOpen(false)} 
               />
-              <div className="absolute right-0 mt-2 w-64 bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 z-20 py-2 animate-in fade-in zoom-in-95 duration-200">
-                <div className="px-4 py-2 border-b border-slate-100 dark:border-slate-800">
-                  <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Sichtbare Spalten</span>
-                </div>
-                <div className="max-h-[300px] overflow-y-auto custom-scrollbar">
-                  {availableFields.map((field) => (
-                    <button
-                      key={field}
-                      onClick={() => toggleColumn(field)}
-                      className="w-full flex items-center justify-between px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors text-left"
-                    >
-                      <span className={`text-sm font-bold ${visibleColumns.includes(field) ? 'text-accent dark:text-blue-400' : 'text-slate-600 dark:text-slate-400'}`}>
-                        {COLUMN_LABELS[field]}
-                      </span>
-                      {visibleColumns.includes(field) && (
-                        <Check className="w-4 h-4 text-accent dark:text-blue-400" />
-                      )}
-                    </button>
-                  ))}
-                </div>
-              </div>
+              <div className="absolute right-0 mt-2 w-64 rounded-2xl bg-white dark:bg-slate-900 shadow-2xl ring-1 ring-slate-200 dark:ring-slate-800 z-50 p-4 animate-in fade-in zoom-in duration-200 origin-top-right">
+            <h4 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-4 px-2">Sichtbare Spalten</h4>
+            <div className="space-y-1 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
+              {columnSettings.map((col) => (
+                <label 
+                  key={col.key} 
+                  className={`
+                    flex items-center gap-3 px-3 py-2 rounded-xl cursor-pointer transition-all
+                    ${col.visible ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400' : 'hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400'}
+                  `}
+                >
+                  <input
+                    type="checkbox"
+                    className="w-4 h-4 rounded border-slate-300 dark:border-slate-700 text-blue-600 focus:ring-blue-500 bg-white dark:bg-slate-800"
+                    checked={col.visible}
+                    onChange={() => {
+                      if (col.key === 'name' || col.key === 'actions') return; // Locked
+                      const newSettings = columnSettings.map(c => 
+                        c.key === col.key ? { ...c, visible: !c.visible } : c
+                      );
+                      setColumnSettings(newSettings);
+                    }}
+                    disabled={col.key === 'name' || col.key === 'actions'}
+                  />
+                  <span className="text-sm font-bold">{col.label}</span>
+                </label>
+              ))}
+            </div>
+          </div>
             </>
           )}
         </div>

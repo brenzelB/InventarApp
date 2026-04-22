@@ -14,28 +14,44 @@ export default function ArticlesPage() {
   const { articles, loading, error, refetch } = useArticles();
   const { role } = useAuth();
   
-  // Filtering & Sorting State
+  // Column & Sorting State
+  const [columnSettings, setColumnSettings] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [sortBy, setSortBy] = useState("newest");
-  const [visibleColumns, setVisibleColumns] = useState<string[]>(['description', 'sku', 'lagerort', 'bestand', 'purchase_price', 'verkaufspreis']);
 
-  // Load from localStorage on mount
+  // Load settings on mount
   useEffect(() => {
-    const saved = localStorage.getItem('article_visible_columns');
+    const defaultSettings = [
+      { key: 'qr_code', label: 'QR', width: 80, visible: true },
+      { key: 'name', label: 'Name', width: 250, visible: true },
+      { key: 'description', label: 'Beschreibung', width: 200, visible: true },
+      { key: 'sku', label: 'SKU', width: 120, visible: true },
+      { key: 'lagerort', label: 'Lagerort', width: 120, visible: true },
+      { key: 'bestand', label: 'Bestand', width: 150, visible: true },
+      { key: 'purchase_price', label: 'EK-Preis', width: 120, visible: true },
+      { key: 'verkaufspreis', label: 'VK-Preis', width: 120, visible: true },
+      { key: 'herstellpreis', label: 'Herstellpreis', width: 120, visible: false },
+      { key: 'tax_rate', label: 'Steuer', width: 100, visible: false },
+      { key: 'mindestbestand', label: 'Min-Bestand', width: 120, visible: false },
+      { key: 'actions', label: 'Aktionen', width: 100, visible: true },
+    ];
+
+    const saved = localStorage.getItem('article_column_settings');
     if (saved) {
       try {
-        setVisibleColumns(JSON.parse(saved));
+        setColumnSettings(JSON.parse(saved));
       } catch (e) {
-        console.error("Failed to load visible columns", e);
+        setColumnSettings(defaultSettings);
       }
+    } else {
+      setColumnSettings(defaultSettings);
     }
   }, []);
 
-  // Save to localStorage when changed
-  const handleToggleColumn = (columns: string[]) => {
-    setVisibleColumns(columns);
-    localStorage.setItem('article_visible_columns', JSON.stringify(columns));
+  const handleUpdateColumns = (newSettings: any[]) => {
+    setColumnSettings(newSettings);
+    localStorage.setItem('article_column_settings', JSON.stringify(newSettings));
   };
 
   const filteredArticles = useMemo(() => {
@@ -129,8 +145,8 @@ export default function ArticlesPage() {
         sortBy={sortBy}
         setSortBy={setSortBy}
         articles={articles}
-        visibleColumns={visibleColumns}
-        setVisibleColumns={handleToggleColumn}
+        columnSettings={columnSettings}
+        setColumnSettings={handleUpdateColumns}
       />
 
       {error && (
@@ -146,7 +162,12 @@ export default function ArticlesPage() {
         </div>
       ) : (
         <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-          <ArticleTable articles={filteredArticles} onDelete={refetch} visibleColumns={visibleColumns} />
+          <ArticleTable 
+            articles={filteredArticles} 
+            onDelete={refetch} 
+            columnSettings={columnSettings}
+            setColumnSettings={handleUpdateColumns}
+          />
           {filteredArticles.length === 0 && articles.length > 0 && (
             <div className="text-center py-20 bg-white dark:bg-slate-900 rounded-3xl border border-dashed border-slate-300 dark:border-slate-700 mt-8">
               <p className="text-slate-500 dark:text-slate-400 font-bold">Keine Artikel gefunden, die deinen Filtereinstellungen entsprechen.</p>
