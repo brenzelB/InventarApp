@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { Article } from '../types';
 import { articleService } from '../services/articleService';
-import { useState } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
 import { useRouter } from 'next/navigation';
