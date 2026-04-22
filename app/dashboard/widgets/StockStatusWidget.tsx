@@ -1,30 +1,33 @@
 "use client";
 
 import { useMemo } from "react";
+"use client";
+
+import { useMemo } from "react";
 import { useArticles } from "@/modules/articles/hooks/useArticles";
 import { Package, FolderTree } from "lucide-react";
 
 export function StockStatusWidget() {
   const { articles, loading } = useArticles();
 
-  const { totalStock, totalCategories } = useMemo(() => {
-    let totalStockNum = 0;
+  const stats = useMemo(() => {
+    let totalUnits = 0;
     const groups = new Set<string>();
 
     articles.forEach(a => {
-      totalStockNum += a.bestand || 0;
+      totalUnits += Number(a.bestand) || 0;
       if (a.group_id) groups.add(a.group_id);
     });
 
     return {
-      totalStock: totalStockNum,
-      totalCategories: groups.size
+      totalArticles: articles.length,
+      totalUnits,
+      totalGroups: groups.size
     };
   }, [articles]);
 
   if (loading) {
     return (
-      <div className="h-full w-full bg-white rounded-3xl p-8 shadow flex items-center justify-center animate-pulse">
       <div className="h-full w-full bg-white dark:bg-slate-900 rounded-3xl p-8 shadow ring-1 ring-slate-200 dark:ring-slate-800 flex items-center justify-center animate-pulse">
         <div className="h-4 w-20 bg-slate-200 dark:bg-slate-800 rounded"></div>
       </div>
