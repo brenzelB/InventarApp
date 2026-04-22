@@ -95,15 +95,15 @@ export default function SettingsPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* App Profile */}
-        <div className="bg-white dark:bg-widget rounded-3xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col h-full">
+        <div className="bg-white dark:bg-widget rounded-3xl p-8 shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col h-full">
           <div className="flex items-center gap-3 mb-6">
             <Store className="w-5 h-5 text-accent" />
             <h2 className="font-bold text-slate-900 dark:text-white">App-Profil</h2>
           </div>
           
-          <div className="space-y-4 flex-1">
+          <div className="space-y-6 flex-1">
             <div>
               <label className="block text-xs font-black text-slate-400 uppercase tracking-widest mb-2">Name des Inventars</label>
               <div className="flex gap-2">
@@ -126,14 +126,14 @@ export default function SettingsPage() {
         </div>
 
         {/* Inventory Logic */}
-        <div className="bg-white dark:bg-widget rounded-3xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col h-full">
+        <div className="bg-white dark:bg-widget rounded-3xl p-8 shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col h-full">
           <div className="flex items-center gap-3 mb-6">
             <Activity className="w-5 h-5 text-accent" />
             <h2 className="font-bold text-slate-900 dark:text-white">Inventar-Logik</h2>
           </div>
           
-          <div className="space-y-4 flex-1">
-            <div className="grid grid-cols-2 gap-4 items-end">
+          <div className="space-y-6 flex-1">
+            <div className="grid grid-cols-2 gap-8 items-end">
               <div>
                 <label className="block text-xs font-black text-slate-400 uppercase tracking-widest mb-2">Standard-Einheit</label>
                 <select 
@@ -161,13 +161,13 @@ export default function SettingsPage() {
       </div>
 
       {/* Data Maintenance */}
-      <div className="bg-white dark:bg-widget rounded-3xl p-6 shadow-sm border border-slate-200 dark:border-slate-700">
+      <div className="bg-white dark:bg-widget rounded-3xl p-8 shadow-sm border border-slate-200 dark:border-slate-700">
         <div className="flex items-center gap-3 mb-6">
           <Database className="w-5 h-5 text-accent" />
           <h2 className="font-bold text-slate-900 dark:text-white">Daten-Wartung</h2>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <button 
             onClick={handleExport}
             className="flex items-center justify-center gap-3 py-4 bg-slate-50 dark:bg-widget hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-2xl font-black text-sm uppercase tracking-widest transition-all border border-slate-200 dark:border-slate-700 shadow-sm active:scale-[0.98]"
@@ -186,7 +186,7 @@ export default function SettingsPage() {
           </button>
         </div>
         
-        <div className="mt-4 p-4 bg-amber-50 dark:bg-amber-900/10 rounded-2xl border border-amber-100 dark:border-amber-900/20 flex items-start gap-3">
+        <div className="mt-4 p-8 bg-amber-50 dark:bg-amber-900/10 rounded-2xl border border-amber-100 dark:border-amber-900/20 flex items-start gap-3">
           <AlertTriangle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
           <p className="text-xs text-amber-700 dark:text-amber-500 font-medium">
             <span className="font-black uppercase">Achtung:</span> Das Löschen der Artikel kann nicht rückgängig gemacht werden. Alle Bestände, QR-Codes und Kommentare werden vollständig entfernt.

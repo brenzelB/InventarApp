@@ -75,7 +75,7 @@ export default function ArticlesPage() {
             Verwalte und überwache deinen gesamten Lagerbestand an einem zentralen Ort.
           </p>
         </div>
-        <div className="mt-4 flex flex-wrap items-center gap-4 md:ml-4 md:mt-0">
+        <div className="mt-4 flex flex-wrap items-center gap-8 md:ml-4 md:mt-0">
           <ArticleActionButtons articles={filteredArticles} onRefresh={refetch} />
           
           <div className="h-8 w-px bg-slate-200 dark:bg-slate-700 hidden sm:block mx-2" />
@@ -99,13 +99,13 @@ export default function ArticlesPage() {
       />
 
       {error && (
-        <div className="bg-red-50 dark:bg-red-900/30 p-4 rounded-2xl border border-red-100 dark:border-red-800 text-red-700 dark:text-red-400 text-sm font-medium animate-in fade-in slide-in-from-top-2 duration-300">
+        <div className="bg-red-50 dark:bg-red-900/30 p-8 rounded-2xl border border-red-100 dark:border-red-800 text-red-700 dark:text-red-400 text-sm font-medium animate-in fade-in slide-in-from-top-2 duration-300">
           {error}
         </div>
       )}
 
       {loading ? (
-        <div className="flex flex-col items-center justify-center p-20 gap-4">
+        <div className="flex flex-col items-center justify-center p-20 gap-8">
           <div className="w-12 h-12 border-4 border-indigo-100 border-t-indigo-600 rounded-full animate-spin" />
           <p className="text-sm font-medium text-slate-500 animate-pulse">Lade Artikel...</p>
         </div>

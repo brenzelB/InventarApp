@@ -146,7 +146,7 @@ export default function GroupsPage() {
       <div className="md:flex md:items-center md:justify-between">
         <div className="min-w-0 flex-1">
           {selectedGroup ? (
-            <div className="space-y-4">
+            <div className="space-y-6">
               <button 
                 onClick={() => setSelectedGroup(null)}
                 className="flex items-center gap-2 text-sm font-bold text-accent hover:text-indigo-700 transition-colors"
@@ -155,7 +155,7 @@ export default function GroupsPage() {
                 Zurück zur Übersicht
               </button>
               <div className="flex items-center justify-between">
-                <h2 className="text-4xl font-black leading-tight text-slate-900 dark:text-white flex items-center gap-4">
+                <h2 className="text-4xl font-black leading-tight text-slate-900 dark:text-white flex items-center gap-8">
                   <Folder className="w-10 h-10 text-accent" />
                   {selectedGroup.name}
                 </h2>
@@ -200,8 +200,8 @@ export default function GroupsPage() {
       </div>
 
       {!selectedGroup && (
-        <div className="bg-white dark:bg-widget p-6 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm">
-          <form onSubmit={handleCreateGroup} className="flex gap-4">
+        <div className="bg-white dark:bg-widget p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm">
+          <form onSubmit={handleCreateGroup} className="flex gap-8">
             <div className="relative flex-1">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <Folder className="h-5 w-5 text-slate-400" />
@@ -229,14 +229,14 @@ export default function GroupsPage() {
       )}
 
       {error && (
-        <div className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-100 dark:border-red-800 rounded-2xl flex items-center gap-3 text-red-700 dark:text-red-400 text-sm">
+        <div className="p-8 bg-red-50 dark:bg-red-900/20 border border-red-100 dark:border-red-800 rounded-2xl flex items-center gap-3 text-red-700 dark:text-red-400 text-sm">
           <AlertCircle className="w-5 h-5" />
           {error}
         </div>
       )}
 
       {loading ? (
-        <div className="flex flex-col items-center py-20 gap-4">
+        <div className="flex flex-col items-center py-20 gap-8">
           <Loader2 className="w-10 h-10 text-accent animate-spin" />
           <p className="text-slate-500 font-medium">Lade Daten...</p>
         </div>
@@ -309,12 +309,12 @@ export default function GroupsPage() {
         </div>
       ) : viewMode === 'grid' ? (
         /* GRID VIEW */
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {groups.map((group) => (
             <div 
               key={group.id} 
               onClick={() => setSelectedGroup(group)}
-              className="bg-white dark:bg-widget p-6 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-xl hover:scale-[1.02] transition-all cursor-pointer group relative overflow-hidden"
+              className="bg-white dark:bg-widget p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-xl hover:scale-[1.02] transition-all cursor-pointer group relative overflow-hidden"
             >
               <div className="flex items-center justify-between mb-4">
                 <div className="p-2 bg-indigo-50 dark:bg-indigo-900/30 rounded-3xl">

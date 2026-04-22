@@ -44,7 +44,7 @@ export function ImportModal({ onClose, onSuccess }: ImportModalProps) {
           {!result && !loading && (
             <div 
               onClick={() => fileInputRef.current?.click()}
-              className="group cursor-pointer border-2 border-dashed border-slate-300 dark:border-slate-600 hover:border-indigo-500 dark:hover:border-indigo-400 rounded-3xl p-10 flex flex-col items-center justify-center gap-4 transition-all hover:bg-indigo-50/50 dark:hover:bg-indigo-900/10"
+              className="group cursor-pointer border-2 border-dashed border-slate-300 dark:border-slate-600 hover:border-indigo-500 dark:hover:border-indigo-400 rounded-3xl p-10 flex flex-col items-center justify-center gap-8 transition-all hover:bg-indigo-50/50 dark:hover:bg-indigo-900/10"
             >
               <div className="w-16 h-16 rounded-2xl bg-indigo-50 dark:bg-indigo-900/20 text-accent dark:text-indigo-400 flex items-center justify-center group-hover:scale-110 transition-transform">
                 <Upload className="w-8 h-8" />
@@ -64,7 +64,7 @@ export function ImportModal({ onClose, onSuccess }: ImportModalProps) {
           )}
 
           {loading && (
-            <div className="flex flex-col items-center justify-center py-10 gap-4">
+            <div className="flex flex-col items-center justify-center py-10 gap-8">
               <Loader2 className="w-12 h-12 text-accent animate-spin" />
               <div className="text-center">
                 <p className="text-base font-bold text-slate-900 dark:text-white uppercase tracking-wider">Verarbeite Daten...</p>
@@ -75,7 +75,7 @@ export function ImportModal({ onClose, onSuccess }: ImportModalProps) {
 
           {result && (
             <div className="space-y-6">
-              <div className="flex items-center gap-4 p-4 bg-green-50 dark:bg-green-900/20 rounded-2xl border border-green-100 dark:border-green-800/50">
+              <div className="flex items-center gap-8 p-8 bg-green-50 dark:bg-green-900/20 rounded-2xl border border-green-100 dark:border-green-800/50">
                 <div className="w-10 h-10 rounded-3xl bg-green-100 dark:bg-green-900/40 text-green-600 dark:text-green-400 flex items-center justify-center">
                   <FileCheck className="w-6 h-6" />
                 </div>

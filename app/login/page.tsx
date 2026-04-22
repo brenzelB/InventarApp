@@ -116,7 +116,7 @@ export default function LoginPage() {
               </div>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-6">
               <button
                 type="submit"
                 disabled={loading}

@@ -43,7 +43,7 @@ export function ArticleHistoryList({ history }: ArticleHistoryListProps) {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <div className="flex items-center gap-2 mb-2">
         <History className="w-5 h-5 text-slate-500" />
         <h3 className="text-lg font-bold tracking-wide text-slate-800 dark:text-white">Letzte Bewegungen</h3>

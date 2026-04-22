@@ -53,14 +53,14 @@ export function CriticalStockWidget() {
 
   if (loading) {
     return (
-      <div className="h-full w-full bg-white dark:bg-widget rounded-3xl p-4 shadow flex items-center justify-center animate-pulse">
+      <div className="h-full w-full bg-white dark:bg-widget rounded-3xl p-8 shadow flex items-center justify-center animate-pulse">
         <div className="h-4 w-20 bg-slate-200 dark:bg-slate-700 rounded"></div>
       </div>
     );
   }
 
   return (
-    <div className="h-full w-full bg-white dark:bg-widget rounded-3xl p-6 shadow ring-1 ring-slate-200 dark:ring-slate-700 flex flex-col">
+    <div className="h-full w-full bg-white dark:bg-widget rounded-3xl p-8 shadow ring-1 ring-slate-200 dark:ring-slate-700 flex flex-col">
       <h3 className="text-sm font-semibold text-red-500 dark:text-red-400 flex items-center gap-2 mb-4">
         <AlertOctagon className="w-4 h-4" />
         Kritische Bestände

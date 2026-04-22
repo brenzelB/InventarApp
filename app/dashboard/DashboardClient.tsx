@@ -127,7 +127,7 @@ export function DashboardClient({ userId, initialLayout }: DashboardClientProps)
             Dashboard
           </h2>
         </div>
-        <div className="mt-4 md:mt-0 flex gap-4">
+        <div className="mt-4 md:mt-0 flex gap-8">
           <button
             onClick={() => setIsMarketplaceOpen(true)}
             className="inline-flex items-center gap-2 rounded-3xl bg-indigo-50 dark:bg-indigo-900/30 px-4 py-2 text-sm font-bold text-accent dark:text-indigo-400 shadow-sm hover:bg-indigo-100 transition-colors"

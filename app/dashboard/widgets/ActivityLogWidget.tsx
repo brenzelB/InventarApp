@@ -39,14 +39,14 @@ export function ActivityLogWidget() {
   if (loading) {
 // ... existing loading code ...
     return (
-      <div className="h-full w-full bg-white dark:bg-widget rounded-3xl p-4 shadow flex items-center justify-center animate-pulse">
+      <div className="h-full w-full bg-white dark:bg-widget rounded-3xl p-8 shadow flex items-center justify-center animate-pulse">
         <div className="h-4 w-20 bg-slate-200 dark:bg-slate-700 rounded"></div>
       </div>
     );
   }
 
   return (
-    <div className="h-full w-full bg-white dark:bg-widget rounded-3xl p-6 shadow ring-1 ring-slate-200 dark:ring-slate-700 flex flex-col">
+    <div className="h-full w-full bg-white dark:bg-widget rounded-3xl p-8 shadow ring-1 ring-slate-200 dark:ring-slate-700 flex flex-col">
       <h3 className="text-sm font-semibold text-slate-500 dark:text-slate-400 flex items-center gap-2 mb-4">
         <Activity className="w-4 h-4 text-emerald-500" />
         Aktivitäts-Log
@@ -58,7 +58,7 @@ export function ActivityLogWidget() {
             Keine Aktivitäten vorhanden.
           </div>
         ) : (
-          <ul className="space-y-4">
+          <ul className="space-y-6">
             {history.map(entry => {
                const diff = entry.new_stock - entry.old_stock;
                const isInput = entry.type === 'input' && diff > 0;

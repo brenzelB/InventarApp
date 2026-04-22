@@ -136,7 +136,7 @@ export function WeeklyTrendWidget({ config, onUpdateConfig }: WeeklyTrendWidgetP
   };
 
   return (
-    <div className="h-full w-full bg-white dark:bg-widget rounded-3xl p-6 shadow ring-1 ring-slate-200 dark:ring-slate-700 flex flex-col no-drag">
+    <div className="h-full w-full bg-white dark:bg-widget rounded-3xl p-8 shadow ring-1 ring-slate-200 dark:ring-slate-700 flex flex-col no-drag">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-sm font-bold text-slate-800 dark:text-white flex items-center gap-3">
           <div className="p-1.5 bg-indigo-50 dark:bg-indigo-900/30 rounded-2xl">

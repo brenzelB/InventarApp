@@ -51,13 +51,13 @@ export function WidgetMarketplace({
             return (
               <div 
                 key={widget.id}
-                className={`p-4 rounded-3xl border ${isActive ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900/10' : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-widget'} shadow-sm flex flex-col gap-4 relative overflow-hidden transition-colors`}
+                className={`p-8 rounded-3xl border ${isActive ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900/10' : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-widget'} shadow-sm flex flex-col gap-8 relative overflow-hidden transition-colors`}
               >
                 {isActive && (
                   <div className="absolute top-0 left-0 w-1 h-full bg-indigo-500"></div>
                 )}
                 
-                <div className="flex items-start gap-4">
+                <div className="flex items-start gap-8">
                   <div className={`p-3 rounded-2xl ${isActive ? 'bg-indigo-100 dark:bg-indigo-900/30 text-accent dark:text-indigo-400' : 'bg-slate-100 dark:bg-widget text-slate-500'}`}>
                     <Icon className="w-6 h-6" />
                   </div>

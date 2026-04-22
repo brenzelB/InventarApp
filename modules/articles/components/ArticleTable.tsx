@@ -201,7 +201,7 @@ export function ArticleTable({ articles, onDelete }: ArticleTableProps) {
                 {Number(article.verkaufspreis).toFixed(2)} €
               </td>
               <td className="whitespace-nowrap px-3 py-4 text-sm font-medium w-px">
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-8">
                   {(role === 'admin' || role === 'editor') && (
                     <Link 
                       href={`/dashboard/articles/${article.id}`} 

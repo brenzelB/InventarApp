@@ -75,7 +75,7 @@ export function InventoryValueWidget({ config, onUpdateConfig }: { config: any, 
 
   if (loading) {
     return (
-      <div className="h-full w-full bg-slate-900 rounded-3xl p-6 shadow-sm flex flex-col justify-center animate-pulse gap-4 border border-slate-800">
+      <div className="h-full w-full bg-slate-900 rounded-3xl p-6 shadow-sm flex flex-col justify-center animate-pulse gap-8 border border-slate-800">
         <div className="h-24 bg-slate-800 rounded-3xl"></div>
       </div>
     );

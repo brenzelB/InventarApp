@@ -100,7 +100,7 @@ export function ArticleForm({ initialData, articleId, qrCode, onUpdate }: Articl
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 bg-white dark:bg-widget p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
+    <form onSubmit={handleSubmit} className="space-y-6 bg-white dark:bg-widget p-8 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
       {error && (
         <div className="bg-red-50 dark:bg-red-900/30 p-4 rounded-3xl border border-red-200 dark:border-red-800/50 flex items-center gap-3 animate-in fade-in slide-in-from-top-2 duration-300">
           <div className="flex-shrink-0 w-8 h-8 rounded-full bg-red-100 dark:bg-red-900/50 flex items-center justify-center text-red-600 dark:text-red-400">
@@ -128,7 +128,7 @@ export function ArticleForm({ initialData, articleId, qrCode, onUpdate }: Articl
         </div>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div className="md:col-span-1">
           <label className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-200">Name *</label>
           <input required type="text" name="name" value={formData.name} onChange={handleChange} className="mt-2 block w-full rounded-3xl border-0 py-1.5 px-3 text-slate-900 dark:text-white dark:bg-widget shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-accent sm:text-sm sm:leading-6 disabled:opacity-50" disabled={loading || isReadOnly}/>
@@ -166,7 +166,7 @@ export function ArticleForm({ initialData, articleId, qrCode, onUpdate }: Articl
         <textarea name="description" value={formData.description || ''} onChange={handleChange} rows={3} className="mt-2 block w-full rounded-3xl border-0 py-1.5 px-3 text-slate-900 dark:text-white dark:bg-widget shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-accent sm:text-sm sm:leading-6 disabled:opacity-50" disabled={loading || isReadOnly}/>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div>
           <label className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-200">Herstellpreis (€) *</label>
           <input required type="number" step="0.01" min="0" name="herstellpreis" value={formData.herstellpreis} onChange={handleChange} className="mt-2 block w-full rounded-3xl border-0 py-1.5 px-3 text-slate-900 dark:text-white dark:bg-widget shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-accent sm:text-sm sm:leading-6 disabled:opacity-50" disabled={loading || isReadOnly}/>
@@ -198,7 +198,7 @@ export function ArticleForm({ initialData, articleId, qrCode, onUpdate }: Articl
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-end animate-in fade-in slide-in-from-bottom-2 duration-700 delay-300">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-end animate-in fade-in slide-in-from-bottom-2 duration-700 delay-300">
         <div className="relative">
           <label className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-200">Bestand *</label>
           <div className="relative mt-2">
@@ -218,7 +218,7 @@ export function ArticleForm({ initialData, articleId, qrCode, onUpdate }: Articl
           </div>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-6">
           <label className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-200">Einheit *</label>
           <div className="grid grid-cols-5 gap-1">
             {ALL_UNITS.map((u) => (
@@ -248,7 +248,7 @@ export function ArticleForm({ initialData, articleId, qrCode, onUpdate }: Articl
         </div>
       </div>
 
-      <div className="flex justify-end pt-4 border-t border-slate-200 dark:border-slate-700 gap-4">
+      <div className="flex justify-end pt-4 border-t border-slate-200 dark:border-slate-700 gap-8">
         <button type="button" onClick={() => router.push('/dashboard/articles')} disabled={loading} className="px-4 py-2 text-sm font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-3xl transition-colors disabled:opacity-50">
           Abbrechen
         </button>

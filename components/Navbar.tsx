@@ -36,7 +36,7 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
     <nav className="sticky top-0 z-50 shadow-sm bg-white/80 dark:bg-widget/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-700 w-full h-16">
       <div className="h-full px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-full">
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-8">
             <button 
               onClick={onMenuClick}
               className="lg:hidden p-2 rounded-2xl hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-500 transition-colors"

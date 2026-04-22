@@ -9,7 +9,7 @@ export default function Home() {
       <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-300 max-w-2xl mb-8">
         Dies ist eine minimalistische und moderne Basisstruktur für dein Projekt mit Next.js, Tailwind CSS und Supabase.
       </p>
-      <div className="flex gap-4">
+      <div className="flex gap-8">
         <Link href="/dashboard" className="rounded-2xl bg-accent px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-accent-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-all">
           Zum Dashboard
         </Link>

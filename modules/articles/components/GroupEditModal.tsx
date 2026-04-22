@@ -138,7 +138,7 @@ export function GroupEditModal({ group, onClose, onSave }: GroupEditModalProps) 
             />
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-6">
             <div className="flex items-center justify-between">
               <label className="text-sm font-bold text-slate-500 uppercase tracking-wider">Artikel verwalten</label>
               <span className="text-xs font-bold px-2 py-1 bg-indigo-50 dark:bg-indigo-900/30 text-accent dark:text-indigo-400 rounded-2xl">
@@ -177,7 +177,7 @@ export function GroupEditModal({ group, onClose, onSave }: GroupEditModalProps) 
                   return (
                     <label 
                       key={article.id} 
-                      className={`flex items-center gap-4 px-4 py-3 cursor-pointer hover:bg-slate-100/50 dark:hover:bg-slate-700/30 transition-colors ${isChecked ? 'bg-indigo-50/30 dark:bg-indigo-900/10' : ''}`}
+                      className={`flex items-center gap-8 px-4 py-3 cursor-pointer hover:bg-slate-100/50 dark:hover:bg-slate-700/30 transition-colors ${isChecked ? 'bg-indigo-50/30 dark:bg-indigo-900/10' : ''}`}
                     >
                       <input 
                         type="checkbox"
@@ -208,7 +208,7 @@ export function GroupEditModal({ group, onClose, onSave }: GroupEditModalProps) 
           </div>
 
           {error && (
-            <div className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-100 dark:border-red-800 rounded-2xl flex items-center gap-3 text-red-700 dark:text-red-400 text-sm font-medium">
+            <div className="p-8 bg-red-50 dark:bg-red-900/20 border border-red-100 dark:border-red-800 rounded-2xl flex items-center gap-3 text-red-700 dark:text-red-400 text-sm font-medium">
               <AlertCircle className="w-5 h-5 flex-shrink-0" />
               {error}
             </div>

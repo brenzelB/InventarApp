@@ -57,7 +57,7 @@ export function StockAdjustmentForm({ onAdjust, loading }: StockAdjustmentFormPr
         <h3 className="font-semibold text-slate-800 dark:text-white text-sm">Bestand anpassen</h3>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-6">
         <div className="grid grid-cols-2 bg-white dark:bg-widget p-1 rounded-2xl border border-slate-200 dark:border-slate-700 gap-1">
           <button
             type="button"

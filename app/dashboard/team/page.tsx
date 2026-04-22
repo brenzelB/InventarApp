@@ -227,7 +227,7 @@ export default function TeamPage() {
         <p className="text-slate-500 mt-4 max-w-md font-medium">
           Diese Seite ist ausschließlich Administratoren vorbehalten. Deine aktuelle Rolle ist: <span className="text-red-600 font-black uppercase">{role}</span>.
         </p>
-        <div className="mt-8 flex gap-4">
+        <div className="mt-8 flex gap-8">
           <button onClick={() => window.location.reload()} className="px-6 py-2 bg-slate-900 text-white rounded-3xl font-bold flex items-center gap-2">
             <RefreshCcw className="w-4 h-4" /> Aktualisieren
           </button>
@@ -250,7 +250,7 @@ export default function TeamPage() {
             Zentrale Schnittstelle für Mitglieder, Berechtigungen und Einladungen.
           </p>
         </div>
-        <div className="mt-4 md:mt-0 flex gap-4">
+        <div className="mt-4 md:mt-0 flex gap-8">
           <button 
             onClick={fetchTeamData}
             className="p-3 bg-white dark:bg-widget border border-slate-100 dark:border-slate-700 rounded-2xl shadow-sm hover:bg-slate-50 transition-all"
@@ -266,7 +266,7 @@ export default function TeamPage() {
           {/* Mitglieder-Tabelle */}
           <div className="bg-white dark:bg-widget rounded-[2.5rem] border border-slate-100 dark:border-slate-700 shadow-xl shadow-slate-100/50 dark:shadow-none overflow-hidden transition-all">
             <div className="p-8 border-b border-slate-100 dark:border-slate-700 flex items-center justify-between">
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-8">
                 <div className="w-12 h-12 rounded-2xl bg-indigo-50 dark:bg-indigo-900/30 flex items-center justify-center">
                   <Users className="w-6 h-6 text-accent" />
                 </div>
@@ -334,7 +334,7 @@ export default function TeamPage() {
           {/* Einladungen-Sektion */}
           {invitations.length > 0 && (
             <div className="bg-white dark:bg-widget rounded-[2.5rem] border border-slate-100 dark:border-slate-700 shadow-md border border-slate-200 dark:border-white/10 shadow-slate-100/50 dark:shadow-none overflow-hidden animate-in slide-in-from-top-4 duration-500">
-              <div className="p-8 border-b border-slate-100 dark:border-slate-700 flex items-center gap-4">
+              <div className="p-8 border-b border-slate-100 dark:border-slate-700 flex items-center gap-8">
                 <div className="w-12 h-12 rounded-2xl bg-amber-50 dark:bg-amber-900/30 flex items-center justify-center">
                   <Clock className="w-6 h-6 text-amber-500" />
                 </div>
@@ -430,7 +430,7 @@ export default function TeamPage() {
               </div>
 
               {message && (
-                <div className={`p-5 rounded-2xl flex items-center gap-4 text-xs font-black uppercase tracking-widest animate-in slide-in-from-top-2 duration-300 ${message.type === 'success' ? 'bg-white/20 text-white' : 'bg-red-500/50 text-white border border-red-400'}`}>
+                <div className={`p-5 rounded-2xl flex items-center gap-8 text-xs font-black uppercase tracking-widest animate-in slide-in-from-top-2 duration-300 ${message.type === 'success' ? 'bg-white/20 text-white' : 'bg-red-500/50 text-white border border-red-400'}`}>
                   {message.type === 'success' ? <CheckCircle2 className="w-5 h-5 flex-shrink-0" /> : <AlertCircle className="w-5 h-5 flex-shrink-0" />}
                   {message.text}
                 </div>
@@ -439,7 +439,7 @@ export default function TeamPage() {
               <button
                 type="submit"
                 disabled={isInviting}
-                className="w-full bg-white text-accent rounded-2xl py-5 text-xs font-black uppercase tracking-[0.3em] shadow-xl hover:bg-slate-50 hover:scale-[1.02] active:scale-95 transition-all disabled:opacity-50 flex items-center justify-center gap-4 group"
+                className="w-full bg-white text-accent rounded-2xl py-5 text-xs font-black uppercase tracking-[0.3em] shadow-xl hover:bg-slate-50 hover:scale-[1.02] active:scale-95 transition-all disabled:opacity-50 flex items-center justify-center gap-8 group"
               >
                 {isInviting ? <Loader2 className="w-5 h-5 animate-spin" /> : <UserPlus className="w-5 h-5 group-hover:rotate-12 transition-transform" />}
                 Einladung senden

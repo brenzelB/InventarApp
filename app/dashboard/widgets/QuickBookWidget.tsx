@@ -49,13 +49,13 @@ export function QuickBookWidget() {
   };
 
   return (
-    <div className="h-full w-full bg-white dark:bg-widget rounded-3xl p-6 shadow ring-1 ring-slate-200 dark:ring-slate-700 flex flex-col relative overflow-hidden">
+    <div className="h-full w-full bg-white dark:bg-widget rounded-3xl p-8 shadow ring-1 ring-slate-200 dark:ring-slate-700 flex flex-col relative overflow-hidden">
       <h3 className="text-sm font-bold text-slate-800 dark:text-white flex items-center gap-2 mb-4">
         <Zap className="w-4 h-4 text-amber-500" />
         Express-Buchung
       </h3>
       
-      <div className="flex-1 flex flex-col gap-4">
+      <div className="flex-1 flex flex-col gap-8">
         {articlesLoading ? (
            <div className="h-10 bg-slate-100 dark:bg-slate-700 animate-pulse rounded-2xl" />
         ) : (

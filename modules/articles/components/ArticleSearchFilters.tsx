@@ -21,7 +21,7 @@ export function ArticleSearchFilters({
   setSortBy
 }: ArticleSearchFiltersProps) {
   return (
-    <div className="flex flex-col md:flex-row gap-4 items-end md:items-center justify-between bg-white dark:bg-widget p-4 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm">
+    <div className="flex flex-col md:flex-row gap-8 items-end md:items-center justify-between bg-white dark:bg-widget p-8 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm">
       
       {/* Search Input */}
       <div className="relative flex-1 w-full">
