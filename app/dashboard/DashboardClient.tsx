@@ -182,12 +182,16 @@ export function DashboardClient({ userId, initialLayout }: DashboardClientProps)
             useCSSTransforms={true}
             draggableCancel=".no-drag"
           >
-            {layout.map(item => {
+            {layout.map((item, index) => {
               const WidgetComponent = WIDGET_COMPONENTS[item.i];
               if (!WidgetComponent) return null;
 
               return (
-                <div key={item.i} className={`transition-shadow ${isEditing ? 'cursor-grab active:cursor-grabbing ring-2 ring-accent ring-offset-2 ring-offset-slate-50 dark:ring-offset-slate-900 rounded-3xl' : ''}`}>
+                <div 
+                  key={item.i} 
+                  className={`animate-fadeInUp transition-shadow opacity-0 ${isEditing ? 'cursor-grab active:cursor-grabbing ring-2 ring-accent ring-offset-2 ring-offset-slate-50 dark:ring-offset-slate-900 rounded-3xl' : ''}`}
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
                   <WidgetComponent 
                     config={(item as any).settings || {}} 
                     onUpdateConfig={(s: any) => handleUpdateWidgetConfig(item.i, s)} 

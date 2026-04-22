@@ -28,6 +28,11 @@ export function InventoryValueWidget({ config, onUpdateConfig }: { config: any, 
     console.log("🔄 Toggle geklickt! Neuer Modus:", val ? "NETTO" : "BRUTTO");
     setIsNetView(val);
     onUpdateConfig({ isNetto: val });
+    
+    // Trigger Feedback Animation jump effect
+    setIsPulsing(false);
+    setTimeout(() => setIsPulsing(true), 10);
+    setTimeout(() => setIsPulsing(false), 1500);
   };
 
   const stats = useMemo(() => {
