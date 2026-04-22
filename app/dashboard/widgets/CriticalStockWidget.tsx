@@ -2,7 +2,7 @@
 
 import { useMemo, useEffect, useState } from "react";
 import { useArticles } from "@/modules/articles/hooks/useArticles";
-import { AlertOctagon } from "lucide-react";
+import { Info, AlertTriangle } from "lucide-react";
 import Link from "next/link";
 import { getSettings } from "@/app/dashboard/settings/actions";
 
