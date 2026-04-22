@@ -49,9 +49,16 @@ interface ArticleTableProps {
   onDelete: () => void;
   columnSettings: ColumnSetting[];
   setColumnSettings: (settings: ColumnSetting[]) => void;
+  onRowReorder?: (newOrder: string[]) => void;
 }
 
-export function ArticleTable({ articles, onDelete, columnSettings, setColumnSettings }: ArticleTableProps) {
+export function ArticleTable({ 
+  articles, 
+  onDelete, 
+  columnSettings, 
+  setColumnSettings,
+  onRowReorder 
+}: ArticleTableProps) {
   const [localArticles, setLocalArticles] = useState<Article[]>(articles);
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [updatingId, setUpdatingId] = useState<string | null>(null);
@@ -88,7 +95,11 @@ export function ArticleTable({ articles, onDelete, columnSettings, setColumnSett
         const oldIndex = items.findIndex((i) => i.id === active.id);
         const newIndex = items.findIndex((i) => i.id === over.id);
         const newList = arrayMove(items, oldIndex, newIndex);
-        localStorage.setItem('article_sort_order', JSON.stringify(newList.map(a => a.id)));
+        const newIds = newList.map(a => a.id);
+        
+        localStorage.setItem('article_sort_order', JSON.stringify(newIds));
+        if (onRowReorder) onRowReorder(newIds);
+        
         return newList;
       });
     } else if (activeType === 'column' && active.id !== over.id) {
