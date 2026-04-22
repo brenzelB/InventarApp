@@ -86,8 +86,8 @@ export default function SettingsPage() {
   return (
     <div className="max-w-4xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="flex items-center gap-3 mb-2">
-        <div className="p-2 bg-indigo-50 rounded-3xl">
-          <Settings className="w-6 h-6 text-accent" />
+        <div className="p-2 bg-slate-100 rounded-3xl">
+          <Settings className="w-6 h-6 text-slate-700" />
         </div>
         <div>
           <h1 className="text-2xl font-bold text-slate-900 uppercase tracking-tight">Einstellungen</h1>
@@ -99,7 +99,7 @@ export default function SettingsPage() {
         {/* App Profile */}
         <div className="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 flex flex-col h-full ring-1 ring-slate-100/50">
           <div className="flex items-center gap-3 mb-6">
-            <Store className="w-5 h-5 text-accent" />
+            <Store className="w-5 h-5 text-slate-700" />
             <h2 className="font-bold text-slate-900 uppercase tracking-tight text-sm">App-Profil</h2>
           </div>
           
@@ -128,7 +128,7 @@ export default function SettingsPage() {
         {/* Inventory Logic */}
         <div className="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 flex flex-col h-full ring-1 ring-slate-100/50">
           <div className="flex items-center gap-3 mb-6">
-            <Activity className="w-5 h-5 text-accent" />
+            <Activity className="w-5 h-5 text-slate-700" />
             <h2 className="font-bold text-slate-900 uppercase tracking-tight text-sm">Inventar-Logik</h2>
           </div>
           
@@ -163,7 +163,7 @@ export default function SettingsPage() {
       {/* Data Maintenance */}
       <div className="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 ring-1 ring-slate-100/50">
         <div className="flex items-center gap-3 mb-6">
-          <Database className="w-5 h-5 text-accent" />
+          <Database className="w-5 h-5 text-slate-700" />
           <h2 className="font-bold text-slate-900 uppercase tracking-tight text-sm">Daten-Wartung</h2>
         </div>
         
@@ -172,7 +172,7 @@ export default function SettingsPage() {
             onClick={handleExport}
             className="flex items-center justify-center gap-3 py-4 bg-slate-50 hover:bg-slate-100 text-slate-900 rounded-2xl font-black text-xs uppercase tracking-widest transition-all border border-slate-200 shadow-sm active:scale-[0.98]"
           >
-            <FileDown className="w-5 h-5 text-accent" />
+            <FileDown className="w-5 h-5 text-slate-700" />
             Excel-Export (.xlsx)
           </button>
 

@@ -102,7 +102,7 @@ export default function ProfilePage() {
         <div className="lg:col-span-2 space-y-8">
           <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
             <h3 className="text-xl font-bold text-slate-900 mb-6 uppercase tracking-wider flex items-center gap-2">
-              <Settings className="w-5 h-5 text-accent" />
+              <Settings className="w-5 h-5 text-slate-700" />
               Persönliche Daten
             </h3>
             
@@ -149,8 +149,9 @@ export default function ProfilePage() {
                       onClick={() => setAvatarId(item.id)}
                       className={`
                         p-3 rounded-2xl flex items-center justify-center transition-all
-                          ? 'bg-accent text-white shadow-md border border-slate-200 shadow-indigo-200' 
-                          : 'bg-slate-50 text-slate-400 hover:text-slate-600 hover:bg-slate-100'}
+                        ${avatarId === item.id 
+                          ? 'bg-blue-600 text-white shadow-md shadow-blue-200' 
+                          : 'bg-slate-50 text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-slate-100'}
                       `}
                       title={item.label}
                     >
@@ -180,7 +181,7 @@ export default function ProfilePage() {
 
           <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
              <h3 className="text-xl font-bold text-slate-900 mb-6 uppercase tracking-wider flex items-center gap-2">
-              <Key className="w-5 h-5 text-accent" />
+              <Key className="w-5 h-5 text-slate-700" />
               Sicherheit
             </h3>
             <p className="text-sm text-slate-500 mb-6 font-medium leading-relaxed">
