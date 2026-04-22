@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { articleService } from "@/modules/articles/services/articleService";
 import { useSupabaseRealtime } from "@/hooks/useSupabaseRealtime";
+import { useTheme } from "@/components/ThemeProvider";
 
 interface WeeklyTrendWidgetProps {
   config: {
@@ -24,6 +25,10 @@ interface WeeklyTrendWidgetProps {
 export function WeeklyTrendWidget({ config, onUpdateConfig }: WeeklyTrendWidgetProps) {
   const [data, setData] = useState<{ date: string; input: number; output: number; total: number }[]>([]);
   const [loading, setLoading] = useState(true);
+  const { theme } = useTheme();
+  
+  // Detect if dark mode is active (considering system preference)
+  const isDark = theme === 'dark' || (theme === 'system' && typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches);
   
   // Robust initialization and logging
   const timeRange = config.timeRange || config.days || '7';
@@ -136,11 +141,12 @@ export function WeeklyTrendWidget({ config, onUpdateConfig }: WeeklyTrendWidgetP
   };
 
   return (
-    <div className="h-full w-full bg-white rounded-3xl p-8 shadow ring-1 ring-slate-200 flex flex-col">
+  return (
+    <div className="h-full w-full bg-white dark:bg-slate-900 rounded-3xl p-8 shadow ring-1 ring-slate-200 dark:ring-slate-800 flex flex-col">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-          <div className="p-1.5 bg-blue-50 rounded-2xl">
-            <TrendingUp className="w-4 h-4 text-blue-600" />
+        <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
+          <div className="p-1.5 bg-blue-50 dark:bg-slate-800 rounded-2xl">
+            <TrendingUp className="w-4 h-4 text-blue-600 dark:text-blue-400" />
           </div>
           Bestands-Analyse
         </h3>
@@ -148,7 +154,7 @@ export function WeeklyTrendWidget({ config, onUpdateConfig }: WeeklyTrendWidgetP
         <div className="flex items-center gap-2">
           <button 
             onClick={() => updateSettings({ chartType: chartType === 'area' ? 'bar' : 'area' })}
-            className="p-1.5 text-slate-400 hover:text-blue-600 transition-colors rounded-2xl hover:bg-slate-50"
+            className="p-1.5 text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-800"
             title="Darstellung umschalten"
           >
             {chartType === 'area' ? <BarChart2 className="w-4 h-4" /> : <LayoutIcon className="w-4 h-4" />}
@@ -156,7 +162,7 @@ export function WeeklyTrendWidget({ config, onUpdateConfig }: WeeklyTrendWidgetP
 
           <button 
             onClick={() => loadTrend()}
-            className="p-1.5 text-slate-400 hover:text-blue-600 transition-colors rounded-2xl hover:bg-slate-50"
+            className="p-1.5 text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-800"
           >
             <RefreshCcw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
           </button>
@@ -164,7 +170,7 @@ export function WeeklyTrendWidget({ config, onUpdateConfig }: WeeklyTrendWidgetP
           <select 
             value={timeRange} 
             onChange={(e) => updateSettings({ timeRange: Number(e.target.value) })}
-            className="text-[10px] font-black uppercase tracking-widest bg-slate-50 border-none rounded-2xl px-3 py-1.5 ring-1 ring-slate-200 focus:ring-2 focus:ring-blue-600 cursor-pointer text-slate-700"
+            className="text-[10px] font-black uppercase tracking-widest bg-slate-50 dark:bg-slate-800 border-none rounded-2xl px-3 py-1.5 ring-1 ring-slate-200 dark:ring-slate-700 focus:ring-2 focus:ring-blue-600 cursor-pointer text-slate-700 dark:text-slate-300"
           >
             <option value={1}>Heute</option>
             <option value={7}>7 Tage</option>
@@ -191,26 +197,43 @@ export function WeeklyTrendWidget({ config, onUpdateConfig }: WeeklyTrendWidgetP
                   <stop offset="95%" stopColor="#6366f1" stopOpacity={0}/>
                 </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" opacity={0.5} />
+              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={isDark ? "#334155" : "#e2e8f0"} opacity={0.5} />
               <XAxis 
                 dataKey="date" 
                 axisLine={false} 
                 tickLine={false} 
-                tick={{ fontSize: 9, fill: '#94a3b8', fontWeight: 500 }} 
+                tick={{ fontSize: 9, fill: isDark ? '#64748b' : '#94a3b8', fontWeight: 500 }} 
                 dy={12}
                 interval={Number(timeRange) === 1 ? 2 : Number(timeRange) > 7 ? 'preserveStartEnd' : 0}
               />
               <YAxis 
                 axisLine={false} 
                 tickLine={false} 
-                tick={{ fontSize: 9, fill: '#94a3b8', fontWeight: 500 }}
+                tick={{ fontSize: 9, fill: isDark ? '#64748b' : '#94a3b8', fontWeight: 500 }}
               />
               <Tooltip 
-                contentStyle={{ borderRadius: '16px', border: 'none', boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.1)', padding: '16px' }}
-                labelStyle={{ fontWeight: '900', color: '#1e293b', marginBottom: '10px', fontSize: '13px' }}
+                contentStyle={{ 
+                  borderRadius: '16px', 
+                  border: 'none', 
+                  backgroundColor: isDark ? '#0f172a' : '#ffffff',
+                  boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.1)', 
+                  padding: '16px' 
+                }}
+                labelStyle={{ fontWeight: '900', color: isDark ? '#f1f5f9' : '#1e293b', marginBottom: '10px', fontSize: '13px' }}
                 cursor={{ stroke: '#6366f1', strokeWidth: 1, strokeDasharray: '5 5' }}
               />
-              <Legend verticalAlign="top" height={36} iconType="circle" wrapperStyle={{ fontSize: '10px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#475569' }} />
+              <Legend 
+                verticalAlign="top" 
+                height={36} 
+                iconType="circle" 
+                wrapperStyle={{ 
+                  fontSize: '10px', 
+                  fontWeight: 'bold', 
+                  textTransform: 'uppercase', 
+                  letterSpacing: '0.05em', 
+                  color: isDark ? '#94a3b8' : '#475569' 
+                }} 
+              />
               
               {chartType === 'area' ? (
                 <>

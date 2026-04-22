@@ -63,7 +63,7 @@ export function QRCodeView({ svgString, articleId, name, size = "md" }: QRCodeVi
     <>
       {/* Thumbnail in der Tabelle */}
       <div
-        className={`${sizes[size]} cursor-zoom-in hover:opacity-80 hover:scale-105 transition-all duration-150 rounded-lg border border-slate-200 bg-white p-1.5 shadow-sm`}
+        className={`${sizes[size]} cursor-zoom-in hover:opacity-80 hover:scale-105 transition-all duration-150 rounded-lg border border-slate-200 dark:border-slate-800 bg-white p-1.5 shadow-sm`}
         onClick={() => setIsOpen(true)}
         title={`QR-Code für ${name} – vergrößern`}
       >
@@ -79,17 +79,17 @@ export function QRCodeView({ svgString, articleId, name, size = "md" }: QRCodeVi
       {/* Zoom-Modal */}
       {isOpen && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/70 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm"
           onClick={() => setIsOpen(false)}
         >
           <div
-            className="bg-white p-8 rounded-3xl shadow-2xl max-w-sm w-full"
+            className="bg-white dark:bg-slate-900 p-8 rounded-3xl shadow-2xl max-w-sm w-full border border-transparent dark:border-slate-800"
             style={{ animation: "qrZoomIn 0.15s ease-out" }}
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
             <div className="flex justify-between items-center mb-6">
-              <h3 className="text-lg font-bold tracking-wide text-slate-900 truncate pr-4">
+              <h3 className="text-lg font-bold tracking-wide text-slate-900 dark:text-slate-100 truncate pr-4">
                 {name}
               </h3>
               <button
@@ -107,8 +107,8 @@ export function QRCodeView({ svgString, articleId, name, size = "md" }: QRCodeVi
               <img src={imgSrc} alt="QR Code" className="w-64 h-64 object-contain" />
             </div>
 
-            <p className="mt-3 text-center text-xs text-slate-400">
-              Scan mit Smartphone öffnet die Artikel-Detailseite
+            <p className="mt-3 text-center text-xs text-slate-400 dark:text-slate-500 font-bold uppercase tracking-widest">
+              Scan öffnet die Detailseite
             </p>
 
             {/* Aktionen */}
@@ -126,7 +126,7 @@ export function QRCodeView({ svgString, articleId, name, size = "md" }: QRCodeVi
               </a>
               <button
                 onClick={() => window.print()}
-                className="flex items-center justify-center gap-2 bg-slate-100 text-slate-700 px-4 py-2.5 rounded-2xl font-medium hover:bg-slate-200 transition-colors"
+                className="flex items-center justify-center gap-2 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-4 py-2.5 rounded-2xl font-bold text-xs uppercase tracking-widest hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
               >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />

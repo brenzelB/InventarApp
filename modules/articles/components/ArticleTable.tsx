@@ -83,38 +83,38 @@ export function ArticleTable({ articles, onDelete }: ArticleTableProps) {
 
   if (articles.length === 0) {
     return (
-      <div className="text-center py-12 bg-white rounded-2xl shadow-sm border border-slate-200">
-        <svg className="mx-auto h-12 w-12 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+      <div className="text-center py-12 bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800">
+        <svg className="mx-auto h-12 w-12 text-slate-400 dark:text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
         </svg>
-        <h3 className="mt-2 text-sm font-bold text-slate-900">Keine Artikel gefunden</h3>
-        <p className="mt-1 text-sm text-slate-500 font-medium">Lege deinen ersten Artikel an.</p>
+        <h3 className="mt-2 text-sm font-bold text-slate-900 dark:text-slate-100">Keine Artikel gefunden</h3>
+        <p className="mt-1 text-sm text-slate-500 dark:text-slate-400 font-medium">Lege deinen ersten Artikel an.</p>
       </div>
     );
   }
 
   return (
-    <div className="overflow-x-auto shadow ring-1 ring-slate-200 sm:rounded-2xl">
-      <table className="min-w-full divide-y divide-slate-200 table-auto">
-        <thead className="bg-slate-50">
+    <div className="overflow-x-auto shadow ring-1 ring-slate-200 dark:ring-slate-800 sm:rounded-2xl">
+      <table className="min-w-full divide-y divide-slate-200 dark:divide-slate-800 table-auto">
+        <thead className="bg-slate-50 dark:bg-slate-900">
           <tr>
-            <th scope="col" className="py-4 pl-4 pr-3 text-left text-[11px] font-black text-slate-900 uppercase tracking-widest sm:pl-6 w-16">QR</th>
-            <th scope="col" className="px-3 py-4 text-left text-[11px] font-black text-slate-900 uppercase tracking-widest">Name</th>
-            <th scope="col" className="px-3 py-4 text-left text-[11px] font-black text-slate-900 uppercase tracking-widest">Beschreibung</th>
-            <th scope="col" className="px-3 py-4 text-left text-[11px] font-black text-slate-900 uppercase tracking-widest">SKU</th>
-            <th scope="col" className="px-3 py-4 text-left text-[11px] font-black text-slate-900 uppercase tracking-widest">Lagerort</th>
-            <th scope="col" className="px-3 py-4 text-right text-[11px] font-black text-slate-900 uppercase tracking-widest">Bestand</th>
-            <th scope="col" className="px-3 py-4 text-right text-[11px] font-black text-slate-900 uppercase tracking-widest">EK-Preis</th>
-            <th scope="col" className="px-3 py-4 text-right text-[11px] font-black text-slate-900 uppercase tracking-widest">VK-Preis</th>
-            <th scope="col" className="px-3 py-4 text-left text-[11px] font-black text-slate-900 uppercase tracking-widest w-px whitespace-nowrap">Aktionen</th>
+            <th scope="col" className="py-4 pl-4 pr-3 text-left text-[11px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-widest sm:pl-6 w-16">QR</th>
+            <th scope="col" className="px-3 py-4 text-left text-[11px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-widest">Name</th>
+            <th scope="col" className="px-3 py-4 text-left text-[11px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-widest">Beschreibung</th>
+            <th scope="col" className="px-3 py-4 text-left text-[11px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-widest">SKU</th>
+            <th scope="col" className="px-3 py-4 text-left text-[11px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-widest">Lagerort</th>
+            <th scope="col" className="px-3 py-4 text-right text-[11px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-widest">Bestand</th>
+            <th scope="col" className="px-3 py-4 text-right text-[11px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-widest">EK-Preis</th>
+            <th scope="col" className="px-3 py-4 text-right text-[11px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-widest">VK-Preis</th>
+            <th scope="col" className="px-3 py-4 text-left text-[11px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-widest w-px whitespace-nowrap">Aktionen</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-slate-200 bg-white">
+        <tbody className="divide-y divide-slate-200 dark:divide-slate-800 bg-white dark:bg-slate-950">
           {articles.map((article, index) => (
             <tr 
               key={article.id} 
               className={`
-                hover:bg-slate-50 transition-all groups
+                hover:bg-slate-50 dark:hover:bg-slate-900 transition-all groups
                 animate-in fade-in slide-in-from-left-4 duration-500
               `}
               style={{ animationDelay: `${index * 50}ms` }}
@@ -123,34 +123,34 @@ export function ArticleTable({ articles, onDelete }: ArticleTableProps) {
                 <QRCodeView svgString={article.qr_code} name={article.name} articleId={article.id} size="sm" />
               </td>
               <td className="px-3 py-4 text-sm font-bold">
-                <Link href={`/dashboard/articles/${article.id}`} className="text-slate-900 hover:text-accent transition-colors block truncate max-w-xs md:max-w-md">
+                <Link href={`/dashboard/articles/${article.id}`} className="text-slate-900 dark:text-slate-100 hover:text-accent transition-colors block truncate max-w-xs md:max-w-md">
                   {article.name}
                 </Link>
                 {article.group && (
-                  <span className="inline-flex mt-1 items-center rounded-3xl bg-slate-100 px-2 py-0.5 text-[10px] font-black text-slate-500 ring-1 ring-inset ring-slate-200">
+                  <span className="inline-flex mt-1 items-center rounded-3xl bg-slate-100 dark:bg-slate-800 px-2 py-0.5 text-[10px] font-black text-slate-500 dark:text-slate-400 ring-1 ring-inset ring-slate-200 dark:ring-slate-700">
                     {article.group.name}
                   </span>
                 )}
               </td>
-              <td className="px-3 py-4 text-sm text-slate-600 font-medium max-w-xs truncate" title={article.description || ''}>
+              <td className="px-3 py-4 text-sm text-slate-600 dark:text-slate-400 font-medium max-w-xs truncate" title={article.description || ''}>
                 {article.description || "—"}
               </td>
-              <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-600 font-bold font-mono">{article.sku}</td>
-              <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-600 font-medium">{article.lagerort || "—"}</td>
+              <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-600 dark:text-slate-400 font-bold font-mono">{article.sku}</td>
+              <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-600 dark:text-slate-400 font-medium">{article.lagerort || "—"}</td>
               <td className="whitespace-nowrap px-3 py-4 text-sm text-right">
                 <div className="flex items-center justify-end gap-2 group/stock">
                   {role !== 'viewer' && (
-                    <div className="flex items-center bg-slate-100 rounded-2xl p-0.5 opacity-0 group-hover/stock:opacity-100 transition-opacity">
+                    <div className="flex items-center bg-slate-100 dark:bg-slate-800 rounded-2xl p-0.5 opacity-0 group-hover/stock:opacity-100 transition-opacity">
                       <button 
                         onClick={() => handleQuickAdjust(article, -1)}
-                        className="p-1 hover:text-red-600 transition-colors"
+                        className="p-1 hover:text-red-600 dark:hover:text-red-400 transition-colors"
                         disabled={updatingId === article.id}
                       >
                         <Minus size={14} />
                       </button>
                       <button 
                         onClick={() => handleQuickAdjust(article, 1)}
-                        className="p-1 hover:text-green-600 transition-colors"
+                        className="p-1 hover:text-green-600 dark:hover:text-green-400 transition-colors"
                         disabled={updatingId === article.id}
                       >
                         <Plus size={14} />
@@ -162,10 +162,10 @@ export function ArticleTable({ articles, onDelete }: ArticleTableProps) {
                     inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-black ring-1 ring-inset transition-all
                     ${updatingId === article.id ? 'opacity-50 blur-[1px]' : ''}
                     ${article.bestand === 0
-                      ? 'bg-slate-100 text-slate-900 ring-slate-900/10'
+                      ? 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 ring-slate-900/10 dark:ring-slate-100/10'
                       : article.bestand <= article.mindestbestand 
-                      ? 'bg-rose-100 text-rose-900 ring-rose-900/20' 
-                      : 'bg-emerald-100 text-emerald-900 ring-emerald-900/20'}
+                      ? 'bg-rose-100 dark:bg-rose-900/30 text-rose-900 dark:text-rose-400 ring-rose-900/20' 
+                      : 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-900 dark:text-emerald-400 ring-emerald-900/20'}
                   `}>
                     {updatingId === article.id ? (
                       <Loader2 className="w-3 h-3 animate-spin mr-1" />
@@ -180,7 +180,7 @@ export function ArticleTable({ articles, onDelete }: ArticleTableProps) {
                     autoFocus
                     type="number"
                     step="0.01"
-                    className="w-20 rounded border-slate-300 bg-white text-right py-1 px-2 text-xs focus:ring-accent font-bold"
+                    className="w-20 rounded border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 text-right py-1 px-2 text-xs focus:ring-accent font-bold"
                     value={editValue}
                     onChange={(e) => setEditValue(e.target.value)}
                     onBlur={() => handlePriceSave(article.id)}
@@ -193,13 +193,13 @@ export function ArticleTable({ articles, onDelete }: ArticleTableProps) {
                   <button 
                     onClick={() => startEditing(article)}
                     disabled={updatingId === article.id}
-                    className="hover:text-accent font-bold transition-colors"
+                    className="text-slate-900 dark:text-slate-100 hover:text-accent font-bold transition-colors"
                   >
                     {Number(article.purchase_price || 0).toFixed(2)} €
                   </button>
                 )}
               </td>
-              <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-500 text-right tabular-nums font-medium">
+              <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-500 dark:text-slate-400 text-right tabular-nums font-medium">
                 {Number(article.verkaufspreis).toFixed(2)} €
               </td>
               <td className="whitespace-nowrap px-3 py-4 text-sm font-medium w-px">
@@ -209,7 +209,7 @@ export function ArticleTable({ articles, onDelete }: ArticleTableProps) {
                       href={`/dashboard/articles/${article.id}`} 
                       title="Bearbeiten"
                       aria-label="Artikel bearbeiten"
-                      className="p-2 text-slate-400 hover:text-blue-600 hover:bg-slate-50 rounded-xl transition-all"
+                      className="p-2 text-slate-400 dark:text-slate-600 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-xl transition-all"
                     >
                       <Edit3 size={16} />
                     </Link>
@@ -220,10 +220,10 @@ export function ArticleTable({ articles, onDelete }: ArticleTableProps) {
                       disabled={deletingId === article.id}
                       title="Löschen"
                       aria-label="Artikel löschen"
-                      className="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition-all disabled:opacity-50"
+                      className="p-2 text-slate-400 dark:text-slate-600 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-900/30 rounded-xl transition-all disabled:opacity-50"
                     >
                       {deletingId === article.id ? (
-                        <span className="w-4 h-4 border-2 border-slate-200 border-t-rose-600 rounded-full animate-spin inline-block" />
+                        <span className="w-4 h-4 border-2 border-slate-200 dark:border-slate-700 border-t-rose-600 rounded-full animate-spin inline-block" />
                       ) : (
                         <Trash2 size={16} />
                       )}

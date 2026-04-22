@@ -14,8 +14,12 @@ import {
   FileDown, 
   Trash2, 
   Loader2, 
-  AlertTriangle 
+  AlertTriangle,
+  Sun,
+  Moon,
+  Monitor
 } from "lucide-react";
+import { useTheme } from "@/components/ThemeProvider";
 
 export default function SettingsPage() {
   const [loading, setLoading] = useState(true);
@@ -25,6 +29,8 @@ export default function SettingsPage() {
     default_unit: "Stück",
     warning_threshold: "20"
   });
+
+  const { theme, setTheme } = useTheme();
 
   const { success: toastSuccess, error: toastError } = useToast();
 
@@ -157,6 +163,39 @@ export default function SettingsPage() {
             </div>
             <p className="text-[10px] text-slate-500 font-bold italic mt-auto">Warnschwelle definiert, ab wie viel Prozent des Mindestbestands ein Artikel optisch hervorgehoben wird.</p>
           </div>
+        </div>
+
+        {/* Appearance / Theme */}
+        <div className="bg-white dark:bg-slate-900 rounded-3xl p-8 shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col h-full ring-1 ring-slate-100/50 dark:ring-slate-800/50 md:col-span-2">
+          <div className="flex items-center gap-3 mb-6">
+            <Monitor className="w-5 h-5 text-slate-700 dark:text-slate-400" />
+            <h2 className="font-bold text-slate-900 dark:text-slate-100 uppercase tracking-tight text-sm">Erscheinungsbild</h2>
+          </div>
+          
+          <div className="flex flex-col sm:flex-row gap-4">
+            {[
+              { id: 'light', label: 'Hell', icon: Sun },
+              { id: 'dark', label: 'Dunkel', icon: Moon },
+              { id: 'system', label: 'System', icon: Monitor },
+            ].map((t) => (
+              <button
+                key={t.id}
+                onClick={() => setTheme(t.id as any)}
+                className={`
+                  flex-1 flex items-center justify-center gap-3 py-4 rounded-2xl font-bold text-sm transition-all border
+                  ${theme === t.id 
+                    ? 'bg-accent text-white border-accent shadow-lg shadow-blue-100 dark:shadow-none scale-[1.02]' 
+                    : 'bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700'}
+                `}
+              >
+                <t.icon className="w-5 h-5" />
+                {t.label}
+              </button>
+            ))}
+          </div>
+          <p className="text-[10px] text-slate-500 font-bold italic mt-4 uppercase tracking-widest">
+            Wähle dein bevorzugtes Design oder lass die App automatisch deinem System folgen.
+          </p>
         </div>
       </div>
 

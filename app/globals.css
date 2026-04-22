@@ -3,40 +3,33 @@
 @tailwind utilities;
 
 :root {
-  --background: #f8fafc;
-  --foreground: #000000;
+  --background: #f8fafc; /* Slate-50 */
+  --foreground: #0f172a; /* Slate-900 */
   --widget: #ffffff;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #f8fafc; /* Forced light for visibility */
-    --foreground: #000000;
-    --widget: #ffffff;
-  }
+.dark {
+  --background: #020617; /* Slate-950 */
+  --foreground: #f1f5f9; /* Slate-100 */
+  --widget: #0f172a; /* Slate-900 */
 }
 
 body {
-  color: #0f172a; /* Force Slate-900 */
-  background: #f8fafc; /* Force Slate-50 */
+  color: var(--foreground);
+  background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Global Table Contrast Enforcement */
+/* Base Table Styles (Dynamic colors handled via Tailwind dark: classes in components) */
 table th {
-  color: #0f172a !important;
   font-weight: 900 !important;
 }
 
-table td {
-  color: #1e293b !important; /* Slate-800 */
-}
-
-/* Force Light Mode for common containers */
+/* Widget Background Utility */
 .bg-widget {
-  background-color: #ffffff !important;
+  background-color: var(--widget);
 }
 
 /* Custom Scrollbar Styling (High Specificity) */
