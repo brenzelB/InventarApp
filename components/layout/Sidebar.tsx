@@ -97,13 +97,13 @@ export default function Sidebar({ isOpen, setIsOpen, isCollapsed, setIsCollapsed
                   key={item.name}
                   href={item.href}
                   className={`
-                    flex items-center gap-3 px-3 py-2 rounded-3xl text-sm font-bold transition-all group
+                    flex items-center gap-3 px-3 py-2 rounded-3xl text-sm font-black transition-all group
                     ${isActive 
                       ? 'bg-indigo-50 text-accent' 
                       : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'}
                   `}
                 >
-                  <item.icon className={`w-5 h-5 flex-shrink-0 ${isActive ? 'text-accent' : 'text-slate-400 group-hover:text-slate-900'}`} />
+                  <item.icon className={`w-5 h-5 flex-shrink-0 ${isActive ? 'text-accent' : 'text-slate-500 group-hover:text-slate-900'}`} />
                   {!isCollapsed && <span className="truncate">{item.name}</span>}
                 </Link>
               );

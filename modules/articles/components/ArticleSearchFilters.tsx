@@ -21,7 +21,7 @@ export function ArticleSearchFilters({
   setSortBy
 }: ArticleSearchFiltersProps) {
   return (
-    <div className="flex flex-col md:flex-row gap-8 items-end md:items-center justify-between bg-white dark:bg-widget p-8 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm">
+    <div className="flex flex-col md:flex-row gap-8 items-end md:items-center justify-between bg-white p-8 rounded-2xl border border-slate-200 shadow-sm ring-1 ring-slate-100">
       
       {/* Search Input */}
       <div className="relative flex-1 w-full">
@@ -33,7 +33,7 @@ export function ArticleSearchFilters({
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Suchen nach Name, SKU oder Beschreibung..."
-          className="block w-full pl-10 pr-3 py-2 border border-slate-200 dark:border-slate-700 rounded-3xl bg-slate-50 dark:bg-widget text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent sm:text-sm transition-all"
+          className="block w-full pl-10 pr-3 py-2 border border-slate-300 rounded-3xl bg-slate-50 text-slate-900 font-bold placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent sm:text-sm transition-all"
         />
       </div>
 
@@ -46,7 +46,7 @@ export function ArticleSearchFilters({
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="block w-full pl-9 pr-8 py-2 border border-slate-200 dark:border-slate-700 rounded-3xl bg-slate-50 dark:bg-widget text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-accent sm:text-sm appearance-none cursor-pointer"
+            className="block w-full pl-9 pr-8 py-2 border border-slate-300 rounded-3xl bg-slate-50 text-slate-900 font-bold focus:outline-none focus:ring-2 focus:ring-accent sm:text-sm appearance-none cursor-pointer"
           >
             <option value="all">Alle Artikel</option>
             <option value="low_stock">Niedriger Bestand</option>
@@ -62,7 +62,7 @@ export function ArticleSearchFilters({
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
-            className="block w-full pl-9 pr-8 py-2 border border-slate-200 dark:border-slate-700 rounded-3xl bg-slate-50 dark:bg-widget text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-accent sm:text-sm appearance-none cursor-pointer"
+            className="block w-full pl-9 pr-8 py-2 border border-slate-300 rounded-3xl bg-slate-50 text-slate-900 font-bold focus:outline-none focus:ring-2 focus:ring-accent sm:text-sm appearance-none cursor-pointer"
           >
             <option value="name-asc">Name (A-Z)</option>
             <option value="name-desc">Name (Z-A)</option>

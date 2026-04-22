@@ -94,27 +94,27 @@ export function ArticleTable({ articles, onDelete }: ArticleTableProps) {
   }
 
   return (
-    <div className="overflow-x-auto shadow ring-1 ring-slate-200 dark:ring-slate-700 sm:rounded-2xl">
-      <table className="min-w-full divide-y divide-slate-300 dark:divide-slate-700 table-auto">
-        <thead className="bg-slate-50 dark:bg-widget/50">
+    <div className="overflow-x-auto shadow ring-1 ring-slate-200 sm:rounded-2xl">
+      <table className="min-w-full divide-y divide-slate-200 table-auto">
+        <thead className="bg-slate-50">
           <tr>
-            <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-slate-900 dark:text-slate-200 sm:pl-6 w-16">QR</th>
-            <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-slate-900 dark:text-slate-200">Name</th>
-            <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-slate-900 dark:text-slate-200">Beschreibung</th>
-            <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-slate-900 dark:text-slate-200">SKU</th>
-            <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-slate-900 dark:text-slate-200">Lagerort</th>
-            <th scope="col" className="px-3 py-3.5 text-right text-sm font-semibold text-slate-900 dark:text-slate-200">Bestand</th>
-            <th scope="col" className="px-3 py-3.5 text-right text-sm font-semibold text-slate-900 dark:text-slate-200">EK-Preis</th>
-            <th scope="col" className="px-3 py-3.5 text-right text-sm font-semibold text-slate-900 dark:text-slate-200">VK-Preis</th>
-            <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-slate-900 dark:text-slate-200 w-px whitespace-nowrap">Aktionen</th>
+            <th scope="col" className="py-4 pl-4 pr-3 text-left text-[11px] font-black text-slate-900 uppercase tracking-widest sm:pl-6 w-16">QR</th>
+            <th scope="col" className="px-3 py-4 text-left text-[11px] font-black text-slate-900 uppercase tracking-widest">Name</th>
+            <th scope="col" className="px-3 py-4 text-left text-[11px] font-black text-slate-900 uppercase tracking-widest">Beschreibung</th>
+            <th scope="col" className="px-3 py-4 text-left text-[11px] font-black text-slate-900 uppercase tracking-widest">SKU</th>
+            <th scope="col" className="px-3 py-4 text-left text-[11px] font-black text-slate-900 uppercase tracking-widest">Lagerort</th>
+            <th scope="col" className="px-3 py-4 text-right text-[11px] font-black text-slate-900 uppercase tracking-widest">Bestand</th>
+            <th scope="col" className="px-3 py-4 text-right text-[11px] font-black text-slate-900 uppercase tracking-widest">EK-Preis</th>
+            <th scope="col" className="px-3 py-4 text-right text-[11px] font-black text-slate-900 uppercase tracking-widest">VK-Preis</th>
+            <th scope="col" className="px-3 py-4 text-left text-[11px] font-black text-slate-900 uppercase tracking-widest w-px whitespace-nowrap">Aktionen</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-slate-200 dark:divide-slate-700 bg-white dark:bg-widget">
+        <tbody className="divide-y divide-slate-200 bg-white">
           {articles.map((article, index) => (
             <tr 
               key={article.id} 
               className={`
-                hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-all groups
+                hover:bg-slate-50 transition-all groups
                 animate-in fade-in slide-in-from-left-4 duration-500
               `}
               style={{ animationDelay: `${index * 50}ms` }}
@@ -122,21 +122,21 @@ export function ArticleTable({ articles, onDelete }: ArticleTableProps) {
               <td className="whitespace-nowrap py-4 pl-4 pr-3 sm:pl-6 w-16">
                 <QRCodeView svgString={article.qr_code} name={article.name} articleId={article.id} size="sm" />
               </td>
-              <td className="px-3 py-4 text-sm font-medium">
-                <Link href={`/dashboard/articles/${article.id}`} className="text-slate-900 dark:text-white hover:text-accent dark:hover:text-indigo-400 transition-colors block truncate max-w-xs md:max-w-md">
+              <td className="px-3 py-4 text-sm font-bold">
+                <Link href={`/dashboard/articles/${article.id}`} className="text-slate-900 hover:text-accent transition-colors block truncate max-w-xs md:max-w-md">
                   {article.name}
                 </Link>
                 {article.group && (
-                  <span className="inline-flex mt-1 items-center rounded-3xl bg-slate-50 dark:bg-widget/50 px-1.5 py-0.5 text-[10px] font-bold text-slate-500 dark:text-slate-400 ring-1 ring-inset ring-slate-200 dark:ring-slate-700">
+                  <span className="inline-flex mt-1 items-center rounded-3xl bg-slate-100 px-2 py-0.5 text-[10px] font-black text-slate-500 ring-1 ring-inset ring-slate-200">
                     {article.group.name}
                   </span>
                 )}
               </td>
-              <td className="px-3 py-4 text-sm text-slate-500 dark:text-slate-400 max-w-xs truncate" title={article.description || ''}>
+              <td className="px-3 py-4 text-sm text-slate-600 font-medium max-w-xs truncate" title={article.description || ''}>
                 {article.description || "—"}
               </td>
-              <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-500 dark:text-slate-400 font-mono">{article.sku}</td>
-              <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-500 dark:text-slate-400">{article.lagerort || "—"}</td>
+              <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-600 font-bold font-mono">{article.sku}</td>
+              <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-600 font-medium">{article.lagerort || "—"}</td>
               <td className="whitespace-nowrap px-3 py-4 text-sm text-right">
                 <div className="flex items-center justify-end gap-2 group/stock">
                   {role !== 'viewer' && (

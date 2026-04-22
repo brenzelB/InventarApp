@@ -4,14 +4,14 @@
 
 :root {
   --background: #f8fafc;
-  --foreground: #0f172a;
+  --foreground: #000000;
   --widget: #ffffff;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #f8fafc; /* Forced light for now */
-    --foreground: #0f172a;
+    --background: #f8fafc; /* Forced light for visibility */
+    --foreground: #000000;
     --widget: #ffffff;
   }
 }

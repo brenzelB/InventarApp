@@ -80,11 +80,12 @@ export const InventoryValueWidget = ({ config, onUpdateConfig }: { config: any, 
 
   if (loading) {
     return (
-      <div className="h-full w-full bg-slate-900 rounded-3xl p-6 shadow-sm flex flex-col justify-center animate-pulse gap-8 border border-slate-800">
-        <div className="h-24 bg-slate-800 rounded-3xl"></div>
+      <div className="h-full w-full bg-white rounded-3xl p-8 shadow flex items-center justify-center animate-pulse">
+        <div className="h-4 w-20 bg-slate-200 rounded"></div>
       </div>
     );
-  }  return (
+  }
+  return (
     <div className={`h-full w-full bg-white rounded-3xl shadow flex flex-col ring-1 ring-slate-200 overflow-hidden`}>
       
       {/* Header with Toggle */}

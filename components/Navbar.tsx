@@ -49,10 +49,10 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
             </Link>
             <Link 
               href="/dashboard/profile"
-              className="hidden lg:flex items-center gap-1.5 text-sm font-bold text-slate-400 tracking-tight hover:text-accent transition-colors group"
+              className="hidden lg:flex items-center gap-1.5 text-xs font-black text-slate-500 uppercase tracking-widest hover:text-accent transition-colors group"
             >
-              WILLKOMMEN ZURÜCK{user ? `, ` : ''}
-              <span className="text-slate-900 group-hover:text-accent transition-colors font-black">
+              Willkommen zurück{user ? `, ` : ''}
+              <span className="text-slate-900 group-hover:text-accent transition-colors">
                 {user ? (user.user_metadata?.display_name || user.email?.split('@')[0]) : ''}
               </span>
             </Link>
