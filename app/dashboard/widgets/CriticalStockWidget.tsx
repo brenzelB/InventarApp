@@ -60,9 +60,9 @@ export function CriticalStockWidget() {
   }
 
   return (
-    <div className="h-full w-full bg-white dark:bg-widget rounded-3xl p-8 shadow ring-1 ring-slate-200 dark:ring-slate-700 flex flex-col">
-      <h3 className="text-sm font-bold text-slate-500 dark:text-slate-400 flex items-center gap-2 mb-6">
-        <div className="p-1.5 bg-blue-50 dark:bg-blue-900/30 rounded-2xl">
+    <div className="h-full w-full bg-white rounded-3xl p-8 shadow ring-1 ring-slate-200 flex flex-col">
+      <h3 className="text-sm font-bold text-slate-500 flex items-center gap-2 mb-6">
+        <div className="p-1.5 bg-blue-50 rounded-2xl">
           <Info className="w-4 h-4 text-blue-500" />
         </div>
         Kritische Bestände
@@ -76,20 +76,20 @@ export function CriticalStockWidget() {
         ) : (
           <ul className="space-y-4">
             {criticalItems.map(item => (
-              <li key={item.id} className="flex justify-between items-center group p-2 hover:bg-slate-50 dark:hover:bg-slate-800/50 rounded-2xl transition-all">
+              <li key={item.id} className="flex justify-between items-center group p-2 hover:bg-slate-50 rounded-2xl transition-all">
                 <Link href={`/dashboard/articles/${item.id}`} className="block overflow-hidden flex-1 group-hover:pl-1 transition-all">
-                  <p className="text-sm font-bold text-slate-700 dark:text-white truncate">{item.name}</p>
+                  <p className="text-sm font-bold text-slate-700 truncate">{item.name}</p>
                   <p className="text-[10px] text-slate-400 uppercase font-black tracking-widest">{item.sku}</p>
                 </Link>
                 <div className="text-right flex-shrink-0 ml-4 flex items-center gap-3">
                   <div>
-                    <p className="text-sm font-black text-blue-600 dark:text-blue-400 flex items-center justify-end gap-1.5">
+                    <p className="text-sm font-black text-blue-600 flex items-center justify-end gap-1.5">
                       {item.bestand} 
                       <span className="text-[10px] font-black text-blue-400/70">{item.unit || 'Stk'}</span>
                     </p>
-                    <p className="text-[10px] font-bold text-slate-500 flex items-center justify-end gap-1.5">
+                    <p className="text-[10px] font-bold text-slate-500 flex items-center justify-end gap-1.5 uppercase tracking-tighter">
                       {Number(item.bestand) === 0 ? 'Nicht vorrätig' : 'Niedriger Bestand'}
-                      <AlertTriangle className="w-3 h-3 text-red-500" />
+                      <AlertTriangle className="w-3.5 h-3.5 text-red-500" />
                     </p>
                   </div>
                 </div>

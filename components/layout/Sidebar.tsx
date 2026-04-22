@@ -61,7 +61,7 @@ export default function Sidebar({ isOpen, setIsOpen, isCollapsed, setIsCollapsed
       <aside 
         className={`
           fixed top-0 left-0 z-50 h-screen transition-all duration-300 ease-in-out
-          bg-white dark:bg-widget border-r border-slate-200 dark:border-slate-700
+          bg-white border-r border-slate-200
           ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
           ${isCollapsed ? 'lg:w-20' : 'lg:w-64'}
           w-64
@@ -69,9 +69,9 @@ export default function Sidebar({ isOpen, setIsOpen, isCollapsed, setIsCollapsed
       >
         <div className="flex flex-col h-full">
           {/* Header */}
-          <div className="flex items-center justify-between h-16 px-4 border-b border-slate-200 dark:border-slate-700">
+          <div className="flex items-center justify-between h-16 px-4 border-b border-slate-200">
             {!isCollapsed && (
-              <span className="font-bold text-xl text-accent dark:text-indigo-400 truncate">
+              <span className="font-bold text-xl text-accent truncate">
                 InventarApp
               </span>
             )}
@@ -82,7 +82,7 @@ export default function Sidebar({ isOpen, setIsOpen, isCollapsed, setIsCollapsed
             )}
             <button 
               onClick={() => setIsOpen(false)}
-              className="lg:hidden p-2 rounded-2xl hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-500"
+              className="lg:hidden p-2 rounded-2xl hover:bg-slate-100 text-slate-500"
             >
               <X className="w-5 h-5" />
             </button>
@@ -97,23 +97,23 @@ export default function Sidebar({ isOpen, setIsOpen, isCollapsed, setIsCollapsed
                   key={item.name}
                   href={item.href}
                   className={`
-                    flex items-center gap-3 px-3 py-2 rounded-3xl text-sm font-medium transition-all group
+                    flex items-center gap-3 px-3 py-2 rounded-3xl text-sm font-bold transition-all group
                     ${isActive 
-                      ? 'bg-indigo-50 dark:bg-indigo-900/30 text-accent dark:text-indigo-400' 
-                      : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-white'}
+                      ? 'bg-indigo-50 text-accent' 
+                      : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'}
                   `}
                 >
-                  <item.icon className={`w-5 h-5 flex-shrink-0 ${isActive ? 'text-accent' : 'group-hover:text-slate-900 dark:group-hover:text-white'}`} />
+                  <item.icon className={`w-5 h-5 flex-shrink-0 ${isActive ? 'text-accent' : 'text-slate-400 group-hover:text-slate-900'}`} />
                   {!isCollapsed && <span className="truncate">{item.name}</span>}
                 </Link>
               );
             })}
           </nav>
 
-          <div className="p-4 border-t border-slate-200 dark:border-slate-700 hidden lg:block">
+          <div className="p-4 border-t border-slate-200 hidden lg:block">
             <button
               onClick={() => setIsCollapsed(!isCollapsed)}
-              className="flex items-center justify-center w-full p-2 rounded-3xl bg-slate-50 dark:bg-widget hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-500 transition-colors"
+              className="flex items-center justify-center w-full p-2 rounded-3xl bg-slate-50 hover:bg-slate-100 text-slate-500 transition-colors"
             >
               {isCollapsed ? <ChevronRight className="w-5 h-5" /> : (
                 <div className="flex items-center gap-2">

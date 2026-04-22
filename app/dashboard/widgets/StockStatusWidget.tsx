@@ -31,24 +31,24 @@ export function StockStatusWidget() {
   }
 
   return (
-    <div className="h-full w-full bg-white dark:bg-widget rounded-3xl p-8 shadow ring-1 ring-slate-200 dark:ring-slate-700 flex flex-col justify-between">
-      <h3 className="text-sm font-semibold text-slate-500 dark:text-slate-400 flex items-center gap-2">
+    <div className="h-full w-full bg-white rounded-3xl p-8 shadow ring-1 ring-slate-200 flex flex-col justify-between">
+      <h3 className="text-sm font-bold text-slate-500 flex items-center gap-2">
         <Package className="w-4 h-4 text-accent" />
         Lager-Status
       </h3>
       
       <div className="mt-4 grid grid-cols-2 gap-8">
-        <div className="bg-slate-50 dark:bg-widget/50 p-8 rounded-2xl">
-          <p className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Artikel Gesamt</p>
-          <p className="text-2xl font-black text-slate-900 dark:text-white">{articles.length}</p>
-          <p className="text-xs text-accent font-medium mt-1">{totalStock} Einheiten</p>
+        <div className="bg-slate-50 p-8 rounded-2xl">
+          <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Artikel Gesamt</p>
+          <p className="text-3xl font-black text-slate-900 tracking-tighter">{articles.length}</p>
+          <p className="text-xs text-accent font-black mt-1 uppercase tracking-widest">{totalStock} Einheiten</p>
         </div>
-        <div className="bg-slate-50 dark:bg-widget/50 p-8 rounded-2xl">
-          <p className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1 flex items-center gap-1">
-            <FolderTree className="w-3 h-3" />
+        <div className="bg-slate-50 p-8 rounded-2xl">
+          <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1 flex items-center gap-1">
+            <FolderTree className="w-3 h-3 text-slate-400" />
             Kategorien
           </p>
-          <p className="text-2xl font-black text-slate-900 dark:text-white">{totalCategories}</p>
+          <p className="text-3xl font-black text-slate-900 tracking-tighter">{totalCategories}</p>
         </div>
       </div>
     </div>

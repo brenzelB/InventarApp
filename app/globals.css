@@ -5,14 +5,14 @@
 :root {
   --background: #f8fafc;
   --foreground: #0f172a;
-  --widget: #f8fafc; /* Baseline light bg */
+  --widget: #ffffff;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #000000;
-    --foreground: #f8fafc;
-    --widget: #111111;
+    --background: #f8fafc; /* Forced light for now */
+    --foreground: #0f172a;
+    --widget: #ffffff;
   }
 }
 

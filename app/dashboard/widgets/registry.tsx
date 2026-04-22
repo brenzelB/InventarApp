@@ -1,9 +1,8 @@
-import { Package, Info, Activity, TrendingUp, Coins, Calculator } from "lucide-react";
+import { Package, Info, Activity, TrendingUp, Coins } from "lucide-react";
 import { StockStatusWidget } from "./StockStatusWidget";
 import { CriticalStockWidget } from "./CriticalStockWidget";
 import { ActivityLogWidget } from "./ActivityLogWidget";
-import { WarenwertWidget } from "./WarenwertWidget";
-import { ProfitCalcWidget } from "./ProfitCalcWidget";
+import { InventoryValueWidget } from "./InventoryValueWidget";
 import { QuickBookWidget } from "./QuickBookWidget";
 import { WeeklyTrendWidget } from "./WeeklyTrendWidget";
 
@@ -17,7 +16,6 @@ export interface WidgetMeta {
 }
 
 export const WIDGET_REGISTRY: WidgetMeta[] = [
-  /* existing widgets ... */
   {
     id: "stock-status",
     title: "Lager-Status",
@@ -43,20 +41,12 @@ export const WIDGET_REGISTRY: WidgetMeta[] = [
     defaultH: 3,
   },
   {
-    id: "warenwert",
-    title: "Warenwert",
-    description: "Visualisiert den Bestandswert (Netto-EK) und den potenziellen Warenwert (Netto-VK).",
+    id: "inventory-value",
+    title: "Finanz-Cockpit",
+    description: "Analysiert EK, VK und Marge des gesamten Lagerbestands in 3 Spalten.",
     icon: Coins,
-    defaultW: 6,
-    defaultH: 2,
-  },
-  {
-    id: "profit-calc",
-    title: "Gewinn-Kalkulation",
-    description: "Berechnet Gewinnmargen basierend auf Abzug- und Zuzug-Aktionen.",
-    icon: Calculator,
-    defaultW: 6,
-    defaultH: 2,
+    defaultW: 10,
+    defaultH: 3,
   },
   {
     id: "quick-book",
