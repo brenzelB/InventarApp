@@ -41,25 +41,25 @@ export default function LoginPage() {
   return (
     <div className="flex min-h-[60vh] flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
+        <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-slate-900">
           In deinem Account anmelden
         </h2>
-        <p className="mt-2 text-center text-sm text-slate-600 dark:text-slate-400">
+        <p className="mt-2 text-center text-sm text-slate-600 font-medium">
           Oder wenn du noch keinen Account hast,{" "}
-          <Link href="/register" className="font-medium text-accent hover:text-accent">
+          <Link href="/register" className="font-bold text-accent hover:opacity-80 transition-opacity">
             hier registrieren
           </Link>
         </p>
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white dark:bg-widget py-8 px-4 shadow sm:rounded-2xl sm:px-10 border border-slate-200 dark:border-slate-700">
+        <div className="bg-white py-8 px-4 shadow sm:rounded-2xl sm:px-10 border border-slate-200">
           {isMockMode && (
-            <div className="mb-6 p-4 rounded-3xl bg-amber-50 dark:bg-amber-900/30 border border-amber-200 dark:border-amber-700">
-              <p className="text-sm text-amber-800 dark:text-amber-200 font-medium">
+            <div className="mb-6 p-4 rounded-3xl bg-amber-50 border border-amber-200">
+              <p className="text-sm text-amber-800 font-bold">
                 ⚠️ Demo-Modus aktiv
               </p>
-              <p className="text-xs text-amber-700 dark:text-amber-300 mt-1">
+              <p className="text-xs text-amber-700 mt-1 font-medium">
                 Du kannst dich direkt mit dem Demo-Button anmelden oder einen neuen Account erstellen.
               </p>
             </div>
@@ -67,15 +67,15 @@ export default function LoginPage() {
 
           <form className="space-y-6" onSubmit={handleSubmit}>
             {error && (
-              <div className="rounded-3xl bg-red-50 dark:bg-red-900/30 p-4 mb-4">
-                <div className="text-sm text-red-700 dark:text-red-400 font-medium">
+              <div className="rounded-3xl bg-red-50 p-4 mb-4 border border-red-100">
+                <div className="text-sm text-red-700 font-bold">
                   {error}
                 </div>
               </div>
             )}
             
             <div>
-              <label htmlFor="email" className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-200">
+              <label htmlFor="email" className="block text-sm font-bold leading-6 text-slate-700">
                 E-Mail Adresse
               </label>
               <div className="mt-2">
@@ -87,7 +87,7 @@ export default function LoginPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   autoComplete="email"
                   required
-                  className="block w-full rounded-3xl border-0 py-1.5 text-slate-900 dark:text-white dark:bg-widget shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-accent sm:text-sm sm:leading-6 px-3 disabled:opacity-50"
+                  className="block w-full rounded-3xl border-0 py-1.5 text-slate-900 bg-white shadow-sm ring-1 ring-inset ring-slate-300 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-accent sm:text-sm sm:leading-6 px-3 disabled:opacity-50 font-bold"
                   disabled={loading}
                 />
               </div>
@@ -95,10 +95,10 @@ export default function LoginPage() {
 
             <div>
               <div className="flex items-center justify-between">
-                <label htmlFor="password" className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-200">
+                <label htmlFor="password" className="block text-sm font-bold leading-6 text-slate-700">
                   Passwort
                 </label>
-                <Link href="/forgot-password" className="text-xs text-accent hover:text-accent font-medium">
+                <Link href="/forgot-password/login" className="text-xs text-accent hover:opacity-80 font-bold transition-opacity">
                   Passwort vergessen?
                 </Link>
               </div>
@@ -135,7 +135,7 @@ export default function LoginPage() {
                   type="button"
                   onClick={handleDemoLogin}
                   disabled={loading}
-                  className="flex w-full justify-center items-center rounded-3xl bg-white dark:bg-slate-700 px-3 py-2 text-sm font-semibold text-slate-900 dark:text-white shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 hover:bg-slate-50 dark:hover:bg-slate-600 transition-colors disabled:opacity-75"
+                  className="flex w-full justify-center items-center rounded-3xl bg-slate-50 px-3 py-2 text-sm font-bold text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 hover:bg-slate-100 transition-colors disabled:opacity-75"
                 >
                   Demo Login (Ohne Backend)
                 </button>

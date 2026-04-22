@@ -29,24 +29,24 @@ export default function ForgotPasswordPage() {
   return (
     <div className="flex min-h-[60vh] flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
+        <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-slate-900">
           Passwort zurücksetzen
         </h2>
-        <p className="mt-2 text-center text-sm text-slate-600 dark:text-slate-400">
+        <p className="mt-2 text-center text-sm font-medium text-slate-600">
           Zurück zur{" "}
-          <Link href="/login" className="font-medium text-accent hover:text-accent">
+          <Link href="/login" className="font-bold text-accent hover:opacity-80 transition-opacity">
             Anmeldung
           </Link>
         </p>
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white dark:bg-widget py-8 px-4 shadow sm:rounded-2xl sm:px-10 border border-slate-200 dark:border-slate-700">
+        <div className="bg-white py-8 px-4 shadow sm:rounded-2xl sm:px-10 border border-slate-200">
 
           {isMockMode && (
-            <div className="mb-6 p-4 rounded-3xl bg-amber-50 dark:bg-amber-900/30 border border-amber-200 dark:border-amber-700">
-              <p className="text-sm text-amber-800 dark:text-amber-200 font-medium">⚠️ Demo-Modus aktiv</p>
-              <p className="text-xs text-amber-700 dark:text-amber-300 mt-1">
+            <div className="mb-6 p-4 rounded-3xl bg-amber-50 border border-amber-200">
+              <p className="text-sm text-amber-800 font-bold">⚠️ Demo-Modus aktiv</p>
+              <p className="text-xs text-amber-700 mt-1 font-medium">
                 Passwort-Reset ist im Demo-Modus nicht verfügbar. Bitte echtes Supabase-Backend konfigurieren.
               </p>
             </div>
@@ -54,13 +54,13 @@ export default function ForgotPasswordPage() {
 
           {sent ? (
             <div className="text-center">
-              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30">
-                <svg className="h-6 w-6 text-green-600 dark:text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
+                <svg className="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
               </div>
-              <h3 className="mt-4 text-lg font-bold tracking-wide text-slate-900 dark:text-white">E-Mail versendet</h3>
-              <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
+              <h3 className="mt-4 text-lg font-bold tracking-wide text-slate-900">E-Mail versendet</h3>
+              <p className="mt-2 text-sm text-slate-600">
                 Falls ein Account mit der Adresse <strong>{email}</strong> existiert, wurde ein Reset-Link versendet.
                 Bitte prüfe auch deinen Spam-Ordner.
               </p>
@@ -79,16 +79,16 @@ export default function ForgotPasswordPage() {
           ) : (
             <form onSubmit={handleSubmit} className="space-y-6">
               {error && (
-                <div className="rounded-3xl bg-red-50 dark:bg-red-900/30 p-4">
-                  <p className="text-sm text-red-700 dark:text-red-400 font-medium">{error}</p>
+                <div className="rounded-3xl bg-red-50 p-4 border border-red-100">
+                  <p className="text-sm text-red-700 font-bold">{error}</p>
                 </div>
               )}
 
               <div>
-                <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
+                <p className="text-sm text-slate-600 font-medium mb-4">
                   Gib deine E-Mail-Adresse ein. Wir senden dir einen Link zum Zurücksetzen deines Passworts.
                 </p>
-                <label htmlFor="email" className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-200">
+                <label htmlFor="email" className="block text-sm font-bold leading-6 text-slate-700">
                   E-Mail Adresse
                 </label>
                 <div className="mt-2">
@@ -101,7 +101,7 @@ export default function ForgotPasswordPage() {
                     autoComplete="email"
                     required
                     disabled={loading}
-                    className="block w-full rounded-3xl border-0 py-1.5 px-3 text-slate-900 dark:text-white dark:bg-widget shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-accent sm:text-sm sm:leading-6 disabled:opacity-50"
+                    className="block w-full rounded-3xl border-0 py-1.5 px-3 text-slate-900 bg-white shadow-sm ring-1 ring-inset ring-slate-300 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-accent sm:text-sm sm:leading-6 disabled:opacity-50 font-bold"
                   />
                 </div>
               </div>

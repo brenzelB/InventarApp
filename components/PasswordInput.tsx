@@ -42,7 +42,7 @@ function PasswordStrengthBar({ password }: { password: string }) {
           <div
             key={i}
             className={`h-1 flex-1 rounded-full transition-all duration-300 ${
-              i <= score ? bgColor : "bg-slate-200 dark:bg-slate-700"
+              i <= score ? bgColor : "bg-slate-200"
             }`}
           />
         ))}
@@ -106,7 +106,7 @@ export function PasswordInput({
     <div>
       <label
         htmlFor={id}
-        className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-200"
+        className="block text-sm font-bold leading-6 text-slate-700"
       >
         {label}
       </label>
@@ -121,7 +121,7 @@ export function PasswordInput({
           required={required}
           disabled={disabled}
           placeholder={placeholder}
-          className="block w-full rounded-3xl border-0 py-1.5 pr-10 pl-3 text-slate-900 dark:text-white dark:bg-widget shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-accent sm:text-sm sm:leading-6 disabled:opacity-50"
+          className="block w-full rounded-3xl border-0 py-1.5 pr-10 pl-3 text-slate-900 bg-white shadow-sm ring-1 ring-inset ring-slate-300 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-accent sm:text-sm sm:leading-6 disabled:opacity-50 font-bold"
         />
         <button
           type="button"

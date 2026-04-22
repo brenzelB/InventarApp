@@ -41,30 +41,30 @@ export default function RegisterPage() {
   return (
     <div className="flex min-h-[60vh] flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
+        <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-slate-900">
           Neuen Account erstellen
         </h2>
-        <p className="mt-2 text-center text-sm text-slate-600 dark:text-slate-400">
+        <p className="mt-2 text-center text-sm font-medium text-slate-600">
           Oder{" "}
-          <Link href="/login" className="font-medium text-accent hover:text-accent">
+          <Link href="/login" className="font-bold text-accent hover:opacity-80 transition-opacity">
             hier anmelden
           </Link>
         </p>
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white dark:bg-widget py-8 px-4 shadow sm:rounded-2xl sm:px-10 border border-slate-200 dark:border-slate-700">
+        <div className="bg-white py-8 px-4 shadow sm:rounded-2xl sm:px-10 border border-slate-200">
           <form className="space-y-6" onSubmit={handleSubmit}>
             {error && (
-              <div className="rounded-3xl bg-red-50 dark:bg-red-900/30 p-4 mb-4">
-                <div className="text-sm text-red-700 dark:text-red-400 font-medium">
+              <div className="rounded-3xl bg-red-50 p-4 mb-4 border border-red-100">
+                <div className="text-sm text-red-700 font-bold">
                   {error}
                 </div>
               </div>
             )}
             
             <div>
-              <label htmlFor="email" className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-200">
+              <label htmlFor="email" className="block text-sm font-bold leading-6 text-slate-700">
                 E-Mail Adresse
               </label>
               <div className="mt-2">
@@ -76,7 +76,7 @@ export default function RegisterPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   autoComplete="email"
                   required
-                  className="block w-full rounded-3xl border-0 py-1.5 text-slate-900 dark:text-white dark:bg-widget shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-accent sm:text-sm sm:leading-6 px-3 disabled:opacity-50"
+                  className="block w-full rounded-3xl border-0 py-1.5 text-slate-900 bg-white shadow-sm ring-1 ring-inset ring-slate-300 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-accent sm:text-sm sm:leading-6 px-3 disabled:opacity-50 font-bold"
                   disabled={loading}
                 />
               </div>
