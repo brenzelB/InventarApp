@@ -90,8 +90,8 @@ export default function SettingsPage() {
           <Settings className="w-6 h-6 text-accent" />
         </div>
         <div>
-          <h1 className="text-2xl font-black text-slate-900 uppercase tracking-tight">Einstellungen</h1>
-          <p className="text-sm font-bold text-slate-600">Globale App-Konfiguration und Datenpflege</p>
+          <h1 className="text-2xl font-bold text-slate-900 uppercase tracking-tight">Einstellungen</h1>
+          <p className="text-sm font-bold text-slate-500">Globale App-Konfiguration und Datenpflege</p>
         </div>
       </div>
 
@@ -100,12 +100,12 @@ export default function SettingsPage() {
         <div className="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 flex flex-col h-full ring-1 ring-slate-100/50">
           <div className="flex items-center gap-3 mb-6">
             <Store className="w-5 h-5 text-accent" />
-            <h2 className="font-black text-slate-900 uppercase tracking-tight text-sm">App-Profil</h2>
+            <h2 className="font-bold text-slate-900 uppercase tracking-tight text-sm">App-Profil</h2>
           </div>
           
           <div className="space-y-6 flex-1">
             <div>
-              <label className="block text-[10px] font-black text-slate-700 uppercase tracking-widest mb-2">Name des Inventars</label>
+              <label className="block text-[10px] font-semibold text-slate-700 uppercase tracking-widest mb-2">Name des Inventars</label>
               <div className="flex gap-2">
                 <input 
                   type="text" 
@@ -129,13 +129,13 @@ export default function SettingsPage() {
         <div className="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 flex flex-col h-full ring-1 ring-slate-100/50">
           <div className="flex items-center gap-3 mb-6">
             <Activity className="w-5 h-5 text-accent" />
-            <h2 className="font-black text-slate-900 uppercase tracking-tight text-sm">Inventar-Logik</h2>
+            <h2 className="font-bold text-slate-900 uppercase tracking-tight text-sm">Inventar-Logik</h2>
           </div>
           
           <div className="space-y-6 flex-1">
             <div className="grid grid-cols-2 gap-8 items-end">
               <div>
-                <label className="block text-[10px] font-black text-slate-700 uppercase tracking-widest mb-2">Standard-Einheit</label>
+                <label className="block text-[10px] font-semibold text-slate-700 uppercase tracking-widest mb-2">Standard-Einheit</label>
                 <select 
                   value={settings.default_unit}
                   onChange={(e) => handleUpdate('default_unit', e.target.value)}
@@ -145,7 +145,7 @@ export default function SettingsPage() {
                 </select>
               </div>
               <div>
-                <label className="block text-[10px] font-black text-slate-700 uppercase tracking-widest mb-2">Warnschwelle (%)</label>
+                <label className="block text-[10px] font-semibold text-slate-700 uppercase tracking-widest mb-2">Warnschwelle (%)</label>
                 <input 
                   type="number" 
                   value={settings.warning_threshold}
@@ -155,7 +155,7 @@ export default function SettingsPage() {
                 />
               </div>
             </div>
-            <p className="text-[10px] text-slate-600 font-bold italic mt-auto">Warnschwelle definiert, ab wie viel Prozent des Mindestbestands ein Artikel optisch hervorgehoben wird.</p>
+            <p className="text-[10px] text-slate-500 font-bold italic mt-auto">Warnschwelle definiert, ab wie viel Prozent des Mindestbestands ein Artikel optisch hervorgehoben wird.</p>
           </div>
         </div>
       </div>
@@ -164,7 +164,7 @@ export default function SettingsPage() {
       <div className="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 ring-1 ring-slate-100/50">
         <div className="flex items-center gap-3 mb-6">
           <Database className="w-5 h-5 text-accent" />
-          <h2 className="font-black text-slate-900 uppercase tracking-tight text-sm">Daten-Wartung</h2>
+          <h2 className="font-bold text-slate-900 uppercase tracking-tight text-sm">Daten-Wartung</h2>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

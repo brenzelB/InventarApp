@@ -116,7 +116,7 @@ export function GroupEditModal({ group, onClose, onSave }: GroupEditModalProps) 
         
         {/* Header */}
         <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/30">
-          <h3 className="text-xl font-black text-slate-900 flex items-center gap-2 uppercase tracking-tight">
+          <h3 className="text-xl font-bold text-slate-900 flex items-center gap-2 uppercase tracking-tight">
             {group.name} ({selectedArticleIds.length} Artikel)
           </h3>
           <button onClick={onClose} className="p-2 hover:bg-slate-100 rounded-3xl transition-colors">
@@ -128,7 +128,7 @@ export function GroupEditModal({ group, onClose, onSave }: GroupEditModalProps) 
         <div className="p-6 flex-1 overflow-y-auto space-y-6">
           {/* Name Input */}
           <div className="space-y-2">
-            <label className="text-[10px] font-black text-slate-700 uppercase tracking-widest pl-1">Gruppenname</label>
+            <label className="text-[10px] font-semibold text-slate-700 uppercase tracking-widest pl-1">Gruppenname</label>
             <input 
               type="text"
               value={name}
@@ -140,7 +140,7 @@ export function GroupEditModal({ group, onClose, onSave }: GroupEditModalProps) 
 
           <div className="space-y-6">
             <div className="flex items-center justify-between">
-              <label className="text-[10px] font-black text-slate-700 uppercase tracking-widest pl-1">Artikel verwalten</label>
+              <label className="text-[10px] font-semibold text-slate-700 uppercase tracking-widest pl-1">Artikel verwalten</label>
               <span className="text-[10px] font-black px-2.5 py-0.5 bg-indigo-50 text-accent rounded-full uppercase tracking-widest ring-1 ring-accent/10">
                 {selectedArticleIds.length} zugewiesen
               </span>
@@ -163,7 +163,7 @@ export function GroupEditModal({ group, onClose, onSave }: GroupEditModalProps) 
               {loading ? (
                 <div className="py-10 flex flex-col items-center justify-center gap-3">
                   <Loader2 className="w-8 h-8 text-accent animate-spin" />
-                  <p className="text-xs font-black text-slate-400 uppercase tracking-widest">Lade Artikel...</p>
+                  <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Lade Artikel...</p>
                 </div>
               ) : filteredArticles.length === 0 ? (
                 <div className="py-10 text-center text-slate-400 font-bold italic text-sm">
@@ -188,7 +188,7 @@ export function GroupEditModal({ group, onClose, onSave }: GroupEditModalProps) 
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2">
                           <Package className="w-3.5 h-3.5 text-slate-400" />
-                          <p className="text-sm font-black text-slate-900 truncate">{article.name}</p>
+                          <p className="text-sm font-bold text-slate-900 truncate">{article.name}</p>
                         </div>
                         <p className="text-[10px] font-mono font-bold text-slate-500 uppercase tracking-tighter">{article.sku}</p>
                       </div>
@@ -208,7 +208,7 @@ export function GroupEditModal({ group, onClose, onSave }: GroupEditModalProps) 
           </div>
 
           {error && (
-            <div className="p-8 bg-red-50 border border-red-100 rounded-2xl flex items-center gap-4 text-red-700 text-xs font-black uppercase tracking-widest">
+            <div className="p-8 bg-red-50 border border-red-100 rounded-2xl flex items-center gap-4 text-red-700 text-xs font-bold uppercase tracking-widest">
               <AlertCircle className="w-5 h-5 flex-shrink-0" />
               {error}
             </div>

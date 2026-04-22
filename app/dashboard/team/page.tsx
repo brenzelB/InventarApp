@@ -243,10 +243,10 @@ export default function TeamPage() {
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-6 duration-700">
       <div className="md:flex md:items-center md:justify-between">
         <div className="min-w-0 flex-1">
-          <h2 className="text-4xl font-black leading-7 text-slate-900 sm:truncate sm:tracking-tight uppercase tracking-tighter">
+          <h2 className="text-4xl font-bold leading-7 text-slate-900 sm:truncate sm:tracking-tight uppercase tracking-tighter">
             Team-Verwaltung
           </h2>
-          <p className="mt-4 text-base font-bold text-slate-600">
+          <p className="mt-4 text-base font-bold text-slate-500">
             Zentrale Schnittstelle für Mitglieder, Berechtigungen und Einladungen.
           </p>
         </div>
@@ -270,7 +270,7 @@ export default function TeamPage() {
                 <div className="w-12 h-12 rounded-2xl bg-indigo-50 flex items-center justify-center">
                   <Users className="w-6 h-6 text-accent" />
                 </div>
-                <h3 className="text-lg font-black text-slate-900 uppercase tracking-tight">Teammitglieder</h3>
+                <h3 className="text-lg font-bold text-slate-900 uppercase tracking-tight">Teammitglieder</h3>
               </div>
               <span className="bg-indigo-50 text-accent px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest ring-1 ring-accent/10">{profiles.length} Aktiv</span>
             </div>
@@ -279,10 +279,10 @@ export default function TeamPage() {
               <table className="min-w-full divide-y divide-slate-100">
                 <thead className="bg-slate-50/50">
                   <tr>
-                    <th className="px-8 py-4 text-left text-[11px] font-black text-slate-900 uppercase tracking-[0.2em]">Mitglied</th>
-                    <th className="px-8 py-4 text-left text-[11px] font-black text-slate-900 uppercase tracking-[0.2em]">E-Mail</th>
-                    <th className="px-8 py-4 text-left text-[11px] font-black text-slate-900 uppercase tracking-[0.2em]">Rolle</th>
-                    <th className="px-8 py-4 text-right text-[11px] font-black text-slate-900 uppercase tracking-[0.2em]">Aktion</th>
+                    <th className="px-8 py-4 text-left text-[11px] font-semibold text-slate-700 uppercase tracking-[0.2em]">Mitglied</th>
+                    <th className="px-8 py-4 text-left text-[11px] font-semibold text-slate-700 uppercase tracking-[0.2em]">E-Mail</th>
+                    <th className="px-8 py-4 text-left text-[11px] font-semibold text-slate-700 uppercase tracking-[0.2em]">Rolle</th>
+                    <th className="px-8 py-4 text-right text-[11px] font-semibold text-slate-700 uppercase tracking-[0.2em]">Aktion</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
@@ -338,7 +338,7 @@ export default function TeamPage() {
                 <div className="w-12 h-12 rounded-2xl bg-amber-50 flex items-center justify-center">
                   <Clock className="w-6 h-6 text-amber-500" />
                 </div>
-                <h3 className="text-lg font-black text-slate-900 uppercase tracking-tight">Ausstehende Einladungen</h3>
+                <h3 className="text-lg font-bold text-slate-900 uppercase tracking-tight">Ausstehende Einladungen</h3>
               </div>
               <div className="overflow-x-auto">
                 <table className="min-w-full divide-y divide-slate-100">
@@ -375,7 +375,7 @@ export default function TeamPage() {
 
         {/* Sidebar: Einladungs-Tool */}
         <div className="space-y-8">
-          <div className="bg-accent rounded-[2.5rem] p-10 text-white shadow-2xl shadow-indigo-200 dark:shadow-none relative overflow-hidden group">
+          <div className="bg-accent rounded-[2.5rem] p-10 text-white shadow-2xl shadow-indigo-200 relative overflow-hidden group">
             <div className="absolute -top-10 -right-10 opacity-10 group-hover:scale-110 transition-transform duration-700">
                <UserPlus className="w-48 h-48 rotate-12" />
             </div>
@@ -385,7 +385,7 @@ export default function TeamPage() {
             
             <form onSubmit={handleInvite} className="space-y-6 relative z-10">
               <div className="space-y-2">
-                <label className="text-[10px] font-black uppercase tracking-[0.2em] opacity-80 pl-1">Name des Nutzers</label>
+                <label className="text-[10px] font-semibold uppercase tracking-[0.2em] opacity-80 pl-1">Name des Nutzers</label>
                 <div className="relative">
                   <User className="absolute left-4 top-4 w-5 h-5 text-indigo-200" />
                   <input
@@ -399,7 +399,7 @@ export default function TeamPage() {
               </div>
 
               <div className="space-y-2">
-                <label className="text-[10px] font-black uppercase tracking-[0.2em] opacity-80 pl-1">E-Mail Adresse</label>
+                <label className="text-[10px] font-semibold uppercase tracking-[0.2em] opacity-80 pl-1">E-Mail Adresse</label>
                 <div className="relative">
                   <Mail className="absolute left-4 top-4 w-5 h-5 text-indigo-200" />
                   <input
@@ -417,7 +417,7 @@ export default function TeamPage() {
               </div>
               
               <div className="space-y-2">
-                <label className="text-[10px] font-black uppercase tracking-[0.2em] opacity-80 pl-1">Zukünftige Rolle</label>
+                <label className="text-[10px] font-semibold uppercase tracking-[0.2em] opacity-80 pl-1">Zukünftige Rolle</label>
                 <select
                   value={inviteRole}
                   onChange={(e) => setInviteRole(e.target.value as any)}
@@ -449,7 +449,7 @@ export default function TeamPage() {
 
           {/* Rollen-Info-Card */}
           <div className="bg-white rounded-[2.5rem] p-10 border border-slate-100 ring-1 ring-slate-100/50 space-y-8">
-            <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] pl-1">Berechtigungen</h4>
+            <h4 className="text-[10px] font-semibold text-slate-400 uppercase tracking-[0.3em] pl-1">Berechtigungen</h4>
             <div className="space-y-6">
               <div className="flex gap-5">
                 <div className="w-12 h-12 rounded-2xl bg-indigo-50 flex items-center justify-center flex-shrink-0">

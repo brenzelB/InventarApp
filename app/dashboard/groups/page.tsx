@@ -155,7 +155,7 @@ export default function GroupsPage() {
                 Zurück zur Übersicht
               </button>
               <div className="flex items-center justify-between">
-                <h2 className="text-4xl font-black leading-tight text-slate-900 flex items-center gap-8">
+                <h2 className="text-4xl font-bold leading-tight text-slate-900 flex items-center gap-8">
                   <Folder className="w-10 h-10 text-accent" />
                   {selectedGroup.name}
                 </h2>
@@ -170,10 +170,10 @@ export default function GroupsPage() {
             </div>
           ) : (
             <>
-              <h2 className="text-3xl font-black leading-7 text-slate-900 sm:truncate sm:tracking-tight uppercase">
+              <h2 className="text-3xl font-bold leading-7 text-slate-900 sm:truncate sm:tracking-tight uppercase">
                 Gruppenverwaltung
               </h2>
-              <p className="mt-2 text-sm font-bold text-slate-600">
+              <p className="mt-2 text-sm font-bold text-slate-500">
                 Erstelle Kategorien wie 'Werkzeuge' oder 'Zubehör', um deine Artikel besser zu strukturieren.
               </p>
             </>
@@ -213,7 +213,7 @@ export default function GroupsPage() {
                 onChange={(e) => setNewGroupName(e.target.value)}
                 placeholder="Neue Gruppe (z.B. Büromaterial)..."
                 disabled={isSubmitting}
-                className="block w-full pl-10 pr-3 py-2.5 border border-slate-200 rounded-2xl bg-slate-50 text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-accent sm:text-sm transition-all font-bold"
+                className="block w-full pl-10 pr-3 py-2.5 border border-slate-200 rounded-2xl bg-slate-50 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-accent sm:text-sm transition-all font-bold"
               />
             </div>
             <button
@@ -229,7 +229,7 @@ export default function GroupsPage() {
       )}
 
       {error && (
-        <div className="p-8 bg-red-50 dark:bg-red-900/20 border border-red-100 dark:border-red-800 rounded-2xl flex items-center gap-3 text-red-700 dark:text-red-400 text-sm">
+        <div className="p-8 bg-red-50 border border-red-100 rounded-2xl flex items-center gap-3 text-red-700 text-sm">
           <AlertCircle className="w-5 h-5" />
           {error}
         </div>
@@ -245,9 +245,9 @@ export default function GroupsPage() {
         <div className="space-y-6 animate-in fade-in zoom-in-95 duration-500">
           <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden ring-1 ring-slate-100/50">
             <div className="px-6 py-4 border-b border-slate-100 bg-slate-50/50">
-              <h3 className="text-lg font-black text-slate-900 flex items-center gap-2 uppercase tracking-tight">
+              <h3 className="text-lg font-bold text-slate-900 flex items-center gap-2 uppercase tracking-tight">
                 Zugeordnete Artikel
-                <span className="ml-2 px-2.5 py-0.5 bg-indigo-50 text-accent rounded-full text-[10px] font-black uppercase ring-1 ring-accent/10">
+                <span className="ml-2 px-2.5 py-0.5 bg-indigo-50 text-accent rounded-full text-[10px] font-bold uppercase ring-1 ring-accent/10">
                   {getGroupArticles(selectedGroup.id).length}
                 </span>
               </h3>
@@ -256,10 +256,10 @@ export default function GroupsPage() {
               <table className="min-w-full divide-y divide-slate-100">
                 <thead className="bg-white">
                   <tr>
-                    <th className="px-6 py-4 text-left text-[11px] font-black text-slate-900 uppercase tracking-widest">Name</th>
-                    <th className="px-6 py-4 text-left text-[11px] font-black text-slate-900 uppercase tracking-widest">SKU</th>
-                    <th className="px-6 py-4 text-right text-[11px] font-black text-slate-900 uppercase tracking-widest">Bestand</th>
-                    <th className="px-6 py-4 text-right text-[11px] font-black text-slate-900 uppercase tracking-widest">Preis</th>
+                    <th className="px-6 py-4 text-left text-[11px] font-semibold text-slate-700 uppercase tracking-widest">Name</th>
+                    <th className="px-6 py-4 text-left text-[11px] font-semibold text-slate-700 uppercase tracking-widest">SKU</th>
+                    <th className="px-6 py-4 text-right text-[11px] font-semibold text-slate-700 uppercase tracking-widest">Bestand</th>
+                    <th className="px-6 py-4 text-right text-[11px] font-semibold text-slate-700 uppercase tracking-widest">Preis</th>
                     <th className="w-10"></th>
                   </tr>
                 </thead>
@@ -336,7 +336,7 @@ export default function GroupsPage() {
                 </div>
               </div>
 
-              <h3 className="text-lg font-black text-slate-900 truncate">
+              <h3 className="text-lg font-bold text-slate-900 truncate">
                 {group.name}
               </h3>
               <div className="mt-1 flex items-center justify-between">
@@ -350,13 +350,13 @@ export default function GroupsPage() {
         </div>
       ) : (
         /* LIST VIEW */
-        <div className="bg-white dark:bg-widget rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm overflow-hidden animate-in fade-in zoom-in-95 duration-300">
+        <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden animate-in fade-in zoom-in-95 duration-300">
           <table className="min-w-full divide-y divide-slate-100">
             <thead className="bg-slate-50">
               <tr>
-                <th scope="col" className="px-6 py-4 text-left text-[11px] font-black text-slate-900 uppercase tracking-widest">Gruppe</th>
-                <th scope="col" className="px-6 py-4 text-left text-[11px] font-black text-slate-900 uppercase tracking-widest">Artikel</th>
-                <th scope="col" className="px-6 py-4 text-right text-[11px] font-black text-slate-900 uppercase tracking-widest">Aktionen</th>
+                <th scope="col" className="px-6 py-4 text-left text-[11px] font-semibold text-slate-700 uppercase tracking-widest">Gruppe</th>
+                <th scope="col" className="px-6 py-4 text-left text-[11px] font-semibold text-slate-700 uppercase tracking-widest">Artikel</th>
+                <th scope="col" className="px-6 py-4 text-right text-[11px] font-semibold text-slate-700 uppercase tracking-widest">Aktionen</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
