@@ -13,22 +13,22 @@ export function ArticleHistoryList({ history }: ArticleHistoryListProps) {
       case 'input':
         return { 
           icon: <ArrowUpRight className="w-4 h-4" />, 
-          bg: 'bg-green-50 dark:bg-green-900/20', 
-          text: 'text-green-700 dark:text-green-400', 
+          bg: 'bg-emerald-100', 
+          text: 'text-emerald-900', 
           label: 'Einlagerung' 
         };
       case 'output':
         return { 
           icon: <ArrowDownRight className="w-4 h-4" />, 
-          bg: 'bg-red-50 dark:bg-red-900/20', 
-          text: 'text-red-700 dark:text-red-400', 
+          bg: 'bg-rose-100', 
+          text: 'text-rose-900', 
           label: 'Entnahme' 
         };
       default:
         return { 
           icon: <RefreshCw className="w-4 h-4" />, 
-          bg: 'bg-slate-50', 
-          text: 'text-slate-700', 
+          bg: 'bg-slate-100', 
+          text: 'text-slate-900', 
           label: 'System' 
         };
     }
@@ -59,27 +59,27 @@ export function ArticleHistoryList({ history }: ArticleHistoryListProps) {
                 <th className="px-6 py-4 text-left text-[11px] font-bold text-slate-900 uppercase tracking-widest">Datum</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100 dark:divide-slate-700">
+            <tbody className="divide-y divide-slate-100">
               {history.map((entry) => {
                 const config = getTypeConfig(entry.type);
                 const amount = entry.new_stock - entry.old_stock;
                 return (
-                  <tr key={entry.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/80 transition-colors">
+                  <tr key={entry.id} className="hover:bg-slate-50 transition-colors">
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold ${config.bg} ${config.text}`}>
+                      <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold ${config.bg} ${config.text}`}>
                         {config.icon}
                         {config.label}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`text-sm font-bold ${amount > 0 ? 'text-green-600' : 'text-red-600'}`}>
+                      <span className={`text-sm font-black ${amount > 0 ? 'text-emerald-700' : 'text-rose-700'}`}>
                         {amount > 0 ? `+${amount}` : amount}
                       </span>
                       <span className="ml-2 text-[10px] text-slate-400 font-medium">
                         ({entry.old_stock} → {entry.new_stock})
                       </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-700 font-semibold">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600 font-bold">
                       <div className="flex items-center gap-2">
                         <Calendar className="w-3.5 h-3.5 text-slate-400" />
                         {new Date(entry.created_at).toLocaleString('de-DE', {
