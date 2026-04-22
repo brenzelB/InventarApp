@@ -34,8 +34,8 @@ export function ArticleComments({ comments, onAddComment }: ArticleCommentsProps
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-2 mb-2">
-        <MessageSquare className="w-5 h-5 text-slate-600" />
-        <h3 className="text-lg font-bold tracking-wide text-slate-900">Kommentare ({comments.length})</h3>
+        <MessageSquare className="w-5 h-5 text-slate-600 dark:text-slate-400" />
+        <h3 className="text-lg font-bold tracking-wide text-slate-900 dark:text-slate-100">Kommentare ({comments.length})</h3>
       </div>
 
       <form onSubmit={handleSubmit} className="relative group">
@@ -43,7 +43,7 @@ export function ArticleComments({ comments, onAddComment }: ArticleCommentsProps
           value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
           placeholder="Schreibe einen Kommentar oder eine Notiz zum Artikel..."
-          className="block w-full rounded-2xl border-0 py-4 px-5 text-slate-900 bg-slate-50 shadow-sm ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-accent sm:text-sm transition-all pr-14 placeholder-slate-400 font-medium"
+          className="block w-full rounded-2xl border-0 py-4 px-5 text-slate-900 dark:text-slate-100 bg-slate-50 dark:bg-slate-950/50 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-700 focus:ring-2 focus:ring-accent sm:text-sm transition-all pr-14 placeholder-slate-400 dark:placeholder-slate-500 font-medium"
           rows={2}
           disabled={loading}
         />
@@ -62,28 +62,28 @@ export function ArticleComments({ comments, onAddComment }: ArticleCommentsProps
 
       <div className="space-y-6">
         {comments.length === 0 ? (
-          <div className="text-center py-10 bg-slate-50 rounded-2xl border border-dashed border-slate-300">
-            <p className="text-slate-500 text-sm font-semibold">Keine Kommentare vorhanden.</p>
+          <div className="text-center py-10 bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-dashed border-slate-300 dark:border-slate-800">
+            <p className="text-slate-500 dark:text-slate-400 text-sm font-semibold">Keine Kommentare vorhanden.</p>
           </div>
         ) : (
           comments.map((comment) => (
-            <div key={comment.id} className="flex gap-8 p-8 rounded-2xl bg-white border border-slate-100 shadow-sm">
+            <div key={comment.id} className="flex gap-8 p-8 rounded-2xl bg-white dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 shadow-sm dark:shadow-none">
               <div className="flex-shrink-0">
-                <div className="w-10 h-10 rounded-3xl bg-indigo-50 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-3xl bg-indigo-50 dark:bg-indigo-900/30 flex items-center justify-center">
                   <User className="w-5 h-5 text-accent" />
                 </div>
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between mb-1">
-                  <span className="text-xs font-bold text-slate-500">BENUTZER</span>
-                  <span className="text-[10px] text-slate-400 font-bold">
+                  <span className="text-xs font-bold text-slate-500 dark:text-slate-400">BENUTZER</span>
+                  <span className="text-[10px] text-slate-400 dark:text-slate-500 font-bold">
                     {new Date(comment.created_at).toLocaleString('de-DE', {
                       day: '2-digit', month: '2-digit', year: 'numeric',
                       hour: '2-digit', minute: '2-digit'
                     })}
                   </span>
                 </div>
-                <p className="text-sm text-slate-700 font-medium leading-relaxed whitespace-pre-wrap">
+                <p className="text-sm text-slate-700 dark:text-slate-200 font-medium leading-relaxed whitespace-pre-wrap">
                   {comment.content}
                 </p>
               </div>

@@ -54,18 +54,18 @@ export function StockAdjustmentForm({ onAdjust, loading }: StockAdjustmentFormPr
     <div className="bg-slate-50 dark:bg-slate-900/50 p-5 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm dark:shadow-none ring-1 ring-slate-200/50 dark:ring-slate-800/50">
       <div className="flex items-center gap-2 mb-4">
         <PackageOpen className="w-5 h-5 text-accent" />
-        <h3 className="font-bold text-slate-900 text-sm">Bestand anpassen</h3>
+        <h3 className="font-bold text-slate-900 dark:text-slate-100 text-sm">Bestand anpassen</h3>
       </div>
 
       <div className="space-y-6">
-        <div className="grid grid-cols-2 bg-white p-1 rounded-2xl border border-slate-200 gap-1">
+        <div className="grid grid-cols-2 bg-white dark:bg-slate-950/50 p-1 rounded-2xl border border-slate-200 dark:border-slate-800 gap-1">
           <button
             type="button"
             onClick={() => { setType('input'); setShowSuccess(false); }}
             className={`flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-3xl text-xs font-medium transition-all ${
               type === 'input' 
               ? 'bg-green-100 dark:bg-emerald-900/30 text-green-700 dark:text-emerald-400 shadow-sm dark:shadow-none' 
-              : 'text-slate-500 hover:text-slate-700'
+              : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
             }`}
           >
             <Plus className="w-3.5 h-3.5" />
@@ -77,7 +77,7 @@ export function StockAdjustmentForm({ onAdjust, loading }: StockAdjustmentFormPr
             className={`flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-3xl text-xs font-medium transition-all ${
               type === 'output' 
               ? 'bg-red-100 dark:bg-rose-900/30 text-red-700 dark:text-rose-400 shadow-sm dark:shadow-none' 
-              : 'text-slate-500 hover:text-slate-700'
+              : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
             }`}
           >
             <Minus className="w-3.5 h-3.5" />
@@ -86,7 +86,7 @@ export function StockAdjustmentForm({ onAdjust, loading }: StockAdjustmentFormPr
         </div>
 
         <div>
-          <label className="block text-xs font-medium text-slate-500 mb-1.5 uppercase tracking-wider">Menge</label>
+          <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1.5 uppercase tracking-wider">Menge</label>
           <input
             type="number"
             step="0.01"
