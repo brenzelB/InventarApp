@@ -37,18 +37,19 @@ export function StockStatusWidget() {
         Lager-Status
       </h3>
       
-      <div className="mt-4 grid grid-cols-2 gap-8">
-        <div className="bg-slate-50 p-8 rounded-2xl">
-          <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Artikel Gesamt</p>
-          <p className="text-3xl font-black text-slate-900 tracking-tighter">{articles.length}</p>
-          <p className="text-xs text-accent font-black mt-1 uppercase tracking-widest">{totalStock} Einheiten</p>
+      <div className="mt-6 grid grid-cols-2 gap-6 flex-1">
+        <div className="bg-slate-50/50 rounded-3xl border border-slate-100 flex flex-col items-center justify-center p-8 transition-all hover:bg-slate-50">
+          <p className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-4">Artikel Gesamt</p>
+          <p className="text-5xl md:text-6xl font-black text-slate-900 tracking-tighter">{articles.length}</p>
+          <p className="text-[10px] text-blue-600 font-black mt-4 uppercase tracking-[0.15em]">{totalStock} Einheiten</p>
         </div>
-        <div className="bg-slate-50 p-8 rounded-2xl">
-          <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1 flex items-center gap-1">
+        <div className="bg-slate-50/50 rounded-3xl border border-slate-100 flex flex-col items-center justify-center p-8 transition-all hover:bg-slate-50">
+          <p className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-4 flex items-center gap-1.5">
             <FolderTree className="w-3 h-3 text-slate-400" />
             Kategorien
           </p>
-          <p className="text-3xl font-black text-slate-900 tracking-tighter">{totalCategories}</p>
+          <p className="text-5xl md:text-6xl font-black text-slate-900 tracking-tighter">{totalCategories}</p>
+          <p className="text-[10px] text-slate-400 font-bold mt-4 uppercase tracking-[0.15em]">Gruppen</p>
         </div>
       </div>
     </div>
