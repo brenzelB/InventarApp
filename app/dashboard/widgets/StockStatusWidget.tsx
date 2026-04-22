@@ -38,14 +38,14 @@ export function StockStatusWidget() {
       </h3>
       
       <div className="mt-6 grid grid-cols-2 gap-6 flex-1">
-        <div className="bg-slate-50/50 rounded-[2.5rem] border border-slate-100 flex flex-col items-center justify-center p-10 transition-all hover:bg-slate-50">
-          <p className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.25em] mb-4">Artikel Gesamt</p>
-          <p className="text-7xl md:text-8xl font-black text-slate-900 tracking-tighter leading-none">{articles.length}</p>
+        <div className="bg-slate-50/50 rounded-[2rem] border border-slate-100 flex flex-col items-center justify-center p-8 transition-all hover:bg-slate-50">
+          <p className="text-xs font-bold text-slate-500 uppercase tracking-[0.25em] mb-4">Artikel</p>
+          <p className="text-6xl font-black text-slate-900 tracking-tighter leading-none">{articles.length}</p>
           <p className="text-[10px] text-blue-600 font-black mt-6 uppercase tracking-[0.15em]">{totalStock} Einheiten</p>
         </div>
-        <div className="bg-slate-50/50 rounded-[2.5rem] border border-slate-100 flex flex-col items-center justify-center p-10 transition-all hover:bg-slate-50">
-          <p className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.25em] mb-4">Gruppen</p>
-          <p className="text-7xl md:text-8xl font-black text-slate-900 tracking-tighter leading-none">{totalCategories}</p>
+        <div className="bg-slate-50/50 rounded-[2rem] border border-slate-100 flex flex-col items-center justify-center p-8 transition-all hover:bg-slate-50">
+          <p className="text-xs font-bold text-slate-500 uppercase tracking-[0.25em] mb-4">Gruppen</p>
+          <p className="text-6xl font-black text-slate-900 tracking-tighter leading-none">{totalCategories}</p>
         </div>
       </div>
     </div>
