@@ -63,9 +63,8 @@ export function ActivityLogWidget() {
                const diff = entry.new_stock - entry.old_stock;
                const isInput = entry.type === 'input' && diff > 0;
                const isOutput = entry.type === 'output' || diff < 0;
-                return (
-                 return (
-                   <li key={entry.id} className={`flex items-start gap-4 p-2 rounded-2xl transition-all ${entry.id === lastNewId ? 'animate-flash-glow' : ''}`}>
+               return (
+                  <li key={entry.id} className={`flex items-start gap-4 p-2 rounded-2xl transition-all ${entry.id === lastNewId ? 'animate-flash-glow' : ''}`}>
                      <div className={`mt-0.5 w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 ${
                      isInput ? 'bg-emerald-100 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400' : 
                      isOutput ? 'bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400' : 
