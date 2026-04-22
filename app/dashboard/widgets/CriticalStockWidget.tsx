@@ -53,8 +53,8 @@ export function CriticalStockWidget() {
 
   if (loading) {
     return (
-      <div className="h-full w-full bg-white dark:bg-widget rounded-3xl p-8 shadow flex items-center justify-center animate-pulse">
-        <div className="h-4 w-20 bg-slate-200 dark:bg-slate-700 rounded"></div>
+      <div className="h-full w-full bg-white rounded-3xl p-8 shadow flex items-center justify-center animate-pulse">
+        <div className="h-4 w-20 bg-slate-200 rounded"></div>
       </div>
     );
   }
