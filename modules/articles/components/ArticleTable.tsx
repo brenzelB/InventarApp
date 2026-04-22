@@ -203,15 +203,15 @@ export function ArticleTable({ articles, onDelete }: ArticleTableProps) {
                 {Number(article.verkaufspreis).toFixed(2)} €
               </td>
               <td className="whitespace-nowrap px-3 py-4 text-sm font-medium w-px">
-                <div className="flex items-center gap-8">
+                <div className="flex items-center justify-end gap-2">
                   {(role === 'admin' || role === 'editor') && (
                     <Link 
                       href={`/dashboard/articles/${article.id}`} 
                       title="Bearbeiten"
                       aria-label="Artikel bearbeiten"
-                      className="text-slate-400 hover:text-blue-600 transition-all p-1"
+                      className="p-2 text-slate-400 hover:text-blue-600 hover:bg-slate-50 rounded-xl transition-all"
                     >
-                      <Edit3 size={18} />
+                      <Edit3 size={16} />
                     </Link>
                   )}
                   {role === 'admin' && (
@@ -220,12 +220,12 @@ export function ArticleTable({ articles, onDelete }: ArticleTableProps) {
                       disabled={deletingId === article.id}
                       title="Löschen"
                       aria-label="Artikel löschen"
-                      className="text-slate-400 hover:text-rose-600 disabled:opacity-50 transition-all p-1"
+                      className="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition-all disabled:opacity-50"
                     >
                       {deletingId === article.id ? (
-                        <span className="w-5 h-5 border-2 border-slate-200 border-t-rose-600 rounded-full animate-spin inline-block" />
+                        <span className="w-4 h-4 border-2 border-slate-200 border-t-rose-600 rounded-full animate-spin inline-block" />
                       ) : (
-                        <Trash2 size={18} />
+                        <Trash2 size={16} />
                       )}
                     </button>
                   )}
