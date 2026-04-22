@@ -25,14 +25,14 @@ export function StockStatusWidget() {
 
   if (loading) {
     return (
-      <div className="h-full w-full bg-white dark:bg-slate-900 rounded-3xl p-8 shadow ring-1 ring-slate-200 dark:ring-slate-800 flex items-center justify-center animate-pulse">
+      <div className="h-full w-full bg-white dark:bg-slate-900 rounded-3xl p-8 shadow dark:shadow-none ring-1 ring-slate-200 dark:ring-slate-800 flex items-center justify-center animate-pulse">
         <div className="h-4 w-20 bg-slate-200 dark:bg-slate-800 rounded"></div>
       </div>
     );
   }
 
   return (
-    <div className="h-full w-full bg-white dark:bg-slate-900 rounded-3xl p-8 shadow ring-1 ring-slate-200 dark:ring-slate-800 flex flex-col">
+    <div className="h-full w-full bg-white dark:bg-slate-900 rounded-3xl p-8 shadow dark:shadow-none ring-1 ring-slate-200 dark:ring-slate-800 flex flex-col">
       <h3 className="text-sm font-black text-slate-900 dark:text-slate-100 flex items-center gap-2 mb-6">
         <div className="p-1.5 bg-indigo-50 dark:bg-indigo-900/30 rounded-2xl">
           <Package className="w-4 h-4 text-accent" />

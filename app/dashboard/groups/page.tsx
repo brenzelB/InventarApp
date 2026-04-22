@@ -314,7 +314,7 @@ export default function GroupsPage() {
             <div 
               key={group.id} 
               onClick={() => setSelectedGroup(group)}
-              className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-xl hover:scale-[1.02] transition-all cursor-pointer group relative overflow-hidden ring-1 ring-slate-100/50 dark:ring-slate-800/50"
+              className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm dark:shadow-none hover:shadow-xl dark:hover:shadow-none hover:scale-[1.02] transition-all cursor-pointer group relative overflow-hidden ring-1 ring-slate-100/50 dark:ring-slate-800/50"
             >
               <div className="flex items-center justify-between mb-4">
                 <div className="p-2 bg-indigo-50 dark:bg-indigo-900/30 rounded-3xl ring-1 ring-accent/10">

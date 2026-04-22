@@ -77,7 +77,7 @@ export default function ProfilePage() {
   return (
     <div className="max-w-4xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       {/* Profil Header */}
-      <div className="flex items-center gap-8 bg-white dark:bg-widget p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm relative overflow-hidden">
+      <div className="flex items-center gap-8 bg-white dark:bg-slate-900/50 p-8 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm dark:shadow-none relative overflow-hidden">
         <div className="absolute top-0 right-0 p-8 opacity-5">
            <Settings className="w-32 h-32 rotate-12" />
         </div>
@@ -100,7 +100,7 @@ export default function ProfilePage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Haupt-Einstellungen */}
         <div className="lg:col-span-2 space-y-8">
-          <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm">
+          <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm dark:shadow-none ring-1 ring-slate-100/50 dark:ring-slate-800/50">
             <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100 mb-6 uppercase tracking-wider flex items-center gap-2">
               <Settings className="w-5 h-5 text-slate-700 dark:text-slate-400" />
               Persönliche Daten
@@ -171,7 +171,7 @@ export default function ProfilePage() {
               <button
                 type="submit"
                 disabled={isUpdating}
-                className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 bg-accent text-white rounded-2xl font-black text-xs uppercase tracking-[0.2em] hover:bg-accent-hover transition-all shadow-xl shadow-indigo-200 disabled:opacity-50"
+                className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 bg-accent text-white rounded-2xl font-black text-xs uppercase tracking-[0.2em] hover:bg-accent-hover transition-all shadow-xl shadow-indigo-200 dark:shadow-[0_0_15px_rgba(59,130,246,0.4)] disabled:opacity-50"
               >
                 {isUpdating ? <Loader2 className="w-4 h-4 animate-spin" /> : <CheckCircle2 className="w-4 h-4" />}
                 Einstellungen speichern
@@ -179,7 +179,7 @@ export default function ProfilePage() {
             </form>
           </div>
 
-          <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm">
+          <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm dark:shadow-none ring-1 ring-slate-100/50 dark:ring-slate-800/50">
              <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100 mb-6 uppercase tracking-wider flex items-center gap-2">
               <Key className="w-5 h-5 text-slate-700 dark:text-slate-400" />
               Sicherheit
@@ -200,7 +200,7 @@ export default function ProfilePage() {
 
         {/* Sidebar Widgets (Stats & Logout) */}
         <div className="space-y-8">
-          <div className="bg-gradient-to-br from-indigo-600 to-indigo-700 p-8 rounded-3xl text-white shadow-xl shadow-indigo-200 relative overflow-hidden group">
+          <div className="bg-gradient-to-br from-indigo-600 to-indigo-700 p-8 rounded-3xl text-white shadow-[0_0_20px_rgba(59,130,246,0.2)] dark:shadow-[0_0_30px_rgba(59,130,246,0.15)] relative overflow-hidden group">
             <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform">
                <Package className="w-24 h-24 rotate-12" />
             </div>
@@ -214,7 +214,7 @@ export default function ProfilePage() {
             </p>
           </div>
 
-          <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm overflow-hidden relative">
+          <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm dark:shadow-none ring-1 ring-slate-100/50 dark:ring-slate-800/50 overflow-hidden relative">
             <div className="absolute top-0 right-0 p-2 opacity-5">
                <LogOut className="w-16 h-16 -rotate-12" />
             </div>
@@ -229,14 +229,14 @@ export default function ProfilePage() {
           </div>
 
           {role === 'admin' && (
-            <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm overflow-hidden relative animate-in slide-in-from-right-4 duration-500">
+            <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm dark:shadow-none ring-1 ring-slate-100/50 dark:ring-slate-800/50 overflow-hidden relative animate-in slide-in-from-right-4 duration-500">
               <div className="absolute top-0 right-0 p-2 opacity-10">
                 <Users className="w-16 h-16 -rotate-12 text-accent" />
               </div>
               <h3 className="text-xs font-black text-accent uppercase tracking-[0.2em] mb-6 relative z-10">ADMINISTRATION</h3>
               <a 
                 href="/dashboard/team"
-                className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 bg-accent text-white rounded-2xl font-black text-xs uppercase tracking-[0.2em] hover:bg-accent-hover transition-all shadow-xl shadow-indigo-100 dark:shadow-none relative z-10"
+                className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 bg-accent text-white rounded-2xl font-black text-xs uppercase tracking-[0.2em] hover:bg-accent-hover transition-all shadow-xl shadow-indigo-100 dark:shadow-[0_0_15px_rgba(59,130,246,0.4)] relative z-10"
               >
                 <Users className="w-4 h-4" />
                 TEAM VERWALTEN

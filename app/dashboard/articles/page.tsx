@@ -81,7 +81,7 @@ export default function ArticlesPage() {
           <div className="h-8 w-px bg-slate-200 hidden sm:block mx-2" />
 
           {role !== 'viewer' && (
-            <Link href="/dashboard/articles/new" className="inline-flex items-center gap-2 rounded-2xl bg-slate-900 px-6 py-3 text-sm font-black text-white shadow-xl hover:scale-[1.02] transition-all active:scale-95 group">
+            <Link href="/dashboard/articles/new" className="inline-flex items-center gap-2 rounded-2xl bg-slate-900 dark:bg-white px-6 py-3 text-sm font-black text-white dark:text-slate-900 shadow-xl dark:shadow-none hover:scale-[1.02] transition-all active:scale-95 group">
               <Plus className="w-5 h-5 group-hover:rotate-90 transition-transform" />
               Neuer Artikel
             </Link>

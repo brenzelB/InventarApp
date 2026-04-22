@@ -51,7 +51,7 @@ export function StockAdjustmentForm({ onAdjust, loading }: StockAdjustmentFormPr
   };
 
   return (
-    <div className="bg-slate-50 p-5 rounded-3xl border border-slate-200 shadow-sm">
+    <div className="bg-slate-50 dark:bg-slate-900/50 p-5 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm dark:shadow-none ring-1 ring-slate-200/50 dark:ring-slate-800/50">
       <div className="flex items-center gap-2 mb-4">
         <PackageOpen className="w-5 h-5 text-accent" />
         <h3 className="font-bold text-slate-900 text-sm">Bestand anpassen</h3>
@@ -64,7 +64,7 @@ export function StockAdjustmentForm({ onAdjust, loading }: StockAdjustmentFormPr
             onClick={() => { setType('input'); setShowSuccess(false); }}
             className={`flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-3xl text-xs font-medium transition-all ${
               type === 'input' 
-              ? 'bg-green-100 text-green-700 shadow-sm' 
+              ? 'bg-green-100 dark:bg-emerald-900/30 text-green-700 dark:text-emerald-400 shadow-sm dark:shadow-none' 
               : 'text-slate-500 hover:text-slate-700'
             }`}
           >
@@ -76,7 +76,7 @@ export function StockAdjustmentForm({ onAdjust, loading }: StockAdjustmentFormPr
             onClick={() => { setType('output'); setShowSuccess(false); }}
             className={`flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-3xl text-xs font-medium transition-all ${
               type === 'output' 
-              ? 'bg-red-100 text-red-700 shadow-sm' 
+              ? 'bg-red-100 dark:bg-rose-900/30 text-red-700 dark:text-rose-400 shadow-sm dark:shadow-none' 
               : 'text-slate-500 hover:text-slate-700'
             }`}
           >
@@ -93,7 +93,7 @@ export function StockAdjustmentForm({ onAdjust, loading }: StockAdjustmentFormPr
             min="0.01"
             value={amount}
             onChange={(e) => { setAmount(Number(e.target.value)); setShowSuccess(false); }}
-            className="block w-full rounded-2xl border-0 py-2.5 px-3 text-slate-900 bg-white shadow-sm ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-accent sm:text-sm font-bold"
+            className="block w-full rounded-2xl border-0 py-2.5 px-3 text-slate-900 dark:text-slate-100 bg-white dark:bg-slate-950 shadow-sm dark:shadow-none ring-1 ring-inset ring-slate-300 dark:ring-slate-700 focus:ring-2 focus:ring-accent sm:text-sm font-bold"
             required
           />
         </div>
@@ -107,7 +107,7 @@ export function StockAdjustmentForm({ onAdjust, loading }: StockAdjustmentFormPr
             ? 'bg-green-600 text-white animate-pulse' 
             : error
             ? 'bg-red-600 text-white'
-            : 'bg-accent hover:bg-accent-hover text-white shadow-indigo-200'
+            : 'bg-accent hover:bg-accent-hover text-white shadow-indigo-200 dark:shadow-[0_0_15px_rgba(59,130,246,0.4)]'
           } disabled:opacity-50 disabled:cursor-not-allowed`}
         >
           {loading ? (

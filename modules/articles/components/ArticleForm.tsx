@@ -100,7 +100,7 @@ export function ArticleForm({ initialData, articleId, qrCode, onUpdate }: Articl
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 bg-white dark:bg-slate-900 p-8 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
+    <form onSubmit={handleSubmit} className="space-y-6 bg-white dark:bg-slate-900 p-8 rounded-2xl shadow-sm dark:shadow-none border border-slate-200 dark:border-slate-700 ring-1 ring-slate-100 dark:ring-slate-800/50">
       {error && (
         <div className="bg-red-50 dark:bg-rose-900/20 p-4 rounded-3xl border border-red-200 dark:border-rose-800 flex items-center gap-3 animate-in fade-in slide-in-from-top-2 duration-300">
           <div className="flex-shrink-0 w-8 h-8 rounded-full bg-red-100 dark:bg-rose-900/50 flex items-center justify-center text-red-600 dark:text-rose-400">

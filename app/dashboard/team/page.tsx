@@ -264,7 +264,7 @@ export default function TeamPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-8">
           {/* Mitglieder-Tabelle */}
-          <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-100 dark:border-slate-700 shadow-xl shadow-slate-100/50 dark:shadow-none overflow-hidden transition-all ring-1 ring-slate-100/30 dark:ring-slate-800/30">
+          <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 shadow-xl dark:shadow-none overflow-hidden transition-all ring-1 ring-slate-100/30 dark:ring-slate-800/30">
             <div className="p-8 border-b border-slate-100 dark:border-slate-700 flex items-center justify-between bg-slate-50/30 dark:bg-slate-900/50">
               <div className="flex items-center gap-8">
                 <div className="w-12 h-12 rounded-2xl bg-indigo-50 dark:bg-indigo-900/30 flex items-center justify-center">
@@ -333,7 +333,7 @@ export default function TeamPage() {
 
           {/* Einladungen-Sektion */}
           {invitations.length > 0 && (
-            <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-100 dark:border-slate-700 shadow-md dark:shadow-none ring-1 ring-slate-100/50 dark:ring-slate-800/50 overflow-hidden animate-in slide-in-from-top-4 duration-500">
+            <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 shadow-md dark:shadow-none ring-1 ring-slate-100/50 dark:ring-slate-800/50 overflow-hidden animate-in slide-in-from-top-4 duration-500">
               <div className="p-8 border-b border-slate-100 dark:border-slate-700 flex items-center gap-8 bg-slate-50/20 dark:bg-slate-900/50">
                 <div className="w-12 h-12 rounded-2xl bg-amber-50 dark:bg-amber-900/30 flex items-center justify-center">
                   <Clock className="w-6 h-6 text-amber-500 dark:text-amber-400" />
@@ -375,7 +375,7 @@ export default function TeamPage() {
 
         {/* Sidebar: Einladungs-Tool */}
         <div className="space-y-8">
-          <div className="bg-accent rounded-[2.5rem] p-10 text-white shadow-2xl shadow-indigo-200 relative overflow-hidden group">
+          <div className="bg-accent rounded-[2.5rem] p-10 text-white shadow-2xl dark:shadow-[0_0_30px_rgba(59,130,246,0.3)] relative overflow-hidden group">
             <div className="absolute -top-10 -right-10 opacity-10 group-hover:scale-110 transition-transform duration-700">
                <UserPlus className="w-48 h-48 rotate-12" />
             </div>
@@ -439,7 +439,7 @@ export default function TeamPage() {
               <button
                 type="submit"
                 disabled={isInviting}
-                className="w-full bg-white text-accent rounded-2xl py-5 text-xs font-black uppercase tracking-[0.3em] shadow-xl hover:bg-slate-50 hover:scale-[1.02] active:scale-95 transition-all disabled:opacity-50 flex items-center justify-center gap-8 group"
+                className="w-full bg-white dark:bg-slate-800 text-accent dark:text-white rounded-2xl py-5 text-xs font-black uppercase tracking-[0.3em] shadow-xl dark:shadow-none hover:bg-slate-50 dark:hover:bg-slate-700 hover:scale-[1.02] active:scale-95 transition-all disabled:opacity-50 flex items-center justify-center gap-8 group"
               >
                 {isInviting ? <Loader2 className="w-5 h-5 animate-spin" /> : <UserPlus className="w-5 h-5 group-hover:rotate-12 transition-transform" />}
                 Einladung senden

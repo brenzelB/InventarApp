@@ -86,7 +86,7 @@ export const InventoryValueWidget = ({ config, onUpdateConfig }: { config: any, 
     );
   }
   return (
-    <div className={`h-full w-full bg-white dark:bg-slate-900 rounded-3xl shadow flex flex-col ring-1 ring-slate-200 dark:ring-slate-800 overflow-hidden`}>
+    <div className={`h-full w-full bg-white dark:bg-slate-900 rounded-3xl shadow dark:shadow-none flex flex-col ring-1 ring-slate-200 dark:ring-slate-800 overflow-hidden`}>
       
       {/* Header with Toggle */}
       <div className="px-8 pt-6 pb-2 flex items-center justify-between">
@@ -100,13 +100,13 @@ export const InventoryValueWidget = ({ config, onUpdateConfig }: { config: any, 
         <div className="flex bg-slate-100 dark:bg-slate-950 p-1 rounded-full border border-slate-200 dark:border-slate-800 shadow-inner">
           <button 
             onClick={() => handleToggleNetto(false)}
-            className={`px-4 py-1.5 text-[10px] font-black uppercase tracking-widest rounded-full transition-all ${!isNetView ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'}`}
+            className={`px-4 py-1.5 text-[10px] font-black uppercase tracking-widest rounded-full transition-all ${!isNetView ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm dark:shadow-none' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'}`}
           >
             Brutto
           </button>
           <button 
             onClick={() => handleToggleNetto(true)}
-            className={`px-4 py-1.5 text-[10px] font-black uppercase tracking-widest rounded-full transition-all ${isNetView ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'}`}
+            className={`px-4 py-1.5 text-[10px] font-black uppercase tracking-widest rounded-full transition-all ${isNetView ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm dark:shadow-none' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'}`}
           >
             Netto
           </button>

@@ -81,7 +81,7 @@ export default function ArticleDetailPage({ params }: { params: { id: string } }
             {fromGroup ? "Zurück zur Gruppe" : "Zurück zu allen Artikeln"}
           </Link>
           <div className="flex items-start gap-8">
-            <div className="p-3 bg-accent rounded-2xl shadow-md border border-slate-200 dark:border-slate-700 shadow-indigo-200 dark:shadow-none">
+            <div className="p-3 bg-accent rounded-2xl shadow-md dark:shadow-[0_0_15px_rgba(59,130,246,0.3)] border border-slate-200 dark:border-slate-700">
               <Box className="w-8 h-8 text-white" />
             </div>
             <div>
@@ -112,7 +112,7 @@ export default function ArticleDetailPage({ params }: { params: { id: string } }
               onClick={() => setActiveTab(tab.id as TabType)}
               className={`flex items-center gap-2 px-4 py-2 rounded-3xl text-sm font-bold transition-all ${
                 activeTab === tab.id 
-                ? 'bg-white dark:bg-slate-800 text-accent shadow-sm' 
+                ? 'bg-white dark:bg-slate-800 text-accent shadow-sm dark:shadow-none' 
                 : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-300'
               }`}
             >
@@ -133,15 +133,15 @@ export default function ArticleDetailPage({ params }: { params: { id: string } }
             <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
               {/* Stats Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
-                <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm">
+                <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm dark:shadow-none ring-1 ring-slate-100/50 dark:ring-slate-800/50">
                   <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-1">Aktueller Bestand</p>
                   <p className={`text-3xl font-black ${isLowStock ? 'text-red-500 dark:text-rose-400' : 'text-slate-900 dark:text-slate-100'}`}>{article.bestand} {article.unit || 'Stück'}</p>
                 </div>
-                <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm">
+                <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm dark:shadow-none ring-1 ring-slate-100/50 dark:ring-slate-800/50">
                   <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-1">Verkaufspreis</p>
                   <p className="text-3xl font-black text-slate-900 dark:text-slate-100">{Number(article.verkaufspreis).toFixed(2)} €</p>
                 </div>
-                <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm">
+                <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm dark:shadow-none ring-1 ring-slate-100/50 dark:ring-slate-800/50">
                   <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-1">Letzte Änderung</p>
                   <p className="text-sm font-bold text-slate-900 dark:text-slate-100 mt-3">
                     {history.length > 0 
@@ -153,7 +153,7 @@ export default function ArticleDetailPage({ params }: { params: { id: string } }
 
               {/* Description & QR */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div className="md:col-span-2 bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm flex flex-col">
+                <div className="md:col-span-2 bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm dark:shadow-none ring-1 ring-slate-100/50 dark:ring-slate-800/50 flex flex-col">
                   <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 mb-6 flex items-center gap-2">
                     <Info className="w-5 h-5 text-accent" /> Beschreibung
                   </h3>
@@ -162,7 +162,7 @@ export default function ArticleDetailPage({ params }: { params: { id: string } }
                   </p>
                 </div>
                 
-                <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm relative overflow-hidden group">
+                 <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm dark:shadow-none ring-1 ring-slate-100/50 dark:ring-slate-800/50 relative overflow-hidden group">
                   <div className="flex justify-between items-center mb-6">
                     <h3 className="text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest">Scanbarer QR-Code</h3>
                     <div className="flex gap-1.5 text-slate-300 dark:text-slate-600">
@@ -185,7 +185,7 @@ export default function ArticleDetailPage({ params }: { params: { id: string } }
                 </div>
               </div>
 
-              <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm">
+              <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm dark:shadow-none ring-1 ring-slate-100/50 dark:ring-slate-800/50">
                 <ArticleHistoryList history={history.slice(0, 5)} />
                 <button 
                   onClick={() => setActiveTab('analysis')}
@@ -199,7 +199,7 @@ export default function ArticleDetailPage({ params }: { params: { id: string } }
 
           {activeTab === 'analysis' && (
             <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-              <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm">
+              <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm dark:shadow-none ring-1 ring-slate-100/50 dark:ring-slate-800/50">
                 <div className="flex items-center justify-between mb-8">
                   <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100">Bestandsverlauf</h3>
                   <TrendingUp className="w-6 h-6 text-accent" />
@@ -215,14 +215,14 @@ export default function ArticleDetailPage({ params }: { params: { id: string } }
                 )}
                 <StockHistoryChart history={history} initialStock={article.bestand} />
               </div>
-              <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm">
+              <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm dark:shadow-none ring-1 ring-slate-100/50 dark:ring-slate-800/50">
                 <ArticleHistoryList history={history} />
               </div>
             </div>
           )}
 
           {activeTab === 'comments' && (
-            <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm animate-in fade-in slide-in-from-bottom-4 duration-500 space-y-6">
+            <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm dark:shadow-none ring-1 ring-slate-100/50 dark:ring-slate-800/50 animate-in fade-in slide-in-from-bottom-4 duration-500 space-y-6">
               {comments.length === 0 && (
                 <div className="p-8 bg-amber-50 dark:bg-amber-900/20 border border-amber-100 dark:border-amber-800 rounded-2xl flex items-start gap-3">
                   <AlertTriangle className="w-5 h-5 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
@@ -268,7 +268,7 @@ export default function ArticleDetailPage({ params }: { params: { id: string } }
           <StockAdjustmentForm onAdjust={adjustStock} loading={isAdjusting} />
           
           {/* Quick Stats Sidebar */}
-          <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm space-y-6">
+          <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm dark:shadow-none ring-1 ring-slate-100/50 dark:ring-slate-800/50 space-y-6">
             <h3 className="font-bold text-slate-900 dark:text-slate-100 uppercase text-xs tracking-widest pl-1 border-l-4 border-indigo-600">Finanzielles</h3>
             <div className="space-y-6">
               <div className="flex justify-between items-center text-sm">
@@ -297,7 +297,7 @@ export default function ArticleDetailPage({ params }: { params: { id: string } }
             </div>
           </div>
 
-          <div className="bg-accent p-8 rounded-3xl shadow-xl shadow-indigo-200 dark:shadow-none relative overflow-hidden group">
+          <div className="bg-accent p-8 rounded-3xl shadow-xl dark:shadow-[0_0_30px_rgba(59,130,246,0.2)] relative overflow-hidden group">
             <div className="relative z-10 text-white space-y-2">
               <p className="text-[10px] font-bold text-indigo-200 uppercase tracking-widest">Lagerwert Gesammt</p>
               <p className="text-3xl font-black">{(article.bestand * article.verkaufspreis).toFixed(2)} €</p>

@@ -103,7 +103,7 @@ export default function SettingsPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* App Profile */}
-        <div className="bg-white dark:bg-slate-900 rounded-3xl p-8 shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col h-full ring-1 ring-slate-100/50 dark:ring-slate-800/50">
+        <div className="bg-white dark:bg-slate-900 rounded-3xl p-8 shadow-sm dark:shadow-none border border-slate-100 dark:border-slate-800 flex flex-col h-full ring-1 ring-slate-100/50 dark:ring-slate-800/50">
           <div className="flex items-center gap-3 mb-6">
             <Store className="w-5 h-5 text-slate-700 dark:text-slate-400" />
             <h2 className="font-bold text-slate-900 dark:text-slate-100 uppercase tracking-tight text-sm">App-Profil</h2>
@@ -122,7 +122,7 @@ export default function SettingsPage() {
                 <button 
                   onClick={() => handleUpdate('app_name', settings.app_name)}
                   disabled={saving === 'app_name'}
-                  className="p-2.5 bg-accent hover:bg-indigo-500 text-white rounded-3xl transition-all shadow-sm active:scale-90"
+                  className="p-2.5 bg-accent hover:bg-indigo-500 text-white rounded-3xl transition-all shadow-sm dark:shadow-[0_0_15px_rgba(59,130,246,0.4)] active:scale-90"
                 >
                   {saving === 'app_name' ? <Loader2 className="w-5 h-5 animate-spin" /> : <Save className="w-5 h-5" />}
                 </button>
@@ -132,7 +132,7 @@ export default function SettingsPage() {
         </div>
 
         {/* Inventory Logic */}
-        <div className="bg-white dark:bg-slate-900 rounded-3xl p-8 shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col h-full ring-1 ring-slate-100/50 dark:ring-slate-800/50">
+        <div className="bg-white dark:bg-slate-900 rounded-3xl p-8 shadow-sm dark:shadow-none border border-slate-100 dark:border-slate-800 flex flex-col h-full ring-1 ring-slate-100/50 dark:ring-slate-800/50">
           <div className="flex items-center gap-3 mb-6">
             <Activity className="w-5 h-5 text-slate-700 dark:text-slate-400" />
             <h2 className="font-bold text-slate-900 dark:text-slate-100 uppercase tracking-tight text-sm">Inventar-Logik</h2>
@@ -166,7 +166,7 @@ export default function SettingsPage() {
         </div>
 
         {/* Appearance / Theme */}
-        <div className="bg-white dark:bg-slate-900 rounded-3xl p-8 shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col h-full ring-1 ring-slate-100/50 dark:ring-slate-800/50 md:col-span-2">
+        <div className="bg-white dark:bg-slate-900 rounded-3xl p-8 shadow-sm dark:shadow-none border border-slate-100 dark:border-slate-800 flex flex-col h-full ring-1 ring-slate-100/50 dark:ring-slate-800/50 md:col-span-2">
           <div className="flex items-center gap-3 mb-6">
             <Monitor className="w-5 h-5 text-slate-700 dark:text-slate-400" />
             <h2 className="font-bold text-slate-900 dark:text-slate-100 uppercase tracking-tight text-sm">Erscheinungsbild</h2>
@@ -184,7 +184,7 @@ export default function SettingsPage() {
                 className={`
                   flex-1 flex items-center justify-center gap-3 py-4 rounded-2xl font-bold text-sm transition-all border
                   ${theme === t.id 
-                    ? 'bg-accent text-white border-accent shadow-lg shadow-blue-100 dark:shadow-none scale-[1.02]' 
+                    ? 'bg-accent text-white border-accent shadow-[0_0_20px_rgba(59,130,246,0.2)] dark:shadow-[0_0_30px_rgba(59,130,246,0.15)] scale-[1.02]' 
                     : 'bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700'}
                 `}
               >
@@ -200,7 +200,7 @@ export default function SettingsPage() {
       </div>
 
       {/* Data Maintenance */}
-      <div className="bg-white dark:bg-slate-900 rounded-3xl p-8 shadow-sm border border-slate-100 dark:border-slate-800 ring-1 ring-slate-100/50 dark:ring-slate-800/50">
+      <div className="bg-white dark:bg-slate-900 rounded-3xl p-8 shadow-sm dark:shadow-none border border-slate-100 dark:border-slate-800 ring-1 ring-slate-100/50 dark:ring-slate-800/50">
         <div className="flex items-center gap-3 mb-6">
           <Database className="w-5 h-5 text-slate-700 dark:text-slate-400" />
           <h2 className="font-bold text-slate-900 dark:text-slate-100 uppercase tracking-tight text-sm">Daten-Wartung</h2>

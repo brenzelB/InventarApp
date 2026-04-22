@@ -38,7 +38,7 @@ export function ProfitCalcWidget() {
   }
 
   return (
-    <div className="h-full w-full bg-white dark:bg-slate-900 rounded-3xl p-8 shadow ring-1 ring-slate-200 dark:ring-slate-800 flex flex-col">
+    <div className="h-full w-full bg-white dark:bg-slate-900 rounded-3xl p-8 shadow dark:shadow-none ring-1 ring-slate-200 dark:ring-slate-800 flex flex-col">
       <h3 className="text-sm font-bold text-slate-500 dark:text-slate-100 flex items-center gap-2 mb-6">
         <div className="p-1.5 bg-blue-50 dark:bg-blue-900/30 rounded-2xl">
           <Calculator className="w-4 h-4 text-blue-500" />
@@ -68,7 +68,7 @@ export function ProfitCalcWidget() {
         </div>
 
         <div className="flex-shrink-0">
-          <button className="bg-blue-500 hover:bg-blue-600 text-white font-black uppercase tracking-widest text-[10px] px-6 py-4 rounded-full transition-all hover:scale-105 active:scale-95 shadow-md">
+          <button className="bg-blue-500 hover:bg-blue-600 text-white font-black uppercase tracking-widest text-[10px] px-6 py-4 rounded-full transition-all hover:scale-105 active:scale-95 shadow-md dark:shadow-[0_0_15px_rgba(59,130,246,0.4)]">
             Profit
           </button>
         </div>

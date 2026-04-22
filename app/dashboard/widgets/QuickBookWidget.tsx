@@ -49,7 +49,7 @@ export function QuickBookWidget() {
   };
 
   return (
-    <div className="h-full w-full bg-white dark:bg-slate-900 rounded-3xl p-8 shadow ring-1 ring-slate-200 dark:ring-slate-800 flex flex-col relative overflow-hidden">
+    <div className="h-full w-full bg-white dark:bg-slate-900 rounded-3xl p-8 shadow dark:shadow-none ring-1 ring-slate-200 dark:ring-slate-800 flex flex-col relative overflow-hidden">
       <h3 className="text-xs font-black text-slate-900 dark:text-slate-100 flex items-center gap-2 mb-6 uppercase tracking-widest">
         <Zap className="w-4 h-4 text-amber-500" />
         Express-Buchung
@@ -111,7 +111,7 @@ export function QuickBookWidget() {
 
         {/* Success Overlay */}
         <div className={`absolute inset-0 bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm z-20 flex flex-col items-center justify-center transition-all duration-300 pointer-events-none ${success ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-          <div className="w-16 h-16 bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 rounded-full flex items-center justify-center mb-4 shadow-sm ring-1 ring-emerald-200 dark:ring-emerald-800">
+          <div className="w-16 h-16 bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 rounded-full flex items-center justify-center mb-4 shadow-sm dark:shadow-none ring-1 ring-emerald-200 dark:ring-emerald-800">
             <Check className="w-8 h-8" />
           </div>
           <p className="text-sm font-black text-emerald-700 dark:text-emerald-400 uppercase tracking-widest">Buchung erfolgreich!</p>
