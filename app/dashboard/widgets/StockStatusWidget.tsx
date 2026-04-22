@@ -37,16 +37,16 @@ export function StockStatusWidget() {
         Lager-Status
       </h3>
       
-      <div className="mt-4 grid grid-cols-2 gap-4">
-        <div className="aspect-square bg-slate-50/50 rounded-3xl border border-slate-100 flex flex-col items-center justify-between p-8 transition-all hover:bg-slate-50">
-          <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] leading-none">Artikel</p>
-          <p className="text-6xl font-black text-slate-900 tracking-tighter leading-none">{articles.length}</p>
-          <p className="text-[10px] text-blue-600 font-black uppercase tracking-[0.1em] leading-none">{totalStock} Einheiten</p>
+      <div className="mt-2 grid grid-cols-2 gap-6">
+        <div className="h-52 bg-slate-50/50 rounded-3xl border border-slate-100 flex flex-col items-center justify-between p-8 transition-all hover:bg-slate-50">
+          <div className="text-[10px] font-black text-slate-500 uppercase tracking-[0.25em]">Artikel</div>
+          <div className="text-6xl font-black text-slate-900 tracking-tighter leading-none">{articles.length}</div>
+          <div className="text-[11px] text-blue-600 font-black uppercase tracking-[0.1em]">{totalStock} Einheiten</div>
         </div>
-        <div className="aspect-square bg-slate-50/50 rounded-3xl border border-slate-100 flex flex-col items-center justify-between p-8 transition-all hover:bg-slate-50">
-          <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] leading-none">Gruppen</p>
-          <p className="text-6xl font-black text-slate-900 tracking-tighter leading-none">{totalCategories}</p>
-          <div className="h-[10px]" aria-hidden="true" /> {/* Perfect alignment placeholder */}
+        <div className="h-52 bg-slate-50/50 rounded-3xl border border-slate-100 flex flex-col items-center justify-between p-8 transition-all hover:bg-slate-50">
+          <div className="text-[10px] font-black text-slate-500 uppercase tracking-[0.25em]">Gruppen</div>
+          <div className="text-6xl font-black text-slate-900 tracking-tighter leading-none">{totalCategories}</div>
+          <div className="text-[11px] opacity-0 pointer-events-none" aria-hidden="true">PLACEHOLDER</div>
         </div>
       </div>
     </div>
