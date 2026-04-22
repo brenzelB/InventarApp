@@ -87,7 +87,7 @@ export function InventoryValueWidget({ config, onUpdateConfig }: { config: any, 
   }
 
   return (
-    <div className={`h-full w-full bg-slate-900 rounded-2xl shadow-2xl ring-1 ring-slate-800 flex flex-col no-drag transition-all duration-500 overflow-hidden relative ${isPulsing ? 'ring-accent ring-2 ring-offset-2 ring-offset-slate-900' : ''}`}>
+    <div className={`h-full w-full bg-slate-900 rounded-2xl shadow-2xl ring-1 ring-slate-800 flex flex-col transition-all duration-500 overflow-hidden relative ${isPulsing ? 'ring-accent ring-2 ring-offset-2 ring-offset-slate-900' : ''}`}>
       
       {/* Header with Toggle */}
       <div className="px-6 pt-5 pb-2 flex items-center justify-between z-10">

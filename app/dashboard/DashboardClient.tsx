@@ -189,13 +189,17 @@ export function DashboardClient({ userId, initialLayout }: DashboardClientProps)
               return (
                 <div 
                   key={item.i} 
-                  className={`animate-fadeInUp transition-shadow opacity-0 ${isEditing ? 'cursor-grab active:cursor-grabbing ring-2 ring-accent ring-offset-2 ring-offset-slate-50 dark:ring-offset-slate-900 rounded-3xl' : ''}`}
-                  style={{ animationDelay: `${index * 100}ms` }}
+                  className={isEditing ? 'cursor-grab active:cursor-grabbing ring-2 ring-accent ring-offset-2 ring-offset-slate-50 dark:ring-offset-slate-900 rounded-3xl' : ''}
                 >
-                  <WidgetComponent 
-                    config={(item as any).settings || {}} 
-                    onUpdateConfig={(s: any) => handleUpdateWidgetConfig(item.i, s)} 
-                  />
+                  <div 
+                    className="h-full w-full animate-fadeInUp opacity-0"
+                    style={{ animationDelay: `${index * 100}ms` }}
+                  >
+                    <WidgetComponent 
+                      config={(item as any).settings || {}} 
+                      onUpdateConfig={(s: any) => handleUpdateWidgetConfig(item.i, s)} 
+                    />
+                  </div>
                 </div>
               );
             })}
