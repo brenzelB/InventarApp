@@ -155,13 +155,13 @@ export default function GroupsPage() {
                 Zurück zur Übersicht
               </button>
               <div className="flex items-center justify-between">
-                <h2 className="text-4xl font-black leading-tight text-slate-900 dark:text-white flex items-center gap-8">
+                <h2 className="text-4xl font-black leading-tight text-slate-900 flex items-center gap-8">
                   <Folder className="w-10 h-10 text-accent" />
                   {selectedGroup.name}
                 </h2>
                 <button 
                   onClick={() => setEditingGroup(selectedGroup)}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-white dark:bg-widget text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 rounded-2xl font-bold text-sm hover:shadow-md border border-slate-200 dark:border-white/10 transition-all"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-slate-900 border border-slate-200 rounded-2xl font-black text-xs uppercase tracking-widest hover:shadow-md transition-all ring-1 ring-slate-100"
                 >
                   <Edit3 className="w-4 h-4 text-accent" />
                   Gruppe verwalten
@@ -170,10 +170,10 @@ export default function GroupsPage() {
             </div>
           ) : (
             <>
-              <h2 className="text-3xl font-black leading-7 text-slate-900 dark:text-white sm:truncate sm:tracking-tight">
+              <h2 className="text-3xl font-black leading-7 text-slate-900 sm:truncate sm:tracking-tight uppercase">
                 Gruppenverwaltung
               </h2>
-              <p className="mt-2 text-sm font-medium text-slate-500 dark:text-slate-400">
+              <p className="mt-2 text-sm font-bold text-slate-600">
                 Erstelle Kategorien wie 'Werkzeuge' oder 'Zubehör', um deine Artikel besser zu strukturieren.
               </p>
             </>
@@ -182,16 +182,16 @@ export default function GroupsPage() {
         
         {/* Only show View Toggle in List View */}
         {!selectedGroup && (
-          <div className="mt-4 md:mt-0 flex items-center gap-1 p-1 bg-slate-100 dark:bg-widget rounded-3xl">
+          <div className="mt-4 md:mt-0 flex items-center gap-1 p-1 bg-slate-100 rounded-3xl">
             <button 
               onClick={() => setViewMode('grid')}
-              className={`p-2 rounded-2xl transition-all ${viewMode === 'grid' ? 'bg-white dark:bg-widget text-accent shadow-sm' : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-200'}`}
+              className={`p-2 rounded-2xl transition-all ${viewMode === 'grid' ? 'bg-white text-accent shadow-sm' : 'text-slate-400 hover:text-slate-600'}`}
             >
               <LayoutGrid className="w-5 h-5" />
             </button>
             <button 
               onClick={() => setViewMode('list')}
-              className={`p-2 rounded-2xl transition-all ${viewMode === 'list' ? 'bg-white dark:bg-widget text-accent shadow-sm' : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-200'}`}
+              className={`p-2 rounded-2xl transition-all ${viewMode === 'list' ? 'bg-white text-accent shadow-sm' : 'text-slate-400 hover:text-slate-600'}`}
             >
               <List className="w-5 h-5" />
             </button>
@@ -213,7 +213,7 @@ export default function GroupsPage() {
                 onChange={(e) => setNewGroupName(e.target.value)}
                 placeholder="Neue Gruppe (z.B. Büromaterial)..."
                 disabled={isSubmitting}
-                className="block w-full pl-10 pr-3 py-2.5 border border-slate-200 dark:border-slate-700 rounded-2xl bg-slate-50 dark:bg-widget text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-accent sm:text-sm transition-all"
+                className="block w-full pl-10 pr-3 py-2.5 border border-slate-200 rounded-2xl bg-slate-50 text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-accent sm:text-sm transition-all"
               />
             </div>
             <button
@@ -253,13 +253,13 @@ export default function GroupsPage() {
               </h3>
             </div>
             <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-slate-100 dark:divide-slate-700">
-                <thead className="bg-white dark:bg-widget">
+              <table className="min-w-full divide-y divide-slate-100">
+                <thead className="bg-white">
                   <tr>
-                    <th className="px-6 py-4 text-left text-xs font-black text-slate-400 uppercase tracking-widest">Name</th>
-                    <th className="px-6 py-4 text-left text-xs font-black text-slate-400 uppercase tracking-widest">SKU</th>
-                    <th className="px-6 py-4 text-right text-xs font-black text-slate-400 uppercase tracking-widest">Bestand</th>
-                    <th className="px-6 py-4 text-right text-xs font-black text-slate-400 uppercase tracking-widest">Preis</th>
+                    <th className="px-6 py-4 text-left text-[11px] font-black text-slate-900 uppercase tracking-widest">Name</th>
+                    <th className="px-6 py-4 text-left text-[11px] font-black text-slate-900 uppercase tracking-widest">SKU</th>
+                    <th className="px-6 py-4 text-right text-[11px] font-black text-slate-900 uppercase tracking-widest">Bestand</th>
+                    <th className="px-6 py-4 text-right text-[11px] font-black text-slate-900 uppercase tracking-widest">Preis</th>
                     <th className="w-10"></th>
                   </tr>
                 </thead>
@@ -351,12 +351,12 @@ export default function GroupsPage() {
       ) : (
         /* LIST VIEW */
         <div className="bg-white dark:bg-widget rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm overflow-hidden animate-in fade-in zoom-in-95 duration-300">
-          <table className="min-w-full divide-y divide-slate-100 dark:divide-slate-700">
-            <thead className="bg-slate-50 dark:bg-widget/50">
+          <table className="min-w-full divide-y divide-slate-100">
+            <thead className="bg-slate-50">
               <tr>
-                <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Gruppe</th>
-                <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Artikel</th>
-                <th scope="col" className="px-6 py-4 text-right text-xs font-bold text-slate-500 uppercase tracking-wider">Aktionen</th>
+                <th scope="col" className="px-6 py-4 text-left text-[11px] font-black text-slate-900 uppercase tracking-widest">Gruppe</th>
+                <th scope="col" className="px-6 py-4 text-left text-[11px] font-black text-slate-900 uppercase tracking-widest">Artikel</th>
+                <th scope="col" className="px-6 py-4 text-right text-[11px] font-black text-slate-900 uppercase tracking-widest">Aktionen</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 dark:divide-slate-700">
