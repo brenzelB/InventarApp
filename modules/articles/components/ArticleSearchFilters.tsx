@@ -114,6 +114,7 @@ export function ArticleSearchFilters({
             <option value="stock-asc" className="dark:bg-slate-900">Bestand (Wenig zuerst)</option>
             <option value="stock-desc" className="dark:bg-slate-900">Bestand (Viel zuerst)</option>
             <option value="newest" className="dark:bg-slate-900">Neueste zuerst</option>
+            <option value="manual" className="dark:bg-slate-900">Manuelle Sortierung</option>
           </select>
         </div>
 

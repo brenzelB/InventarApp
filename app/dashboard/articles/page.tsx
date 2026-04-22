@@ -64,7 +64,20 @@ export default function ArticlesPage() {
     }
 
     // 3. Sorting
+    const savedSortOrder = typeof window !== 'undefined' ? localStorage.getItem('article_sort_order') : null;
+    const sortOrder = savedSortOrder ? JSON.parse(savedSortOrder) : [];
+
     result.sort((a, b) => {
+      // Manual Sorting Priority
+      if (sortBy === 'manual' && sortOrder.length > 0) {
+        const indexA = sortOrder.indexOf(a.id);
+        const indexB = sortOrder.indexOf(b.id);
+        
+        if (indexA !== -1 && indexB !== -1) return indexA - indexB;
+        if (indexA !== -1) return -1;
+        if (indexB !== -1) return 1;
+      }
+
       switch (sortBy) {
         case "name-asc": return a.name.localeCompare(b.name);
         case "name-desc": return b.name.localeCompare(a.name);
