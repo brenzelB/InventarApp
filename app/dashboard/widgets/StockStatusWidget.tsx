@@ -1,9 +1,6 @@
 "use client";
 
 import { useMemo } from "react";
-"use client";
-
-import { useMemo } from "react";
 import { useArticles } from "@/modules/articles/hooks/useArticles";
 import { Package, FolderTree } from "lucide-react";
 
