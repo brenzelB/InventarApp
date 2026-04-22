@@ -224,7 +224,6 @@ export function ArticleTable({ articles, onDelete, columnSettings, setColumnSett
     </div>
   );
 }
-}
 
 function SortableRow({ 
   article, 
