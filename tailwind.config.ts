@@ -12,6 +12,11 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        widget: "#111111", /* Dark mode widget background */
+        accent: {
+          DEFAULT: "#df312c",
+          hover: "#c52825",
+        }
       },
     },
   },

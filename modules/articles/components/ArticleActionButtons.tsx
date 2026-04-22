@@ -36,7 +36,7 @@ export function ArticleActionButtons({ articles, onRefresh }: ArticleActionButto
       {/* Template Download */}
       <button 
         onClick={() => importExportService.downloadTemplate()}
-        className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold text-slate-600 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all shadow-sm"
+        className="flex items-center gap-2 px-4 py-2 rounded-3xl text-sm font-bold text-slate-600 bg-white dark:bg-widget border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all shadow-sm"
         title="Import-Vorlage herunterladen"
       >
         <FileDown className="w-4 h-4" />
@@ -46,7 +46,7 @@ export function ArticleActionButtons({ articles, onRefresh }: ArticleActionButto
       {/* Import Button */}
       <button 
         onClick={() => setShowImport(true)}
-        className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold text-slate-900 dark:text-white bg-white dark:bg-slate-800 border-2 border-slate-900 dark:border-white hover:bg-slate-900 hover:text-white dark:hover:bg-white dark:hover:text-slate-900 transition-all shadow-md active:scale-95"
+        className="flex items-center gap-2 px-4 py-2 rounded-3xl text-sm font-bold text-slate-900 dark:text-white bg-white dark:bg-widget border-2 border-slate-900 dark:border-white hover:bg-slate-900 hover:text-white dark:hover:bg-white dark:hover:text-slate-900 transition-all shadow-sm border border-slate-200 dark:border-white/10 active:scale-95"
       >
         <Upload className="w-4 h-4" />
         <span>Import</span>
@@ -56,7 +56,7 @@ export function ArticleActionButtons({ articles, onRefresh }: ArticleActionButto
       <div className="relative">
         <button 
           onClick={() => setShowExportMenu(!showExportMenu)}
-          className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-500 shadow-lg shadow-indigo-200 dark:shadow-none transition-all active:scale-95"
+          className="flex items-center gap-2 px-4 py-2 rounded-3xl text-sm font-bold text-white bg-accent hover:bg-indigo-500 shadow-md border border-slate-200 dark:border-white/10 shadow-indigo-200 dark:shadow-none transition-all active:scale-95"
         >
           <Download className="w-4 h-4" />
           <span>Export</span>
@@ -69,7 +69,7 @@ export function ArticleActionButtons({ articles, onRefresh }: ArticleActionButto
               className="fixed inset-0 z-10" 
               onClick={() => setShowExportMenu(false)} 
             />
-            <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-slate-800 rounded-2xl shadow-2xl border border-slate-100 dark:border-slate-700 py-2 z-20 animate-in fade-in slide-in-from-top-2">
+            <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-widget rounded-2xl shadow-2xl border border-slate-100 dark:border-slate-700 py-2 z-20 animate-in fade-in slide-in-from-top-2">
               <button 
                 onClick={() => handleExport('xlsx')}
                 className="flex items-center gap-3 w-full px-4 py-3 text-sm font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors text-left"
@@ -81,7 +81,7 @@ export function ArticleActionButtons({ articles, onRefresh }: ArticleActionButto
                 onClick={() => handleExport('csv')}
                 className="flex items-center gap-3 w-full px-4 py-3 text-sm font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors text-left"
               >
-                <Download className="w-4 h-4 text-blue-600" />
+                <Download className="w-4 h-4 text-accent" />
                 CSV (.csv)
               </button>
               <div className="h-px bg-slate-100 dark:bg-slate-700 my-1 mx-2" />

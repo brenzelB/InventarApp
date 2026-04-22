@@ -136,11 +136,11 @@ export function WeeklyTrendWidget({ config, onUpdateConfig }: WeeklyTrendWidgetP
   };
 
   return (
-    <div className="h-full w-full bg-white dark:bg-slate-800 rounded-xl p-6 shadow ring-1 ring-slate-200 dark:ring-slate-700 flex flex-col no-drag">
+    <div className="h-full w-full bg-white dark:bg-widget rounded-3xl p-6 shadow ring-1 ring-slate-200 dark:ring-slate-700 flex flex-col no-drag">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-sm font-bold text-slate-800 dark:text-white flex items-center gap-3">
-          <div className="p-1.5 bg-indigo-50 dark:bg-indigo-900/30 rounded-lg">
-            <TrendingUp className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+          <div className="p-1.5 bg-indigo-50 dark:bg-indigo-900/30 rounded-2xl">
+            <TrendingUp className="w-4 h-4 text-accent dark:text-indigo-400" />
           </div>
           Bestands-Analyse 2.0
         </h3>
@@ -148,7 +148,7 @@ export function WeeklyTrendWidget({ config, onUpdateConfig }: WeeklyTrendWidgetP
         <div className="flex items-center gap-2">
           <button 
             onClick={() => updateSettings({ chartType: chartType === 'area' ? 'bar' : 'area' })}
-            className="p-1.5 text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700"
+            className="p-1.5 text-slate-400 hover:text-accent dark:hover:text-indigo-400 transition-colors rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-700"
             title="Darstellung umschalten"
           >
             {chartType === 'area' ? <BarChart2 className="w-4 h-4" /> : <LayoutIcon className="w-4 h-4" />}
@@ -156,7 +156,7 @@ export function WeeklyTrendWidget({ config, onUpdateConfig }: WeeklyTrendWidgetP
 
           <button 
             onClick={() => loadTrend()}
-            className="p-1.5 text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700"
+            className="p-1.5 text-slate-400 hover:text-accent dark:hover:text-indigo-400 transition-colors rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-700"
           >
             <RefreshCcw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
           </button>
@@ -164,7 +164,7 @@ export function WeeklyTrendWidget({ config, onUpdateConfig }: WeeklyTrendWidgetP
           <select 
             value={timeRange} 
             onChange={(e) => updateSettings({ timeRange: Number(e.target.value) })}
-            className="text-[10px] font-black uppercase tracking-widest bg-slate-50 dark:bg-slate-900 border-none rounded-lg px-3 py-1.5 ring-1 ring-slate-200 dark:ring-slate-700 focus:ring-2 focus:ring-indigo-500 cursor-pointer"
+            className="text-[10px] font-black uppercase tracking-widest bg-slate-50 dark:bg-widget border-none rounded-2xl px-3 py-1.5 ring-1 ring-slate-200 dark:ring-slate-700 focus:ring-2 focus:ring-accent cursor-pointer"
           >
             <option value={1}>Heute</option>
             <option value={7}>7 Tage</option>

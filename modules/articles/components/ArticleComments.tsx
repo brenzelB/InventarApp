@@ -35,7 +35,7 @@ export function ArticleComments({ comments, onAddComment }: ArticleCommentsProps
     <div className="space-y-6">
       <div className="flex items-center gap-2 mb-2">
         <MessageSquare className="w-5 h-5 text-slate-500" />
-        <h3 className="text-lg font-semibold text-slate-800 dark:text-white">Kommentare ({comments.length})</h3>
+        <h3 className="text-lg font-bold tracking-wide text-slate-800 dark:text-white">Kommentare ({comments.length})</h3>
       </div>
 
       <form onSubmit={handleSubmit} className="relative group">
@@ -43,14 +43,14 @@ export function ArticleComments({ comments, onAddComment }: ArticleCommentsProps
           value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
           placeholder="Schreibe einen Kommentar oder eine Notiz zum Artikel..."
-          className="block w-full rounded-2xl border-0 py-4 px-5 text-slate-900 dark:text-white dark:bg-slate-800 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-700 focus:ring-2 focus:ring-indigo-600 sm:text-sm transition-all pr-14"
+          className="block w-full rounded-2xl border-0 py-4 px-5 text-slate-900 dark:text-white dark:bg-widget shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-700 focus:ring-2 focus:ring-accent sm:text-sm transition-all pr-14"
           rows={2}
           disabled={loading}
         />
         <button
           type="submit"
           disabled={loading || !newComment.trim()}
-          className="absolute right-3 bottom-3 p-2 bg-indigo-600 text-white rounded-xl hover:bg-indigo-500 disabled:opacity-50 transition-colors shadow-lg"
+          className="absolute right-3 bottom-3 p-2 bg-accent text-white rounded-3xl hover:bg-indigo-500 disabled:opacity-50 transition-colors shadow-md border border-slate-200 dark:border-white/10"
         >
           {loading ? (
             <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
@@ -62,15 +62,15 @@ export function ArticleComments({ comments, onAddComment }: ArticleCommentsProps
 
       <div className="space-y-4">
         {comments.length === 0 ? (
-          <div className="text-center py-10 bg-slate-50 dark:bg-slate-900/30 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700">
+          <div className="text-center py-10 bg-slate-50 dark:bg-widget/30 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700">
             <p className="text-slate-500 text-sm">Keine Kommentare vorhanden.</p>
           </div>
         ) : (
           comments.map((comment) => (
-            <div key={comment.id} className="flex gap-4 p-4 rounded-2xl bg-white dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700 shadow-sm">
+            <div key={comment.id} className="flex gap-4 p-4 rounded-2xl bg-white dark:bg-widget/50 border border-slate-100 dark:border-slate-700 shadow-sm">
               <div className="flex-shrink-0">
-                <div className="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-900/30 flex items-center justify-center">
-                  <User className="w-5 h-5 text-indigo-600" />
+                <div className="w-10 h-10 rounded-3xl bg-indigo-50 dark:bg-indigo-900/30 flex items-center justify-center">
+                  <User className="w-5 h-5 text-accent" />
                 </div>
               </div>
               <div className="flex-1 min-w-0">

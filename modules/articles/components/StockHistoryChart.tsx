@@ -45,7 +45,7 @@ export function StockHistoryChart({ history, initialStock }: StockHistoryChartPr
 
   if (history.length === 0) {
     return (
-      <div className="h-[300px] flex items-center justify-center bg-slate-50 dark:bg-slate-900/50 rounded-lg border border-dashed border-slate-300 dark:border-slate-700">
+      <div className="h-[300px] flex items-center justify-center bg-slate-50 dark:bg-widget/50 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700">
         <p className="text-slate-500 italic">Noch keine Bestandsdaten für eine Analyse vorhanden.</p>
       </div>
     );

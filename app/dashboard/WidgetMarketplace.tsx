@@ -25,7 +25,7 @@ export function WidgetMarketplace({
         onClick={onClose}
       />
       
-      <div className="absolute inset-y-0 right-0 max-w-md w-full bg-white dark:bg-slate-900 shadow-2xl flex flex-col transform transition-transform duration-300 ease-in-out">
+      <div className="absolute inset-y-0 right-0 max-w-md w-full bg-white dark:bg-widget shadow-2xl flex flex-col transform transition-transform duration-300 ease-in-out">
         {/* Header */}
         <div className="p-6 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
           <div>
@@ -51,14 +51,14 @@ export function WidgetMarketplace({
             return (
               <div 
                 key={widget.id}
-                className={`p-4 rounded-xl border ${isActive ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900/10' : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900'} shadow-sm flex flex-col gap-4 relative overflow-hidden transition-colors`}
+                className={`p-4 rounded-3xl border ${isActive ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900/10' : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-widget'} shadow-sm flex flex-col gap-4 relative overflow-hidden transition-colors`}
               >
                 {isActive && (
                   <div className="absolute top-0 left-0 w-1 h-full bg-indigo-500"></div>
                 )}
                 
                 <div className="flex items-start gap-4">
-                  <div className={`p-3 rounded-lg ${isActive ? 'bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400' : 'bg-slate-100 dark:bg-slate-800 text-slate-500'}`}>
+                  <div className={`p-3 rounded-2xl ${isActive ? 'bg-indigo-100 dark:bg-indigo-900/30 text-accent dark:text-indigo-400' : 'bg-slate-100 dark:bg-widget text-slate-500'}`}>
                     <Icon className="w-6 h-6" />
                   </div>
                   <div className="flex-1">
@@ -71,7 +71,7 @@ export function WidgetMarketplace({
                   {isActive ? (
                     <button
                       onClick={() => onRemoveWidget(widget.id)}
-                      className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-semibold text-rose-600 bg-rose-50 hover:bg-rose-100 dark:bg-rose-900/20 dark:hover:bg-rose-900/40 rounded-lg transition-colors"
+                      className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-semibold text-rose-600 bg-rose-50 hover:bg-rose-100 dark:bg-rose-900/20 dark:hover:bg-rose-900/40 rounded-2xl transition-colors"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
                       Entfernen
@@ -79,7 +79,7 @@ export function WidgetMarketplace({
                   ) : (
                     <button
                       onClick={() => onAddWidget(widget)}
-                      className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-900/20 dark:hover:bg-indigo-900/40 rounded-lg transition-colors"
+                      className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-semibold text-accent bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-900/20 dark:hover:bg-indigo-900/40 rounded-2xl transition-colors"
                     >
                       <Plus className="w-3.5 h-3.5" />
                       Hinzufügen

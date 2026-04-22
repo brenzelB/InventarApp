@@ -209,7 +209,7 @@ export default function TeamPage() {
   if (authLoading) {
     return (
       <div className="flex items-center justify-center p-20">
-        <Loader2 className="w-8 h-8 animate-spin text-indigo-600" />
+        <Loader2 className="w-8 h-8 animate-spin text-accent" />
       </div>
     );
   }
@@ -228,10 +228,10 @@ export default function TeamPage() {
           Diese Seite ist ausschließlich Administratoren vorbehalten. Deine aktuelle Rolle ist: <span className="text-red-600 font-black uppercase">{role}</span>.
         </p>
         <div className="mt-8 flex gap-4">
-          <button onClick={() => window.location.reload()} className="px-6 py-2 bg-slate-900 text-white rounded-xl font-bold flex items-center gap-2">
+          <button onClick={() => window.location.reload()} className="px-6 py-2 bg-slate-900 text-white rounded-3xl font-bold flex items-center gap-2">
             <RefreshCcw className="w-4 h-4" /> Aktualisieren
           </button>
-          <a href="/dashboard" className="px-6 py-2 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-xl font-bold">
+          <a href="/dashboard" className="px-6 py-2 bg-slate-100 dark:bg-widget text-slate-600 dark:text-slate-300 rounded-3xl font-bold">
             Zum Dashboard
           </a>
         </div>
@@ -253,7 +253,7 @@ export default function TeamPage() {
         <div className="mt-4 md:mt-0 flex gap-4">
           <button 
             onClick={fetchTeamData}
-            className="p-3 bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-2xl shadow-sm hover:bg-slate-50 transition-all"
+            className="p-3 bg-white dark:bg-widget border border-slate-100 dark:border-slate-700 rounded-2xl shadow-sm hover:bg-slate-50 transition-all"
             title="Daten aktualisieren"
           >
             <RefreshCcw className={`w-5 h-5 text-slate-500 ${loading ? 'animate-spin' : ''}`} />
@@ -264,11 +264,11 @@ export default function TeamPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-8">
           {/* Mitglieder-Tabelle */}
-          <div className="bg-white dark:bg-slate-800 rounded-[2.5rem] border border-slate-100 dark:border-slate-700 shadow-xl shadow-slate-100/50 dark:shadow-none overflow-hidden transition-all">
+          <div className="bg-white dark:bg-widget rounded-[2.5rem] border border-slate-100 dark:border-slate-700 shadow-xl shadow-slate-100/50 dark:shadow-none overflow-hidden transition-all">
             <div className="p-8 border-b border-slate-100 dark:border-slate-700 flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-2xl bg-indigo-50 dark:bg-indigo-900/30 flex items-center justify-center">
-                  <Users className="w-6 h-6 text-indigo-600" />
+                  <Users className="w-6 h-6 text-accent" />
                 </div>
                 <h3 className="text-lg font-black text-slate-900 dark:text-white uppercase tracking-tight">Teammitglieder</h3>
               </div>
@@ -277,7 +277,7 @@ export default function TeamPage() {
             
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-slate-100 dark:divide-slate-700">
-                <thead className="bg-slate-50/50 dark:bg-slate-900/50">
+                <thead className="bg-slate-50/50 dark:bg-widget/50">
                   <tr>
                     <th className="px-8 py-4 text-left text-[11px] font-black text-slate-400 uppercase tracking-[0.2em]">Mitglied</th>
                     <th className="px-8 py-4 text-left text-[11px] font-black text-slate-400 uppercase tracking-[0.2em]">E-Mail</th>
@@ -290,7 +290,7 @@ export default function TeamPage() {
                     <tr key={profile.id} className="group hover:bg-slate-50/50 dark:hover:bg-slate-700/50 transition-all">
                       <td className="px-8 py-5 whitespace-nowrap text-sm font-bold text-slate-900 dark:text-white">
                         {profile.display_name || 'Unbekannt'}
-                        {profile.id === user?.id && <span className="ml-2 text-[10px] bg-slate-100 dark:border-slate-700 px-2 py-0.5 rounded-md opacity-50">ICH</span>}
+                        {profile.id === user?.id && <span className="ml-2 text-[10px] bg-slate-100 dark:border-slate-700 px-2 py-0.5 rounded-3xl opacity-50">ICH</span>}
                       </td>
                       <td className="px-8 py-5 whitespace-nowrap text-sm text-slate-500 font-medium">
                         {profile.email}
@@ -300,7 +300,7 @@ export default function TeamPage() {
                           disabled={profile.id === user?.id}
                           value={profile.role}
                           onChange={(e) => handleUpdateRole(profile.id, e.target.value as any)}
-                          className="bg-transparent border-none text-[11px] font-black uppercase tracking-widest text-slate-700 dark:text-slate-300 focus:ring-0 cursor-pointer disabled:opacity-40 hover:text-indigo-600 transition-colors"
+                          className="bg-transparent border-none text-[11px] font-black uppercase tracking-widest text-slate-700 dark:text-slate-300 focus:ring-0 cursor-pointer disabled:opacity-40 hover:text-accent transition-colors"
                         >
                           <option value="admin">Admin</option>
                           <option value="editor">Editor</option>
@@ -311,7 +311,7 @@ export default function TeamPage() {
                         <button
                           onClick={() => handleDeleteMember(profile.id, profile.email)}
                           disabled={profile.id === user?.id}
-                          className="text-slate-300 hover:text-red-500 transition-all p-2 rounded-xl hover:bg-red-50 dark:hover:bg-red-900/30 disabled:hidden"
+                          className="text-slate-300 hover:text-red-500 transition-all p-2 rounded-3xl hover:bg-red-50 dark:hover:bg-red-900/30 disabled:hidden"
                         >
                           <Trash2 size={18} />
                         </button>
@@ -321,7 +321,7 @@ export default function TeamPage() {
                   {loading && profiles.length === 0 && (
                     <tr>
                       <td colSpan={4} className="py-20 text-center">
-                        <Loader2 className="w-10 h-10 animate-spin text-indigo-600 mx-auto" />
+                        <Loader2 className="w-10 h-10 animate-spin text-accent mx-auto" />
                         <p className="mt-4 text-xs font-black text-slate-400 uppercase tracking-widest">Lade Teammitglieder...</p>
                       </td>
                     </tr>
@@ -333,7 +333,7 @@ export default function TeamPage() {
 
           {/* Einladungen-Sektion */}
           {invitations.length > 0 && (
-            <div className="bg-white dark:bg-slate-800 rounded-[2.5rem] border border-slate-100 dark:border-slate-700 shadow-lg shadow-slate-100/50 dark:shadow-none overflow-hidden animate-in slide-in-from-top-4 duration-500">
+            <div className="bg-white dark:bg-widget rounded-[2.5rem] border border-slate-100 dark:border-slate-700 shadow-md border border-slate-200 dark:border-white/10 shadow-slate-100/50 dark:shadow-none overflow-hidden animate-in slide-in-from-top-4 duration-500">
               <div className="p-8 border-b border-slate-100 dark:border-slate-700 flex items-center gap-4">
                 <div className="w-12 h-12 rounded-2xl bg-amber-50 dark:bg-amber-900/30 flex items-center justify-center">
                   <Clock className="w-6 h-6 text-amber-500" />
@@ -359,7 +359,7 @@ export default function TeamPage() {
                         <td className="px-8 py-5 whitespace-nowrap text-right w-px">
                           <button
                             onClick={() => handleDeleteInvitation(invite.id)}
-                            className="text-slate-300 hover:text-red-500 transition-all p-2 rounded-xl hover:bg-red-50 dark:hover:bg-red-900/30"
+                            className="text-slate-300 hover:text-red-500 transition-all p-2 rounded-3xl hover:bg-red-50 dark:hover:bg-red-900/30"
                           >
                             <Trash2 size={18} />
                           </button>
@@ -375,7 +375,7 @@ export default function TeamPage() {
 
         {/* Sidebar: Einladungs-Tool */}
         <div className="space-y-8">
-          <div className="bg-indigo-600 rounded-[2.5rem] p-10 text-white shadow-2xl shadow-indigo-200 dark:shadow-none relative overflow-hidden group">
+          <div className="bg-accent rounded-[2.5rem] p-10 text-white shadow-2xl shadow-indigo-200 dark:shadow-none relative overflow-hidden group">
             <div className="absolute -top-10 -right-10 opacity-10 group-hover:scale-110 transition-transform duration-700">
                <UserPlus className="w-48 h-48 rotate-12" />
             </div>
@@ -439,7 +439,7 @@ export default function TeamPage() {
               <button
                 type="submit"
                 disabled={isInviting}
-                className="w-full bg-white text-indigo-600 rounded-2xl py-5 text-xs font-black uppercase tracking-[0.3em] shadow-xl hover:bg-slate-50 hover:scale-[1.02] active:scale-95 transition-all disabled:opacity-50 flex items-center justify-center gap-4 group"
+                className="w-full bg-white text-accent rounded-2xl py-5 text-xs font-black uppercase tracking-[0.3em] shadow-xl hover:bg-slate-50 hover:scale-[1.02] active:scale-95 transition-all disabled:opacity-50 flex items-center justify-center gap-4 group"
               >
                 {isInviting ? <Loader2 className="w-5 h-5 animate-spin" /> : <UserPlus className="w-5 h-5 group-hover:rotate-12 transition-transform" />}
                 Einladung senden
@@ -448,12 +448,12 @@ export default function TeamPage() {
           </div>
 
           {/* Rollen-Info-Card */}
-          <div className="bg-white dark:bg-slate-800 rounded-[2.5rem] p-10 border border-slate-100 dark:border-slate-700 space-y-8">
+          <div className="bg-white dark:bg-widget rounded-[2.5rem] p-10 border border-slate-100 dark:border-slate-700 space-y-8">
             <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] pl-1">Berechtigungen</h4>
             <div className="space-y-6">
               <div className="flex gap-5">
                 <div className="w-12 h-12 rounded-2xl bg-indigo-50 dark:bg-indigo-900/30 flex items-center justify-center flex-shrink-0">
-                  <Shield className="w-5 h-5 text-indigo-600" />
+                  <Shield className="w-5 h-5 text-accent" />
                 </div>
                 <div>
                   <span className="font-black text-[11px] text-slate-900 dark:text-white uppercase tracking-widest block mb-1">Admins</span>
@@ -474,7 +474,7 @@ export default function TeamPage() {
                 </div>
               </div>
               <div className="flex gap-5">
-                <div className="w-12 h-12 rounded-2xl bg-slate-50 dark:bg-slate-900/30 flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 rounded-2xl bg-slate-50 dark:bg-widget/30 flex items-center justify-center flex-shrink-0">
                   <Users className="w-5 h-5 text-slate-400" />
                 </div>
                 <div>

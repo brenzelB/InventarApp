@@ -46,16 +46,16 @@ export default function LoginPage() {
         </h2>
         <p className="mt-2 text-center text-sm text-slate-600 dark:text-slate-400">
           Oder wenn du noch keinen Account hast,{" "}
-          <Link href="/register" className="font-medium text-indigo-600 hover:text-indigo-500">
+          <Link href="/register" className="font-medium text-accent hover:text-accent">
             hier registrieren
           </Link>
         </p>
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white dark:bg-slate-800 py-8 px-4 shadow sm:rounded-lg sm:px-10 border border-slate-200 dark:border-slate-700">
+        <div className="bg-white dark:bg-widget py-8 px-4 shadow sm:rounded-2xl sm:px-10 border border-slate-200 dark:border-slate-700">
           {isMockMode && (
-            <div className="mb-6 p-4 rounded-md bg-amber-50 dark:bg-amber-900/30 border border-amber-200 dark:border-amber-700">
+            <div className="mb-6 p-4 rounded-3xl bg-amber-50 dark:bg-amber-900/30 border border-amber-200 dark:border-amber-700">
               <p className="text-sm text-amber-800 dark:text-amber-200 font-medium">
                 ⚠️ Demo-Modus aktiv
               </p>
@@ -67,7 +67,7 @@ export default function LoginPage() {
 
           <form className="space-y-6" onSubmit={handleSubmit}>
             {error && (
-              <div className="rounded-md bg-red-50 dark:bg-red-900/30 p-4 mb-4">
+              <div className="rounded-3xl bg-red-50 dark:bg-red-900/30 p-4 mb-4">
                 <div className="text-sm text-red-700 dark:text-red-400 font-medium">
                   {error}
                 </div>
@@ -87,7 +87,7 @@ export default function LoginPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   autoComplete="email"
                   required
-                  className="block w-full rounded-md border-0 py-1.5 text-slate-900 dark:text-white dark:bg-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-3 disabled:opacity-50"
+                  className="block w-full rounded-3xl border-0 py-1.5 text-slate-900 dark:text-white dark:bg-widget shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-accent sm:text-sm sm:leading-6 px-3 disabled:opacity-50"
                   disabled={loading}
                 />
               </div>
@@ -98,7 +98,7 @@ export default function LoginPage() {
                 <label htmlFor="password" className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-200">
                   Passwort
                 </label>
-                <Link href="/forgot-password" className="text-xs text-indigo-600 hover:text-indigo-500 font-medium">
+                <Link href="/forgot-password" className="text-xs text-accent hover:text-accent font-medium">
                   Passwort vergessen?
                 </Link>
               </div>
@@ -120,7 +120,7 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="flex w-full justify-center items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-colors disabled:opacity-75 disabled:cursor-not-allowed"
+                className="flex w-full justify-center items-center rounded-3xl bg-accent px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-colors disabled:opacity-75 disabled:cursor-not-allowed"
               >
                 {loading ? (
                   <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -135,7 +135,7 @@ export default function LoginPage() {
                   type="button"
                   onClick={handleDemoLogin}
                   disabled={loading}
-                  className="flex w-full justify-center items-center rounded-md bg-white dark:bg-slate-700 px-3 py-2 text-sm font-semibold text-slate-900 dark:text-white shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 hover:bg-slate-50 dark:hover:bg-slate-600 transition-colors disabled:opacity-75"
+                  className="flex w-full justify-center items-center rounded-3xl bg-white dark:bg-slate-700 px-3 py-2 text-sm font-semibold text-slate-900 dark:text-white shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 hover:bg-slate-50 dark:hover:bg-slate-600 transition-colors disabled:opacity-75"
                 >
                   Demo Login (Ohne Backend)
                 </button>

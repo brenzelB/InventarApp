@@ -113,11 +113,11 @@ export default function ArticlesPage() {
         <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
           <ArticleTable articles={filteredArticles} onDelete={refetch} />
           {filteredArticles.length === 0 && articles.length > 0 && (
-            <div className="text-center py-20 bg-white dark:bg-slate-800 rounded-3xl border border-dashed border-slate-300 dark:border-slate-700 mt-8">
+            <div className="text-center py-20 bg-white dark:bg-widget rounded-3xl border border-dashed border-slate-300 dark:border-slate-700 mt-8">
               <p className="text-slate-500 font-medium">Keine Artikel gefunden, die deinen Filtereinstellungen entsprechen.</p>
               <button 
                 onClick={() => { setSearchQuery(""); setStatusFilter("all"); }}
-                className="mt-4 text-indigo-600 font-bold hover:underline"
+                className="mt-4 text-accent font-bold hover:underline"
               >
                 Filter zurücksetzen
               </button>

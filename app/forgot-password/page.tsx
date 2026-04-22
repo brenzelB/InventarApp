@@ -34,17 +34,17 @@ export default function ForgotPasswordPage() {
         </h2>
         <p className="mt-2 text-center text-sm text-slate-600 dark:text-slate-400">
           Zurück zur{" "}
-          <Link href="/login" className="font-medium text-indigo-600 hover:text-indigo-500">
+          <Link href="/login" className="font-medium text-accent hover:text-accent">
             Anmeldung
           </Link>
         </p>
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white dark:bg-slate-800 py-8 px-4 shadow sm:rounded-lg sm:px-10 border border-slate-200 dark:border-slate-700">
+        <div className="bg-white dark:bg-widget py-8 px-4 shadow sm:rounded-2xl sm:px-10 border border-slate-200 dark:border-slate-700">
 
           {isMockMode && (
-            <div className="mb-6 p-4 rounded-md bg-amber-50 dark:bg-amber-900/30 border border-amber-200 dark:border-amber-700">
+            <div className="mb-6 p-4 rounded-3xl bg-amber-50 dark:bg-amber-900/30 border border-amber-200 dark:border-amber-700">
               <p className="text-sm text-amber-800 dark:text-amber-200 font-medium">⚠️ Demo-Modus aktiv</p>
               <p className="text-xs text-amber-700 dark:text-amber-300 mt-1">
                 Passwort-Reset ist im Demo-Modus nicht verfügbar. Bitte echtes Supabase-Backend konfigurieren.
@@ -59,7 +59,7 @@ export default function ForgotPasswordPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
               </div>
-              <h3 className="mt-4 text-lg font-semibold text-slate-900 dark:text-white">E-Mail versendet</h3>
+              <h3 className="mt-4 text-lg font-bold tracking-wide text-slate-900 dark:text-white">E-Mail versendet</h3>
               <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
                 Falls ein Account mit der Adresse <strong>{email}</strong> existiert, wurde ein Reset-Link versendet.
                 Bitte prüfe auch deinen Spam-Ordner.
@@ -70,7 +70,7 @@ export default function ForgotPasswordPage() {
               <div className="mt-6">
                 <Link
                   href="/login"
-                  className="inline-flex items-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 transition-colors"
+                  className="inline-flex items-center rounded-3xl bg-accent px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 transition-colors"
                 >
                   Zurück zur Anmeldung
                 </Link>
@@ -79,7 +79,7 @@ export default function ForgotPasswordPage() {
           ) : (
             <form onSubmit={handleSubmit} className="space-y-6">
               {error && (
-                <div className="rounded-md bg-red-50 dark:bg-red-900/30 p-4">
+                <div className="rounded-3xl bg-red-50 dark:bg-red-900/30 p-4">
                   <p className="text-sm text-red-700 dark:text-red-400 font-medium">{error}</p>
                 </div>
               )}
@@ -101,7 +101,7 @@ export default function ForgotPasswordPage() {
                     autoComplete="email"
                     required
                     disabled={loading}
-                    className="block w-full rounded-md border-0 py-1.5 px-3 text-slate-900 dark:text-white dark:bg-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:opacity-50"
+                    className="block w-full rounded-3xl border-0 py-1.5 px-3 text-slate-900 dark:text-white dark:bg-widget shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-accent sm:text-sm sm:leading-6 disabled:opacity-50"
                   />
                 </div>
               </div>
@@ -109,7 +109,7 @@ export default function ForgotPasswordPage() {
               <button
                 type="submit"
                 disabled={loading || isMockMode}
-                className="flex w-full justify-center items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 transition-colors disabled:opacity-75 disabled:cursor-not-allowed"
+                className="flex w-full justify-center items-center rounded-3xl bg-accent px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 transition-colors disabled:opacity-75 disabled:cursor-not-allowed"
               >
                 {loading ? (
                   <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">

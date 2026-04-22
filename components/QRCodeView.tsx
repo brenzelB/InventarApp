@@ -32,7 +32,7 @@ export function QRCodeView({ svgString, articleId, name, size = "md" }: QRCodeVi
   if (!imgSrc) {
     return (
       <div
-        className={`${sizes[size]} flex items-center justify-center rounded border border-dashed border-slate-300 bg-slate-50 dark:bg-slate-800 dark:border-slate-700`}
+        className={`${sizes[size]} flex items-center justify-center rounded border border-dashed border-slate-300 bg-slate-50 dark:bg-widget dark:border-slate-700`}
         title="Kein QR-Code verfügbar"
       >
         <svg className="w-4 h-4 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -63,7 +63,7 @@ export function QRCodeView({ svgString, articleId, name, size = "md" }: QRCodeVi
     <>
       {/* Thumbnail in der Tabelle */}
       <div
-        className={`${sizes[size]} cursor-zoom-in hover:opacity-80 hover:scale-110 transition-all duration-150 rounded-md border border-slate-200 dark:border-slate-600 bg-white p-0.5 shadow-sm`}
+        className={`${sizes[size]} cursor-zoom-in hover:opacity-80 hover:scale-110 transition-all duration-150 rounded-3xl border border-slate-200 dark:border-slate-600 bg-white p-0.5 shadow-sm`}
         onClick={() => setIsOpen(true)}
         title={`QR-Code für ${name} – vergrößern`}
       >
@@ -83,13 +83,13 @@ export function QRCodeView({ svgString, articleId, name, size = "md" }: QRCodeVi
           onClick={() => setIsOpen(false)}
         >
           <div
-            className="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-2xl max-w-sm w-full"
+            className="bg-white dark:bg-widget p-8 rounded-2xl shadow-2xl max-w-sm w-full"
             style={{ animation: "qrZoomIn 0.15s ease-out" }}
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
             <div className="flex justify-between items-center mb-6">
-              <h3 className="text-lg font-semibold text-slate-900 dark:text-white truncate pr-4">
+              <h3 className="text-lg font-bold tracking-wide text-slate-900 dark:text-white truncate pr-4">
                 {name}
               </h3>
               <button
@@ -103,7 +103,7 @@ export function QRCodeView({ svgString, articleId, name, size = "md" }: QRCodeVi
             </div>
 
             {/* QR groß */}
-            <div className="bg-white p-4 rounded-xl border border-slate-100 flex justify-center">
+            <div className="bg-white p-4 rounded-3xl border border-slate-100 flex justify-center">
               <img src={imgSrc} alt="QR Code" className="w-64 h-64 object-contain" />
             </div>
 
@@ -116,7 +116,7 @@ export function QRCodeView({ svgString, articleId, name, size = "md" }: QRCodeVi
               <a
                 href={imgSrc}
                 download={`QR_${name.replace(/\s+/g, "_")}.svg`}
-                className="flex items-center justify-center gap-2 bg-indigo-600 text-white px-4 py-2.5 rounded-lg font-medium hover:bg-indigo-500 transition-colors"
+                className="flex items-center justify-center gap-2 bg-accent text-white px-4 py-2.5 rounded-2xl font-medium hover:bg-indigo-500 transition-colors"
                 onClick={(e) => e.stopPropagation()}
               >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -126,7 +126,7 @@ export function QRCodeView({ svgString, articleId, name, size = "md" }: QRCodeVi
               </a>
               <button
                 onClick={() => window.print()}
-                className="flex items-center justify-center gap-2 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 px-4 py-2.5 rounded-lg font-medium hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors"
+                className="flex items-center justify-center gap-2 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 px-4 py-2.5 rounded-2xl font-medium hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors"
               >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />

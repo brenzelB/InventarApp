@@ -39,14 +39,14 @@ export function ActivityLogWidget() {
   if (loading) {
 // ... existing loading code ...
     return (
-      <div className="h-full w-full bg-white dark:bg-slate-800 rounded-xl p-4 shadow flex items-center justify-center animate-pulse">
+      <div className="h-full w-full bg-white dark:bg-widget rounded-3xl p-4 shadow flex items-center justify-center animate-pulse">
         <div className="h-4 w-20 bg-slate-200 dark:bg-slate-700 rounded"></div>
       </div>
     );
   }
 
   return (
-    <div className="h-full w-full bg-white dark:bg-slate-800 rounded-xl p-6 shadow ring-1 ring-slate-200 dark:ring-slate-700 flex flex-col">
+    <div className="h-full w-full bg-white dark:bg-widget rounded-3xl p-6 shadow ring-1 ring-slate-200 dark:ring-slate-700 flex flex-col">
       <h3 className="text-sm font-semibold text-slate-500 dark:text-slate-400 flex items-center gap-2 mb-4">
         <Activity className="w-4 h-4 text-emerald-500" />
         Aktivitäts-Log
@@ -64,11 +64,11 @@ export function ActivityLogWidget() {
                const isInput = entry.type === 'input' && diff > 0;
                const isOutput = entry.type === 'output' || diff < 0;
                 return (
-                  <li key={entry.id} className={`flex items-start gap-3 p-2 rounded-lg transition-all ${entry.id === lastNewId ? 'animate-flash-glow' : ''}`}>
+                  <li key={entry.id} className={`flex items-start gap-3 p-2 rounded-2xl transition-all ${entry.id === lastNewId ? 'animate-flash-glow' : ''}`}>
                     <div className={`mt-0.5 w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 ${
                     isInput ? 'bg-emerald-100 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400' : 
                     isOutput ? 'bg-rose-100 text-rose-600 dark:bg-rose-900/30 dark:text-rose-400' : 
-                    'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400'
+                    'bg-slate-100 text-slate-600 dark:bg-widget dark:text-slate-400'
                   }`}>
                     {isInput ? <ArrowUpRight className="w-3 h-3" /> : isOutput ? <ArrowDownRight className="w-3 h-3" /> : <Edit2 className="w-3 h-3" />}
                   </div>

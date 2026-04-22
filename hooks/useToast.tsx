@@ -49,16 +49,16 @@ export function ToastProvider({ children }: { children: ReactNode }) {
             className={`
               pointer-events-auto flex items-center gap-3 px-6 py-4 rounded-2xl shadow-2xl border min-w-[300px] max-w-md
               animate-in slide-in-from-right-full fade-in-0 duration-300
-              ${t.type === 'success' ? 'bg-white dark:bg-slate-800 border-green-100 dark:border-green-900/30 text-slate-900 dark:text-white' : ''}
+              ${t.type === 'success' ? 'bg-white dark:bg-widget border-green-100 dark:border-green-900/30 text-slate-900 dark:text-white' : ''}
               ${t.type === 'error' ? 'bg-red-50 dark:bg-red-900/20 border-red-100 dark:border-red-900/30 text-red-900 dark:text-red-400' : ''}
-              ${t.type === 'info' ? 'bg-white dark:bg-slate-800 border-slate-100 dark:border-slate-700 text-slate-900 dark:text-white' : ''}
+              ${t.type === 'info' ? 'bg-white dark:bg-widget border-slate-100 dark:border-slate-700 text-slate-900 dark:text-white' : ''}
             `}
           >
             <div className={`
-              w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0
+              w-10 h-10 rounded-3xl flex items-center justify-center flex-shrink-0
               ${t.type === 'success' ? 'bg-green-100 dark:bg-green-900/50 text-green-600' : ''}
               ${t.type === 'error' ? 'bg-red-100 dark:bg-red-900/50 text-red-600' : ''}
-              ${t.type === 'info' ? 'bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600' : ''}
+              ${t.type === 'info' ? 'bg-indigo-100 dark:bg-indigo-900/50 text-accent' : ''}
             `}>
               {t.type === 'success' && <CheckCircle2 className="w-5 h-5" />}
               {t.type === 'error' && <AlertCircle className="w-5 h-5" />}
@@ -76,7 +76,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
 
             <button 
               onClick={() => removeToast(t.id)}
-              className="p-1 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors opacity-40 hover:opacity-100"
+              className="p-1 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-2xl transition-colors opacity-40 hover:opacity-100"
             >
               <X className="w-4 h-4" />
             </button>

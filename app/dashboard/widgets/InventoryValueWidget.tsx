@@ -75,14 +75,14 @@ export function InventoryValueWidget({ config, onUpdateConfig }: { config: any, 
 
   if (loading) {
     return (
-      <div className="h-full w-full bg-slate-900 rounded-xl p-6 shadow-sm flex flex-col justify-center animate-pulse gap-4 border border-slate-800">
-        <div className="h-24 bg-slate-800 rounded-xl"></div>
+      <div className="h-full w-full bg-slate-900 rounded-3xl p-6 shadow-sm flex flex-col justify-center animate-pulse gap-4 border border-slate-800">
+        <div className="h-24 bg-slate-800 rounded-3xl"></div>
       </div>
     );
   }
 
   return (
-    <div className={`h-full w-full bg-slate-900 rounded-2xl shadow-2xl ring-1 ring-slate-800 flex flex-col no-drag transition-all duration-500 overflow-hidden relative ${isPulsing ? 'ring-indigo-500 ring-2 ring-offset-2 ring-offset-slate-900' : ''}`}>
+    <div className={`h-full w-full bg-slate-900 rounded-2xl shadow-2xl ring-1 ring-slate-800 flex flex-col no-drag transition-all duration-500 overflow-hidden relative ${isPulsing ? 'ring-accent ring-2 ring-offset-2 ring-offset-slate-900' : ''}`}>
       
       {/* Header with Toggle */}
       <div className="px-6 pt-5 pb-2 flex items-center justify-between z-10">
@@ -91,16 +91,16 @@ export function InventoryValueWidget({ config, onUpdateConfig }: { config: any, 
           Finanz-Cockpit {isNetView ? <span className="text-indigo-400/50 ml-1">(Netto)</span> : <span className="text-slate-600 ml-1">(Brutto)</span>}
         </h3>
 
-        <div className="flex bg-slate-800/50 p-0.5 rounded-lg border border-slate-700/50 ring-1 ring-black/20">
+        <div className="flex bg-slate-800/50 p-0.5 rounded-2xl border border-slate-700/50 ring-1 ring-black/20">
           <button 
             onClick={() => handleToggleNetto(false)}
-            className={`px-3 py-1 text-[9px] font-black uppercase tracking-tighter rounded-md transition-all ${!isNetView ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-500 hover:text-slate-300'}`}
+            className={`px-3 py-1 text-[9px] font-black uppercase tracking-tighter rounded-3xl transition-all ${!isNetView ? 'bg-accent text-white shadow-md border border-slate-200 dark:border-white/10' : 'text-slate-500 hover:text-slate-300'}`}
           >
             Brutto
           </button>
           <button 
             onClick={() => handleToggleNetto(true)}
-            className={`px-3 py-1 text-[9px] font-black uppercase tracking-tighter rounded-md transition-all ${isNetView ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-500 hover:text-slate-300'}`}
+            className={`px-3 py-1 text-[9px] font-black uppercase tracking-tighter rounded-3xl transition-all ${isNetView ? 'bg-accent text-white shadow-md border border-slate-200 dark:border-white/10' : 'text-slate-500 hover:text-slate-300'}`}
           >
             Netto
           </button>
@@ -121,7 +121,7 @@ export function InventoryValueWidget({ config, onUpdateConfig }: { config: any, 
               <span className="text-xl font-black text-indigo-100 tracking-tight">
                 {stats.buy.toLocaleString('de-DE', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
               </span>
-              <span className="text-[10px] font-bold text-indigo-500/50">€</span>
+              <span className="text-[10px] font-bold text-accent/50">€</span>
             </div>
           </div>
         </div>

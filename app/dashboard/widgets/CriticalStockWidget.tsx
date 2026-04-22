@@ -53,14 +53,14 @@ export function CriticalStockWidget() {
 
   if (loading) {
     return (
-      <div className="h-full w-full bg-white dark:bg-slate-800 rounded-xl p-4 shadow flex items-center justify-center animate-pulse">
+      <div className="h-full w-full bg-white dark:bg-widget rounded-3xl p-4 shadow flex items-center justify-center animate-pulse">
         <div className="h-4 w-20 bg-slate-200 dark:bg-slate-700 rounded"></div>
       </div>
     );
   }
 
   return (
-    <div className="h-full w-full bg-white dark:bg-slate-800 rounded-xl p-6 shadow ring-1 ring-slate-200 dark:ring-slate-700 flex flex-col">
+    <div className="h-full w-full bg-white dark:bg-widget rounded-3xl p-6 shadow ring-1 ring-slate-200 dark:ring-slate-700 flex flex-col">
       <h3 className="text-sm font-semibold text-red-500 dark:text-red-400 flex items-center gap-2 mb-4">
         <AlertOctagon className="w-4 h-4" />
         Kritische Bestände
@@ -75,7 +75,7 @@ export function CriticalStockWidget() {
           <ul className="space-y-3">
             {criticalItems.map(item => (
               <li key={item.id} className="flex justify-between items-center group">
-                <Link href={`/dashboard/articles/${item.id}`} className="block overflow-hidden flex-1 hover:text-indigo-600 transition-colors">
+                <Link href={`/dashboard/articles/${item.id}`} className="block overflow-hidden flex-1 hover:text-accent transition-colors">
                   <p className="text-sm font-bold text-slate-900 dark:text-white truncate">{item.name}</p>
                   <p className="text-[10px] text-slate-500 uppercase font-bold tracking-widest">{item.sku}</p>
                 </Link>

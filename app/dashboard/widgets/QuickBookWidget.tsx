@@ -49,7 +49,7 @@ export function QuickBookWidget() {
   };
 
   return (
-    <div className="h-full w-full bg-white dark:bg-slate-800 rounded-xl p-6 shadow ring-1 ring-slate-200 dark:ring-slate-700 flex flex-col relative overflow-hidden">
+    <div className="h-full w-full bg-white dark:bg-widget rounded-3xl p-6 shadow ring-1 ring-slate-200 dark:ring-slate-700 flex flex-col relative overflow-hidden">
       <h3 className="text-sm font-bold text-slate-800 dark:text-white flex items-center gap-2 mb-4">
         <Zap className="w-4 h-4 text-amber-500" />
         Express-Buchung
@@ -57,10 +57,10 @@ export function QuickBookWidget() {
       
       <div className="flex-1 flex flex-col gap-4">
         {articlesLoading ? (
-           <div className="h-10 bg-slate-100 dark:bg-slate-700 animate-pulse rounded-lg" />
+           <div className="h-10 bg-slate-100 dark:bg-slate-700 animate-pulse rounded-2xl" />
         ) : (
           <select 
-            className="w-full text-sm rounded-lg border-0 py-2.5 px-3 text-slate-900 dark:text-white dark:bg-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-indigo-600 appearance-none bg-no-repeat bg-[right_0.5rem_center] bg-[length:1.2em_1.2em]"
+            className="w-full text-sm rounded-2xl border-0 py-2.5 px-3 text-slate-900 dark:text-white dark:bg-widget shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-accent appearance-none bg-no-repeat bg-[right_0.5rem_center] bg-[length:1.2em_1.2em]"
             value={selectedArticleId}
             onChange={(e) => {
               setSelectedArticleId(e.target.value);
@@ -84,7 +84,7 @@ export function QuickBookWidget() {
             min="0.01"
             value={amount}
             onChange={e => setAmount(Number(e.target.value))}
-            className="w-full text-sm rounded-lg border-0 py-2.5 px-3 text-slate-900 dark:text-white dark:bg-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-indigo-600"
+            className="w-full text-sm rounded-2xl border-0 py-2.5 px-3 text-slate-900 dark:text-white dark:bg-widget shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-accent"
             disabled={loading || !selectedArticleId}
             placeholder="Menge..."
           />
@@ -94,7 +94,7 @@ export function QuickBookWidget() {
           <button
             onClick={() => handleAction('input')}
             disabled={loading || !selectedArticleId || amount <= 0}
-            className="flex items-center justify-center gap-1 py-2.5 rounded-lg text-xs font-bold text-green-700 bg-green-100 hover:bg-green-200 dark:bg-green-900/30 dark:text-green-400 dark:hover:bg-green-900/50 transition-colors disabled:opacity-50"
+            className="flex items-center justify-center gap-1 py-2.5 rounded-2xl text-xs font-bold text-green-700 bg-green-100 hover:bg-green-200 dark:bg-green-900/30 dark:text-green-400 dark:hover:bg-green-900/50 transition-colors disabled:opacity-50"
           >
             <Plus className="w-3 h-3" /> Einlagern
           </button>
@@ -102,14 +102,14 @@ export function QuickBookWidget() {
           <button
             onClick={() => handleAction('output')}
             disabled={loading || !selectedArticleId || amount <= 0}
-            className="flex items-center justify-center gap-1 py-2.5 rounded-lg text-xs font-bold text-red-700 bg-red-100 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-400 dark:hover:bg-red-900/50 transition-colors disabled:opacity-50"
+            className="flex items-center justify-center gap-1 py-2.5 rounded-2xl text-xs font-bold text-red-700 bg-red-100 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-400 dark:hover:bg-red-900/50 transition-colors disabled:opacity-50"
           >
             <Minus className="w-3 h-3" /> Auslagern
           </button>
         </div>
 
         {/* Success Overlay */}
-        <div className={`absolute inset-0 bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm z-20 flex flex-col items-center justify-center transition-all duration-300 pointer-events-none ${success ? 'opacity-100' : 'opacity-0'}`}>
+        <div className={`absolute inset-0 bg-white/90 dark:bg-widget/90 backdrop-blur-sm z-20 flex flex-col items-center justify-center transition-all duration-300 pointer-events-none ${success ? 'opacity-100' : 'opacity-0'}`}>
           <div className="w-12 h-12 bg-green-100 dark:bg-green-900/50 text-green-600 dark:text-green-400 rounded-full flex items-center justify-center mb-2">
             <Check className="w-6 h-6" />
           </div>
@@ -117,8 +117,8 @@ export function QuickBookWidget() {
         </div>
 
         {loading && !success && (
-          <div className="absolute inset-0 bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm z-20 flex items-center justify-center">
-            <Loader2 className="w-6 h-6 text-indigo-600 animate-spin" />
+          <div className="absolute inset-0 bg-white/50 dark:bg-widget/50 backdrop-blur-sm z-20 flex items-center justify-center">
+            <Loader2 className="w-6 h-6 text-accent animate-spin" />
           </div>
         )}
       </div>

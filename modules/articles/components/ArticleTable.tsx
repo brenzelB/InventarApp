@@ -83,7 +83,7 @@ export function ArticleTable({ articles, onDelete }: ArticleTableProps) {
 
   if (articles.length === 0) {
     return (
-      <div className="text-center py-12 bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700">
+      <div className="text-center py-12 bg-white dark:bg-widget rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
         <svg className="mx-auto h-12 w-12 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
         </svg>
@@ -94,9 +94,9 @@ export function ArticleTable({ articles, onDelete }: ArticleTableProps) {
   }
 
   return (
-    <div className="overflow-x-auto shadow ring-1 ring-slate-200 dark:ring-slate-700 sm:rounded-lg">
+    <div className="overflow-x-auto shadow ring-1 ring-slate-200 dark:ring-slate-700 sm:rounded-2xl">
       <table className="min-w-full divide-y divide-slate-300 dark:divide-slate-700 table-auto">
-        <thead className="bg-slate-50 dark:bg-slate-900/50">
+        <thead className="bg-slate-50 dark:bg-widget/50">
           <tr>
             <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-slate-900 dark:text-slate-200 sm:pl-6 w-16">QR</th>
             <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-slate-900 dark:text-slate-200">Name</th>
@@ -109,7 +109,7 @@ export function ArticleTable({ articles, onDelete }: ArticleTableProps) {
             <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-slate-900 dark:text-slate-200 w-px whitespace-nowrap">Aktionen</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-slate-200 dark:divide-slate-700 bg-white dark:bg-slate-800">
+        <tbody className="divide-y divide-slate-200 dark:divide-slate-700 bg-white dark:bg-widget">
           {articles.map((article, index) => (
             <tr 
               key={article.id} 
@@ -123,11 +123,11 @@ export function ArticleTable({ articles, onDelete }: ArticleTableProps) {
                 <QRCodeView svgString={article.qr_code} name={article.name} articleId={article.id} size="sm" />
               </td>
               <td className="px-3 py-4 text-sm font-medium">
-                <Link href={`/dashboard/articles/${article.id}`} className="text-slate-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors block truncate max-w-xs md:max-w-md">
+                <Link href={`/dashboard/articles/${article.id}`} className="text-slate-900 dark:text-white hover:text-accent dark:hover:text-indigo-400 transition-colors block truncate max-w-xs md:max-w-md">
                   {article.name}
                 </Link>
                 {article.group && (
-                  <span className="inline-flex mt-1 items-center rounded-md bg-slate-50 dark:bg-slate-900/50 px-1.5 py-0.5 text-[10px] font-bold text-slate-500 dark:text-slate-400 ring-1 ring-inset ring-slate-200 dark:ring-slate-700">
+                  <span className="inline-flex mt-1 items-center rounded-3xl bg-slate-50 dark:bg-widget/50 px-1.5 py-0.5 text-[10px] font-bold text-slate-500 dark:text-slate-400 ring-1 ring-inset ring-slate-200 dark:ring-slate-700">
                     {article.group.name}
                   </span>
                 )}
@@ -140,7 +140,7 @@ export function ArticleTable({ articles, onDelete }: ArticleTableProps) {
               <td className="whitespace-nowrap px-3 py-4 text-sm text-right">
                 <div className="flex items-center justify-end gap-2 group/stock">
                   {role !== 'viewer' && (
-                    <div className="flex items-center bg-slate-100 dark:bg-slate-900 rounded-lg p-0.5 opacity-0 group-hover/stock:opacity-100 transition-opacity">
+                    <div className="flex items-center bg-slate-100 dark:bg-widget rounded-2xl p-0.5 opacity-0 group-hover/stock:opacity-100 transition-opacity">
                       <button 
                         onClick={() => handleQuickAdjust(article, -1)}
                         className="p-1 hover:text-red-600 transition-colors"
@@ -178,7 +178,7 @@ export function ArticleTable({ articles, onDelete }: ArticleTableProps) {
                     autoFocus
                     type="number"
                     step="0.01"
-                    className="w-20 rounded border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-right py-1 px-2 text-xs focus:ring-indigo-500"
+                    className="w-20 rounded border-slate-300 dark:border-slate-600 bg-white dark:bg-widget text-right py-1 px-2 text-xs focus:ring-accent"
                     value={editValue}
                     onChange={(e) => setEditValue(e.target.value)}
                     onBlur={() => handlePriceSave(article.id)}
@@ -191,7 +191,7 @@ export function ArticleTable({ articles, onDelete }: ArticleTableProps) {
                   <button 
                     onClick={() => startEditing(article)}
                     disabled={updatingId === article.id}
-                    className="hover:text-indigo-600 dark:hover:text-indigo-400 font-medium transition-colors"
+                    className="hover:text-accent dark:hover:text-indigo-400 font-medium transition-colors"
                   >
                     {Number(article.purchase_price || 0).toFixed(2)} €
                   </button>

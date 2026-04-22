@@ -100,9 +100,9 @@ export function ArticleForm({ initialData, articleId, qrCode, onUpdate }: Articl
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700">
+    <form onSubmit={handleSubmit} className="space-y-6 bg-white dark:bg-widget p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
       {error && (
-        <div className="bg-red-50 dark:bg-red-900/30 p-4 rounded-xl border border-red-200 dark:border-red-800/50 flex items-center gap-3 animate-in fade-in slide-in-from-top-2 duration-300">
+        <div className="bg-red-50 dark:bg-red-900/30 p-4 rounded-3xl border border-red-200 dark:border-red-800/50 flex items-center gap-3 animate-in fade-in slide-in-from-top-2 duration-300">
           <div className="flex-shrink-0 w-8 h-8 rounded-full bg-red-100 dark:bg-red-900/50 flex items-center justify-center text-red-600 dark:text-red-400">
             <AlertTriangle className="w-5 h-5" />
           </div>
@@ -111,7 +111,7 @@ export function ArticleForm({ initialData, articleId, qrCode, onUpdate }: Articl
       )}
 
       {success && (
-        <div className="bg-green-50 dark:bg-green-900/30 p-4 rounded-xl border border-green-200 dark:border-green-800/50 flex items-center gap-3 animate-in fade-in slide-in-from-top-2 duration-300">
+        <div className="bg-green-50 dark:bg-green-900/30 p-4 rounded-3xl border border-green-200 dark:border-green-800/50 flex items-center gap-3 animate-in fade-in slide-in-from-top-2 duration-300">
           <div className="flex-shrink-0 w-8 h-8 rounded-full bg-green-100 dark:bg-green-900/50 flex items-center justify-center text-green-600 dark:text-green-400">
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -131,12 +131,12 @@ export function ArticleForm({ initialData, articleId, qrCode, onUpdate }: Articl
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="md:col-span-1">
           <label className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-200">Name *</label>
-          <input required type="text" name="name" value={formData.name} onChange={handleChange} className="mt-2 block w-full rounded-md border-0 py-1.5 px-3 text-slate-900 dark:text-white dark:bg-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:opacity-50" disabled={loading || isReadOnly}/>
+          <input required type="text" name="name" value={formData.name} onChange={handleChange} className="mt-2 block w-full rounded-3xl border-0 py-1.5 px-3 text-slate-900 dark:text-white dark:bg-widget shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-accent sm:text-sm sm:leading-6 disabled:opacity-50" disabled={loading || isReadOnly}/>
         </div>
 
         <div className="md:col-span-1">
           <label className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-200">SKU (Artikelnummer) *</label>
-          <input required type="text" name="sku" value={formData.sku} onChange={handleChange} className="mt-2 block w-full rounded-md border-0 py-1.5 px-3 text-slate-900 dark:text-white dark:bg-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:opacity-50" disabled={loading || isReadOnly}/>
+          <input required type="text" name="sku" value={formData.sku} onChange={handleChange} className="mt-2 block w-full rounded-3xl border-0 py-1.5 px-3 text-slate-900 dark:text-white dark:bg-widget shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-accent sm:text-sm sm:leading-6 disabled:opacity-50" disabled={loading || isReadOnly}/>
         </div>
 
         <div className="md:col-span-1">
@@ -145,7 +145,7 @@ export function ArticleForm({ initialData, articleId, qrCode, onUpdate }: Articl
             name="group_id" 
             value={formData.group_id || ''} 
             onChange={handleChange}
-            className="mt-2 block w-full rounded-md border-0 py-1.5 px-3 text-slate-900 dark:text-white dark:bg-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:opacity-50 appearance-none bg-no-repeat bg-[right_0.5rem_center] bg-[length:1.5em_1.5em]"
+            className="mt-2 block w-full rounded-3xl border-0 py-1.5 px-3 text-slate-900 dark:text-white dark:bg-widget shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-accent sm:text-sm sm:leading-6 disabled:opacity-50 appearance-none bg-no-repeat bg-[right_0.5rem_center] bg-[length:1.5em_1.5em]"
             disabled={loading || isReadOnly}
           >
             <option value="">Keine Gruppe</option>
@@ -158,28 +158,28 @@ export function ArticleForm({ initialData, articleId, qrCode, onUpdate }: Articl
 
       <div className="animate-in fade-in slide-in-from-bottom-2 duration-700 delay-150">
         <label className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-200">Lagerort (z.B. Regal A, Fach 3)</label>
-        <input type="text" name="lagerort" value={formData.lagerort || ''} onChange={handleChange} className="mt-2 block w-full rounded-md border-0 py-2.5 px-3 text-slate-900 dark:text-white dark:bg-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:opacity-50" placeholder="z.B. Regal A, Fach 3" disabled={loading || isReadOnly}/>
+        <input type="text" name="lagerort" value={formData.lagerort || ''} onChange={handleChange} className="mt-2 block w-full rounded-3xl border-0 py-2.5 px-3 text-slate-900 dark:text-white dark:bg-widget shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-accent sm:text-sm sm:leading-6 disabled:opacity-50" placeholder="z.B. Regal A, Fach 3" disabled={loading || isReadOnly}/>
       </div>
 
       <div>
         <label className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-200">Beschreibung</label>
-        <textarea name="description" value={formData.description || ''} onChange={handleChange} rows={3} className="mt-2 block w-full rounded-md border-0 py-1.5 px-3 text-slate-900 dark:text-white dark:bg-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:opacity-50" disabled={loading || isReadOnly}/>
+        <textarea name="description" value={formData.description || ''} onChange={handleChange} rows={3} className="mt-2 block w-full rounded-3xl border-0 py-1.5 px-3 text-slate-900 dark:text-white dark:bg-widget shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-accent sm:text-sm sm:leading-6 disabled:opacity-50" disabled={loading || isReadOnly}/>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div>
           <label className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-200">Herstellpreis (€) *</label>
-          <input required type="number" step="0.01" min="0" name="herstellpreis" value={formData.herstellpreis} onChange={handleChange} className="mt-2 block w-full rounded-md border-0 py-1.5 px-3 text-slate-900 dark:text-white dark:bg-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:opacity-50" disabled={loading || isReadOnly}/>
+          <input required type="number" step="0.01" min="0" name="herstellpreis" value={formData.herstellpreis} onChange={handleChange} className="mt-2 block w-full rounded-3xl border-0 py-1.5 px-3 text-slate-900 dark:text-white dark:bg-widget shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-accent sm:text-sm sm:leading-6 disabled:opacity-50" disabled={loading || isReadOnly}/>
         </div>
 
         <div>
           <label className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-200">Einkaufspreis (€) *</label>
-          <input required type="number" step="0.01" min="0" name="purchase_price" value={formData.purchase_price} onChange={handleChange} className="mt-2 block w-full rounded-md border-0 py-1.5 px-3 text-slate-900 dark:text-white dark:bg-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:opacity-50" disabled={loading || isReadOnly}/>
+          <input required type="number" step="0.01" min="0" name="purchase_price" value={formData.purchase_price} onChange={handleChange} className="mt-2 block w-full rounded-3xl border-0 py-1.5 px-3 text-slate-900 dark:text-white dark:bg-widget shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-accent sm:text-sm sm:leading-6 disabled:opacity-50" disabled={loading || isReadOnly}/>
         </div>
 
         <div>
           <label className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-200">Verkaufspreis (€) *</label>
-          <input required type="number" step="0.01" min="0" name="verkaufspreis" value={formData.verkaufspreis} onChange={handleChange} className="mt-2 block w-full rounded-md border-0 py-1.5 px-3 text-slate-900 dark:text-white dark:bg-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:opacity-50" disabled={loading || isReadOnly}/>
+          <input required type="number" step="0.01" min="0" name="verkaufspreis" value={formData.verkaufspreis} onChange={handleChange} className="mt-2 block w-full rounded-3xl border-0 py-1.5 px-3 text-slate-900 dark:text-white dark:bg-widget shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-accent sm:text-sm sm:leading-6 disabled:opacity-50" disabled={loading || isReadOnly}/>
         </div>
 
         <div>
@@ -188,7 +188,7 @@ export function ArticleForm({ initialData, articleId, qrCode, onUpdate }: Articl
             name="tax_rate" 
             value={formData.tax_rate} 
             onChange={handleChange}
-            className="mt-2 block w-full rounded-md border-0 py-1.5 px-3 text-slate-900 dark:text-white dark:bg-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:opacity-50 appearance-none bg-no-repeat bg-[right_0.5rem_center] bg-[length:1.2em_1.2em]"
+            className="mt-2 block w-full rounded-3xl border-0 py-1.5 px-3 text-slate-900 dark:text-white dark:bg-widget shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-accent sm:text-sm sm:leading-6 disabled:opacity-50 appearance-none bg-no-repeat bg-[right_0.5rem_center] bg-[length:1.2em_1.2em]"
             disabled={loading || isReadOnly}
           >
             <option value={19}>19 % (Standard)</option>
@@ -209,7 +209,7 @@ export function ArticleForm({ initialData, articleId, qrCode, onUpdate }: Articl
               name="bestand" 
               value={formData.bestand} 
               onChange={handleChange} 
-              className="block w-full rounded-md border-0 py-2.5 pl-3 pr-16 text-slate-900 dark:text-white dark:bg-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:opacity-50" 
+              className="block w-full rounded-3xl border-0 py-2.5 pl-3 pr-16 text-slate-900 dark:text-white dark:bg-widget shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-accent sm:text-sm sm:leading-6 disabled:opacity-50" 
               disabled={loading || isReadOnly}
             />
             <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
@@ -229,10 +229,10 @@ export function ArticleForm({ initialData, articleId, qrCode, onUpdate }: Articl
                 onClick={() => setFormData(prev => ({ ...prev, unit: u }))}
                 title={u}
                 className={`
-                  h-[44px] flex items-center justify-center rounded-md text-[10px] font-black uppercase transition-all active:scale-95 ring-1 ring-inset
+                  h-[44px] flex items-center justify-center rounded-3xl text-[10px] font-black uppercase transition-all active:scale-95 ring-1 ring-inset
                   ${formData.unit === u 
-                    ? 'bg-indigo-600 ring-indigo-600 text-white shadow-md' 
-                    : 'bg-slate-50 dark:bg-slate-910/50 dark:bg-slate-900 ring-slate-300 dark:ring-slate-600 text-slate-500 dark:text-slate-400 hover:ring-slate-400 dark:hover:ring-slate-500'}
+                    ? 'bg-accent ring-indigo-600 text-white shadow-sm border border-slate-200 dark:border-white/10' 
+                    : 'bg-slate-50 dark:bg-slate-910/50 dark:bg-widget ring-slate-300 dark:ring-slate-600 text-slate-500 dark:text-slate-400 hover:ring-slate-400 dark:hover:ring-slate-500'}
                   disabled:opacity-50 disabled:cursor-not-allowed
                 `}
               >
@@ -244,20 +244,20 @@ export function ArticleForm({ initialData, articleId, qrCode, onUpdate }: Articl
 
         <div>
           <label className="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-200">Mindestbestand *</label>
-          <input required type="number" step={getStep(formData.unit)} name="mindestbestand" value={formData.mindestbestand} onChange={handleChange} className="mt-2 block w-full rounded-md border-0 py-2.5 px-3 text-slate-900 dark:text-white dark:bg-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:opacity-50" disabled={loading || isReadOnly}/>
+          <input required type="number" step={getStep(formData.unit)} name="mindestbestand" value={formData.mindestbestand} onChange={handleChange} className="mt-2 block w-full rounded-3xl border-0 py-2.5 px-3 text-slate-900 dark:text-white dark:bg-widget shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-accent sm:text-sm sm:leading-6 disabled:opacity-50" disabled={loading || isReadOnly}/>
         </div>
       </div>
 
       <div className="flex justify-end pt-4 border-t border-slate-200 dark:border-slate-700 gap-4">
-        <button type="button" onClick={() => router.push('/dashboard/articles')} disabled={loading} className="px-4 py-2 text-sm font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-md transition-colors disabled:opacity-50">
+        <button type="button" onClick={() => router.push('/dashboard/articles')} disabled={loading} className="px-4 py-2 text-sm font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-3xl transition-colors disabled:opacity-50">
           Abbrechen
         </button>
         {isReadOnly ? (
-          <div className="flex-1 text-sm text-amber-600 font-medium bg-amber-50 dark:bg-amber-900/20 px-4 py-2 rounded-lg border border-amber-100 dark:border-amber-800/50">
+          <div className="flex-1 text-sm text-amber-600 font-medium bg-amber-50 dark:bg-amber-900/20 px-4 py-2 rounded-2xl border border-amber-100 dark:border-amber-800/50">
             Nur Lesezugriff
           </div>
         ) : (
-          <button type="submit" disabled={loading} className="px-4 py-2 text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-500 rounded-md shadow-sm transition-colors disabled:opacity-50 flex items-center">
+          <button type="submit" disabled={loading} className="px-4 py-2 text-sm font-semibold text-white bg-accent hover:bg-indigo-500 rounded-3xl shadow-sm transition-colors disabled:opacity-50 flex items-center">
             {loading ? 'Speichere...' : 'Speichern'}
           </button>
         )}

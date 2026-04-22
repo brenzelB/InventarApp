@@ -130,7 +130,7 @@ export function DashboardClient({ userId, initialLayout }: DashboardClientProps)
         <div className="mt-4 md:mt-0 flex gap-4">
           <button
             onClick={() => setIsMarketplaceOpen(true)}
-            className="inline-flex items-center gap-2 rounded-xl bg-indigo-50 dark:bg-indigo-900/30 px-4 py-2 text-sm font-bold text-indigo-600 dark:text-indigo-400 shadow-sm hover:bg-indigo-100 transition-colors"
+            className="inline-flex items-center gap-2 rounded-3xl bg-indigo-50 dark:bg-indigo-900/30 px-4 py-2 text-sm font-bold text-accent dark:text-indigo-400 shadow-sm hover:bg-indigo-100 transition-colors"
           >
             <Plus className="w-4 h-4" /> Widget hinzufügen
           </button>
@@ -140,14 +140,14 @@ export function DashboardClient({ userId, initialLayout }: DashboardClientProps)
               <button
                 onClick={handleCancel}
                 disabled={isSaving}
-                className="inline-flex items-center gap-2 rounded-xl bg-slate-100 dark:bg-slate-800 px-4 py-2 text-sm font-bold text-slate-600 dark:text-slate-300 shadow-sm hover:bg-slate-200 transition-colors"
+                className="inline-flex items-center gap-2 rounded-3xl bg-slate-100 dark:bg-widget px-4 py-2 text-sm font-bold text-slate-600 dark:text-slate-300 shadow-sm hover:bg-slate-200 transition-colors"
               >
                 <X className="w-4 h-4" /> Abbrechen
               </button>
               <button
                 onClick={handleSave}
                 disabled={isSaving}
-                className="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-4 py-2 text-sm font-bold text-white shadow-sm hover:bg-emerald-500 transition-colors disabled:opacity-50"
+                className="inline-flex items-center gap-2 rounded-3xl bg-emerald-600 px-4 py-2 text-sm font-bold text-white shadow-sm hover:bg-emerald-500 transition-colors disabled:opacity-50"
               >
                 {isSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
                 Speichern
@@ -156,7 +156,7 @@ export function DashboardClient({ userId, initialLayout }: DashboardClientProps)
           ) : (
             <button
               onClick={() => setIsEditing(true)}
-              className="inline-flex items-center gap-2 rounded-xl bg-white dark:bg-slate-800 px-4 py-2 text-sm font-bold text-slate-700 dark:text-slate-300 shadow-sm border border-slate-200 dark:border-slate-700 hover:bg-slate-50 transition-colors"
+              className="inline-flex items-center gap-2 rounded-3xl bg-white dark:bg-widget px-4 py-2 text-sm font-bold text-slate-700 dark:text-slate-300 shadow-sm border border-slate-200 dark:border-slate-700 hover:bg-slate-50 transition-colors"
             >
               <Pencil className="w-4 h-4" /> Layout bearbeiten
             </button>
@@ -164,7 +164,7 @@ export function DashboardClient({ userId, initialLayout }: DashboardClientProps)
         </div>
       </div>
 
-      <div className={`p-2 rounded-2xl transition-all duration-300 ${isEditing ? 'bg-slate-100/50 dark:bg-slate-800/50 ring-2 ring-indigo-500/20 ring-inset relative' : ''}`}>
+      <div className={`p-2 rounded-2xl transition-all duration-300 ${isEditing ? 'bg-slate-100/50 dark:bg-widget/50 ring-2 ring-accent/20 ring-inset relative' : ''}`}>
         {isEditing && (
           <div className="absolute top-0 left-0 w-full h-full pointer-events-none rounded-2xl border-2 border-dashed border-indigo-400/50 z-0 opacity-50" />
         )}
@@ -187,7 +187,7 @@ export function DashboardClient({ userId, initialLayout }: DashboardClientProps)
               if (!WidgetComponent) return null;
 
               return (
-                <div key={item.i} className={`transition-shadow ${isEditing ? 'cursor-grab active:cursor-grabbing ring-2 ring-indigo-500 ring-offset-2 ring-offset-slate-50 dark:ring-offset-slate-900 rounded-xl' : ''}`}>
+                <div key={item.i} className={`transition-shadow ${isEditing ? 'cursor-grab active:cursor-grabbing ring-2 ring-accent ring-offset-2 ring-offset-slate-50 dark:ring-offset-slate-900 rounded-3xl' : ''}`}>
                   <WidgetComponent 
                     config={(item as any).settings || {}} 
                     onUpdateConfig={(s: any) => handleUpdateWidgetConfig(item.i, s)} 

@@ -77,11 +77,11 @@ export default function ProfilePage() {
   return (
     <div className="max-w-4xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       {/* Profil Header */}
-      <div className="flex items-center gap-6 bg-white dark:bg-slate-800 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm relative overflow-hidden">
+      <div className="flex items-center gap-6 bg-white dark:bg-widget p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm relative overflow-hidden">
         <div className="absolute top-0 right-0 p-8 opacity-5">
            <Settings className="w-32 h-32 rotate-12" />
         </div>
-        <div className="relative z-10 w-24 h-24 rounded-full bg-indigo-600 flex items-center justify-center text-white ring-4 ring-indigo-50 dark:ring-indigo-900/30 shadow-2xl">
+        <div className="relative z-10 w-24 h-24 rounded-full bg-accent flex items-center justify-center text-white ring-4 ring-indigo-50 dark:ring-indigo-900/30 shadow-2xl">
           {(() => {
              const IconComp = avatarIcons.find(a => a.id === avatarId)?.icon || User;
              return <IconComp className="w-12 h-12" />;
@@ -92,7 +92,7 @@ export default function ProfilePage() {
             {user.user_metadata?.display_name || user.email?.split('@')[0]}
           </h2>
           <p className="text-slate-500 font-medium flex items-center gap-2 mt-1">
-            <Mail className="w-4 h-4 text-indigo-500" /> {user.email}
+            <Mail className="w-4 h-4 text-accent" /> {user.email}
           </p>
         </div>
       </div>
@@ -100,9 +100,9 @@ export default function ProfilePage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Haupt-Einstellungen */}
         <div className="lg:col-span-2 space-y-8">
-          <div className="bg-white dark:bg-slate-800 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm">
+          <div className="bg-white dark:bg-widget p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm">
             <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-6 uppercase tracking-wider flex items-center gap-2">
-              <Settings className="w-5 h-5 text-indigo-600" />
+              <Settings className="w-5 h-5 text-accent" />
               Persönliche Daten
             </h3>
             
@@ -117,7 +117,7 @@ export default function ProfilePage() {
                     type="email"
                     disabled
                     value={user.email}
-                    className="block w-full pl-10 pr-3 py-2.5 border border-slate-200 dark:border-slate-700 rounded-2xl bg-slate-50 dark:bg-slate-900/50 text-slate-400 cursor-not-allowed sm:text-sm font-medium"
+                    className="block w-full pl-10 pr-3 py-2.5 border border-slate-200 dark:border-slate-700 rounded-2xl bg-slate-50 dark:bg-widget/50 text-slate-400 cursor-not-allowed sm:text-sm font-medium"
                   />
                 </div>
               </div>
@@ -134,7 +134,7 @@ export default function ProfilePage() {
                     value={displayName}
                     onChange={(e) => setDisplayName(e.target.value)}
                     placeholder="Dein Name..."
-                    className="block w-full pl-10 pr-3 py-3 border border-slate-200 dark:border-slate-700 rounded-2xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm transition-all shadow-sm font-bold"
+                    className="block w-full pl-10 pr-3 py-3 border border-slate-200 dark:border-slate-700 rounded-2xl bg-white dark:bg-widget text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-accent sm:text-sm transition-all shadow-sm font-bold"
                   />
                 </div>
               </div>
@@ -150,8 +150,8 @@ export default function ProfilePage() {
                       className={`
                         p-3 rounded-2xl flex items-center justify-center transition-all
                         ${avatarId === item.id 
-                          ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-200 dark:shadow-none' 
-                          : 'bg-slate-50 dark:bg-slate-900 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700'}
+                          ? 'bg-accent text-white shadow-md border border-slate-200 dark:border-white/10 shadow-indigo-200 dark:shadow-none' 
+                          : 'bg-slate-50 dark:bg-widget text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700'}
                       `}
                       title={item.label}
                     >
@@ -171,7 +171,7 @@ export default function ProfilePage() {
               <button
                 type="submit"
                 disabled={isUpdating}
-                className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 bg-indigo-600 text-white rounded-2xl font-black text-xs uppercase tracking-[0.2em] hover:bg-indigo-700 transition-all shadow-xl shadow-indigo-200 dark:shadow-none disabled:opacity-50"
+                className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 bg-accent text-white rounded-2xl font-black text-xs uppercase tracking-[0.2em] hover:bg-accent-hover transition-all shadow-xl shadow-indigo-200 dark:shadow-none disabled:opacity-50"
               >
                 {isUpdating ? <Loader2 className="w-4 h-4 animate-spin" /> : <CheckCircle2 className="w-4 h-4" />}
                 Einstellungen speichern
@@ -179,9 +179,9 @@ export default function ProfilePage() {
             </form>
           </div>
 
-          <div className="bg-white dark:bg-slate-800 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm">
+          <div className="bg-white dark:bg-widget p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm">
              <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-6 uppercase tracking-wider flex items-center gap-2">
-              <Key className="w-5 h-5 text-indigo-600" />
+              <Key className="w-5 h-5 text-accent" />
               Sicherheit
             </h3>
             <p className="text-sm text-slate-500 mb-6 font-medium leading-relaxed">
@@ -214,7 +214,7 @@ export default function ProfilePage() {
             </p>
           </div>
 
-          <div className="bg-white dark:bg-slate-800 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm overflow-hidden relative">
+          <div className="bg-white dark:bg-widget p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm overflow-hidden relative">
             <div className="absolute top-0 right-0 p-2 opacity-5">
                <LogOut className="w-16 h-16 -rotate-12" />
             </div>
@@ -229,14 +229,14 @@ export default function ProfilePage() {
           </div>
 
           {role === 'admin' && (
-            <div className="bg-white dark:bg-slate-800 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm overflow-hidden relative animate-in slide-in-from-right-4 duration-500">
+            <div className="bg-white dark:bg-widget p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm overflow-hidden relative animate-in slide-in-from-right-4 duration-500">
               <div className="absolute top-0 right-0 p-2 opacity-10">
-                <Users className="w-16 h-16 -rotate-12 text-indigo-600" />
+                <Users className="w-16 h-16 -rotate-12 text-accent" />
               </div>
-              <h3 className="text-xs font-black text-indigo-600 uppercase tracking-[0.2em] mb-6 relative z-10">ADMINISTRATION</h3>
+              <h3 className="text-xs font-black text-accent uppercase tracking-[0.2em] mb-6 relative z-10">ADMINISTRATION</h3>
               <a 
                 href="/dashboard/team"
-                className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 bg-indigo-600 text-white rounded-2xl font-black text-xs uppercase tracking-[0.2em] hover:bg-indigo-700 transition-all shadow-xl shadow-indigo-100 dark:shadow-none relative z-10"
+                className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 bg-accent text-white rounded-2xl font-black text-xs uppercase tracking-[0.2em] hover:bg-accent-hover transition-all shadow-xl shadow-indigo-100 dark:shadow-none relative z-10"
               >
                 <Users className="w-4 h-4" />
                 TEAM VERWALTEN
@@ -249,7 +249,7 @@ export default function ProfilePage() {
       {/* DEBUG INFO */}
       <div className="mt-12 pt-8 border-t border-slate-100 dark:border-slate-800 text-center">
         <p className="text-[10px] font-black text-slate-300 dark:text-slate-600 uppercase tracking-[0.3em]">
-          DEBUG: Aktuelle Rolle laut System: <span className="text-indigo-400 dark:text-indigo-500">{role}</span>
+          DEBUG: Aktuelle Rolle laut System: <span className="text-indigo-400 dark:text-accent">{role}</span>
         </p>
       </div>
     </div>

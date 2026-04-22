@@ -78,7 +78,7 @@ export default function SettingsPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <Loader2 className="w-8 h-8 animate-spin text-indigo-600" />
+        <Loader2 className="w-8 h-8 animate-spin text-accent" />
       </div>
     );
   }
@@ -86,7 +86,7 @@ export default function SettingsPage() {
   return (
     <div className="max-w-4xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="flex items-center gap-3 mb-2">
-        <div className="p-2 bg-indigo-600 rounded-xl">
+        <div className="p-2 bg-accent rounded-3xl">
           <Settings className="w-6 h-6 text-white" />
         </div>
         <div>
@@ -97,9 +97,9 @@ export default function SettingsPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* App Profile */}
-        <div className="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col h-full">
+        <div className="bg-white dark:bg-widget rounded-3xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col h-full">
           <div className="flex items-center gap-3 mb-6">
-            <Store className="w-5 h-5 text-indigo-600" />
+            <Store className="w-5 h-5 text-accent" />
             <h2 className="font-bold text-slate-900 dark:text-white">App-Profil</h2>
           </div>
           
@@ -111,12 +111,12 @@ export default function SettingsPage() {
                   type="text" 
                   value={settings.app_name}
                   onChange={(e) => setSettings({...settings, app_name: e.target.value})}
-                  className="block w-full rounded-xl border-0 py-2.5 px-4 text-slate-900 dark:text-white dark:bg-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-indigo-600 sm:text-sm"
+                  className="block w-full rounded-3xl border-0 py-2.5 px-4 text-slate-900 dark:text-white dark:bg-widget shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-accent sm:text-sm"
                 />
                 <button 
                   onClick={() => handleUpdate('app_name', settings.app_name)}
                   disabled={saving === 'app_name'}
-                  className="p-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl transition-all shadow-md active:scale-90"
+                  className="p-2.5 bg-accent hover:bg-indigo-500 text-white rounded-3xl transition-all shadow-sm border border-slate-200 dark:border-white/10 active:scale-90"
                 >
                   {saving === 'app_name' ? <Loader2 className="w-5 h-5 animate-spin" /> : <Save className="w-5 h-5" />}
                 </button>
@@ -126,9 +126,9 @@ export default function SettingsPage() {
         </div>
 
         {/* Inventory Logic */}
-        <div className="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col h-full">
+        <div className="bg-white dark:bg-widget rounded-3xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col h-full">
           <div className="flex items-center gap-3 mb-6">
-            <Activity className="w-5 h-5 text-indigo-600" />
+            <Activity className="w-5 h-5 text-accent" />
             <h2 className="font-bold text-slate-900 dark:text-white">Inventar-Logik</h2>
           </div>
           
@@ -139,7 +139,7 @@ export default function SettingsPage() {
                 <select 
                   value={settings.default_unit}
                   onChange={(e) => handleUpdate('default_unit', e.target.value)}
-                  className="block w-full rounded-xl border-0 py-2.5 px-3 text-slate-900 dark:text-white dark:bg-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-indigo-600 sm:text-sm"
+                  className="block w-full rounded-3xl border-0 py-2.5 px-3 text-slate-900 dark:text-white dark:bg-widget shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-accent sm:text-sm"
                 >
                   {['Stück', 'kg', 'g', 'l', 'ml'].map(u => <option key={u} value={u}>{u}</option>)}
                 </select>
@@ -151,7 +151,7 @@ export default function SettingsPage() {
                   value={settings.warning_threshold}
                   onBlur={(e) => handleUpdate('warning_threshold', e.target.value)}
                   onChange={(e) => setSettings({...settings, warning_threshold: e.target.value})}
-                  className="block w-full rounded-xl border-0 py-2.5 px-3 text-slate-900 dark:text-white dark:bg-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-indigo-600 sm:text-sm"
+                  className="block w-full rounded-3xl border-0 py-2.5 px-3 text-slate-900 dark:text-white dark:bg-widget shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:ring-2 focus:ring-accent sm:text-sm"
                 />
               </div>
             </div>
@@ -161,18 +161,18 @@ export default function SettingsPage() {
       </div>
 
       {/* Data Maintenance */}
-      <div className="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-sm border border-slate-200 dark:border-slate-700">
+      <div className="bg-white dark:bg-widget rounded-3xl p-6 shadow-sm border border-slate-200 dark:border-slate-700">
         <div className="flex items-center gap-3 mb-6">
-          <Database className="w-5 h-5 text-indigo-600" />
+          <Database className="w-5 h-5 text-accent" />
           <h2 className="font-bold text-slate-900 dark:text-white">Daten-Wartung</h2>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <button 
             onClick={handleExport}
-            className="flex items-center justify-center gap-3 py-4 bg-slate-50 dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-2xl font-black text-sm uppercase tracking-widest transition-all border border-slate-200 dark:border-slate-700 shadow-sm active:scale-[0.98]"
+            className="flex items-center justify-center gap-3 py-4 bg-slate-50 dark:bg-widget hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-2xl font-black text-sm uppercase tracking-widest transition-all border border-slate-200 dark:border-slate-700 shadow-sm active:scale-[0.98]"
           >
-            <FileDown className="w-5 h-5 text-indigo-600" />
+            <FileDown className="w-5 h-5 text-accent" />
             Excel-Export (.xlsx)
           </button>
 

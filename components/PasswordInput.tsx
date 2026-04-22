@@ -121,7 +121,7 @@ export function PasswordInput({
           required={required}
           disabled={disabled}
           placeholder={placeholder}
-          className="block w-full rounded-md border-0 py-1.5 pr-10 pl-3 text-slate-900 dark:text-white dark:bg-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:opacity-50"
+          className="block w-full rounded-3xl border-0 py-1.5 pr-10 pl-3 text-slate-900 dark:text-white dark:bg-widget shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-accent sm:text-sm sm:leading-6 disabled:opacity-50"
         />
         <button
           type="button"
