@@ -38,18 +38,14 @@ export function StockStatusWidget() {
       </h3>
       
       <div className="mt-6 grid grid-cols-2 gap-6 flex-1">
-        <div className="bg-slate-50/50 rounded-3xl border border-slate-100 flex flex-col items-center justify-center p-8 transition-all hover:bg-slate-50">
-          <p className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-4">Artikel Gesamt</p>
-          <p className="text-5xl md:text-6xl font-black text-slate-900 tracking-tighter">{articles.length}</p>
-          <p className="text-[10px] text-blue-600 font-black mt-4 uppercase tracking-[0.15em]">{totalStock} Einheiten</p>
+        <div className="bg-slate-50/50 rounded-[2.5rem] border border-slate-100 flex flex-col items-center justify-center p-10 transition-all hover:bg-slate-50">
+          <p className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.25em] mb-4">Artikel Gesamt</p>
+          <p className="text-7xl md:text-8xl font-black text-slate-900 tracking-tighter leading-none">{articles.length}</p>
+          <p className="text-[10px] text-blue-600 font-black mt-6 uppercase tracking-[0.15em]">{totalStock} Einheiten</p>
         </div>
-        <div className="bg-slate-50/50 rounded-3xl border border-slate-100 flex flex-col items-center justify-center p-8 transition-all hover:bg-slate-50">
-          <p className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-4 flex items-center gap-1.5">
-            <FolderTree className="w-3 h-3 text-slate-400" />
-            Kategorien
-          </p>
-          <p className="text-5xl md:text-6xl font-black text-slate-900 tracking-tighter">{totalCategories}</p>
-          <p className="text-[10px] text-slate-400 font-bold mt-4 uppercase tracking-[0.15em]">Gruppen</p>
+        <div className="bg-slate-50/50 rounded-[2.5rem] border border-slate-100 flex flex-col items-center justify-center p-10 transition-all hover:bg-slate-50">
+          <p className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.25em] mb-4">Gruppen</p>
+          <p className="text-7xl md:text-8xl font-black text-slate-900 tracking-tighter leading-none">{totalCategories}</p>
         </div>
       </div>
     </div>
