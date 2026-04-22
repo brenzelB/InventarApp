@@ -8,7 +8,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
 import { useRouter } from 'next/navigation';
 import { QRCodeView } from "@/components/QRCodeView";
-import { Pencil, Trash2, Plus, Minus, Loader2 } from 'lucide-react';
+import { Edit3, Trash2, Plus, Minus, Loader2 } from 'lucide-react';
 
 interface ArticleTableProps {
   articles: Article[];
@@ -209,9 +209,9 @@ export function ArticleTable({ articles, onDelete }: ArticleTableProps) {
                       href={`/dashboard/articles/${article.id}`} 
                       title="Bearbeiten"
                       aria-label="Artikel bearbeiten"
-                      className="hover:opacity-70 transition-all p-1"
+                      className="text-slate-400 hover:text-blue-600 transition-all p-1"
                     >
-                      <Pencil size={18} className="text-blue-500" />
+                      <Edit3 size={18} />
                     </Link>
                   )}
                   {role === 'admin' && (
@@ -220,12 +220,12 @@ export function ArticleTable({ articles, onDelete }: ArticleTableProps) {
                       disabled={deletingId === article.id}
                       title="Löschen"
                       aria-label="Artikel löschen"
-                      className="hover:opacity-70 disabled:opacity-50 transition-all p-1"
+                      className="text-slate-400 hover:text-rose-600 disabled:opacity-50 transition-all p-1"
                     >
                       {deletingId === article.id ? (
-                        <span className="w-5 h-5 border-2 border-slate-300 border-t-red-500 rounded-full animate-spin inline-block" />
+                        <span className="w-5 h-5 border-2 border-slate-200 border-t-rose-600 rounded-full animate-spin inline-block" />
                       ) : (
-                        <Trash2 size={18} className="text-red-500" />
+                        <Trash2 size={18} />
                       )}
                     </button>
                   )}
