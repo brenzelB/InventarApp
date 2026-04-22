@@ -11,7 +11,9 @@ import {
   LayoutDashboard,
   Box,
   AlertTriangle,
-  Info
+  Info,
+  Camera,
+  FileText
 } from "lucide-react";
 import Link from "next/link";
 import { useArticleDetails } from "@/modules/articles/hooks/useArticleDetails";
@@ -150,18 +152,40 @@ export default function ArticleDetailPage({ params }: { params: { id: string } }
               </div>
 
               {/* Description & QR */}
-              <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm flex flex-col md:flex-row gap-8">
-                <div className="flex-1">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="md:col-span-2 bg-white p-8 rounded-3xl border border-slate-100 shadow-sm flex flex-col">
                   <h3 className="text-lg font-bold text-slate-900 mb-6 flex items-center gap-2">
                     <Info className="w-5 h-5 text-accent" /> Beschreibung
                   </h3>
-                  <p className="text-slate-600 leading-relaxed">
+                  <p className="text-slate-600 leading-relaxed flex-1">
                     {article.description || "Keine Beschreibung hinterlegt."}
                   </p>
                 </div>
-                <div className="flex flex-col items-center p-6 bg-white rounded-3xl border-2 border-slate-100 shadow-sm transition-all hover:shadow-md">
-                  <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-4">Scanbarer QR-Code</p>
-                  <QRCodeView svgString={article.qr_code} name={article.name} articleId={article.id} size="lg" />
+                
+                <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm relative overflow-hidden group">
+                  <div className="flex justify-between items-center mb-6">
+                    <h3 className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Scanbarer QR-Code</h3>
+                    <div className="flex gap-1.5 text-slate-300">
+                      <Camera className="w-4 h-4" />
+                      <FileText className="w-4 h-4" />
+                    </div>
+                  </div>
+                  
+                  <div className="flex flex-col items-center">
+                    {/* Recessed QR Panel with dotted indicator */}
+                    <div className="relative p-6 bg-slate-50 rounded-[2.5rem] ring-1 ring-inset ring-slate-100/50 mb-6">
+                      {/* Red Dotted Zone Indicator */}
+                      <div className="absolute inset-2 border-2 border-dashed border-red-400/20 rounded-[2rem] pointer-events-none" />
+                      
+                      <div className="relative bg-white p-4 rounded-3xl shadow-sm border border-slate-100">
+                        <QRCodeView svgString={article.qr_code} name={article.name} articleId={article.id} size="lg" />
+                      </div>
+                    </div>
+                    
+                    <button className="w-full py-4 bg-red-600 hover:bg-red-700 text-white rounded-2xl font-black text-[10px] uppercase tracking-widest transition-all shadow-lg shadow-red-100 active:scale-95">
+                      QR-Code generieren
+                    </button>
+                  </div>
                 </div>
               </div>
 
