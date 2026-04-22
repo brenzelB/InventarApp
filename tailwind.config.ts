@@ -12,10 +12,10 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
-        widget: "#111111", /* Dark mode widget background */
+        widget: "var(--widget)", /* Use variable for light/dark widget bg */
         accent: {
-          DEFAULT: "#df312c",
-          hover: "#c52825",
+          DEFAULT: "#3b82f6",
+          hover: "#2563eb",
         }
       },
       keyframes: {

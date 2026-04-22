@@ -23,6 +23,8 @@ const DEFAULT_LAYOUT: Layout[] = [
   { i: "stock-status", x: 0, y: 0, w: 4, h: 2 },
   { i: "critical-stock", x: 4, y: 0, w: 4, h: 3 },
   { i: "activity-log", x: 8, y: 0, w: 4, h: 3 },
+  { i: "warenwert", x: 0, y: 3, w: 6, h: 2 },
+  { i: "profit-calc", x: 6, y: 3, w: 6, h: 2 },
 ];
 
 export function DashboardClient({ userId, initialLayout }: DashboardClientProps) {

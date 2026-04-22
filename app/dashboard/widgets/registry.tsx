@@ -1,8 +1,9 @@
-import { Package, AlertOctagon, Activity, TrendingUp, Users } from "lucide-react";
+import { Package, Info, Activity, TrendingUp, Coins, Calculator } from "lucide-react";
 import { StockStatusWidget } from "./StockStatusWidget";
 import { CriticalStockWidget } from "./CriticalStockWidget";
 import { ActivityLogWidget } from "./ActivityLogWidget";
-import { InventoryValueWidget } from "./InventoryValueWidget";
+import { WarenwertWidget } from "./WarenwertWidget";
+import { ProfitCalcWidget } from "./ProfitCalcWidget";
 import { QuickBookWidget } from "./QuickBookWidget";
 import { WeeklyTrendWidget } from "./WeeklyTrendWidget";
 
@@ -16,6 +17,7 @@ export interface WidgetMeta {
 }
 
 export const WIDGET_REGISTRY: WidgetMeta[] = [
+  /* existing widgets ... */
   {
     id: "stock-status",
     title: "Lager-Status",
@@ -28,7 +30,7 @@ export const WIDGET_REGISTRY: WidgetMeta[] = [
     id: "critical-stock",
     title: "Kritische Bestände",
     description: "Listet die Top 5 Artikel auf, die unter ihr Warnlimit gefallen sind.",
-    icon: AlertOctagon,
+    icon: Info,
     defaultW: 4,
     defaultH: 3,
   },
@@ -41,12 +43,20 @@ export const WIDGET_REGISTRY: WidgetMeta[] = [
     defaultH: 3,
   },
   {
-    id: "inventory-value",
-    title: "Finanz-Übersicht",
-    description: "Analysiert EK, VK und Marge des gesamten Lagerbestands.",
-    icon: TrendingUp,
-    defaultW: 4,
-    defaultH: 3,
+    id: "warenwert",
+    title: "Warenwert",
+    description: "Visualisiert den Bestandswert (Netto-EK) und den potenziellen Warenwert (Netto-VK).",
+    icon: Coins,
+    defaultW: 6,
+    defaultH: 2,
+  },
+  {
+    id: "profit-calc",
+    title: "Gewinn-Kalkulation",
+    description: "Berechnet Gewinnmargen basierend auf Abzug- und Zuzug-Aktionen.",
+    icon: Calculator,
+    defaultW: 6,
+    defaultH: 2,
   },
   {
     id: "quick-book",
@@ -70,7 +80,8 @@ export const WIDGET_COMPONENTS: Record<string, React.ComponentType<any>> = {
   "stock-status": StockStatusWidget,
   "critical-stock": CriticalStockWidget,
   "activity-log": ActivityLogWidget,
-  "inventory-value": InventoryValueWidget,
+  "warenwert": WarenwertWidget,
+  "profit-calc": ProfitCalcWidget,
   "quick-book": QuickBookWidget,
   "weekly-trend": WeeklyTrendWidget,
 };

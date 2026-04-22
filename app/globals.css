@@ -5,12 +5,14 @@
 :root {
   --background: #f8fafc;
   --foreground: #0f172a;
+  --widget: #f8fafc; /* Baseline light bg */
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #000000;
     --foreground: #f8fafc;
+    --widget: #111111;
   }
 }
 
