@@ -81,26 +81,26 @@ export default function ArticleDetailPage({ params }: { params: { id: string } }
             {fromGroup ? "Zurück zur Gruppe" : "Zurück zu allen Artikeln"}
           </Link>
           <div className="flex items-start gap-8">
-            <div className="p-3 bg-accent rounded-2xl shadow-md border border-slate-200 shadow-indigo-200">
+            <div className="p-3 bg-accent rounded-2xl shadow-md border border-slate-200 dark:border-slate-700 shadow-indigo-200 dark:shadow-none">
               <Box className="w-8 h-8 text-white" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-slate-900 tracking-tight">{article.name}</h1>
-              <p className="text-slate-500 font-medium">
+              <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-100 tracking-tight">{article.name}</h1>
+              <p className="text-slate-500 dark:text-slate-400 font-medium">
                 {article.sku} 
                 {article.lagerort && (
-                  <span className="ml-2 px-2 py-0.5 bg-slate-100 rounded-2xl text-xs font-bold text-accent uppercase tracking-wider">
+                  <span className="ml-2 px-2 py-0.5 bg-slate-100 dark:bg-slate-800 rounded-2xl text-xs font-bold text-accent uppercase tracking-wider">
                     {article.lagerort}
                   </span>
                 )}
                 <span className="mx-2">•</span>
-                {isLowStock ? <span className="text-red-500 font-bold">Niedriger Bestand!</span> : <span className="text-green-600 font-bold">Bestand OK</span>}
+                {isLowStock ? <span className="text-red-500 dark:text-rose-400 font-bold">Niedriger Bestand!</span> : <span className="text-green-600 dark:text-emerald-400 font-bold">Bestand OK</span>}
               </p>
             </div>
           </div>
         </div>
         
-        <div className="flex flex-wrap gap-2 p-1 bg-slate-100 rounded-2xl border border-slate-200">
+        <div className="flex flex-wrap gap-2 p-1 bg-slate-100 dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-700">
           {[
             { id: 'overview', label: 'Übersicht', icon: LayoutDashboard },
             { id: 'analysis', label: 'Analyse', icon: TrendingUp },
@@ -112,8 +112,8 @@ export default function ArticleDetailPage({ params }: { params: { id: string } }
               onClick={() => setActiveTab(tab.id as TabType)}
               className={`flex items-center gap-2 px-4 py-2 rounded-3xl text-sm font-bold transition-all ${
                 activeTab === tab.id 
-                ? 'bg-white text-accent shadow-sm' 
-                : 'text-slate-500 hover:text-slate-800'
+                ? 'bg-white dark:bg-slate-800 text-accent shadow-sm' 
+                : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-300'
               }`}
             >
               <tab.icon className="w-4 h-4" />
@@ -133,17 +133,17 @@ export default function ArticleDetailPage({ params }: { params: { id: string } }
             <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
               {/* Stats Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
-                <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
-                  <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">Aktueller Bestand</p>
-                  <p className={`text-3xl font-black ${isLowStock ? 'text-red-500' : 'text-slate-900'}`}>{article.bestand} {article.unit || 'Stück'}</p>
+                <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm">
+                  <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-1">Aktueller Bestand</p>
+                  <p className={`text-3xl font-black ${isLowStock ? 'text-red-500 dark:text-rose-400' : 'text-slate-900 dark:text-slate-100'}`}>{article.bestand} {article.unit || 'Stück'}</p>
                 </div>
-                <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
-                  <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">Verkaufspreis</p>
-                  <p className="text-3xl font-black text-slate-900">{Number(article.verkaufspreis).toFixed(2)} €</p>
+                <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm">
+                  <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-1">Verkaufspreis</p>
+                  <p className="text-3xl font-black text-slate-900 dark:text-slate-100">{Number(article.verkaufspreis).toFixed(2)} €</p>
                 </div>
-                <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
-                  <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">Letzte Änderung</p>
-                  <p className="text-sm font-bold text-slate-900 mt-3">
+                <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm">
+                  <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-1">Letzte Änderung</p>
+                  <p className="text-sm font-bold text-slate-900 dark:text-slate-100 mt-3">
                     {history.length > 0 
                       ? new Date(history[0].created_at).toLocaleDateString('de-DE') 
                       : 'N/A'}
@@ -153,19 +153,19 @@ export default function ArticleDetailPage({ params }: { params: { id: string } }
 
               {/* Description & QR */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div className="md:col-span-2 bg-white p-8 rounded-3xl border border-slate-100 shadow-sm flex flex-col">
-                  <h3 className="text-lg font-bold text-slate-900 mb-6 flex items-center gap-2">
+                <div className="md:col-span-2 bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm flex flex-col">
+                  <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 mb-6 flex items-center gap-2">
                     <Info className="w-5 h-5 text-accent" /> Beschreibung
                   </h3>
-                  <p className="text-slate-600 leading-relaxed flex-1">
+                  <p className="text-slate-600 dark:text-slate-400 leading-relaxed flex-1">
                     {article.description || "Keine Beschreibung hinterlegt."}
                   </p>
                 </div>
                 
-                <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm relative overflow-hidden group">
+                <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm relative overflow-hidden group">
                   <div className="flex justify-between items-center mb-6">
-                    <h3 className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Scanbarer QR-Code</h3>
-                    <div className="flex gap-1.5 text-slate-300">
+                    <h3 className="text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest">Scanbarer QR-Code</h3>
+                    <div className="flex gap-1.5 text-slate-300 dark:text-slate-600">
                       <Camera className="w-4 h-4" />
                       <FileText className="w-4 h-4" />
                     </div>
@@ -173,7 +173,7 @@ export default function ArticleDetailPage({ params }: { params: { id: string } }
                   
                   <div className="flex flex-col items-center">
                     {/* Recessed QR Panel with dotted indicator */}
-                    <div className="relative p-6 bg-slate-50 rounded-[2.5rem] ring-1 ring-inset ring-slate-100/50">
+                    <div className="relative p-6 bg-slate-50 dark:bg-slate-950 rounded-[2.5rem] ring-1 ring-inset ring-slate-100/50 dark:ring-slate-800/50">
                       {/* Red Dotted Zone Indicator */}
                       <div className="absolute inset-2 border-2 border-dashed border-red-400/20 rounded-[2rem] pointer-events-none" />
                       
@@ -185,11 +185,11 @@ export default function ArticleDetailPage({ params }: { params: { id: string } }
                 </div>
               </div>
 
-              <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
+              <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm">
                 <ArticleHistoryList history={history.slice(0, 5)} />
                 <button 
                   onClick={() => setActiveTab('analysis')}
-                  className="mt-6 w-full py-3 text-sm font-bold text-accent bg-indigo-50 rounded-3xl hover:bg-indigo-100 transition-colors"
+                  className="mt-6 w-full py-3 text-sm font-bold text-accent bg-indigo-50 dark:bg-indigo-900/30 rounded-3xl hover:bg-indigo-100 dark:hover:bg-indigo-900/50 transition-colors"
                 >
                   Vollständigen Verlauf anzeigen
                 </button>
@@ -222,13 +222,13 @@ export default function ArticleDetailPage({ params }: { params: { id: string } }
           )}
 
           {activeTab === 'comments' && (
-            <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm animate-in fade-in slide-in-from-bottom-4 duration-500 space-y-6">
+            <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm animate-in fade-in slide-in-from-bottom-4 duration-500 space-y-6">
               {comments.length === 0 && (
-                <div className="p-8 bg-amber-50 border border-amber-100 rounded-2xl flex items-start gap-3">
-                  <AlertTriangle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+                <div className="p-8 bg-amber-50 dark:bg-amber-900/20 border border-amber-100 dark:border-amber-800 rounded-2xl flex items-start gap-3">
+                  <AlertTriangle className="w-5 h-5 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
                   <div>
-                    <p className="text-sm font-bold text-amber-800">Kommentar-Funktion möglicherweise inaktiv</p>
-                    <p className="text-xs text-amber-700">Wenn Sie keine Kommentare sehen oder hinzufügen können, prüfen Sie bitte, ob die `article_comments` Tabelle in der Datenbank existiert.</p>
+                    <p className="text-sm font-bold text-amber-800 dark:text-amber-300">Kommentar-Funktion möglicherweise inaktiv</p>
+                    <p className="text-xs text-amber-700 dark:text-amber-500">Wenn Sie keine Kommentare sehen oder hinzufügen können, prüfen Sie bitte, ob die `article_comments` Tabelle in der Datenbank existiert.</p>
                   </div>
                 </div>
               )}
@@ -268,25 +268,25 @@ export default function ArticleDetailPage({ params }: { params: { id: string } }
           <StockAdjustmentForm onAdjust={adjustStock} loading={isAdjusting} />
           
           {/* Quick Stats Sidebar */}
-          <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm space-y-6">
-            <h3 className="font-bold text-slate-900 uppercase text-xs tracking-widest pl-1 border-l-4 border-indigo-600">Finanzielles</h3>
+          <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm space-y-6">
+            <h3 className="font-bold text-slate-900 dark:text-slate-100 uppercase text-xs tracking-widest pl-1 border-l-4 border-indigo-600">Finanzielles</h3>
             <div className="space-y-6">
               <div className="flex justify-between items-center text-sm">
-                <span className="text-slate-600 font-semibold">Herstellpreis</span>
-                <span className="font-bold text-slate-900">{Number(article.herstellpreis).toFixed(2)} €</span>
+                <span className="text-slate-600 dark:text-slate-400 font-semibold">Herstellpreis</span>
+                <span className="font-bold text-slate-900 dark:text-slate-100">{Number(article.herstellpreis).toFixed(2)} €</span>
               </div>
               <div className="flex justify-between items-center text-sm">
-                <span className="text-slate-600 font-semibold">Einkaufspreis</span>
-                <span className="font-bold text-slate-900">{Number(article.purchase_price || 0).toFixed(2)} €</span>
+                <span className="text-slate-600 dark:text-slate-400 font-semibold">Einkaufspreis</span>
+                <span className="font-bold text-slate-900 dark:text-slate-100">{Number(article.purchase_price || 0).toFixed(2)} €</span>
               </div>
               <div className="flex justify-between items-center text-sm">
-                <span className="text-slate-600 font-semibold">Verkaufspreis</span>
-                <span className="font-bold text-slate-900">{Number(article.verkaufspreis).toFixed(2)} €</span>
+                <span className="text-slate-600 dark:text-slate-400 font-semibold">Verkaufspreis</span>
+                <span className="font-bold text-slate-900 dark:text-slate-100">{Number(article.verkaufspreis).toFixed(2)} €</span>
               </div>
-              <div className="flex justify-between items-center text-[10px] text-slate-500 font-bold uppercase tracking-widest pt-1">
+              <div className="flex justify-between items-center text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest pt-1">
                 <span>Inkl. {article.tax_rate || 19}% MwSt.</span>
               </div>
-              <div className="pt-4 border-t border-slate-100 flex justify-between items-center">
+              <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex justify-between items-center">
                 <span className="text-xs font-bold text-accent uppercase">Marge</span>
                 <span className="text-lg font-black text-accent">
                   {article.verkaufspreis > 0 

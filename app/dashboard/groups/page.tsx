@@ -149,19 +149,19 @@ export default function GroupsPage() {
             <div className="space-y-6">
               <button 
                 onClick={() => setSelectedGroup(null)}
-                className="flex items-center gap-2 text-sm font-bold text-accent hover:text-indigo-700 transition-colors"
+                className="flex items-center gap-2 text-sm font-bold text-accent hover:text-indigo-700 dark:hover:text-indigo-400 transition-colors"
               >
                 <ArrowLeft className="w-4 h-4" />
                 Zurück zur Übersicht
               </button>
               <div className="flex items-center justify-between">
-                <h2 className="text-4xl font-bold leading-tight text-slate-900 flex items-center gap-8">
+                <h2 className="text-4xl font-bold leading-tight text-slate-900 dark:text-slate-100 flex items-center gap-8">
                   <Folder className="w-10 h-10 text-accent" />
                   {selectedGroup.name}
                 </h2>
                 <button 
                   onClick={() => setEditingGroup(selectedGroup)}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-slate-900 border border-slate-200 rounded-2xl font-black text-xs uppercase tracking-widest hover:shadow-md transition-all ring-1 ring-slate-100"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 border border-slate-200 dark:border-slate-700 rounded-2xl font-black text-xs uppercase tracking-widest hover:shadow-md dark:hover:bg-slate-800 transition-all ring-1 ring-slate-100 dark:ring-slate-800"
                 >
                   <Edit3 className="w-4 h-4 text-accent" />
                   Gruppe verwalten
@@ -170,10 +170,10 @@ export default function GroupsPage() {
             </div>
           ) : (
             <>
-              <h2 className="text-3xl font-bold leading-7 text-slate-900 sm:truncate sm:tracking-tight uppercase">
+              <h2 className="text-3xl font-bold leading-7 text-slate-900 dark:text-slate-100 sm:truncate sm:tracking-tight uppercase">
                 Gruppenverwaltung
               </h2>
-              <p className="mt-2 text-sm font-bold text-slate-500">
+              <p className="mt-2 text-sm font-bold text-slate-500 dark:text-slate-400">
                 Erstelle Kategorien wie 'Werkzeuge' oder 'Zubehör', um deine Artikel besser zu strukturieren.
               </p>
             </>
@@ -182,16 +182,16 @@ export default function GroupsPage() {
         
         {/* Only show View Toggle in List View */}
         {!selectedGroup && (
-          <div className="mt-4 md:mt-0 flex items-center gap-1 p-1 bg-slate-100 rounded-3xl">
+          <div className="mt-4 md:mt-0 flex items-center gap-1 p-1 bg-slate-100 dark:bg-slate-900 rounded-3xl">
             <button 
               onClick={() => setViewMode('grid')}
-              className={`p-2 rounded-2xl transition-all ${viewMode === 'grid' ? 'bg-white text-accent shadow-sm' : 'text-slate-400 hover:text-slate-600'}`}
+              className={`p-2 rounded-2xl transition-all ${viewMode === 'grid' ? 'bg-white dark:bg-slate-800 text-accent shadow-sm' : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-300'}`}
             >
               <LayoutGrid className="w-5 h-5" />
             </button>
             <button 
               onClick={() => setViewMode('list')}
-              className={`p-2 rounded-2xl transition-all ${viewMode === 'list' ? 'bg-white text-accent shadow-sm' : 'text-slate-400 hover:text-slate-600'}`}
+              className={`p-2 rounded-2xl transition-all ${viewMode === 'list' ? 'bg-white dark:bg-slate-800 text-accent shadow-sm' : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-300'}`}
             >
               <List className="w-5 h-5" />
             </button>
@@ -200,11 +200,11 @@ export default function GroupsPage() {
       </div>
 
       {!selectedGroup && (
-        <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm ring-1 ring-slate-100/50">
+        <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm ring-1 ring-slate-100/50 dark:ring-slate-800/50">
           <form onSubmit={handleCreateGroup} className="flex gap-8">
             <div className="relative flex-1">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Folder className="h-5 w-5 text-slate-400" />
+                <Folder className="h-5 w-5 text-slate-400 dark:text-slate-500" />
               </div>
               <input
                 type="text"
@@ -213,7 +213,7 @@ export default function GroupsPage() {
                 onChange={(e) => setNewGroupName(e.target.value)}
                 placeholder="Neue Gruppe (z.B. Büromaterial)..."
                 disabled={isSubmitting}
-                className="block w-full pl-10 pr-3 py-2.5 border border-slate-200 rounded-2xl bg-slate-50 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-accent sm:text-sm transition-all font-bold"
+                className="block w-full pl-10 pr-3 py-2.5 border border-slate-200 dark:border-slate-700 rounded-2xl bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-accent sm:text-sm transition-all font-bold"
               />
             </div>
             <button
@@ -243,27 +243,27 @@ export default function GroupsPage() {
       ) : selectedGroup ? (
         /* DETAIL VIEW */
         <div className="space-y-6 animate-in fade-in zoom-in-95 duration-500">
-          <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden ring-1 ring-slate-100/50">
-            <div className="px-6 py-4 border-b border-slate-100 bg-slate-50/50">
-              <h3 className="text-lg font-bold text-slate-900 flex items-center gap-2 uppercase tracking-tight">
+          <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm overflow-hidden ring-1 ring-slate-100/50 dark:ring-slate-800/50">
+            <div className="px-6 py-4 border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900">
+              <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2 uppercase tracking-tight">
                 Zugeordnete Artikel
-                <span className="ml-2 px-2.5 py-0.5 bg-indigo-50 text-accent rounded-full text-[10px] font-bold uppercase ring-1 ring-accent/10">
+                <span className="ml-2 px-2.5 py-0.5 bg-indigo-50 dark:bg-indigo-900/30 text-accent dark:text-indigo-300 rounded-full text-[10px] font-bold uppercase ring-1 ring-accent/10">
                   {getGroupArticles(selectedGroup.id).length}
                 </span>
               </h3>
             </div>
             <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-slate-100">
-                <thead className="bg-white">
+              <table className="min-w-full divide-y divide-slate-100 dark:divide-slate-700">
+                <thead className="bg-white dark:bg-slate-900">
                   <tr>
-                    <th className="px-6 py-4 text-left text-[11px] font-semibold text-slate-700 uppercase tracking-widest">Name</th>
-                    <th className="px-6 py-4 text-left text-[11px] font-semibold text-slate-700 uppercase tracking-widest">SKU</th>
-                    <th className="px-6 py-4 text-right text-[11px] font-semibold text-slate-700 uppercase tracking-widest">Bestand</th>
-                    <th className="px-6 py-4 text-right text-[11px] font-semibold text-slate-700 uppercase tracking-widest">Preis</th>
+                    <th className="px-6 py-4 text-left text-[11px] font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-widest">Name</th>
+                    <th className="px-6 py-4 text-left text-[11px] font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-widest">SKU</th>
+                    <th className="px-6 py-4 text-right text-[11px] font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-widest">Bestand</th>
+                    <th className="px-6 py-4 text-right text-[11px] font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-widest">Preis</th>
                     <th className="w-10"></th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100">
+                <tbody className="divide-y divide-slate-100 dark:divide-slate-700 bg-white dark:bg-slate-950">
                   {getGroupArticles(selectedGroup.id).length === 0 ? (
                     <tr>
                       <td colSpan={5} className="px-6 py-12 text-center text-slate-500 font-bold italic text-sm">
@@ -275,20 +275,20 @@ export default function GroupsPage() {
                       <tr 
                         key={article.id} 
                         onClick={() => router.push(`/dashboard/articles/${article.id}?fromGroup=${selectedGroup.id}`)}
-                        className="hover:bg-slate-50 transition-all cursor-pointer group/row"
+                        className="hover:bg-slate-50 dark:hover:bg-slate-900 transition-all cursor-pointer group/row"
                       >
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-black text-slate-900 group-hover/row:text-accent transition-colors">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-black text-slate-900 dark:text-slate-100 group-hover/row:text-accent transition-colors">
                           {article.name}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-mono font-bold text-slate-500">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-mono font-bold text-slate-500 dark:text-slate-400">
                           {article.sku}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-right">
-                          <span className={`inline-flex px-2 py-1 rounded-2xl text-[10px] font-black uppercase tracking-wider ${article.bestand <= article.mindestbestand ? 'bg-red-50 text-red-700 ring-1 ring-red-600/10' : 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-600/10'}`}>
+                          <span className={`inline-flex px-2 py-1 rounded-2xl text-[10px] font-black uppercase tracking-wider ${article.bestand <= article.mindestbestand ? 'bg-red-50 dark:bg-rose-900/30 text-red-700 dark:text-rose-400 ring-1 ring-red-600/10' : 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 ring-1 ring-emerald-600/10'}`}>
                             {article.bestand}
                           </span>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-black text-slate-900">
+                        <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-black text-slate-900 dark:text-slate-100">
                           {Number(article.verkaufspreis).toFixed(2)} €
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-right">
@@ -303,9 +303,9 @@ export default function GroupsPage() {
           </div>
         </div>
       ) : groups.length === 0 ? (
-        <div className="text-center py-20 bg-slate-50 rounded-3xl border border-dashed border-slate-200 ring-1 ring-slate-100/50">
-          <Folder className="w-12 h-12 text-slate-300 mx-auto mb-4" />
-          <p className="text-slate-500 font-bold">Noch keine Gruppen erstellt.</p>
+        <div className="text-center py-20 bg-slate-50 dark:bg-slate-900 rounded-3xl border border-dashed border-slate-200 dark:border-slate-700 ring-1 ring-slate-100/50 dark:ring-slate-800/50">
+          <Folder className="w-12 h-12 text-slate-300 dark:text-slate-700 mx-auto mb-4" />
+          <p className="text-slate-500 dark:text-slate-400 font-bold">Noch keine Gruppen erstellt.</p>
         </div>
       ) : viewMode === 'grid' ? (
         /* GRID VIEW */
@@ -314,66 +314,66 @@ export default function GroupsPage() {
             <div 
               key={group.id} 
               onClick={() => setSelectedGroup(group)}
-              className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl hover:scale-[1.02] transition-all cursor-pointer group relative overflow-hidden ring-1 ring-slate-100/50"
+              className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-xl hover:scale-[1.02] transition-all cursor-pointer group relative overflow-hidden ring-1 ring-slate-100/50 dark:ring-slate-800/50"
             >
               <div className="flex items-center justify-between mb-4">
-                <div className="p-2 bg-indigo-50 rounded-3xl ring-1 ring-accent/10">
+                <div className="p-2 bg-indigo-50 dark:bg-indigo-900/30 rounded-3xl ring-1 ring-accent/10">
                   <Folder className="w-5 h-5 text-accent" />
                 </div>
                 <div className="flex gap-2">
                   <button 
                     onClick={(e) => handleEditClick(e, group)}
-                    className="p-2 hover:bg-slate-100 rounded-2xl text-slate-500 transition-colors"
+                    className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-2xl text-slate-500 dark:text-slate-400 transition-colors"
                   >
                     <Edit3 className="w-4 h-4" />
                   </button>
                   <button 
                     onClick={(e) => handleDeleteGroup(e, group.id)}
-                    className="p-2 hover:bg-red-50 rounded-2xl text-red-500 transition-colors"
+                    className="p-2 hover:bg-red-50 dark:hover:bg-rose-900/30 rounded-2xl text-red-500 dark:text-rose-400 transition-colors"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
                 </div>
               </div>
 
-              <h3 className="text-lg font-bold text-slate-900 truncate">
+              <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 truncate">
                 {group.name}
               </h3>
               <div className="mt-1 flex items-center justify-between">
-                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">
                   {getArticleCount(group.id)} Artikel
                 </p>
-                <ChevronRight className="w-4 h-4 text-slate-300 group-hover:text-accent transition-colors" />
+                <ChevronRight className="w-4 h-4 text-slate-300 dark:text-slate-600 group-hover:text-accent transition-colors" />
               </div>
             </div>
           ))}
         </div>
       ) : (
         /* LIST VIEW */
-        <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden animate-in fade-in zoom-in-95 duration-300">
-          <table className="min-w-full divide-y divide-slate-100">
-            <thead className="bg-slate-50">
+        <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm overflow-hidden animate-in fade-in zoom-in-95 duration-300 ring-1 ring-slate-100/50 dark:ring-slate-800/50">
+          <table className="min-w-full divide-y divide-slate-100 dark:divide-slate-700">
+            <thead className="bg-slate-50 dark:bg-slate-900">
               <tr>
-                <th scope="col" className="px-6 py-4 text-left text-[11px] font-semibold text-slate-700 uppercase tracking-widest">Gruppe</th>
-                <th scope="col" className="px-6 py-4 text-left text-[11px] font-semibold text-slate-700 uppercase tracking-widest">Artikel</th>
-                <th scope="col" className="px-6 py-4 text-right text-[11px] font-semibold text-slate-700 uppercase tracking-widest">Aktionen</th>
+                <th scope="col" className="px-6 py-4 text-left text-[11px] font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-widest">Gruppe</th>
+                <th scope="col" className="px-6 py-4 text-left text-[11px] font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-widest">Artikel</th>
+                <th scope="col" className="px-6 py-4 text-right text-[11px] font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-widest">Aktionen</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-slate-100 dark:divide-slate-700 bg-white dark:bg-slate-950">
               {groups.map((group) => (
                 <tr 
                   key={group.id} 
                   onClick={() => setSelectedGroup(group)}
-                  className="hover:bg-slate-50/50 transition-colors cursor-pointer group"
+                  className="hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors cursor-pointer group"
                 >
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-black text-slate-900">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-black text-slate-900 dark:text-slate-100">
                     <div className="flex items-center">
                       <Folder className="w-4 h-4 text-accent mr-3" />
                       {group.name}
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-black bg-indigo-50 text-accent uppercase tracking-widest ring-1 ring-accent/10">
+                    <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-black bg-indigo-50 dark:bg-indigo-900/30 text-accent dark:text-indigo-300 uppercase tracking-widest ring-1 ring-accent/10">
                       {getArticleCount(group.id)} Artikel
                     </span>
                   </td>
@@ -381,13 +381,13 @@ export default function GroupsPage() {
                     <div className="flex justify-end gap-2">
                       <button 
                         onClick={(e) => handleEditClick(e, group)}
-                        className="p-2 text-slate-900 hover:text-accent hover:bg-indigo-50 rounded-2xl transition-all"
+                        className="p-2 text-slate-900 dark:text-slate-100 hover:text-accent dark:hover:text-accent hover:bg-indigo-50 dark:hover:bg-indigo-900/30 rounded-2xl transition-all"
                       >
                         <Edit3 className="w-4 h-4" />
                       </button>
                       <button 
                         onClick={(e) => handleDeleteGroup(e, group.id)}
-                        className="p-2 text-slate-900 hover:text-red-600 hover:bg-red-50 rounded-2xl transition-all"
+                        className="p-2 text-slate-900 dark:text-slate-100 hover:text-red-600 dark:hover:text-rose-400 hover:bg-red-50 dark:hover:bg-rose-900/30 rounded-2xl transition-all"
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>

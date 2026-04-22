@@ -68,7 +68,7 @@ export default function ArticlesPage() {
     <div className="space-y-8">
       <div className="md:flex md:items-center md:justify-between">
         <div className="min-w-0 flex-1">
-          <h2 className="text-3xl font-black leading-7 text-slate-900 sm:truncate sm:tracking-tight">
+          <h2 className="text-3xl font-black leading-7 text-slate-900 dark:text-slate-100 sm:truncate sm:tracking-tight">
             Artikelverwaltung
           </h2>
           <p className="mt-2 text-sm font-bold text-slate-500">
@@ -113,8 +113,8 @@ export default function ArticlesPage() {
         <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
           <ArticleTable articles={filteredArticles} onDelete={refetch} />
           {filteredArticles.length === 0 && articles.length > 0 && (
-            <div className="text-center py-20 bg-white rounded-3xl border border-dashed border-slate-300 mt-8">
-              <p className="text-slate-500 font-bold">Keine Artikel gefunden, die deinen Filtereinstellungen entsprechen.</p>
+            <div className="text-center py-20 bg-white dark:bg-slate-900 rounded-3xl border border-dashed border-slate-300 dark:border-slate-700 mt-8">
+              <p className="text-slate-500 dark:text-slate-400 font-bold">Keine Artikel gefunden, die deinen Filtereinstellungen entsprechen.</p>
               <button 
                 onClick={() => { setSearchQuery(""); setStatusFilter("all"); }}
                 className="mt-4 text-accent font-black hover:underline"

@@ -33,13 +33,13 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
   const { user, logout } = useAuth();
 
   return (
-    <nav className="sticky top-0 z-50 shadow-sm bg-white/80 backdrop-blur-md border-b border-slate-200 w-full h-16">
+    <nav className="sticky top-0 z-50 shadow-sm bg-white/80 dark:bg-slate-950/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 w-full h-16">
       <div className="h-full px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-full">
           <div className="flex items-center gap-8">
             <button 
               onClick={onMenuClick}
-              className="lg:hidden p-2 rounded-2xl hover:bg-slate-100 text-slate-500 transition-colors"
+              className="lg:hidden p-2 rounded-2xl hover:bg-slate-100 dark:hover:bg-slate-900 text-slate-500 dark:text-slate-400 transition-colors"
               aria-label="Menü öffnen"
             >
               <Menu className="w-6 h-6" />
@@ -49,10 +49,10 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
             </Link>
             <Link 
               href="/dashboard/profile"
-              className="hidden lg:flex items-center gap-1.5 text-xs font-black text-slate-500 uppercase tracking-widest hover:text-accent transition-colors group"
+              className="hidden lg:flex items-center gap-1.5 text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest hover:text-accent transition-colors group"
             >
               Willkommen zurück{user ? `, ` : ''}
-              <span className="text-slate-900 group-hover:text-accent transition-colors">
+              <span className="text-slate-900 dark:text-slate-100 group-hover:text-accent transition-colors">
                 {user ? (user.user_metadata?.display_name || user.email?.split('@')[0]) : ''}
               </span>
             </Link>
@@ -63,7 +63,7 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
               <div className="flex items-center gap-3">
                 <Link 
                   href="/dashboard/profile"
-                  className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-100 text-slate-600 hover:bg-indigo-50 hover:text-accent transition-all border border-transparent hover:border-indigo-100"
+                  className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 hover:text-accent dark:hover:text-accent transition-all border border-transparent hover:border-indigo-100 dark:hover:border-indigo-900"
                 >
                   {(() => {
                     const AvatarIcon = iconMap[user.user_metadata?.avatar_id] || User;
@@ -76,7 +76,7 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
                     console.log("[Navbar] Logout button clicked");
                     logout();
                   }}
-                  className="flex items-center gap-2 px-4 py-2 text-sm font-black text-red-600 hover:bg-red-50 rounded-3xl transition-all"
+                  className="flex items-center gap-2 px-4 py-2 text-sm font-black text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-3xl transition-all"
                   title="Abmelden"
                 >
                   <LogOut className="w-4 h-4" />
@@ -84,7 +84,7 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
                 </button>
               </div>
             ) : (
-              <Link href="/login" className="bg-accent hover:bg-accent-hover text-white px-6 py-2 rounded-3xl text-sm font-bold transition-all shadow-sm border border-slate-200 shadow-indigo-200">
+              <Link href="/login" className="bg-accent hover:bg-accent-hover text-white px-6 py-2 rounded-3xl text-sm font-bold transition-all shadow-sm border border-slate-200 dark:border-slate-800 shadow-indigo-200 dark:shadow-none">
                 Login
               </Link>
             )}

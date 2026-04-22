@@ -220,18 +220,18 @@ export default function TeamPage() {
   if (!isAdmin) {
     return (
       <div className="flex flex-col items-center justify-center p-20 text-center animate-in zoom-in-95 duration-500">
-        <div className="w-20 h-20 bg-red-50 text-red-500 rounded-3xl flex items-center justify-center mb-8 ring-8 ring-red-50">
+        <div className="w-20 h-20 bg-red-50 dark:bg-red-900/30 text-red-500 dark:text-red-400 rounded-3xl flex items-center justify-center mb-8 ring-8 ring-red-50 dark:ring-red-900/10">
            <Lock className="w-10 h-10" />
         </div>
-        <h1 className="text-3xl font-black text-slate-900 uppercase tracking-tight">Zugriff verweigert</h1>
-        <p className="text-slate-600 mt-4 max-w-md font-bold">
-          Diese Seite ist ausschließlich Administratoren vorbehalten. Deine aktuelle Rolle ist: <span className="text-red-600 font-black uppercase">{role}</span>.
+        <h1 className="text-3xl font-black text-slate-900 dark:text-slate-100 uppercase tracking-tight">Zugriff verweigert</h1>
+        <p className="text-slate-600 dark:text-slate-400 mt-4 max-w-md font-bold">
+          Diese Seite ist ausschließlich Administratoren vorbehalten. Deine aktuelle Rolle ist: <span className="text-red-600 dark:text-red-400 font-black uppercase">{role}</span>.
         </p>
         <div className="mt-8 flex gap-8">
-          <button onClick={() => window.location.reload()} className="px-6 py-2 bg-slate-900 text-white rounded-3xl font-bold flex items-center gap-2">
+          <button onClick={() => window.location.reload()} className="px-6 py-2 bg-slate-900 dark:bg-slate-800 text-white rounded-3xl font-bold flex items-center gap-2 hover:bg-slate-800 dark:hover:bg-slate-700 transition-colors">
             <RefreshCcw className="w-4 h-4" /> Aktualisieren
           </button>
-          <a href="/dashboard" className="px-6 py-2 bg-slate-100 text-slate-600 rounded-3xl font-bold">
+          <a href="/dashboard" className="px-6 py-2 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-3xl font-bold hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
             Zum Dashboard
           </a>
         </div>
@@ -243,20 +243,20 @@ export default function TeamPage() {
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-6 duration-700">
       <div className="md:flex md:items-center md:justify-between">
         <div className="min-w-0 flex-1">
-          <h2 className="text-4xl font-bold leading-7 text-slate-900 sm:truncate sm:tracking-tight uppercase tracking-tighter">
+          <h2 className="text-4xl font-bold leading-7 text-slate-900 dark:text-slate-100 sm:truncate sm:tracking-tight uppercase tracking-tighter">
             Team-Verwaltung
           </h2>
-          <p className="mt-4 text-base font-bold text-slate-500">
+          <p className="mt-4 text-base font-bold text-slate-500 dark:text-slate-400">
             Zentrale Schnittstelle für Mitglieder, Berechtigungen und Einladungen.
           </p>
         </div>
         <div className="mt-4 md:mt-0 flex gap-8">
           <button 
             onClick={fetchTeamData}
-            className="p-3 bg-white border border-slate-100 rounded-2xl shadow-sm hover:bg-slate-50 transition-all ring-1 ring-slate-100/50"
+            className="p-3 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-700 rounded-2xl shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-all ring-1 ring-slate-100/50 dark:ring-slate-800/50"
             title="Daten aktualisieren"
           >
-            <RefreshCcw className={`w-5 h-5 text-slate-500 ${loading ? 'animate-spin' : ''}`} />
+            <RefreshCcw className={`w-5 h-5 text-slate-500 dark:text-slate-400 ${loading ? 'animate-spin' : ''}`} />
           </button>
         </div>
       </div>
@@ -264,35 +264,35 @@ export default function TeamPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-8">
           {/* Mitglieder-Tabelle */}
-          <div className="bg-white rounded-[2.5rem] border border-slate-100 shadow-xl shadow-slate-100/50 overflow-hidden transition-all ring-1 ring-slate-100/30">
-            <div className="p-8 border-b border-slate-100 flex items-center justify-between bg-slate-50/30">
+          <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-100 dark:border-slate-700 shadow-xl shadow-slate-100/50 dark:shadow-none overflow-hidden transition-all ring-1 ring-slate-100/30 dark:ring-slate-800/30">
+            <div className="p-8 border-b border-slate-100 dark:border-slate-700 flex items-center justify-between bg-slate-50/30 dark:bg-slate-900/50">
               <div className="flex items-center gap-8">
-                <div className="w-12 h-12 rounded-2xl bg-indigo-50 flex items-center justify-center">
+                <div className="w-12 h-12 rounded-2xl bg-indigo-50 dark:bg-indigo-900/30 flex items-center justify-center">
                   <Users className="w-6 h-6 text-accent" />
                 </div>
-                <h3 className="text-lg font-bold text-slate-900 uppercase tracking-tight">Teammitglieder</h3>
+                <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 uppercase tracking-tight">Teammitglieder</h3>
               </div>
-              <span className="bg-indigo-50 text-accent px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest ring-1 ring-accent/10">{profiles.length} Aktiv</span>
+              <span className="bg-indigo-50 dark:bg-indigo-900/30 text-accent dark:text-indigo-300 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest ring-1 ring-accent/10">{profiles.length} Aktiv</span>
             </div>
             
             <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-slate-100">
-                <thead className="bg-slate-50/50">
+              <table className="min-w-full divide-y divide-slate-100 dark:divide-slate-700">
+                <thead className="bg-slate-50/50 dark:bg-slate-900/50">
                   <tr>
-                    <th className="px-8 py-4 text-left text-[11px] font-semibold text-slate-700 uppercase tracking-[0.2em]">Mitglied</th>
-                    <th className="px-8 py-4 text-left text-[11px] font-semibold text-slate-700 uppercase tracking-[0.2em]">E-Mail</th>
-                    <th className="px-8 py-4 text-left text-[11px] font-semibold text-slate-700 uppercase tracking-[0.2em]">Rolle</th>
-                    <th className="px-8 py-4 text-right text-[11px] font-semibold text-slate-700 uppercase tracking-[0.2em]">Aktion</th>
+                    <th className="px-8 py-4 text-left text-[11px] font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-[0.2em]">Mitglied</th>
+                    <th className="px-8 py-4 text-left text-[11px] font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-[0.2em]">E-Mail</th>
+                    <th className="px-8 py-4 text-left text-[11px] font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-[0.2em]">Rolle</th>
+                    <th className="px-8 py-4 text-right text-[11px] font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-[0.2em]">Aktion</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100">
+                <tbody className="divide-y divide-slate-100 dark:divide-slate-700 bg-white dark:bg-slate-950">
                   {profiles.map((profile) => (
-                    <tr key={profile.id} className="group hover:bg-slate-50/50 transition-all cursor-default">
-                      <td className="px-8 py-5 whitespace-nowrap text-sm font-black text-slate-900">
+                    <tr key={profile.id} className="group hover:bg-slate-50/50 dark:hover:bg-slate-900 transition-all cursor-default">
+                      <td className="px-8 py-5 whitespace-nowrap text-sm font-black text-slate-900 dark:text-slate-100">
                         {profile.display_name || 'Unbekannt'}
-                        {profile.id === user?.id && <span className="ml-2 text-[10px] bg-indigo-50 text-accent px-2 py-0.5 rounded-3xl font-black uppercase tracking-widest">ICH</span>}
+                        {profile.id === user?.id && <span className="ml-2 text-[10px] bg-indigo-50 dark:bg-indigo-900/30 text-accent dark:text-indigo-300 px-2 py-0.5 rounded-3xl font-black uppercase tracking-widest">ICH</span>}
                       </td>
-                      <td className="px-8 py-5 whitespace-nowrap text-sm text-slate-700 font-bold">
+                      <td className="px-8 py-5 whitespace-nowrap text-sm text-slate-700 dark:text-slate-300 font-bold">
                         {profile.email}
                       </td>
                       <td className="px-8 py-5 whitespace-nowrap">
@@ -300,11 +300,11 @@ export default function TeamPage() {
                           disabled={profile.id === user?.id}
                           value={profile.role}
                           onChange={(e) => handleUpdateRole(profile.id, e.target.value as any)}
-                          className="bg-transparent border-none text-[11px] font-black uppercase tracking-widest text-slate-900 focus:ring-0 cursor-pointer disabled:opacity-40 hover:text-accent transition-colors"
+                          className="bg-transparent border-none text-[11px] font-black uppercase tracking-widest text-slate-900 dark:text-slate-100 focus:ring-0 cursor-pointer disabled:opacity-40 hover:text-accent transition-colors"
                         >
-                          <option value="admin">Admin</option>
-                          <option value="editor">Editor</option>
-                          <option value="viewer">Viewer</option>
+                          <option value="admin" className="dark:bg-slate-900">Admin</option>
+                          <option value="editor" className="dark:bg-slate-900">Editor</option>
+                          <option value="viewer" className="dark:bg-slate-900">Viewer</option>
                         </select>
                       </td>
                       <td className="px-8 py-5 whitespace-nowrap text-right">
@@ -333,27 +333,27 @@ export default function TeamPage() {
 
           {/* Einladungen-Sektion */}
           {invitations.length > 0 && (
-            <div className="bg-white rounded-[2.5rem] border border-slate-100 shadow-md ring-1 ring-slate-100/50 overflow-hidden animate-in slide-in-from-top-4 duration-500">
-              <div className="p-8 border-b border-slate-100 flex items-center gap-8 bg-slate-50/20">
-                <div className="w-12 h-12 rounded-2xl bg-amber-50 flex items-center justify-center">
-                  <Clock className="w-6 h-6 text-amber-500" />
+            <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-100 dark:border-slate-700 shadow-md dark:shadow-none ring-1 ring-slate-100/50 dark:ring-slate-800/50 overflow-hidden animate-in slide-in-from-top-4 duration-500">
+              <div className="p-8 border-b border-slate-100 dark:border-slate-700 flex items-center gap-8 bg-slate-50/20 dark:bg-slate-900/50">
+                <div className="w-12 h-12 rounded-2xl bg-amber-50 dark:bg-amber-900/30 flex items-center justify-center">
+                  <Clock className="w-6 h-6 text-amber-500 dark:text-amber-400" />
                 </div>
-                <h3 className="text-lg font-bold text-slate-900 uppercase tracking-tight">Ausstehende Einladungen</h3>
+                <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 uppercase tracking-tight">Ausstehende Einladungen</h3>
               </div>
               <div className="overflow-x-auto">
-                <table className="min-w-full divide-y divide-slate-100">
-                  <tbody className="divide-y divide-slate-100">
+                <table className="min-w-full divide-y divide-slate-100 dark:divide-slate-700">
+                  <tbody className="divide-y divide-slate-100 dark:divide-slate-700 bg-white dark:bg-slate-950">
                     {invitations.map((invite) => (
-                      <tr key={invite.id} className="hover:bg-slate-50/50 transition-colors">
+                      <tr key={invite.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-900 transition-colors">
                         <td className="px-8 py-5 whitespace-nowrap">
                           <div className="flex flex-col">
-                            <span className="text-sm font-black text-slate-900">{invite.email}</span>
+                            <span className="text-sm font-black text-slate-900 dark:text-slate-100">{invite.email}</span>
                             {invite.metadata?.name && (
-                              <span className="text-[10px] text-slate-500 font-black uppercase tracking-widest mt-0.5">{invite.metadata.name}</span>
+                              <span className="text-[10px] text-slate-500 dark:text-slate-400 font-black uppercase tracking-widest mt-0.5">{invite.metadata.name}</span>
                             )}
                           </div>
                         </td>
-                        <td className="px-8 py-5 whitespace-nowrap text-[10px] text-amber-600 font-black uppercase tracking-widest text-right">
+                        <td className="px-8 py-5 whitespace-nowrap text-[10px] text-amber-600 dark:text-amber-400 font-black uppercase tracking-widest text-right">
                           {invite.role}
                         </td>
                         <td className="px-8 py-5 whitespace-nowrap text-right w-px">
@@ -448,38 +448,38 @@ export default function TeamPage() {
           </div>
 
           {/* Rollen-Info-Card */}
-          <div className="bg-white rounded-[2.5rem] p-10 border border-slate-100 ring-1 ring-slate-100/50 space-y-8">
-            <h4 className="text-[10px] font-semibold text-slate-400 uppercase tracking-[0.3em] pl-1">Berechtigungen</h4>
+          <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] p-10 border border-slate-100 dark:border-slate-700 ring-1 ring-slate-100/50 dark:ring-slate-800/50 space-y-8">
+            <h4 className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-[0.3em] pl-1">Berechtigungen</h4>
             <div className="space-y-6">
               <div className="flex gap-5">
-                <div className="w-12 h-12 rounded-2xl bg-indigo-50 flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 rounded-2xl bg-indigo-50 dark:bg-indigo-900/30 flex items-center justify-center flex-shrink-0">
                   <Shield className="w-5 h-5 text-accent" />
                 </div>
                 <div>
-                  <span className="font-black text-[11px] text-slate-900 uppercase tracking-widest block mb-1">Admins</span>
-                  <p className="text-xs text-slate-600 font-bold leading-relaxed">
+                  <span className="font-black text-[11px] text-slate-900 dark:text-slate-100 uppercase tracking-widest block mb-1">Admins</span>
+                  <p className="text-xs text-slate-600 dark:text-slate-400 font-bold leading-relaxed">
                     Volle Team-Verwaltung, Artikel-Manipulation und Systemzugriff.
                   </p>
                 </div>
               </div>
               <div className="flex gap-5">
-                <div className="w-12 h-12 rounded-2xl bg-green-50 flex items-center justify-center flex-shrink-0">
-                  <CheckCircle2 className="w-5 h-5 text-green-500" />
+                <div className="w-12 h-12 rounded-2xl bg-green-50 dark:bg-emerald-900/30 flex items-center justify-center flex-shrink-0">
+                  <CheckCircle2 className="w-5 h-5 text-green-500 dark:text-emerald-400" />
                 </div>
                 <div>
-                  <span className="font-black text-[11px] text-slate-900 uppercase tracking-widest block mb-1">Editoren</span>
-                  <p className="text-xs text-slate-600 font-bold leading-relaxed">
+                  <span className="font-black text-[11px] text-slate-900 dark:text-slate-100 uppercase tracking-widest block mb-1">Editoren</span>
+                  <p className="text-xs text-slate-600 dark:text-slate-400 font-bold leading-relaxed">
                     Können Artikel pflegen, Bestände buchen und Inventur machen.
                   </p>
                 </div>
               </div>
               <div className="flex gap-5">
-                <div className="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center flex-shrink-0">
-                  <Users className="w-5 h-5 text-slate-400" />
+                <div className="w-12 h-12 rounded-2xl bg-slate-50 dark:bg-slate-800 flex items-center justify-center flex-shrink-0">
+                  <Users className="w-5 h-5 text-slate-400 dark:text-slate-500" />
                 </div>
                 <div>
-                  <span className="font-black text-[11px] text-slate-900 uppercase tracking-widest block mb-1">Viewer</span>
-                  <p className="text-xs text-slate-600 font-bold leading-relaxed">
+                  <span className="font-black text-[11px] text-slate-900 dark:text-slate-100 uppercase tracking-widest block mb-1">Viewer</span>
+                  <p className="text-xs text-slate-600 dark:text-slate-400 font-bold leading-relaxed">
                     Reiner Lesezugriff auf Berichte, Listen und Details.
                   </p>
                 </div>

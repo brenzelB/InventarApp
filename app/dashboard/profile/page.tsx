@@ -100,33 +100,33 @@ export default function ProfilePage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Haupt-Einstellungen */}
         <div className="lg:col-span-2 space-y-8">
-          <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
-            <h3 className="text-xl font-bold text-slate-900 mb-6 uppercase tracking-wider flex items-center gap-2">
-              <Settings className="w-5 h-5 text-slate-700" />
+          <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm">
+            <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100 mb-6 uppercase tracking-wider flex items-center gap-2">
+              <Settings className="w-5 h-5 text-slate-700 dark:text-slate-400" />
               Persönliche Daten
             </h3>
             
             <form onSubmit={handleUpdateProfile} className="space-y-6">
               <div>
-                <label className="block text-[10px] font-semibold text-slate-700 uppercase tracking-[0.2em] mb-2 pl-1">E-Mail Adresse (fest)</label>
+                <label className="block text-[10px] font-semibold text-slate-700 dark:text-slate-400 uppercase tracking-[0.2em] mb-2 pl-1">E-Mail Adresse (fest)</label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Mail className="h-5 w-5 text-slate-400" />
+                    <Mail className="h-5 w-5 text-slate-400 dark:text-slate-500" />
                   </div>
                   <input
                     type="email"
                     disabled
                     value={user.email}
-                    className="block w-full pl-10 pr-3 py-2.5 border border-slate-200 rounded-2xl bg-slate-50 text-slate-400 cursor-not-allowed sm:text-sm font-medium"
+                    className="block w-full pl-10 pr-3 py-2.5 border border-slate-200 dark:border-slate-700 rounded-2xl bg-slate-50 dark:bg-slate-950 text-slate-400 dark:text-slate-500 cursor-not-allowed sm:text-sm font-medium"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-[10px] font-semibold text-slate-700 uppercase tracking-[0.2em] mb-2 pl-1">Anzeigename</label>
+                <label className="block text-[10px] font-semibold text-slate-700 dark:text-slate-400 uppercase tracking-[0.2em] mb-2 pl-1">Anzeigename</label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <User className="h-5 w-5 text-slate-400" />
+                    <User className="h-5 w-5 text-slate-400 dark:text-slate-500" />
                   </div>
                   <input
                     type="text"
@@ -134,7 +134,7 @@ export default function ProfilePage() {
                     value={displayName}
                     onChange={(e) => setDisplayName(e.target.value)}
                     placeholder="Dein Name..."
-                    className="block w-full pl-10 pr-3 py-3 border border-slate-200 rounded-2xl bg-white text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-accent sm:text-sm transition-all shadow-sm font-bold"
+                    className="block w-full pl-10 pr-3 py-3 border border-slate-200 dark:border-slate-700 rounded-2xl bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-accent sm:text-sm transition-all shadow-sm font-bold"
                   />
                 </div>
               </div>
@@ -162,7 +162,7 @@ export default function ProfilePage() {
               </div>
 
               {message && (
-                <div className={`p-8 rounded-2xl flex items-center gap-3 text-sm font-medium animate-in fade-in slide-in-from-top-2 duration-300 ${message.type === 'success' ? 'bg-green-50 text-green-700 border border-green-100' : 'bg-red-50 text-red-700 border border-red-100'}`}>
+                <div className={`p-8 rounded-2xl flex items-center gap-3 text-sm font-medium animate-in fade-in slide-in-from-top-2 duration-300 ${message.type === 'success' ? 'bg-green-50 dark:bg-emerald-900/30 text-green-700 dark:text-emerald-400 border border-green-100 dark:border-emerald-800' : 'bg-red-50 dark:bg-rose-900/30 text-red-700 dark:text-rose-400 border border-red-100 dark:border-rose-800'}`}>
                   {message.type === 'success' ? <CheckCircle2 className="w-5 h-5 flex-shrink-0" /> : <AlertCircle className="w-5 h-5 flex-shrink-0" />}
                   {message.text}
                 </div>
@@ -179,18 +179,18 @@ export default function ProfilePage() {
             </form>
           </div>
 
-          <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
-             <h3 className="text-xl font-bold text-slate-900 mb-6 uppercase tracking-wider flex items-center gap-2">
-              <Key className="w-5 h-5 text-slate-700" />
+          <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm">
+             <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100 mb-6 uppercase tracking-wider flex items-center gap-2">
+              <Key className="w-5 h-5 text-slate-700 dark:text-slate-400" />
               Sicherheit
             </h3>
-            <p className="text-sm text-slate-500 mb-6 font-medium leading-relaxed">
+            <p className="text-sm text-slate-500 dark:text-slate-400 mb-6 font-medium leading-relaxed">
               Du kannst jederzeit dein Passwort ändern. Wir senden dir dazu eine E-Mail mit einem Bestätigungslink an deine hinterlegte Adresse.
             </p>
             <button
               onClick={handlePasswordReset}
               disabled={isResetting}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-slate-900 text-white rounded-2xl font-bold text-sm hover:bg-slate-800 transition-all shadow-xl disabled:opacity-50"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-slate-900 dark:bg-slate-800 text-white rounded-2xl font-bold text-sm hover:bg-slate-800 dark:hover:bg-slate-700 transition-all shadow-xl disabled:opacity-50"
             >
               {isResetting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Key className="w-4 h-4" />}
               Passwort zurücksetzen
@@ -214,14 +214,14 @@ export default function ProfilePage() {
             </p>
           </div>
 
-          <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm overflow-hidden relative">
+          <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm overflow-hidden relative">
             <div className="absolute top-0 right-0 p-2 opacity-5">
                <LogOut className="w-16 h-16 -rotate-12" />
             </div>
-            <h3 className="text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-6 relative z-10">AUSLOGGEN</h3>
+            <h3 className="text-xs font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] mb-6 relative z-10">AUSLOGGEN</h3>
             <button
               onClick={logout}
-              className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 bg-red-50 text-red-600 rounded-2xl font-black text-xs uppercase tracking-[0.2em] hover:bg-red-600 hover:text-white transition-all group relative z-10"
+              className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 bg-red-50 dark:bg-rose-900/30 text-red-600 dark:text-rose-400 rounded-2xl font-black text-xs uppercase tracking-[0.2em] hover:bg-red-600 dark:hover:bg-red-500 hover:text-white transition-all group relative z-10"
             >
               <LogOut className="w-4 h-4 group-hover:scale-110 transition-transform" />
               ABMELDEN
@@ -229,14 +229,14 @@ export default function ProfilePage() {
           </div>
 
           {role === 'admin' && (
-            <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm overflow-hidden relative animate-in slide-in-from-right-4 duration-500">
+            <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm overflow-hidden relative animate-in slide-in-from-right-4 duration-500">
               <div className="absolute top-0 right-0 p-2 opacity-10">
                 <Users className="w-16 h-16 -rotate-12 text-accent" />
               </div>
               <h3 className="text-xs font-black text-accent uppercase tracking-[0.2em] mb-6 relative z-10">ADMINISTRATION</h3>
               <a 
                 href="/dashboard/team"
-                className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 bg-accent text-white rounded-2xl font-black text-xs uppercase tracking-[0.2em] hover:bg-accent-hover transition-all shadow-xl shadow-indigo-100 relative z-10"
+                className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 bg-accent text-white rounded-2xl font-black text-xs uppercase tracking-[0.2em] hover:bg-accent-hover transition-all shadow-xl shadow-indigo-100 dark:shadow-none relative z-10"
               >
                 <Users className="w-4 h-4" />
                 TEAM VERWALTEN

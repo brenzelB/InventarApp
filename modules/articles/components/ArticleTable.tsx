@@ -83,7 +83,7 @@ export function ArticleTable({ articles, onDelete }: ArticleTableProps) {
 
   if (articles.length === 0) {
     return (
-      <div className="text-center py-12 bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800">
+      <div className="text-center py-12 bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
         <svg className="mx-auto h-12 w-12 text-slate-400 dark:text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
         </svg>
@@ -94,8 +94,8 @@ export function ArticleTable({ articles, onDelete }: ArticleTableProps) {
   }
 
   return (
-    <div className="overflow-x-auto shadow ring-1 ring-slate-200 dark:ring-slate-800 sm:rounded-2xl">
-      <table className="min-w-full divide-y divide-slate-200 dark:divide-slate-800 table-auto">
+    <div className="overflow-x-auto shadow ring-1 ring-slate-200 dark:ring-slate-700 sm:rounded-2xl">
+      <table className="min-w-full divide-y divide-slate-200 dark:divide-slate-700 table-auto">
         <thead className="bg-slate-50 dark:bg-slate-900">
           <tr>
             <th scope="col" className="py-4 pl-4 pr-3 text-left text-[11px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-widest sm:pl-6 w-16">QR</th>
@@ -109,7 +109,7 @@ export function ArticleTable({ articles, onDelete }: ArticleTableProps) {
             <th scope="col" className="px-3 py-4 text-left text-[11px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-widest w-px whitespace-nowrap">Aktionen</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-slate-200 dark:divide-slate-800 bg-white dark:bg-slate-950">
+        <tbody className="divide-y divide-slate-200 dark:divide-slate-700 bg-white dark:bg-slate-950">
           {articles.map((article, index) => (
             <tr 
               key={article.id} 
