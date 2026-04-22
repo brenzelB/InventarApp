@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { ArticleTable } from "@/modules/articles/components/ArticleTable";
 import { ArticleSearchFilters } from "@/modules/articles/components/ArticleSearchFilters";
@@ -15,6 +15,8 @@ export default function ArticlesPage() {
   const { role } = useAuth();
   
   // Filtering & Sorting State
+  const [searchQuery, setSearchQuery] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
   const [sortBy, setSortBy] = useState("newest");
   const [visibleColumns, setVisibleColumns] = useState<string[]>(['description', 'sku', 'lagerort', 'bestand', 'purchase_price', 'verkaufspreis']);
 
