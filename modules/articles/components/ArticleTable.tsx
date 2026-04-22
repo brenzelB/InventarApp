@@ -13,9 +13,10 @@ import { Edit3, Trash2, Plus, Minus, Loader2 } from 'lucide-react';
 interface ArticleTableProps {
   articles: Article[];
   onDelete: () => void;
+  visibleColumns: string[];
 }
 
-export function ArticleTable({ articles, onDelete }: ArticleTableProps) {
+export function ArticleTable({ articles, onDelete, visibleColumns }: ArticleTableProps) {
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [updatingId, setUpdatingId] = useState<string | null>(null);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -98,14 +99,37 @@ export function ArticleTable({ articles, onDelete }: ArticleTableProps) {
       <table className="min-w-full divide-y divide-slate-200 dark:divide-slate-700 table-auto">
         <thead className="bg-slate-50 dark:bg-slate-900">
           <tr>
-            <th scope="col" className="py-4 pl-4 pr-3 text-left text-[11px] font-black text-slate-900 dark:text-slate-400 uppercase tracking-widest sm:pl-6 w-16">QR</th>
+            {visibleColumns.includes('qr_code') && (
+              <th scope="col" className="py-4 pl-4 pr-3 text-left text-[11px] font-black text-slate-900 dark:text-slate-400 uppercase tracking-widest sm:pl-6 w-16">QR</th>
+            )}
             <th scope="col" className="px-3 py-4 text-left text-[11px] font-black text-slate-900 dark:text-slate-400 uppercase tracking-widest">Name</th>
-            <th scope="col" className="px-3 py-4 text-left text-[11px] font-black text-slate-900 dark:text-slate-400 uppercase tracking-widest">Beschreibung</th>
-            <th scope="col" className="px-3 py-4 text-left text-[11px] font-black text-slate-900 dark:text-slate-400 uppercase tracking-widest">SKU</th>
-            <th scope="col" className="px-3 py-4 text-left text-[11px] font-black text-slate-900 dark:text-slate-400 uppercase tracking-widest">Lagerort</th>
-            <th scope="col" className="px-3 py-4 text-right text-[11px] font-black text-slate-900 dark:text-slate-400 uppercase tracking-widest">Bestand</th>
-            <th scope="col" className="px-3 py-4 text-right text-[11px] font-black text-slate-900 dark:text-slate-400 uppercase tracking-widest">EK-Preis</th>
-            <th scope="col" className="px-3 py-4 text-right text-[11px] font-black text-slate-900 dark:text-slate-400 uppercase tracking-widest">VK-Preis</th>
+            {visibleColumns.includes('description') && (
+              <th scope="col" className="px-3 py-4 text-left text-[11px] font-black text-slate-900 dark:text-slate-400 uppercase tracking-widest">Beschreibung</th>
+            )}
+            {visibleColumns.includes('sku') && (
+              <th scope="col" className="px-3 py-4 text-left text-[11px] font-black text-slate-900 dark:text-slate-400 uppercase tracking-widest">SKU</th>
+            )}
+            {visibleColumns.includes('lagerort') && (
+              <th scope="col" className="px-3 py-4 text-left text-[11px] font-black text-slate-900 dark:text-slate-400 uppercase tracking-widest">Lagerort</th>
+            )}
+            {visibleColumns.includes('bestand') && (
+              <th scope="col" className="px-3 py-4 text-right text-[11px] font-black text-slate-900 dark:text-slate-400 uppercase tracking-widest">Bestand</th>
+            )}
+            {visibleColumns.includes('purchase_price') && (
+              <th scope="col" className="px-3 py-4 text-right text-[11px] font-black text-slate-900 dark:text-slate-400 uppercase tracking-widest">EK-Preis</th>
+            )}
+            {visibleColumns.includes('verkaufspreis') && (
+              <th scope="col" className="px-3 py-4 text-right text-[11px] font-black text-slate-900 dark:text-slate-400 uppercase tracking-widest">VK-Preis</th>
+            )}
+            {visibleColumns.includes('herstellpreis') && (
+              <th scope="col" className="px-3 py-4 text-right text-[11px] font-black text-slate-900 dark:text-slate-400 uppercase tracking-widest">Herstellpreis</th>
+            )}
+            {visibleColumns.includes('tax_rate') && (
+              <th scope="col" className="px-3 py-4 text-right text-[11px] font-black text-slate-900 dark:text-slate-400 uppercase tracking-widest">Steuer</th>
+            )}
+            {visibleColumns.includes('mindestbestand') && (
+              <th scope="col" className="px-3 py-4 text-right text-[11px] font-black text-slate-900 dark:text-slate-400 uppercase tracking-widest">Min-Bestand</th>
+            )}
             <th scope="col" className="px-3 py-4 text-left text-[11px] font-black text-slate-900 dark:text-slate-400 uppercase tracking-widest w-px whitespace-nowrap">Aktionen</th>
           </tr>
         </thead>
@@ -119,9 +143,11 @@ export function ArticleTable({ articles, onDelete }: ArticleTableProps) {
               `}
               style={{ animationDelay: `${index * 50}ms` }}
             >
-              <td className="whitespace-nowrap py-4 pl-4 pr-3 sm:pl-6 w-16">
-                <QRCodeView svgString={article.qr_code} name={article.name} articleId={article.id} size="sm" />
-              </td>
+              {visibleColumns.includes('qr_code') && (
+                <td className="whitespace-nowrap py-4 pl-4 pr-3 sm:pl-6 w-16">
+                  <QRCodeView svgString={article.qr_code} name={article.name} articleId={article.id} size="sm" />
+                </td>
+              )}
               <td className="px-3 py-4 text-sm font-bold">
                 <Link href={`/dashboard/articles/${article.id}`} className="text-slate-900 dark:text-slate-100 hover:text-accent transition-colors block truncate max-w-xs md:max-w-md">
                   {article.name}
@@ -132,76 +158,103 @@ export function ArticleTable({ articles, onDelete }: ArticleTableProps) {
                   </span>
                 )}
               </td>
-              <td className="px-3 py-4 text-sm text-slate-600 dark:text-slate-400 font-medium max-w-xs truncate" title={article.description || ''}>
-                {article.description || "—"}
-              </td>
-              <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-600 dark:text-slate-400 font-bold font-mono">{article.sku}</td>
-              <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-600 dark:text-slate-400 font-medium">{article.lagerort || "—"}</td>
-              <td className="whitespace-nowrap px-3 py-4 text-sm text-right">
-                <div className="flex items-center justify-end gap-2 group/stock">
-                  {role !== 'viewer' && (
-                    <div className="flex items-center bg-slate-100 dark:bg-slate-800 rounded-2xl p-0.5 opacity-0 group-hover/stock:opacity-100 transition-opacity">
-                      <button 
-                        onClick={() => handleQuickAdjust(article, -1)}
-                        className="p-1 hover:text-red-600 dark:hover:text-red-400 transition-colors"
-                        disabled={updatingId === article.id}
-                      >
-                        <Minus size={14} />
-                      </button>
-                      <button 
-                        onClick={() => handleQuickAdjust(article, 1)}
-                        className="p-1 hover:text-green-600 dark:hover:text-green-400 transition-colors"
-                        disabled={updatingId === article.id}
-                      >
-                        <Plus size={14} />
-                      </button>
-                    </div>
-                  )}
+              {visibleColumns.includes('description') && (
+                <td className="px-3 py-4 text-sm text-slate-600 dark:text-slate-400 font-medium max-w-xs truncate" title={article.description || ''}>
+                  {article.description || "—"}
+                </td>
+              )}
+              {visibleColumns.includes('sku') && (
+                <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-600 dark:text-slate-400 font-bold font-mono">{article.sku}</td>
+              )}
+              {visibleColumns.includes('lagerort') && (
+                <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-600 dark:text-slate-400 font-medium">{article.lagerort || "—"}</td>
+              )}
+              {visibleColumns.includes('bestand') && (
+                <td className="whitespace-nowrap px-3 py-4 text-sm text-right">
+                  <div className="flex items-center justify-end gap-2 group/stock">
+                    {role !== 'viewer' && (
+                      <div className="flex items-center bg-slate-100 dark:bg-slate-800 rounded-2xl p-0.5 opacity-0 group-hover/stock:opacity-100 transition-opacity">
+                        <button 
+                          onClick={() => handleQuickAdjust(article, -1)}
+                          className="p-1 hover:text-red-600 dark:hover:text-red-400 transition-colors"
+                          disabled={updatingId === article.id}
+                        >
+                          <Minus size={14} />
+                        </button>
+                        <button 
+                          onClick={() => handleQuickAdjust(article, 1)}
+                          className="p-1 hover:text-green-600 dark:hover:text-green-400 transition-colors"
+                          disabled={updatingId === article.id}
+                        >
+                          <Plus size={14} />
+                        </button>
+                      </div>
+                    )}
 
-                  <span className={`
-                    inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-black ring-1 ring-inset transition-all
-                    ${updatingId === article.id ? 'opacity-50 blur-[1px]' : ''}
-                    ${article.bestand === 0
-                      ? 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 ring-slate-900/10 dark:ring-slate-100/10'
-                      : article.bestand <= article.mindestbestand 
-                      ? 'bg-rose-100 dark:bg-rose-900/30 text-rose-900 dark:text-rose-400 ring-rose-900/20' 
-                      : 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-900 dark:text-emerald-400 ring-emerald-900/20'}
-                  `}>
-                    {updatingId === article.id ? (
-                      <Loader2 className="w-3 h-3 animate-spin mr-1" />
-                    ) : null}
-                    {article.bestand} {article.unit || 'Stück'}
-                  </span>
-                </div>
-              </td>
-              <td className="whitespace-nowrap px-3 py-4 text-sm text-right tabular-nums">
-                {editingId === article.id ? (
-                  <input
-                    autoFocus
-                    type="number"
-                    step="0.01"
-                    className="w-20 rounded border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 text-right py-1 px-2 text-xs focus:ring-accent font-bold"
-                    value={editValue}
-                    onChange={(e) => setEditValue(e.target.value)}
-                    onBlur={() => handlePriceSave(article.id)}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter') handlePriceSave(article.id);
-                      if (e.key === 'Escape') setEditingId(null);
-                    }}
-                  />
-                ) : (
-                  <button 
-                    onClick={() => startEditing(article)}
-                    disabled={updatingId === article.id}
-                    className="text-slate-900 dark:text-slate-100 hover:text-accent font-bold transition-colors"
-                  >
-                    {Number(article.purchase_price || 0).toFixed(2)} €
-                  </button>
-                )}
-              </td>
-              <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-500 dark:text-slate-400 text-right tabular-nums font-medium">
-                {Number(article.verkaufspreis).toFixed(2)} €
-              </td>
+                    <span className={`
+                      inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-black ring-1 ring-inset transition-all
+                      ${updatingId === article.id ? 'opacity-50 blur-[1px]' : ''}
+                      ${article.bestand === 0
+                        ? 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 ring-slate-900/10 dark:ring-slate-100/10'
+                        : article.bestand <= article.mindestbestand 
+                        ? 'bg-rose-100 dark:bg-rose-900/30 text-rose-900 dark:text-rose-400 ring-rose-900/20' 
+                        : 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-900 dark:text-emerald-400 ring-emerald-900/20'}
+                    `}>
+                      {updatingId === article.id ? (
+                        <Loader2 className="w-3 h-3 animate-spin mr-1" />
+                      ) : null}
+                      {article.bestand} {article.unit || 'Stück'}
+                    </span>
+                  </div>
+                </td>
+              )}
+              {visibleColumns.includes('purchase_price') && (
+                <td className="whitespace-nowrap px-3 py-4 text-sm text-right tabular-nums">
+                  {editingId === article.id ? (
+                    <input
+                      autoFocus
+                      type="number"
+                      step="0.01"
+                      className="w-20 rounded border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 text-right py-1 px-2 text-xs focus:ring-accent font-bold"
+                      value={editValue}
+                      onChange={(e) => setEditValue(e.target.value)}
+                      onBlur={() => handlePriceSave(article.id)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') handlePriceSave(article.id);
+                        if (e.key === 'Escape') setEditingId(null);
+                      }}
+                    />
+                  ) : (
+                    <button 
+                      onClick={() => startEditing(article)}
+                      disabled={updatingId === article.id}
+                      className="text-slate-900 dark:text-slate-100 hover:text-accent font-bold transition-colors"
+                    >
+                      {Number(article.purchase_price || 0).toFixed(2)} €
+                    </button>
+                  )}
+                </td>
+              )}
+              {visibleColumns.includes('verkaufspreis') && (
+                <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-500 dark:text-slate-400 text-right tabular-nums font-medium">
+                  {Number(article.verkaufspreis).toFixed(2)} €
+                </td>
+              )}
+              {visibleColumns.includes('herstellpreis') && (
+                <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-500 dark:text-slate-400 text-right tabular-nums font-medium">
+                  {Number(article.herstellpreis).toFixed(2)} €
+                </td>
+              )}
+              {visibleColumns.includes('tax_rate') && (
+                <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-500 dark:text-slate-400 text-right tabular-nums font-medium">
+                  {article.tax_rate} %
+                </td>
+              )}
+              {visibleColumns.includes('mindestbestand') && (
+                <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-500 dark:text-slate-400 text-right tabular-nums font-medium">
+                  {article.mindestbestand}
+                </td>
+              )}
               <td className="whitespace-nowrap px-3 py-4 text-sm font-medium w-px">
                 <div className="flex items-center justify-end gap-2">
                   {(role === 'admin' || role === 'editor') && (
