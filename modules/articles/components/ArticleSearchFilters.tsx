@@ -4,6 +4,13 @@ import React from 'react';
 import { Search, Filter, ArrowUpDown, Columns, Check } from 'lucide-react';
 import { Article } from '../types';
 
+interface ColumnSetting {
+  key: string;
+  label: string;
+  width: number;
+  visible: boolean;
+}
+
 interface ArticleSearchFiltersProps {
   searchQuery: string;
   setSearchQuery: (val: string) => void;
@@ -12,23 +19,9 @@ interface ArticleSearchFiltersProps {
   sortBy: string;
   setSortBy: (val: string) => void;
   articles: Article[];
-  columnSettings: any[];
-  setColumnSettings: (settings: any[]) => void;
+  columnSettings: ColumnSetting[];
+  setColumnSettings: (settings: ColumnSetting[]) => void;
 }
-
-const COLUMN_LABELS: Record<string, string> = {
-  qr_code: "QR",
-  description: "Beschreibung",
-  sku: "SKU",
-  lagerort: "Lagerort",
-  bestand: "Bestand",
-  purchase_price: "EK-Preis",
-  verkaufspreis: "VK-Preis",
-  herstellpreis: "Herstellpreis",
-  tax_rate: "Steuer",
-  unit: "Einheit",
-  mindestbestand: "Min-Bestand",
-};
 
 export function ArticleSearchFilters({
   searchQuery,
@@ -39,6 +32,8 @@ export function ArticleSearchFilters({
   setSortBy,
   articles,
   columnSettings,
+  setSortBy: _setSortBy, // not used here but part of props
+  columnSettings: _columnSettings, // not used here but part of props
   setColumnSettings
 }: ArticleSearchFiltersProps) {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -122,34 +117,34 @@ export function ArticleSearchFilters({
                 onClick={() => setIsMenuOpen(false)} 
               />
               <div className="absolute right-0 mt-2 w-64 rounded-2xl bg-white dark:bg-slate-900 shadow-2xl ring-1 ring-slate-200 dark:ring-slate-800 z-50 p-4 animate-in fade-in zoom-in duration-200 origin-top-right">
-            <h4 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-4 px-2">Sichtbare Spalten</h4>
-            <div className="space-y-1 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
-              {columnSettings.map((col) => (
-                <label 
-                  key={col.key} 
-                  className={`
-                    flex items-center gap-3 px-3 py-2 rounded-xl cursor-pointer transition-all
-                    ${col.visible ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400' : 'hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400'}
-                  `}
-                >
-                  <input
-                    type="checkbox"
-                    className="w-4 h-4 rounded border-slate-300 dark:border-slate-700 text-blue-600 focus:ring-blue-500 bg-white dark:bg-slate-800"
-                    checked={col.visible}
-                    onChange={() => {
-                      if (col.key === 'name' || col.key === 'actions') return; // Locked
-                      const newSettings = columnSettings.map(c => 
-                        c.key === col.key ? { ...c, visible: !c.visible } : c
-                      );
-                      setColumnSettings(newSettings);
-                    }}
-                    disabled={col.key === 'name' || col.key === 'actions'}
-                  />
-                  <span className="text-sm font-bold">{col.label}</span>
-                </label>
-              ))}
-            </div>
-          </div>
+                <h4 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-4 px-2">Sichtbare Spalten</h4>
+                <div className="space-y-1 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
+                  {columnSettings.map((col: ColumnSetting) => (
+                    <label 
+                      key={col.key} 
+                      className={`
+                        flex items-center gap-3 px-3 py-2 rounded-xl cursor-pointer transition-all
+                        ${col.visible ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400' : 'hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400'}
+                      `}
+                    >
+                      <input
+                        type="checkbox"
+                        className="w-4 h-4 rounded border-slate-300 dark:border-slate-700 text-blue-600 focus:ring-blue-500 bg-white dark:bg-slate-800"
+                        checked={col.visible}
+                        onChange={() => {
+                          if (col.key === 'name' || col.key === 'actions') return; // Locked
+                          const newSettings = columnSettings.map((c: ColumnSetting) => 
+                            c.key === col.key ? { ...c, visible: !c.visible } : c
+                          );
+                          setColumnSettings(newSettings);
+                        }}
+                        disabled={col.key === 'name' || col.key === 'actions'}
+                      />
+                      <span className="text-sm font-bold">{col.label}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
             </>
           )}
         </div>

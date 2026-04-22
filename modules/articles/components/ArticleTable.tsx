@@ -36,11 +36,18 @@ import {
 import { CSS } from '@dnd-kit/utilities';
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
 
+interface ColumnSetting {
+  key: string;
+  label: string;
+  width: number;
+  visible: boolean;
+}
+
 interface ArticleTableProps {
   articles: Article[];
   onDelete: () => void;
-  columnSettings: any[];
-  setColumnSettings: (settings: any[]) => void;
+  columnSettings: ColumnSetting[];
+  setColumnSettings: (settings: ColumnSetting[]) => void;
 }
 
 export function ArticleTable({ articles, onDelete, columnSettings, setColumnSettings }: ArticleTableProps) {
@@ -84,15 +91,15 @@ export function ArticleTable({ articles, onDelete, columnSettings, setColumnSett
         return newList;
       });
     } else if (activeType === 'column' && active.id !== over.id) {
-      const oldIndex = columnSettings.findIndex((c) => c.key === active.id);
-      const newIndex = columnSettings.findIndex((c) => c.key === over.id);
+      const oldIndex = columnSettings.findIndex((c: ColumnSetting) => c.key === active.id);
+      const newIndex = columnSettings.findIndex((c: ColumnSetting) => c.key === over.id);
       const newSettings = arrayMove(columnSettings, oldIndex, newIndex);
       setColumnSettings(newSettings);
     }
   };
 
   const handleResize = (key: string, newWidth: number) => {
-    const newSettings = columnSettings.map(c => 
+    const newSettings = columnSettings.map((c: ColumnSetting) => 
       c.key === key ? { ...c, width: newWidth } : c
     );
     setColumnSettings(newSettings);
@@ -240,7 +247,22 @@ function SortableRow({
   handlePriceSave, 
   setEditingId, 
   handleDelete 
-}: any) {
+}: {
+  article: Article;
+  index: number;
+  columnSettings: ColumnSetting[];
+  role: string | null;
+  updatingId: string | null;
+  deletingId: string | null;
+  editingId: string | null;
+  editValue: string;
+  setEditValue: (val: string) => void;
+  handleQuickAdjust: (article: Article, delta: number) => void;
+  startEditing: (article: Article) => void;
+  handlePriceSave: (id: string) => void;
+  setEditingId: (id: string | null) => void;
+  handleDelete: (id: string) => void;
+}) {
   const {
     attributes,
     listeners,
@@ -261,7 +283,7 @@ function SortableRow({
   };
 
   const renderCell = (colKey: string) => {
-    const col = columnSettings.find(c => c.key === colKey);
+    const col = columnSettings.find((c: ColumnSetting) => c.key === colKey);
     const cellStyle = { width: col?.width, minWidth: col?.width };
 
     switch (colKey) {
@@ -395,7 +417,13 @@ function SortableRow({
   );
 }
 
-function ResizableHeader({ column, onResize }: { column: any; onResize: (key: string, width: number) => void }) {
+function ResizableHeader({ 
+  column, 
+  onResize 
+}: { 
+  column: ColumnSetting; 
+  onResize: (key: string, width: number) => void 
+}) {
   const {
     attributes,
     listeners,

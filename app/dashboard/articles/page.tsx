@@ -10,19 +10,26 @@ import { QrCode, RefreshCcw, CheckCircle2, Loader2, Plus } from "lucide-react";
 import { ArticleActionButtons } from "@/modules/articles/components/ArticleActionButtons";
 import { useAuth } from "@/hooks/useAuth";
 
+interface ColumnSetting {
+  key: string;
+  label: string;
+  width: number;
+  visible: boolean;
+}
+
 export default function ArticlesPage() {
   const { articles, loading, error, refetch } = useArticles();
   const { role } = useAuth();
   
   // Column & Sorting State
-  const [columnSettings, setColumnSettings] = useState<any[]>([]);
+  const [columnSettings, setColumnSettings] = useState<ColumnSetting[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [sortBy, setSortBy] = useState("newest");
 
   // Load settings on mount
   useEffect(() => {
-    const defaultSettings = [
+    const defaultSettings: ColumnSetting[] = [
       { key: 'qr_code', label: 'QR', width: 80, visible: true },
       { key: 'name', label: 'Name', width: 250, visible: true },
       { key: 'description', label: 'Beschreibung', width: 200, visible: true },
@@ -49,7 +56,7 @@ export default function ArticlesPage() {
     }
   }, []);
 
-  const handleUpdateColumns = (newSettings: any[]) => {
+  const handleUpdateColumns = (newSettings: ColumnSetting[]) => {
     setColumnSettings(newSettings);
     localStorage.setItem('article_column_settings', JSON.stringify(newSettings));
   };
