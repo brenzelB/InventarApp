@@ -85,6 +85,7 @@ export const articleService = {
       console.error("[ArticleService] Failed to log activity:", error);
       return null;
     }
+    console.log("[ArticleService] New Activity logged:", { type, message, articleId, details });
     this.notify();
     return data;
   },

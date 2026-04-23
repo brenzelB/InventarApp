@@ -33,7 +33,15 @@ export function ActivityLogWidget() {
 
   useEffect(() => {
     load();
+    // Local subscription for Mock Mode and instant updates
+    const unsubscribe = articleService.subscribe(() => {
+      console.log("[ActivityLogWidget] Refreshing due to service notification");
+      load();
+    });
+    return () => unsubscribe();
   }, [load]);
+
+  console.log("[ActivityLogWidget] Current Logs:", logs);
 
   // Realtime Subscription
   useSupabaseRealtime('activity_logs', (payload) => {
@@ -55,42 +63,58 @@ export function ActivityLogWidget() {
     return `${date.toLocaleDateString('de-DE')}, ${timeStr}`;
   };
 
-  const getLogConfig = (type: string, message: string) => {
-    switch (type) {
-      case 'create':
-        return {
-          icon: <PlusCircle className="w-3.5 h-3.5" />,
-          colorClass: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400',
-          dotClass: 'bg-emerald-500'
-        };
-      case 'delete':
-        return {
-          icon: <Trash2 className="w-3.5 h-3.5" />,
-          colorClass: 'bg-rose-500/10 text-rose-600 dark:text-rose-400',
-          dotClass: 'bg-rose-500'
-        };
-      case 'import':
-        return {
-          icon: <UploadCloud className="w-3.5 h-3.5" />,
-          colorClass: 'bg-blue-500/10 text-blue-600 dark:text-blue-400',
-          dotClass: 'bg-blue-500'
-        };
-      case 'stock_adjustment':
-        const isUp = message.includes('->') && (() => {
-          const parts = message.split('->');
-          return parseFloat(parts[1]) > parseFloat(parts[0].split(':').pop() || '0');
-        })();
-        return {
-          icon: isUp ? <ArrowUpRight className="w-3.5 h-3.5" /> : <ArrowDownRight className="w-3.5 h-3.5" />,
-          colorClass: isUp ? 'bg-emerald-500/10 text-emerald-600' : 'bg-blue-500/10 text-blue-600',
-          dotClass: isUp ? 'bg-emerald-500' : 'bg-blue-500'
-        };
-      default:
-        return {
-          icon: <Activity className="w-3.5 h-3.5" />,
-          colorClass: 'bg-slate-500/10 text-slate-600 dark:text-slate-400',
-          dotClass: 'bg-slate-500'
-        };
+  const getLogConfig = (type: string, message: string = "") => {
+    try {
+      switch (type) {
+        case 'create':
+          return {
+            icon: <PlusCircle className="w-3.5 h-3.5" />,
+            colorClass: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400',
+            dotClass: 'bg-emerald-500'
+          };
+        case 'delete':
+          return {
+            icon: <Trash2 className="w-3.5 h-3.5" />,
+            colorClass: 'bg-rose-500/10 text-rose-600 dark:text-rose-400',
+            dotClass: 'bg-rose-500'
+          };
+        case 'import':
+          return {
+            icon: <UploadCloud className="w-3.5 h-3.5" />,
+            colorClass: 'bg-blue-500/10 text-blue-600 dark:text-blue-400',
+            dotClass: 'bg-blue-500'
+          };
+        case 'stock_adjustment':
+          const isUp = message.includes('->') && (() => {
+            try {
+              const parts = message.split('->');
+              if (parts.length < 2) return false;
+              const newVal = parseFloat(parts[1].trim());
+              const oldVal = parseFloat(parts[0].split(':').pop()?.trim() || '0');
+              return newVal > oldVal;
+            } catch (e) {
+              return false;
+            }
+          })();
+          return {
+            icon: isUp ? <ArrowUpRight className="w-3.5 h-3.5" /> : <ArrowDownRight className="w-3.5 h-3.5" />,
+            colorClass: isUp ? 'bg-emerald-500/10 text-emerald-600' : 'bg-blue-500/10 text-blue-600',
+            dotClass: isUp ? 'bg-emerald-500' : 'bg-blue-500'
+          };
+        default:
+          return {
+            icon: <Activity className="w-3.5 h-3.5" />,
+            colorClass: 'bg-slate-500/10 text-slate-600 dark:text-slate-400',
+            dotClass: 'bg-slate-500'
+          };
+      }
+    } catch (err) {
+      console.error("Error in getLogConfig:", err);
+      return {
+        icon: <Activity className="w-3.5 h-3.5" />,
+        colorClass: 'bg-slate-500/10 text-slate-600 dark:text-slate-400',
+        dotClass: 'bg-slate-500'
+      };
     }
   };
 
