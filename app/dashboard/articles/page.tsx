@@ -241,6 +241,7 @@ export default function ArticlesPage() {
           <ArticleTable 
             articles={filteredArticles} 
             onDelete={handleOnDelete} 
+            onRefresh={refetch}
             columnSettings={columnSettings}
             setColumnSettings={handleUpdateColumns}
             onRowReorder={handleRowReorder}

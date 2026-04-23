@@ -47,6 +47,7 @@ interface ColumnSetting {
 interface ArticleTableProps {
   articles: Article[];
   onDelete: (id: string) => void;
+  onRefresh: () => void;
   columnSettings: ColumnSetting[];
   setColumnSettings: (settings: ColumnSetting[]) => void;
   onRowReorder?: (newOrder: string[]) => void;
@@ -55,6 +56,7 @@ interface ArticleTableProps {
 export function ArticleTable({ 
   articles, 
   onDelete, 
+  onRefresh,
   columnSettings, 
   setColumnSettings,
   onRowReorder 
@@ -147,7 +149,7 @@ export function ArticleTable({
     try {
       await articleService.updateArticle(article.id, { bestand: newBestand });
       toastSuccess(`${article.name}: Bestand auf ${newBestand} ${article.unit} aktualisiert.`);
-      onDelete(); // Refresh list
+      onRefresh(); // Refresh list correctly
     } catch (err: any) {
       toastError("Fehler beim Aktualisieren: " + err.message);
     } finally {
@@ -170,8 +172,7 @@ export function ArticleTable({
     try {
       await articleService.updateArticle(id, { purchase_price: newValue });
       toastSuccess("Einkaufspreis aktualisiert.");
-      // No need for onDelete() here if useArticles is reactive, but keeping it for safety
-      onDelete(); 
+      onRefresh(); 
     } catch (err: any) {
       toastError("Fehler: " + err.message);
     } finally {
