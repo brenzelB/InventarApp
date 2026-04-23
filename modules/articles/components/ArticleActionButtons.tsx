@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { importExportService } from "../services/importExportService";
-import { ImportModal } from "./ImportModal";
+import { importExportService, ColumnSetting } from "../services/importExportService";
+import { ImportPreviewModal } from "./ImportPreviewModal";
 import { Article } from "../types";
 import { 
   Download, 
@@ -16,9 +16,10 @@ import {
 interface ArticleActionButtonsProps {
   articles: Article[];
   onRefresh: () => void;
+  columnSettings?: ColumnSetting[];
 }
 
-export function ArticleActionButtons({ articles, onRefresh }: ArticleActionButtonsProps) {
+export function ArticleActionButtons({ articles, onRefresh, columnSettings }: ArticleActionButtonsProps) {
   const [showImport, setShowImport] = useState(false);
   const [showExportMenu, setShowExportMenu] = useState(false);
 
@@ -26,7 +27,7 @@ export function ArticleActionButtons({ articles, onRefresh }: ArticleActionButto
     if (format === 'pdf') {
       importExportService.exportToPDF(articles);
     } else {
-      importExportService.exportArticles(articles, format);
+      importExportService.exportArticles(articles, format, columnSettings);
     }
     setShowExportMenu(false);
   };
@@ -35,7 +36,7 @@ export function ArticleActionButtons({ articles, onRefresh }: ArticleActionButto
     <div className="flex flex-wrap items-center gap-2">
       {/* Template Download */}
       <button 
-        onClick={() => importExportService.downloadTemplate()}
+        onClick={() => importExportService.downloadTemplate(columnSettings)}
         className="flex items-center gap-2 px-4 py-2 rounded-3xl text-sm font-bold text-slate-600 dark:text-slate-400 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all shadow-sm dark:shadow-none"
         title="Import-Vorlage herunterladen"
       >
@@ -72,22 +73,22 @@ export function ArticleActionButtons({ articles, onRefresh }: ArticleActionButto
             <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-slate-900 rounded-2xl shadow-2xl dark:shadow-none border border-slate-100 dark:border-slate-800 py-2 z-20 animate-in fade-in slide-in-from-top-2">
               <button 
                 onClick={() => handleExport('xlsx')}
-                className="flex items-center gap-3 w-full px-4 py-3 text-sm font-bold text-slate-700 hover:bg-slate-50 transition-colors text-left"
+                className="flex items-center gap-3 w-full px-4 py-3 text-sm font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-left"
               >
                 <FileSpreadsheet className="w-4 h-4 text-green-600" />
                 Excel (.xlsx)
               </button>
               <button 
                 onClick={() => handleExport('csv')}
-                className="flex items-center gap-3 w-full px-4 py-3 text-sm font-bold text-slate-700 hover:bg-slate-50 transition-colors text-left"
+                className="flex items-center gap-3 w-full px-4 py-3 text-sm font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-left"
               >
                 <Download className="w-4 h-4 text-accent" />
                 CSV (.csv)
               </button>
-              <div className="h-px bg-slate-100 my-1 mx-2" />
+              <div className="h-px bg-slate-100 dark:bg-slate-800 my-1 mx-2" />
               <button 
                 onClick={() => handleExport('pdf')}
-                className="flex items-center gap-3 w-full px-4 py-3 text-sm font-bold text-slate-700 hover:bg-slate-50 transition-colors text-left"
+                className="flex items-center gap-3 w-full px-4 py-3 text-sm font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-left"
               >
                 <FileText className="w-4 h-4 text-red-500" />
                 PDF Report
@@ -98,11 +99,10 @@ export function ArticleActionButtons({ articles, onRefresh }: ArticleActionButto
       </div>
 
       {showImport && (
-        <ImportModal 
+        <ImportPreviewModal 
           onClose={() => setShowImport(false)} 
           onSuccess={() => {
             onRefresh();
-            // Modal stays open to show result, then user closes it
           }} 
         />
       )}

@@ -193,7 +193,7 @@ export default function ArticlesPage() {
           </div>
         </div>
         <div className="mt-4 flex flex-wrap items-center gap-8 md:ml-4 md:mt-0">
-          <ArticleActionButtons articles={filteredArticles} onRefresh={refetch} />
+          <ArticleActionButtons articles={filteredArticles} onRefresh={refetch} columnSettings={columnSettings} />
           
           <div className="h-8 w-px bg-slate-200 hidden sm:block mx-2" />
 
