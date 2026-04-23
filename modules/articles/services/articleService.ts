@@ -60,6 +60,48 @@ export const articleService = {
     listeners.forEach(l => l());
   },
 
+  async logActivity(type: import("../types").ActivityType, message: string, articleId?: string, details?: any) {
+    if (isMockMode) {
+      const logs = JSON.parse(localStorage.getItem("mock_activity_logs") || "[]");
+      const newLog = {
+        id: generateId(),
+        type,
+        message,
+        article_id: articleId || null,
+        details: details || {},
+        created_at: new Date().toISOString()
+      };
+      logs.unshift(newLog);
+      localStorage.setItem("mock_activity_logs", JSON.stringify(logs.slice(0, 100)));
+      this.notify();
+      return newLog;
+    }
+    const { data, error } = await supabase
+      .from("activity_logs")
+      .insert([{ type, message, article_id: articleId, details }])
+      .select()
+      .single();
+    if (error) {
+      console.error("[ArticleService] Failed to log activity:", error);
+      return null;
+    }
+    this.notify();
+    return data;
+  },
+
+  async getActivityLogs(limit: number = 20): Promise<import("../types").ActivityLog[]> {
+    if (isMockMode) {
+      return JSON.parse(localStorage.getItem("mock_activity_logs") || "[]").slice(0, limit);
+    }
+    const { data, error } = await supabase
+      .from("activity_logs")
+      .select("*")
+      .order("created_at", { ascending: false })
+      .limit(limit);
+    if (error) throw error;
+    return data || [];
+  },
+
   async getArticles() {
     if (isMockMode) {
       return getMockArticles();
@@ -139,9 +181,11 @@ export const articleService = {
         .eq("id", createdArticle.id)
         .single();
       const finalArticle = (updated ?? createdArticle) as Article;
+      await this.logActivity('create', `Artikel "${finalArticle.name}" wurde neu angelegt`, finalArticle.id);
       this.notify();
       return finalArticle;
     } catch {
+      await this.logActivity('create', `Artikel "${createdArticle.name}" wurde neu angelegt`, createdArticle.id);
       this.notify();
       return createdArticle;
     }
@@ -193,8 +237,17 @@ export const articleService = {
       this.notify();
       return;
     }
+    // Artikelname für Log abrufen, bevor er gelöscht wird
+    let articleName = "Unbekannter Artikel";
+    try {
+      const art = await this.getArticleById(id);
+      articleName = art.name;
+    } catch {}
+
     const { error } = await supabase.from("articles").delete().eq("id", id);
     if (error) throw error;
+    
+    await this.logActivity('delete', `Artikel "${articleName}" wurde gelöscht`);
     this.notify();
   },
 
@@ -339,6 +392,15 @@ export const articleService = {
       .single();
       
     if (error) throw error;
+
+    // Log as activity as well
+    try {
+      const art = await this.getArticleById(articleId);
+      await this.logActivity('stock_adjustment', `Bestand von "${art.name}" angepasst: ${old_stock} -> ${new_stock}`, articleId, { old_stock, new_stock, type, amount });
+    } catch {
+      await this.logActivity('stock_adjustment', `Bestand von Artikel ${articleId} angepasst: ${old_stock} -> ${new_stock}`, articleId, { old_stock, new_stock, type, amount });
+    }
+
     return data;
   },
 

@@ -51,6 +51,18 @@ export interface ArticleHistoryEntry {
   created_at: string;
 }
 
+export type ActivityType = 'create' | 'delete' | 'import' | 'update' | 'stock_adjustment';
+
+export interface ActivityLog {
+  id: string;
+  user_id?: string;
+  type: ActivityType;
+  message: string;
+  article_id?: string | null;
+  details?: any;
+  created_at: string;
+}
+
 export interface ArticleComment {
   id: string;
   article_id: string;

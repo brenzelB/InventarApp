@@ -313,6 +313,11 @@ export const importExportService = {
           // realtime to propagate N individual INSERT events.
           articleService.notify();
 
+          // Log import activity
+          if (importedCount > 0) {
+            await articleService.logActivity('import', `${importedCount} Artikel wurden erfolgreich importiert`, null, { count: importedCount });
+          }
+
           resolve({
             success: importedCount,
             groupsCreated: groupsCreatedCount,
