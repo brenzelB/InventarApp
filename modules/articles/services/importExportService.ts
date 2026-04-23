@@ -315,7 +315,7 @@ export const importExportService = {
 
           // Log import activity
           if (importedCount > 0) {
-            await articleService.logActivity('import', `${importedCount} Artikel wurden erfolgreich importiert`, null, { count: importedCount });
+            await articleService.logActivity('import', `${importedCount} Artikel wurden erfolgreich importiert`, undefined, { count: importedCount });
           }
 
           resolve({
