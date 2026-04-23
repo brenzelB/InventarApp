@@ -60,7 +60,7 @@ export const articleService = {
     listeners.forEach(l => l());
   },
 
-  async logActivity(type: import("../types").ActivityType, message: string, articleId?: string, details?: any) {
+  async logActivity(type: import("../types").ActivityType, message: string, articleId?: string, payload?: any) {
     if (isMockMode) {
       const logs = JSON.parse(localStorage.getItem("mock_activity_logs") || "[]");
       const newLog = {
@@ -68,7 +68,7 @@ export const articleService = {
         type,
         message,
         article_id: articleId || null,
-        details: details || {},
+        payload: payload || {},
         created_at: new Date().toISOString()
       };
       logs.unshift(newLog);
@@ -78,14 +78,14 @@ export const articleService = {
     }
     const { data, error } = await supabase
       .from("activity_logs")
-      .insert([{ type, message, article_id: articleId, details }])
+      .insert([{ type, message, article_id: articleId, payload }])
       .select()
       .single();
     if (error) {
       console.error("[ArticleService] Failed to log activity:", error);
       return null;
     }
-    console.log("[ArticleService] New Activity logged:", { type, message, articleId, details });
+    console.log("[ArticleService] New Activity logged:", { type, message, articleId, payload });
     this.notify();
     return data;
   },

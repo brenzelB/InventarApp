@@ -22,10 +22,12 @@ export function ActivityLogWidget() {
 
   const load = useCallback(async () => {
     try {
-      const data = await articleService.getActivityLogs(15);
+      console.log("[ActivityLogWidget] Fetching logs...");
+      const data = await articleService.getActivityLogs(20);
+      console.log("[ActivityLogWidget] Received data:", data);
       setLogs(data);
     } catch (err: any) {
-      console.error("Failed to load activity logs", err);
+      console.error("[ActivityLogWidget] Failed to load activity logs:", err);
     } finally {
       setLoading(false);
     }
@@ -45,6 +47,7 @@ export function ActivityLogWidget() {
 
   // Realtime Subscription
   useSupabaseRealtime('activity_logs', (payload) => {
+    console.log("[ActivityLogWidget] Realtime event:", payload);
     load(); 
     if (payload.eventType === 'INSERT') {
       setLastNewId(payload.new.id);

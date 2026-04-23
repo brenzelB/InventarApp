@@ -59,7 +59,7 @@ export interface ActivityLog {
   type: ActivityType;
   message: string;
   article_id?: string | null;
-  details?: any;
+  payload?: any;
   created_at: string;
 }
 

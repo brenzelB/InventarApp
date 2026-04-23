@@ -1,4 +1,4 @@
--- Migration: Comprehensive Activity Logging
+-- Migration: Comprehensive Activity Logging (Audited Version)
 -- Execute this in the Supabase SQL Editor
 
 CREATE TABLE IF NOT EXISTS public.activity_logs (
@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS public.activity_logs (
     type VARCHAR(50) NOT NULL, -- 'create', 'delete', 'import', 'update', 'stock_adjustment'
     message TEXT NOT NULL,
     article_id UUID, -- No FK to allow history to persist after article deletion
-    details JSONB DEFAULT '{}'::jsonb,
+    payload JSONB DEFAULT '{}'::jsonb,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -19,7 +19,7 @@ DROP POLICY IF EXISTS "Allow authenticated users to view logs" ON public.activit
 CREATE POLICY "Allow authenticated users to view logs" ON public.activity_logs
     FOR SELECT TO authenticated USING (true);
 
--- Policies: Allow service/system to insert logs
+-- Policies: Allow authenticated users to insert logs
 DROP POLICY IF EXISTS "Allow authenticated users to insert logs" ON public.activity_logs;
 CREATE POLICY "Allow authenticated users to insert logs" ON public.activity_logs
     FOR INSERT TO authenticated WITH CHECK (true);
