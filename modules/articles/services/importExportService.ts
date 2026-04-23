@@ -308,6 +308,11 @@ export const importExportService = {
             }
           }
 
+          // Notify all useArticles subscribers (including dashboard widgets) once
+          // after the full import, so they re-fetch without waiting for Supabase
+          // realtime to propagate N individual INSERT events.
+          articleService.notify();
+
           resolve({
             success: importedCount,
             groupsCreated: groupsCreatedCount,
