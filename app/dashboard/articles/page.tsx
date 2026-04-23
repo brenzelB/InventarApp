@@ -24,7 +24,7 @@ interface GridConfig {
 }
 
 export default function ArticlesPage() {
-  const { articles, loading, error, refetch } = useArticles();
+  const { articles, loading, error, refetch, setArticles } = useArticles();
   const { role, user } = useAuth();
   
   // Column & Sorting State
@@ -116,6 +116,13 @@ export default function ArticlesPage() {
   const handleRowReorder = (newOrder: string[]) => {
     setRowOrder(newOrder);
     localStorage.setItem('article_sort_order', JSON.stringify(newOrder));
+  };
+
+  const handleOnDelete = (id: string) => {
+    // Option A: Optimistic state update
+    setArticles(prev => prev.filter(a => a.id !== id));
+    // Option B: Background refetch to ensure server sync
+    refetch();
   };
 
   const filteredArticles = useMemo(() => {
@@ -233,7 +240,7 @@ export default function ArticlesPage() {
         <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
           <ArticleTable 
             articles={filteredArticles} 
-            onDelete={refetch} 
+            onDelete={handleOnDelete} 
             columnSettings={columnSettings}
             setColumnSettings={handleUpdateColumns}
             onRowReorder={handleRowReorder}

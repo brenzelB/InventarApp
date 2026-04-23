@@ -46,7 +46,7 @@ interface ColumnSetting {
 
 interface ArticleTableProps {
   articles: Article[];
-  onDelete: () => void;
+  onDelete: (id: string) => void;
   columnSettings: ColumnSetting[];
   setColumnSettings: (settings: ColumnSetting[]) => void;
   onRowReorder?: (newOrder: string[]) => void;
@@ -123,7 +123,12 @@ export function ArticleTable({
     try {
       await articleService.deleteArticle(id);
       toastSuccess("Artikel wurde erfolgreich gelöscht.");
-      onDelete();
+      
+      // Update server components state
+      router.refresh();
+      
+      // Trigger local state update in parent
+      onDelete(id);
     } catch (err: any) {
       toastError(err.message || 'Fehler beim Löschen.');
     } finally {
