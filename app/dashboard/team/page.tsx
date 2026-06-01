@@ -24,7 +24,8 @@ import {
 interface Profile {
   id: string;
   email: string;
-  display_name: string;
+  display_name?: string;
+  full_name?: string;
   role: UserRole;
   created_at: string;
 }
@@ -289,7 +290,17 @@ export default function TeamPage() {
                   {profiles.map((profile) => (
                     <tr key={profile.id} className="group hover:bg-slate-50/50 dark:hover:bg-slate-900 transition-all cursor-default">
                       <td className="px-8 py-5 whitespace-nowrap text-sm font-black text-slate-900 dark:text-slate-100">
-                        {profile.display_name || 'Unbekannt'}
+                        {(() => {
+                          const hasName = profile.full_name || profile.display_name;
+                          const isPending = invitations.some(inv => inv.email?.toLowerCase() === profile.email?.toLowerCase());
+                          if (hasName) {
+                            return profile.full_name || profile.display_name;
+                          } else if (isPending) {
+                            return <span className="text-amber-500 dark:text-amber-400 italic text-xs font-bold">Ausstehend (Eingeladen)</span>;
+                          } else {
+                            return <span className="text-slate-500 dark:text-slate-400 font-bold">{profile.email?.split('@')[0] || 'Unbekannt'}</span>;
+                          }
+                        })()}
                         {profile.id === user?.id && <span className="ml-2 text-[10px] bg-indigo-50 dark:bg-indigo-900/30 text-accent dark:text-indigo-300 px-2 py-0.5 rounded-3xl font-black uppercase tracking-widest">ICH</span>}
                       </td>
                       <td className="px-8 py-5 whitespace-nowrap text-sm text-slate-700 dark:text-slate-300 font-bold">
