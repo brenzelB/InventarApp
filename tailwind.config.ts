@@ -13,11 +13,32 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
-        widget: "var(--widget)", /* Use variable for light/dark widget bg */
+        widget: "var(--widget)",
+        outline: "var(--outline)",
+        primary: {
+          DEFAULT: "var(--primary)",
+          hover: "var(--primary-hover)",
+        },
+        secondary: {
+          DEFAULT: "var(--secondary)",
+          hover: "var(--secondary-hover)",
+        },
         accent: {
-          DEFAULT: "#3b82f6",
-          hover: "#2563eb",
-        }
+          DEFAULT: "var(--accent)",
+          hover: "var(--accent-hover)",
+        },
+        'surface-0': "var(--surface-0)",
+        'surface-1': "var(--surface-1)",
+        'surface-2': "var(--surface-2)",
+      },
+      borderRadius: {
+        'card': 'var(--border-radius-card)',
+        'element': 'var(--border-radius-element)',
+      },
+      fontFamily: {
+        sora: ["var(--font-sora)", "sans-serif"],
+        hanken: ["var(--font-hanken)", "sans-serif"],
+        mono: ["var(--font-jetbrains)", "monospace"],
       },
       keyframes: {
         fadeInUp: {
@@ -33,3 +54,4 @@ const config: Config = {
   plugins: [],
 };
 export default config;
+

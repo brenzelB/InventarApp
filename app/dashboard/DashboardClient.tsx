@@ -122,19 +122,22 @@ export function DashboardClient({ userId, initialLayout }: DashboardClientProps)
 
   return (
     <div className="py-6">
-      <div className="md:flex md:items-center md:justify-between px-4 sm:px-0 mb-6">
+      <div className="md:flex md:items-center md:justify-between px-4 sm:px-0 mb-8">
         <div className="min-w-0 flex-1">
-          <h2 className="text-2xl font-black leading-7 text-slate-900 dark:text-white sm:truncate sm:text-3xl tracking-tighter uppercase">
-            Dashboard
+          <div className="text-[10px] font-bold font-mono text-secondary uppercase tracking-[0.2em] mb-1">
+            [ SYS_DASH_INV ]
+          </div>
+          <h2 className="text-2xl font-bold font-sora leading-7 text-foreground sm:truncate sm:text-3xl tracking-tight uppercase">
+            System Dashboard
           </h2>
         </div>
-        <div className="mt-4 md:mt-0 flex gap-8">
+        <div className="mt-4 md:mt-0 flex gap-4">
           <button
             onClick={() => setIsMarketplaceOpen(true)}
-            className="group inline-flex items-center h-11 px-3 rounded-full bg-indigo-50 dark:bg-blue-900/30 text-accent dark:text-blue-400 shadow-sm hover:bg-indigo-100 dark:hover:bg-blue-800/40 transition-all duration-300 ease-in-out"
+            className="group inline-flex items-center h-11 px-4 rounded-element bg-secondary/10 hover:bg-secondary/20 text-secondary border border-secondary/20 shadow-sm transition-all duration-300 ease-in-out font-mono text-xs uppercase tracking-wider"
           >
-            <Plus className="w-5 h-5 flex-shrink-0" />
-            <span className="max-w-0 overflow-hidden opacity-0 group-hover:max-w-xs group-hover:opacity-100 group-hover:ml-2 transition-all duration-300 ease-in-out whitespace-nowrap text-sm font-black uppercase tracking-widest">
+            <Plus className="w-4 h-4 flex-shrink-0" />
+            <span className="max-w-0 overflow-hidden opacity-0 group-hover:max-w-xs group-hover:opacity-100 group-hover:ml-2 transition-all duration-300 ease-in-out whitespace-nowrap">
               Widget hinzufügen
             </span>
           </button>
@@ -144,20 +147,20 @@ export function DashboardClient({ userId, initialLayout }: DashboardClientProps)
               <button
                 onClick={handleCancel}
                 disabled={isSaving}
-                className="group inline-flex items-center h-11 px-3 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 shadow-sm hover:bg-slate-200 dark:hover:bg-slate-700 transition-all duration-300 ease-in-out"
+                className="group inline-flex items-center h-11 px-4 rounded-element bg-surface-2 border border-outline text-foreground/80 shadow-sm hover:bg-foreground/5 transition-all duration-300 ease-in-out font-mono text-xs uppercase tracking-wider"
               >
-                <X className="w-5 h-5 flex-shrink-0" />
-                <span className="max-w-0 overflow-hidden opacity-0 group-hover:max-w-xs group-hover:opacity-100 group-hover:ml-2 transition-all duration-300 ease-in-out whitespace-nowrap text-sm font-black uppercase tracking-widest">
+                <X className="w-4 h-4 flex-shrink-0" />
+                <span className="max-w-0 overflow-hidden opacity-0 group-hover:max-w-xs group-hover:opacity-100 group-hover:ml-2 transition-all duration-300 ease-in-out whitespace-nowrap">
                   Abbrechen
                 </span>
               </button>
               <button
                 onClick={handleSave}
                 disabled={isSaving}
-                className="group inline-flex items-center h-11 px-3 rounded-full bg-emerald-600 text-white shadow-lg shadow-emerald-200 dark:shadow-none hover:bg-emerald-500 transition-all duration-300 ease-in-out disabled:opacity-50"
+                className="group inline-flex items-center h-11 px-4 rounded-element bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-500 border border-emerald-500/20 hover:bg-emerald-500/20 shadow-lg shadow-emerald-500/5 transition-all duration-300 ease-in-out disabled:opacity-50 font-mono text-xs uppercase tracking-wider"
               >
-                {isSaving ? <Loader2 className="w-5 h-5 animate-spin flex-shrink-0" /> : <Save className="w-5 h-5 flex-shrink-0" />}
-                <span className="max-w-0 overflow-hidden opacity-0 group-hover:max-w-xs group-hover:opacity-100 group-hover:ml-2 transition-all duration-300 ease-in-out whitespace-nowrap text-sm font-black uppercase tracking-widest">
+                {isSaving ? <Loader2 className="w-4 h-4 animate-spin flex-shrink-0" /> : <Save className="w-4 h-4 flex-shrink-0" />}
+                <span className="max-w-0 overflow-hidden opacity-0 group-hover:max-w-xs group-hover:opacity-100 group-hover:ml-2 transition-all duration-300 ease-in-out whitespace-nowrap">
                   Speichern
                 </span>
               </button>
@@ -165,10 +168,10 @@ export function DashboardClient({ userId, initialLayout }: DashboardClientProps)
           ) : (
             <button
               onClick={() => setIsEditing(true)}
-              className="group inline-flex items-center h-11 px-3 rounded-full bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 shadow-sm border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-300 ease-in-out"
+              className="group inline-flex items-center h-11 px-4 rounded-element bg-widget border border-outline text-foreground/80 hover:bg-surface-2 transition-all duration-300 ease-in-out font-mono text-xs uppercase tracking-wider"
             >
-              <Pencil className="w-5 h-5 flex-shrink-0" />
-              <span className="max-w-0 overflow-hidden opacity-0 group-hover:max-w-xs group-hover:opacity-100 group-hover:ml-2 transition-all duration-300 ease-in-out whitespace-nowrap text-sm font-black uppercase tracking-widest">
+              <Pencil className="w-4 h-4 flex-shrink-0" />
+              <span className="max-w-0 overflow-hidden opacity-0 group-hover:max-w-xs group-hover:opacity-100 group-hover:ml-2 transition-all duration-300 ease-in-out whitespace-nowrap">
                 Layout bearbeiten
               </span>
             </button>
@@ -176,9 +179,9 @@ export function DashboardClient({ userId, initialLayout }: DashboardClientProps)
         </div>
       </div>
 
-      <div className={`p-2 rounded-2xl transition-all duration-300 ${isEditing ? 'bg-slate-100/50 dark:bg-widget/50 ring-2 ring-accent/20 ring-inset relative' : ''}`}>
+      <div className={`p-2 rounded-card transition-all duration-300 ${isEditing ? 'bg-surface-2/30 border border-dashed border-primary/30 relative' : ''}`}>
         {isEditing && (
-          <div className="absolute top-0 left-0 w-full h-full pointer-events-none rounded-2xl border-2 border-dashed border-indigo-400/50 z-0 opacity-50" />
+          <div className="absolute top-0 left-0 w-full h-full pointer-events-none rounded-card border-2 border-dashed border-primary/20 z-0 opacity-40" />
         )}
         <div className="relative z-10">
           <ResponsiveGridLayout
@@ -201,7 +204,7 @@ export function DashboardClient({ userId, initialLayout }: DashboardClientProps)
               return (
                 <div 
                   key={item.i} 
-                  className={isEditing ? 'cursor-grab active:cursor-grabbing ring-2 ring-accent ring-offset-2 ring-offset-slate-50 dark:ring-offset-slate-900 rounded-3xl' : ''}
+                  className={isEditing ? 'cursor-grab active:cursor-grabbing border border-primary shadow-[0_0_15px_rgba(224,108,117,0.2)] rounded-card overflow-hidden bg-widget' : ''}
                 >
                   <div 
                     className="h-full w-full animate-fadeInUp opacity-0"

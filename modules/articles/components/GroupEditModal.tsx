@@ -111,16 +111,16 @@ export function GroupEditModal({ group, onClose, onSave }: GroupEditModalProps) 
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300">
-      <div className="bg-white dark:bg-slate-900 w-full max-w-2xl rounded-3xl shadow-2xl dark:shadow-none border border-slate-100 dark:border-slate-800 overflow-hidden flex flex-col max-h-[90vh] ring-1 ring-slate-100/50 dark:ring-slate-800/50">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#111111]/85 backdrop-blur-[4px] animate-in fade-in duration-300">
+      <div className="bg-widget w-full max-w-2xl rounded-card shadow-lg border border-outline overflow-hidden flex flex-col max-h-[90vh] bg-grid-pattern bg-opacity-5 transition-all duration-300">
         
         {/* Header */}
-        <div className="px-6 py-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-slate-50/30 dark:bg-slate-950/30">
-          <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2 uppercase tracking-tight">
-            {group.name} ({selectedArticleIds.length} Artikel)
+        <div className="px-6 py-4 border-b border-outline flex items-center justify-between bg-surface-2 dark:bg-surface-2/40">
+          <h3 className="text-sm font-bold text-foreground flex items-center gap-2 uppercase tracking-wide font-sora">
+            [ GROUP_EDIT ] {group.name} ({selectedArticleIds.length} Artikel)
           </h3>
-          <button onClick={onClose} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-3xl transition-colors">
-            <X className="w-5 h-5 text-slate-400 dark:text-slate-500" />
+          <button onClick={onClose} className="p-2 hover:bg-surface-2 rounded-element transition-colors">
+            <X className="w-4 h-4 text-foreground/45" />
           </button>
         </div>
 
@@ -128,45 +128,45 @@ export function GroupEditModal({ group, onClose, onSave }: GroupEditModalProps) 
         <div className="p-6 flex-1 overflow-y-auto space-y-6">
           {/* Name Input */}
           <div className="space-y-2">
-            <label className="text-[10px] font-semibold text-slate-700 dark:text-slate-400 uppercase tracking-widest pl-1">Gruppenname</label>
+            <label className="text-[10px] font-bold font-mono text-foreground/50 uppercase tracking-widest pl-1">Gruppenname</label>
             <input 
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full px-4 py-3 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-accent font-bold transition-all placeholder:text-slate-400 dark:placeholder:text-slate-600"
+              className="w-full block border border-outline rounded-element bg-surface-0 text-foreground placeholder-foreground/30 py-2.5 px-3 focus:ring-1 focus:ring-primary focus:border-primary text-xs font-mono font-bold transition-all shadow-sm"
               placeholder="Name der Gruppe..."
             />
           </div>
 
-          <div className="space-y-6">
+          <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <label className="text-[10px] font-semibold text-slate-700 dark:text-slate-400 uppercase tracking-widest pl-1">Artikel verwalten</label>
-              <span className="text-[10px] font-black px-2.5 py-0.5 bg-indigo-50 dark:bg-indigo-900/30 text-accent dark:text-indigo-300 rounded-full uppercase tracking-widest ring-1 ring-accent/10">
+              <label className="text-[10px] font-bold font-mono text-foreground/50 uppercase tracking-widest pl-1">Artikel verwalten</label>
+              <span className="text-[9px] font-bold font-mono uppercase tracking-wider px-2 py-0.5 bg-secondary/15 text-secondary border border-secondary/20 rounded-element">
                 {selectedArticleIds.length} zugewiesen
               </span>
             </div>
 
             {/* Article Search */}
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 dark:text-slate-500" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground/45" />
               <input 
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Artikel suchen..."
-                className="w-full pl-10 pr-4 py-2.5 text-sm rounded-3xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-accent transition-all font-bold"
+                className="w-full pl-10 pr-4 py-2 border border-outline rounded-element bg-surface-0 text-foreground placeholder-foreground/30 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all font-mono font-bold text-xs shadow-sm"
               />
             </div>
 
             {/* Article List */}
-            <div className="border border-slate-100 dark:border-slate-800 rounded-2xl overflow-hidden divide-y divide-slate-50 dark:divide-slate-800 max-h-64 overflow-y-auto bg-slate-50/20 dark:bg-slate-950/20">
+            <div className="border border-outline rounded-element overflow-hidden divide-y divide-outline max-h-64 overflow-y-auto bg-surface-0/50">
               {loading ? (
                 <div className="py-10 flex flex-col items-center justify-center gap-3">
-                  <Loader2 className="w-8 h-8 text-accent animate-spin" />
-                  <p className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Lade Artikel...</p>
+                  <Loader2 className="w-8 h-8 text-primary animate-spin" />
+                  <p className="text-xs font-bold text-foreground/50 uppercase tracking-widest font-mono">Lade Artikel...</p>
                 </div>
               ) : filteredArticles.length === 0 ? (
-                <div className="py-10 text-center text-slate-400 dark:text-slate-500 font-bold italic text-sm">
+                <div className="py-10 text-center text-foreground/40 font-bold italic text-xs font-mono uppercase">
                   Keine Artikel gefunden.
                 </div>
               ) : (
@@ -177,28 +177,28 @@ export function GroupEditModal({ group, onClose, onSave }: GroupEditModalProps) 
                   return (
                     <label 
                       key={article.id} 
-                      className={`flex items-center gap-8 px-4 py-3 cursor-pointer hover:bg-slate-100/50 dark:hover:bg-slate-800/50 transition-colors ${isChecked ? 'bg-indigo-50/30 dark:bg-indigo-900/10' : ''}`}
+                      className={`flex items-center gap-8 px-4 py-3 cursor-pointer hover:bg-surface-2/40 transition-colors ${isChecked ? 'bg-secondary/5' : ''}`}
                     >
                       <input 
                         type="checkbox"
                         checked={isChecked}
                         onChange={() => toggleArticle(article.id)}
-                        className="w-5 h-5 rounded-2xl border-2 border-slate-200 dark:border-slate-700 text-accent focus:ring-accent transition-all cursor-pointer bg-white dark:bg-slate-950"
+                        className="w-4 h-4 rounded-element border border-outline text-secondary focus:ring-secondary transition-all cursor-pointer bg-surface-0"
                       />
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2">
-                          <Package className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500" />
-                          <p className="text-sm font-bold text-slate-900 dark:text-slate-100 truncate">{article.name}</p>
+                          <Package className="w-3.5 h-3.5 text-foreground/40" />
+                          <p className="text-xs font-bold text-foreground truncate font-sora">{article.name}</p>
                         </div>
-                        <p className="text-[10px] font-mono font-bold text-slate-500 dark:text-slate-400 uppercase tracking-tighter">{article.sku}</p>
+                        <p className="text-[9px] font-mono font-bold text-foreground/45 uppercase tracking-wide">{article.sku}</p>
                       </div>
                       {inOtherGroup && (
-                        <span className="text-[9px] px-2 py-0.5 bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 rounded-full font-black uppercase tracking-widest ring-1 ring-amber-600/10">
+                        <span className="text-[9px] px-2 py-0.5 bg-amber-500/10 text-amber-500 rounded-element font-bold uppercase tracking-wider border border-amber-500/20">
                           Andere Gruppe
                         </span>
                       )}
                       {isChecked && !inOtherGroup && (
-                        <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                        <CheckCircle2 className="w-4 h-4 text-secondary" />
                       )}
                     </label>
                   );
@@ -208,7 +208,7 @@ export function GroupEditModal({ group, onClose, onSave }: GroupEditModalProps) 
           </div>
 
           {error && (
-            <div className="p-8 bg-red-50 dark:bg-rose-900/20 border border-red-100 dark:border-rose-800 rounded-2xl flex items-center gap-4 text-red-700 dark:text-rose-400 text-xs font-bold uppercase tracking-widest">
+            <div className="p-4 bg-primary/10 border border-primary/20 rounded-element flex items-center gap-4 text-primary text-xs font-bold font-mono uppercase tracking-wider">
               <AlertCircle className="w-5 h-5 flex-shrink-0" />
               {error}
             </div>
@@ -216,20 +216,20 @@ export function GroupEditModal({ group, onClose, onSave }: GroupEditModalProps) 
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-4 bg-slate-50/50 dark:bg-slate-950/50 border-t border-slate-100 dark:border-slate-800 flex justify-end gap-3">
+        <div className="px-6 py-4 bg-surface-2/40 border-t border-outline flex justify-end gap-3">
           <button 
             onClick={onClose}
             disabled={isSubmitting}
-            className="px-4 py-2 text-xs font-black text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 uppercase tracking-widest transition-colors"
+            className="px-4 py-2 text-xs font-bold font-mono uppercase tracking-widest text-foreground/70 hover:text-foreground hover:bg-surface-2 rounded-element border border-transparent hover:border-outline transition-colors"
           >
             Abbrechen
           </button>
           <button 
             onClick={handleSave}
             disabled={isSubmitting || !name.trim()}
-            className="inline-flex items-center gap-2 px-6 py-2.5 bg-accent text-white rounded-3xl font-black text-[11px] uppercase tracking-widest hover:bg-indigo-600 shadow-md transition-all disabled:opacity-50"
+            className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-white dark:text-black dark:font-extrabold rounded-element border border-outline font-bold text-xs uppercase tracking-widest hover:bg-primary-hover shadow-sm transition-all"
           >
-            {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin text-white" /> : <Save className="w-4 h-4 text-white" />}
+            {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin text-current" /> : <Save className="w-4 h-4 text-current" />}
             Änderungen speichern
           </button>
         </div>

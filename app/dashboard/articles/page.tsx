@@ -184,29 +184,32 @@ export default function ArticlesPage() {
     <div className="space-y-8">
       <div className="md:flex md:items-center md:justify-between">
         <div className="min-w-0 flex-1">
-          <h2 className="text-3xl font-black leading-7 text-slate-900 dark:text-slate-100 sm:truncate sm:tracking-tight">
+          <div className="text-[10px] font-bold font-mono text-secondary uppercase tracking-[0.2em] mb-1">
+            [ STOCK_DATABASE ]
+          </div>
+          <h2 className="text-3xl font-bold font-sora leading-7 text-foreground sm:truncate uppercase tracking-tight">
             Artikelverwaltung
           </h2>
           <div className="flex items-center gap-3 mt-2">
-            <p className="text-sm font-bold text-slate-500">
+            <p className="text-xs font-medium text-foreground/60">
               Verwalte und überwache deinen gesamten Lagerbestand an einem zentralen Ort.
             </p>
             {isSyncing && (
-              <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-blue-50 dark:bg-blue-900/20 text-[10px] font-black text-blue-600 dark:text-blue-400 uppercase tracking-widest animate-pulse border border-blue-100 dark:border-blue-800">
+              <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-element bg-secondary/10 border border-secondary/20 text-[9px] font-bold font-mono text-secondary uppercase tracking-widest animate-pulse">
                 <RefreshCcw className="w-2.5 h-2.5 animate-spin" />
-                Synchronisierung...
+                Sync...
               </div>
             )}
           </div>
         </div>
-        <div className="mt-4 flex flex-wrap items-center gap-8 md:ml-4 md:mt-0">
+        <div className="mt-4 flex flex-wrap items-center gap-4 md:ml-4 md:mt-0">
           <ArticleActionButtons articles={filteredArticles} onRefresh={refetch} columnSettings={columnSettings} />
           
-          <div className="h-8 w-px bg-slate-200 hidden sm:block mx-2" />
+          <div className="h-6 w-px bg-outline hidden sm:block mx-1" />
 
           {role !== 'viewer' && (
-            <Link href="/dashboard/articles/new" className="inline-flex items-center gap-2 rounded-2xl bg-slate-900 dark:bg-white px-6 py-3 text-sm font-black text-white dark:text-slate-900 shadow-xl dark:shadow-none hover:scale-[1.02] transition-all active:scale-95 group">
-              <Plus className="w-5 h-5 group-hover:rotate-90 transition-transform" />
+            <Link href="/dashboard/articles/new" className="inline-flex items-center gap-2 rounded-element bg-primary hover:bg-primary-hover px-5 py-2.5 text-xs font-bold text-white dark:text-black dark:font-extrabold shadow-sm font-mono uppercase tracking-widest transition-all">
+              <Plus className="w-4 h-4" />
               Neuer Artikel
             </Link>
           )}
@@ -226,15 +229,15 @@ export default function ArticlesPage() {
       />
 
       {error && (
-        <div className="bg-red-50 p-8 rounded-2xl border border-red-100 text-red-700 text-sm font-bold animate-in fade-in slide-in-from-top-2 duration-300">
+        <div className="bg-primary/10 p-4 rounded-element border border-primary/20 text-primary text-xs font-bold font-mono uppercase tracking-wider animate-in fade-in slide-in-from-top-2 duration-300">
           {error}
         </div>
       )}
 
       {loading ? (
         <div className="flex flex-col items-center justify-center p-20 gap-8">
-          <div className="w-12 h-12 border-4 border-indigo-100 border-t-indigo-600 rounded-full animate-spin" />
-          <p className="text-sm font-medium text-slate-500 animate-pulse">Lade Artikel...</p>
+          <div className="w-12 h-12 border-4 border-outline border-t-primary rounded-full animate-spin" />
+          <p className="text-xs font-bold font-mono text-foreground/50 uppercase tracking-widest animate-pulse">Lade Artikel...</p>
         </div>
       ) : (
         <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -247,11 +250,11 @@ export default function ArticlesPage() {
             onRowReorder={handleRowReorder}
           />
           {filteredArticles.length === 0 && articles.length > 0 && (
-            <div className="text-center py-20 bg-white dark:bg-slate-900 rounded-3xl border border-dashed border-slate-300 dark:border-slate-700 mt-8">
-              <p className="text-slate-500 dark:text-slate-400 font-bold">Keine Artikel gefunden, die deinen Filtereinstellungen entsprechen.</p>
+            <div className="text-center py-20 bg-widget rounded-card border border-outline mt-8 shadow-sm">
+              <p className="text-foreground/60 text-xs font-mono uppercase tracking-wider font-bold">Keine Artikel gefunden, die deinen Filtereinstellungen entsprechen.</p>
               <button 
                 onClick={() => { setSearchQuery(""); setStatusFilter("all"); }}
-                className="mt-4 text-accent font-black hover:underline"
+                className="mt-4 text-xs font-bold font-mono uppercase tracking-widest text-primary hover:text-primary-hover"
               >
                 Filter zurücksetzen
               </button>

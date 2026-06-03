@@ -53,43 +53,43 @@ export function CriticalStockWidget() {
 
   if (loading) {
     return (
-      <div className="h-full w-full bg-white dark:bg-slate-900 rounded-3xl p-8 shadow flex items-center justify-center animate-pulse">
-        <div className="h-4 w-20 bg-slate-200 dark:bg-slate-700 rounded"></div>
+      <div className="h-full w-full bg-widget border border-outline rounded-card p-6 flex items-center justify-center animate-pulse">
+        <div className="h-4 w-20 bg-outline rounded-element"></div>
       </div>
     );
   }
 
   return (
-    <div className="h-full w-full bg-white dark:bg-slate-900 rounded-3xl p-8 shadow dark:shadow-none ring-1 ring-slate-200 dark:ring-slate-800 flex flex-col">
-      <h3 className="text-sm font-bold text-slate-500 dark:text-slate-100 flex items-center gap-2 mb-6">
-        <div className="p-1.5 bg-blue-50 dark:bg-blue-900/30 rounded-2xl">
-          <Info className="w-4 h-4 text-blue-500" />
+    <div className="h-full w-full bg-widget border border-outline rounded-card p-6 border-t-2 border-t-primary shadow-[0_0_15px_rgba(224,108,117,0.05)] flex flex-col">
+      <h3 className="text-xs font-bold text-foreground font-mono uppercase tracking-wider flex items-center gap-2 mb-4 border-b border-outline pb-4">
+        <div className="p-1 bg-surface-2 text-primary rounded-element border border-outline">
+          <AlertTriangle className="w-3.5 h-3.5" />
         </div>
-        Kritische Bestände
+        [ SYS_CRIT_03 ] Kritische Bestände
       </h3>
       
-      <div className="flex-1 min-h-0 overflow-auto pr-6 custom-scrollbar scrollbar-gutter-stable">
+      <div className="flex-1 min-h-0 overflow-auto pr-2 custom-scrollbar scrollbar-gutter-stable">
         {criticalItems.length === 0 ? (
-          <div className="h-full flex items-center justify-center text-sm text-slate-500">
+          <div className="h-full flex items-center justify-center text-xs font-mono text-foreground/50">
             Alles im grünen Bereich.
           </div>
         ) : (
-          <ul className="space-y-4">
+          <ul className="space-y-3">
             {criticalItems.map(item => (
-              <li key={item.id} className="flex justify-between items-center group p-2 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-2xl transition-all">
+              <li key={item.id} className="flex justify-between items-center group p-2 hover:bg-surface-2 rounded-element border border-transparent hover:border-outline transition-all">
                 <Link href={`/dashboard/articles/${item.id}`} className="block overflow-hidden flex-1 group-hover:pl-1 transition-all">
-                  <p className="text-sm font-bold text-slate-700 dark:text-slate-100 truncate">{item.name}</p>
-                  <p className="text-[10px] text-slate-400 dark:text-slate-500 uppercase font-black tracking-widest">{item.sku}</p>
+                  <p className="text-xs font-bold text-foreground truncate">{item.name}</p>
+                  <p className="text-[9px] text-foreground/40 font-mono uppercase tracking-widest">{item.sku}</p>
                 </Link>
                 <div className="text-right flex-shrink-0 ml-4 flex items-center gap-3">
                   <div>
-                    <p className="text-sm font-black text-blue-600 dark:text-blue-400 flex items-center justify-end gap-1.5">
+                    <p className="text-xs font-bold text-primary font-mono flex items-center justify-end gap-1.5">
                       {item.bestand} 
-                      <span className="text-[10px] font-black text-blue-400/70 dark:text-blue-500/50">{item.unit || 'Stk'}</span>
+                      <span className="text-[9px] text-foreground/50 font-bold font-mono">{item.unit || 'Stk'}</span>
                     </p>
-                    <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 flex items-center justify-end gap-1.5 uppercase tracking-tighter">
-                      {Number(item.bestand) === 0 ? 'Nicht vorrätig' : 'Niedriger Bestand'}
-                      <AlertTriangle className="w-3.5 h-3.5 text-red-500 dark:text-rose-500" />
+                    <p className="text-[9px] font-bold text-foreground/50 flex items-center justify-end gap-1 font-mono uppercase tracking-tight">
+                      {Number(item.bestand) === 0 ? 'Leer' : 'Kritisch'}
+                      <AlertTriangle className="w-3 h-3 text-primary animate-pulse" />
                     </p>
                   </div>
                 </div>

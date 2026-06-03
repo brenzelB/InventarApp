@@ -210,7 +210,7 @@ export default function TeamPage() {
   if (authLoading) {
     return (
       <div className="flex items-center justify-center p-20">
-        <Loader2 className="w-8 h-8 animate-spin text-accent" />
+        <Loader2 className="w-8 h-8 animate-spin text-primary" />
       </div>
     );
   }
@@ -220,19 +220,19 @@ export default function TeamPage() {
 
   if (!isAdmin) {
     return (
-      <div className="flex flex-col items-center justify-center p-20 text-center animate-in zoom-in-95 duration-500">
-        <div className="w-20 h-20 bg-red-50 dark:bg-red-900/30 text-red-500 dark:text-red-400 rounded-3xl flex items-center justify-center mb-8 ring-8 ring-red-50 dark:ring-red-900/10">
-           <Lock className="w-10 h-10" />
+      <div className="flex flex-col items-center justify-center py-20 text-center animate-in zoom-in-95 duration-500">
+        <div className="w-16 h-16 bg-red-500/10 border border-red-500/20 text-red-600 dark:text-red-400 rounded-card flex items-center justify-center mb-6">
+           <Lock className="w-8 h-8" />
         </div>
-        <h1 className="text-3xl font-black text-slate-900 dark:text-slate-100 uppercase tracking-tight">Zugriff verweigert</h1>
-        <p className="text-slate-600 dark:text-slate-400 mt-4 max-w-md font-bold">
-          Diese Seite ist ausschließlich Administratoren vorbehalten. Deine aktuelle Rolle ist: <span className="text-red-600 dark:text-red-400 font-black uppercase">{role}</span>.
+        <h1 className="text-2xl font-bold font-sora text-foreground uppercase tracking-tight">Zugriff verweigert</h1>
+        <p className="text-foreground/60 mt-4 max-w-md font-sans text-xs">
+          Diese Seite ist ausschließlich Administratoren vorbehalten. Deine aktuelle Rolle ist: <span className="text-red-600 dark:text-rose-400 font-mono font-bold uppercase">{role}</span>.
         </p>
-        <div className="mt-8 flex gap-8">
-          <button onClick={() => window.location.reload()} className="px-6 py-2 bg-slate-900 dark:bg-slate-800 text-white rounded-3xl font-bold flex items-center gap-2 hover:bg-slate-800 dark:hover:bg-slate-700 transition-colors">
-            <RefreshCcw className="w-4 h-4" /> Aktualisieren
+        <div className="mt-8 flex gap-4">
+          <button onClick={() => window.location.reload()} className="px-4 py-2 bg-surface-0 hover:bg-surface-2 text-foreground border border-outline rounded-element font-bold text-xs font-mono uppercase tracking-widest transition-all flex items-center gap-2 shadow-sm">
+            <RefreshCcw className="w-3.5 h-3.5" /> Aktualisieren
           </button>
-          <a href="/dashboard" className="px-6 py-2 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-3xl font-bold hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+          <a href="/dashboard" className="px-4 py-2 bg-primary hover:bg-primary-hover text-white rounded-element font-bold text-xs font-mono uppercase tracking-widest transition-all flex items-center gap-2 shadow-sm">
             Zum Dashboard
           </a>
         </div>
@@ -241,99 +241,102 @@ export default function TeamPage() {
   }
 
   return (
-    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-6 duration-700">
-      <div className="md:flex md:items-center md:justify-between">
+    <div className="space-y-6 animate-in fade-in slide-in-from-bottom-6 duration-700">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div className="min-w-0 flex-1">
-          <h2 className="text-4xl font-bold leading-7 text-slate-900 dark:text-slate-100 sm:truncate sm:tracking-tight uppercase tracking-tighter">
+          <div className="text-[10px] font-bold font-mono text-secondary uppercase tracking-[0.2em] mb-1">
+            [ TEAM MANAGEMENT ]
+          </div>
+          <h2 className="text-3xl font-bold font-sora text-foreground uppercase tracking-tight sm:truncate">
             Team-Verwaltung
           </h2>
-          <p className="mt-4 text-base font-bold text-slate-500 dark:text-slate-400">
+          <p className="text-xs text-foreground/60 font-sans mt-2">
             Zentrale Schnittstelle für Mitglieder, Berechtigungen und Einladungen.
           </p>
         </div>
-        <div className="mt-4 md:mt-0 flex gap-8">
+        <div className="flex gap-2">
           <button 
             onClick={fetchTeamData}
-            className="p-3 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-700 rounded-2xl shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-all ring-1 ring-slate-100/50 dark:ring-slate-800/50"
+            className="p-2.5 bg-surface-0 hover:bg-surface-2 text-foreground border border-outline rounded-element transition-all shadow-sm flex items-center justify-center"
             title="Daten aktualisieren"
           >
-            <RefreshCcw className={`w-5 h-5 text-slate-500 dark:text-slate-400 ${loading ? 'animate-spin' : ''}`} />
+            <RefreshCcw className={`w-4 h-4 text-foreground/75 ${loading ? 'animate-spin' : ''}`} />
           </button>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-2 space-y-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2 space-y-6">
           {/* Mitglieder-Tabelle */}
-          <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 shadow-xl dark:shadow-none overflow-hidden transition-all ring-1 ring-slate-100/30 dark:ring-slate-800/30">
-            <div className="p-8 border-b border-slate-100 dark:border-slate-700 flex items-center justify-between bg-slate-50/30 dark:bg-slate-900/50">
-              <div className="flex items-center gap-8">
-                <div className="w-12 h-12 rounded-2xl bg-indigo-50 dark:bg-indigo-900/30 flex items-center justify-center">
-                  <Users className="w-6 h-6 text-accent" />
+          <div className="glass-panel bg-surface-1/40 overflow-hidden">
+            <div className="p-6 border-b border-outline flex items-center justify-between bg-surface-2/20">
+              <div className="flex items-center gap-4">
+                <div className="w-10 h-10 rounded-element bg-primary/10 border border-primary/20 flex items-center justify-center">
+                  <Users className="w-5 h-5 text-primary" />
                 </div>
-                <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 uppercase tracking-tight">Teammitglieder</h3>
+                <h3 className="text-sm font-bold font-mono text-foreground uppercase tracking-wider">Teammitglieder</h3>
               </div>
-              <span className="bg-indigo-50 dark:bg-indigo-900/30 text-accent dark:text-indigo-300 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest ring-1 ring-accent/10">{profiles.length} Aktiv</span>
+              <span className="bg-primary/10 text-primary border border-primary/20 px-3 py-1 rounded-element text-[10px] font-bold font-mono uppercase tracking-widest">{profiles.length} Aktiv</span>
             </div>
             
             <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-slate-100 dark:divide-slate-700">
-                <thead className="bg-slate-50/50 dark:bg-slate-900/50">
+              <table className="min-w-full divide-y divide-outline">
+                <thead className="bg-surface-2/40 border-b border-outline">
                   <tr>
-                    <th className="px-8 py-4 text-left text-[11px] font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-[0.2em]">Mitglied</th>
-                    <th className="px-8 py-4 text-left text-[11px] font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-[0.2em]">E-Mail</th>
-                    <th className="px-8 py-4 text-left text-[11px] font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-[0.2em]">Rolle</th>
-                    <th className="px-8 py-4 text-right text-[11px] font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-[0.2em]">Aktion</th>
+                    <th className="px-6 py-3 text-left text-[10px] font-bold font-mono text-foreground/60 uppercase tracking-widest">Mitglied</th>
+                    <th className="px-6 py-3 text-left text-[10px] font-bold font-mono text-foreground/60 uppercase tracking-widest">E-Mail</th>
+                    <th className="px-6 py-3 text-left text-[10px] font-bold font-mono text-foreground/60 uppercase tracking-widest">Rolle</th>
+                    <th className="px-6 py-3 text-right text-[10px] font-bold font-mono text-foreground/60 uppercase tracking-widest">Aktion</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100 dark:divide-slate-700 bg-white dark:bg-slate-950">
+                <tbody className="divide-y divide-outline bg-surface-1/10">
                   {profiles.map((profile) => (
-                    <tr key={profile.id} className="group hover:bg-slate-50/50 dark:hover:bg-slate-900 transition-all cursor-default">
-                      <td className="px-8 py-5 whitespace-nowrap text-sm font-black text-slate-900 dark:text-slate-100">
+                    <tr key={profile.id} className="group hover:bg-surface-2/40 transition-all cursor-default">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-foreground font-sora">
                         {(() => {
                           const hasName = profile.full_name || profile.display_name;
                           const isPending = invitations.some(inv => inv.email?.toLowerCase() === profile.email?.toLowerCase());
                           if (hasName) {
                             return profile.full_name || profile.display_name;
                           } else if (isPending) {
-                            return <span className="text-amber-500 dark:text-amber-400 italic text-xs font-bold">Ausstehend (Eingeladen)</span>;
+                            return <span className="text-amber-500 italic text-xs font-bold font-mono">Ausstehend (Eingeladen)</span>;
                           } else {
-                            return <span className="text-slate-500 dark:text-slate-400 font-bold">{profile.email?.split('@')[0] || 'Unbekannt'}</span>;
+                            return <span className="text-foreground/50 font-bold">{profile.email?.split('@')[0] || 'Unbekannt'}</span>;
                           }
                         })()}
-                        {profile.id === user?.id && <span className="ml-2 text-[10px] bg-indigo-50 dark:bg-indigo-900/30 text-accent dark:text-indigo-300 px-2 py-0.5 rounded-3xl font-black uppercase tracking-widest">ICH</span>}
+                        {profile.id === user?.id && <span className="ml-2 text-[9px] bg-primary/10 text-primary border border-primary/20 px-1.5 py-0.5 rounded-element font-bold font-mono uppercase tracking-widest">ICH</span>}
                       </td>
-                      <td className="px-8 py-5 whitespace-nowrap text-sm text-slate-700 dark:text-slate-300 font-bold">
+                      <td className="px-6 py-4 whitespace-nowrap text-xs text-foreground/75 font-mono">
                         {profile.email}
                       </td>
-                      <td className="px-8 py-5 whitespace-nowrap">
+                      <td className="px-6 py-4 whitespace-nowrap">
                         <select
                           disabled={profile.id === user?.id}
                           value={profile.role}
                           onChange={(e) => handleUpdateRole(profile.id, e.target.value as any)}
-                          className="bg-transparent border-none text-[11px] font-black uppercase tracking-widest text-slate-900 dark:text-slate-100 focus:ring-0 cursor-pointer disabled:opacity-40 hover:text-accent transition-colors"
+                          className="bg-transparent border-none text-[10px] font-bold font-mono uppercase tracking-widest text-foreground focus:ring-0 cursor-pointer disabled:opacity-40 hover:text-primary transition-colors py-1"
                         >
                           <option value="admin" className="dark:bg-slate-900">Admin</option>
                           <option value="editor" className="dark:bg-slate-900">Editor</option>
                           <option value="viewer" className="dark:bg-slate-900">Viewer</option>
                         </select>
                       </td>
-                      <td className="px-8 py-5 whitespace-nowrap text-right">
+                      <td className="px-6 py-4 whitespace-nowrap text-right">
                         <button
                           onClick={() => handleDeleteMember(profile.id, profile.email)}
                           disabled={profile.id === user?.id}
-                          className="text-slate-400 hover:text-red-600 transition-all p-2 rounded-3xl hover:bg-red-50 disabled:hidden"
+                          className="text-foreground/45 hover:text-red-500 dark:hover:text-rose-400 hover:bg-red-500/10 p-1.5 rounded-element border border-transparent hover:border-red-500/20 transition-all disabled:hidden"
                         >
-                          <Trash2 size={18} />
+                          <Trash2 size={16} />
                         </button>
                       </td>
                     </tr>
                   ))}
                   {loading && profiles.length === 0 && (
                     <tr>
-                      <td colSpan={4} className="py-20 text-center">
-                        <Loader2 className="w-10 h-10 animate-spin text-accent mx-auto" />
-                        <p className="mt-4 text-xs font-black text-slate-400 uppercase tracking-widest">Lade Teammitglieder...</p>
+                      <td colSpan={4} className="py-16 text-center">
+                        <Loader2 className="w-8 h-8 animate-spin text-primary mx-auto mb-4" />
+                        <p className="text-foreground/50 font-mono text-[10px] uppercase tracking-widest">Lade Teammitglieder...</p>
                       </td>
                     </tr>
                   )}
@@ -344,35 +347,35 @@ export default function TeamPage() {
 
           {/* Einladungen-Sektion */}
           {invitations.length > 0 && (
-            <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 shadow-md dark:shadow-none ring-1 ring-slate-100/50 dark:ring-slate-800/50 overflow-hidden animate-in slide-in-from-top-4 duration-500">
-              <div className="p-8 border-b border-slate-100 dark:border-slate-700 flex items-center gap-8 bg-slate-50/20 dark:bg-slate-900/50">
-                <div className="w-12 h-12 rounded-2xl bg-amber-50 dark:bg-amber-900/30 flex items-center justify-center">
-                  <Clock className="w-6 h-6 text-amber-500 dark:text-amber-400" />
+            <div className="glass-panel bg-surface-1/40 overflow-hidden animate-in slide-in-from-top-4 duration-500">
+              <div className="p-6 border-b border-outline flex items-center gap-4 bg-surface-2/20">
+                <div className="w-10 h-10 rounded-element bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
+                  <Clock className="w-5 h-5 text-amber-500" />
                 </div>
-                <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 uppercase tracking-tight">Ausstehende Einladungen</h3>
+                <h3 className="text-sm font-bold font-mono text-foreground uppercase tracking-wider">Ausstehende Einladungen</h3>
               </div>
               <div className="overflow-x-auto">
-                <table className="min-w-full divide-y divide-slate-100 dark:divide-slate-700">
-                  <tbody className="divide-y divide-slate-100 dark:divide-slate-700 bg-white dark:bg-slate-950">
+                <table className="min-w-full divide-y divide-outline">
+                  <tbody className="divide-y divide-outline bg-surface-1/10">
                     {invitations.map((invite) => (
-                      <tr key={invite.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-900 transition-colors">
-                        <td className="px-8 py-5 whitespace-nowrap">
+                      <tr key={invite.id} className="hover:bg-surface-2/40 transition-colors">
+                        <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex flex-col">
-                            <span className="text-sm font-black text-slate-900 dark:text-slate-100">{invite.email}</span>
+                            <span className="text-sm font-bold text-foreground font-mono">{invite.email}</span>
                             {invite.metadata?.name && (
-                              <span className="text-[10px] text-slate-500 dark:text-slate-400 font-black uppercase tracking-widest mt-0.5">{invite.metadata.name}</span>
+                              <span className="text-[9px] text-foreground/50 font-mono uppercase tracking-widest mt-0.5 block">{invite.metadata.name}</span>
                             )}
                           </div>
                         </td>
-                        <td className="px-8 py-5 whitespace-nowrap text-[10px] text-amber-600 dark:text-amber-400 font-black uppercase tracking-widest text-right">
+                        <td className="px-6 py-4 whitespace-nowrap text-[10px] font-bold font-mono text-amber-500 uppercase tracking-widest text-right">
                           {invite.role}
                         </td>
-                        <td className="px-8 py-5 whitespace-nowrap text-right w-px">
+                        <td className="px-6 py-4 whitespace-nowrap text-right w-px">
                           <button
                             onClick={() => handleDeleteInvitation(invite.id)}
-                            className="text-slate-400 hover:text-red-500 transition-all p-2 rounded-3xl hover:bg-red-50"
+                            className="text-foreground/45 hover:text-red-500 dark:hover:text-rose-400 hover:bg-red-500/10 p-1.5 rounded-element border border-transparent hover:border-red-500/20 transition-all"
                           >
-                            <Trash2 size={18} />
+                            <Trash2 size={16} />
                           </button>
                         </td>
                       </tr>
@@ -385,34 +388,34 @@ export default function TeamPage() {
         </div>
 
         {/* Sidebar: Einladungs-Tool */}
-        <div className="space-y-8">
-          <div className="bg-accent dark:bg-slate-900 rounded-[2.5rem] p-10 text-white shadow-2xl dark:shadow-none border border-transparent dark:border-slate-800 relative overflow-hidden group">
-            <div className="absolute -top-10 -right-10 opacity-10 group-hover:scale-110 transition-transform duration-700">
-               <UserPlus className="w-48 h-48 rotate-12" />
+        <div className="space-y-6">
+          <div className="glass-panel p-6 bg-surface-1/40 relative overflow-hidden group">
+            <div className="absolute -top-10 -right-10 opacity-[0.03] group-hover:scale-110 transition-transform duration-700 pointer-events-none">
+               <UserPlus className="w-48 h-48 rotate-12 text-foreground" />
             </div>
-            <h3 className="text-2xl font-black mb-8 relative z-10 uppercase tracking-tighter dark:text-white">
+            <h3 className="text-base font-bold font-sora mb-6 uppercase tracking-tight text-foreground">
               Nutzer einladen
             </h3>
             
-            <form onSubmit={handleInvite} className="space-y-6 relative z-10">
-              <div className="space-y-2">
-                <label className="text-[10px] font-semibold uppercase tracking-[0.2em] opacity-80 pl-1 dark:text-slate-400">Name des Nutzers</label>
+            <form onSubmit={handleInvite} className="space-y-4 relative z-10">
+              <div className="space-y-1">
+                <label className="text-[10px] font-bold font-mono uppercase tracking-widest text-foreground/60 pl-1">Name des Nutzers</label>
                 <div className="relative">
-                  <User className="absolute left-4 top-4 w-5 h-5 text-indigo-200 dark:text-slate-500" />
+                  <User className="absolute left-3 top-2.5 w-4 h-4 text-foreground/45" />
                   <input
                     type="text"
                     value={inviteName}
                     onChange={(e) => setInviteName(e.target.value)}
                     placeholder="Max Mustermann"
-                    className="w-full bg-white/10 dark:bg-slate-950/50 border border-white/20 dark:border-slate-800 rounded-2xl py-4 pl-12 pr-4 text-white placeholder-indigo-200 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-white/50 dark:focus:ring-accent/50 text-sm font-bold transition-all"
+                    className="w-full bg-surface-2 border border-outline rounded-element py-1.5 pl-9 pr-3 text-foreground placeholder-foreground/30 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary text-sm font-bold transition-all"
                   />
                 </div>
               </div>
 
-              <div className="space-y-2">
-                <label className="text-[10px] font-semibold uppercase tracking-[0.2em] opacity-80 pl-1 dark:text-slate-400">E-Mail Adresse</label>
+              <div className="space-y-1">
+                <label className="text-[10px] font-bold font-mono uppercase tracking-widest text-foreground/60 pl-1">E-Mail Adresse</label>
                 <div className="relative">
-                  <Mail className="absolute left-4 top-4 w-5 h-5 text-indigo-200 dark:text-slate-500" />
+                  <Mail className="absolute left-3 top-2.5 w-4 h-4 text-foreground/45" />
                   <input
                     type="email"
                     required
@@ -422,27 +425,27 @@ export default function TeamPage() {
                       if (inviteEmailError) setInviteEmailError(false);
                     }}
                     placeholder="name@firma.de"
-                    className={`w-full bg-white/10 dark:bg-slate-950/50 border ${inviteEmailError ? 'border-red-500 ring-2 ring-red-500/50' : 'border-white/20 dark:border-slate-800'} rounded-2xl py-4 pl-12 pr-4 text-white placeholder-indigo-200 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-white/50 dark:focus:ring-accent/50 text-sm font-bold transition-all`}
+                    className={`w-full bg-surface-2 border ${inviteEmailError ? 'border-red-500 ring-1 ring-red-500/50' : 'border-outline'} rounded-element py-1.5 pl-9 pr-3 text-foreground placeholder-foreground/30 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary text-sm font-bold transition-all`}
                   />
                 </div>
               </div>
               
-              <div className="space-y-2">
-                <label className="text-[10px] font-semibold uppercase tracking-[0.2em] opacity-80 pl-1 dark:text-slate-400">Zukünftige Rolle</label>
+              <div className="space-y-1">
+                <label className="text-[10px] font-bold font-mono uppercase tracking-widest text-foreground/60 pl-1">Zukünftige Rolle</label>
                 <select
                   value={inviteRole}
                   onChange={(e) => setInviteRole(e.target.value as any)}
-                  className="w-full bg-white/10 dark:bg-slate-950/50 border border-white/20 dark:border-slate-800 rounded-2xl py-4 px-4 text-white focus:outline-none focus:ring-2 focus:ring-white/50 dark:focus:ring-accent/50 text-xs font-black uppercase tracking-widest appearance-none cursor-pointer"
+                  className="w-full bg-surface-2 border border-outline rounded-element py-2 px-3 text-foreground focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary text-xs font-bold font-mono uppercase tracking-wider cursor-pointer appearance-none"
                 >
-                  <option value="viewer" className="text-slate-900 dark:text-slate-100 dark:bg-slate-900">Viewer (Lesen)</option>
-                  <option value="editor" className="text-slate-900 dark:text-slate-100 dark:bg-slate-900">Editor (Schreiben)</option>
-                  <option value="admin" className="text-slate-900 dark:text-slate-100 dark:bg-slate-900 font-black">Admin (Vollzugriff)</option>
+                  <option value="viewer" className="text-foreground bg-surface-1">Viewer (Lesen)</option>
+                  <option value="editor" className="text-foreground bg-surface-1">Editor (Schreiben)</option>
+                  <option value="admin" className="text-foreground bg-surface-1 font-bold">Admin (Vollzugriff)</option>
                 </select>
               </div>
 
               {message && (
-                <div className={`p-5 rounded-2xl flex items-center gap-8 text-xs font-black uppercase tracking-widest animate-in slide-in-from-top-2 duration-300 ${message.type === 'success' ? 'bg-white/20 text-white' : 'bg-red-500/50 text-white border border-red-400'}`}>
-                  {message.type === 'success' ? <CheckCircle2 className="w-5 h-5 flex-shrink-0" /> : <AlertCircle className="w-5 h-5 flex-shrink-0" />}
+                <div className={`p-4 rounded-element flex items-center gap-3 text-xs font-mono uppercase tracking-wider border ${message.type === 'success' ? 'bg-primary/10 text-primary border-primary/20' : 'bg-red-500/10 text-red-600 dark:text-red-400 border-red-500/20'}`}>
+                  {message.type === 'success' ? <CheckCircle2 className="w-4 h-4 flex-shrink-0" /> : <AlertCircle className="w-4 h-4 flex-shrink-0" />}
                   {message.text}
                 </div>
               )}
@@ -450,47 +453,47 @@ export default function TeamPage() {
               <button
                 type="submit"
                 disabled={isInviting}
-                className="w-full bg-white dark:bg-slate-800 text-accent dark:text-white rounded-2xl py-5 text-xs font-black uppercase tracking-[0.3em] shadow-xl dark:shadow-none hover:bg-slate-50 dark:hover:bg-slate-700 hover:scale-[1.02] active:scale-95 transition-all disabled:opacity-50 flex items-center justify-center gap-8 group"
+                className="w-full bg-primary hover:bg-primary-hover text-white rounded-element py-2.5 text-xs font-bold font-mono uppercase tracking-widest transition-all disabled:opacity-50 flex items-center justify-center gap-2 group shadow-sm"
               >
-                {isInviting ? <Loader2 className="w-5 h-5 animate-spin" /> : <UserPlus className="w-5 h-5 group-hover:rotate-12 transition-transform" />}
+                {isInviting ? <Loader2 className="w-4 h-4 animate-spin" /> : <UserPlus className="w-4 h-4 group-hover:rotate-12 transition-transform" />}
                 Einladung senden
               </button>
             </form>
           </div>
 
           {/* Rollen-Info-Card */}
-          <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] p-10 border border-slate-100 dark:border-slate-700 ring-1 ring-slate-100/50 dark:ring-slate-800/50 space-y-8">
-            <h4 className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-[0.3em] pl-1">Berechtigungen</h4>
-            <div className="space-y-6">
-              <div className="flex gap-5">
-                <div className="w-12 h-12 rounded-2xl bg-indigo-50 dark:bg-indigo-900/30 flex items-center justify-center flex-shrink-0">
-                  <Shield className="w-5 h-5 text-accent" />
+          <div className="glass-panel p-6 bg-surface-1/40 space-y-6">
+            <h4 className="text-[10px] font-bold font-mono text-foreground/50 uppercase tracking-[0.2em] pl-1">Berechtigungen</h4>
+            <div className="space-y-4">
+              <div className="flex gap-4">
+                <div className="w-10 h-10 rounded-element bg-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0">
+                  <Shield className="w-5 h-5 text-primary" />
                 </div>
                 <div>
-                  <span className="font-black text-[11px] text-slate-900 dark:text-slate-100 uppercase tracking-widest block mb-1">Admins</span>
-                  <p className="text-xs text-slate-600 dark:text-slate-400 font-bold leading-relaxed">
+                  <span className="font-bold font-mono text-[10px] text-foreground uppercase tracking-widest block mb-1">Admins</span>
+                  <p className="text-xs text-foreground/60 leading-normal font-sans">
                     Volle Team-Verwaltung, Artikel-Manipulation und Systemzugriff.
                   </p>
                 </div>
               </div>
-              <div className="flex gap-5">
-                <div className="w-12 h-12 rounded-2xl bg-green-50 dark:bg-emerald-900/30 flex items-center justify-center flex-shrink-0">
-                  <CheckCircle2 className="w-5 h-5 text-green-500 dark:text-emerald-400" />
+              <div className="flex gap-4">
+                <div className="w-10 h-10 rounded-element bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center flex-shrink-0">
+                  <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
                 </div>
                 <div>
-                  <span className="font-black text-[11px] text-slate-900 dark:text-slate-100 uppercase tracking-widest block mb-1">Editoren</span>
-                  <p className="text-xs text-slate-600 dark:text-slate-400 font-bold leading-relaxed">
+                  <span className="font-bold font-mono text-[10px] text-foreground uppercase tracking-widest block mb-1">Editoren</span>
+                  <p className="text-xs text-foreground/60 leading-normal font-sans">
                     Können Artikel pflegen, Bestände buchen und Inventur machen.
                   </p>
                 </div>
               </div>
-              <div className="flex gap-5">
-                <div className="w-12 h-12 rounded-2xl bg-slate-50 dark:bg-slate-800 flex items-center justify-center flex-shrink-0">
-                  <Users className="w-5 h-5 text-slate-400 dark:text-slate-500" />
+              <div className="flex gap-4">
+                <div className="w-10 h-10 rounded-element bg-surface-2 border border-outline flex items-center justify-center flex-shrink-0">
+                  <Users className="w-5 h-5 text-foreground/50" />
                 </div>
                 <div>
-                  <span className="font-black text-[11px] text-slate-900 dark:text-slate-100 uppercase tracking-widest block mb-1">Viewer</span>
-                  <p className="text-xs text-slate-600 dark:text-slate-400 font-bold leading-relaxed">
+                  <span className="font-bold font-mono text-[10px] text-foreground uppercase tracking-widest block mb-1">Viewer</span>
+                  <p className="text-xs text-foreground/60 leading-normal font-sans">
                     Reiner Lesezugriff auf Berichte, Listen und Details.
                   </p>
                 </div>

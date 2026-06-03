@@ -80,33 +80,33 @@ export const InventoryValueWidget = ({ config, onUpdateConfig }: { config: any, 
 
   if (loading) {
     return (
-      <div className="h-full w-full bg-white dark:bg-slate-900 rounded-3xl p-8 shadow flex items-center justify-center animate-pulse">
-        <div className="h-4 w-20 bg-slate-200 dark:bg-slate-700 rounded"></div>
+      <div className="h-full w-full bg-widget border border-outline rounded-card p-6 flex items-center justify-center animate-pulse">
+        <div className="h-4 w-20 bg-outline rounded-element"></div>
       </div>
     );
   }
   return (
-    <div className={`h-full w-full bg-white dark:bg-slate-900 rounded-3xl shadow dark:shadow-none flex flex-col ring-1 ring-slate-200 dark:ring-slate-800 overflow-hidden`}>
+    <div className="h-full w-full bg-widget border border-outline rounded-card flex flex-col overflow-hidden transition-colors duration-300">
       
       {/* Header with Toggle */}
-      <div className="px-8 pt-6 pb-2 flex items-center justify-between">
-        <h3 className="text-sm font-bold text-slate-500 dark:text-slate-100 flex items-center gap-2">
-          <div className="p-1.5 bg-indigo-50 dark:bg-indigo-900/30 rounded-2xl">
-            <Coins className="w-4 h-4 text-accent" />
+      <div className="px-6 pt-5 pb-3 flex items-center justify-between border-b border-outline">
+        <h3 className="text-xs font-bold text-foreground font-mono uppercase tracking-wider flex items-center gap-2">
+          <div className="p-1 bg-surface-2 text-primary rounded-element border border-outline">
+            <Coins className="w-3.5 h-3.5" />
           </div>
-          Finanz-Cockpit
+          [ SYS_FIN_04 ] Finanz-Cockpit
         </h3>
 
-        <div className="flex bg-slate-100 dark:bg-slate-950 p-1 rounded-full border border-slate-200 dark:border-slate-800 shadow-inner">
+        <div className="flex bg-surface-2 p-0.5 rounded-element border border-outline">
           <button 
             onClick={() => handleToggleNetto(false)}
-            className={`px-4 py-1.5 text-[10px] font-black uppercase tracking-widest rounded-full transition-all ${!isNetView ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm dark:shadow-none' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'}`}
+            className={`px-3 py-1 text-[9px] font-bold font-mono uppercase tracking-wider rounded-element transition-all ${!isNetView ? 'bg-primary text-white dark:text-black font-extrabold shadow-sm' : 'text-foreground/60 hover:text-foreground'}`}
           >
             Brutto
           </button>
           <button 
             onClick={() => handleToggleNetto(true)}
-            className={`px-4 py-1.5 text-[10px] font-black uppercase tracking-widest rounded-full transition-all ${isNetView ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm dark:shadow-none' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'}`}
+            className={`px-3 py-1 text-[9px] font-bold font-mono uppercase tracking-wider rounded-element transition-all ${isNetView ? 'bg-primary text-white dark:text-black font-extrabold shadow-sm' : 'text-foreground/60 hover:text-foreground'}`}
           >
             Netto
           </button>
@@ -114,39 +114,39 @@ export const InventoryValueWidget = ({ config, onUpdateConfig }: { config: any, 
       </div>
 
       {/* Main Stats Grid */}
-      <div className="flex-1 grid grid-cols-1 md:grid-cols-3 divide-x divide-slate-100 dark:divide-slate-800">
+      <div className="flex-1 grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-outline">
         
         {/* PURCHASE SECTION */}
-        <div className="p-8 flex flex-col justify-center">
-          <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.15em] mb-3">
-             {isNetView ? "Bestandswert (Net EK)" : "EK-Wert (Brutto)"}
+        <div className="p-6 flex flex-col justify-center bg-grid-pattern bg-opacity-5">
+          <p className="text-[9px] font-bold text-foreground/45 font-mono uppercase tracking-widest mb-1.5">
+             {isNetView ? "Bestand EK (Net)" : "EK-Wert (Gross)"}
           </p>
-          <div className="text-3xl font-black text-blue-600 dark:text-blue-400 tracking-tighter">
+          <div className="text-xl font-bold text-red-500 font-mono tracking-tight">
             -{stats.buy.toLocaleString('de-DE', { minimumFractionDigits: 0, maximumFractionDigits: 0 })} €
           </div>
         </div>
 
         {/* PROFIT SECTION (Center) */}
-        <div className="p-8 flex flex-col justify-center bg-slate-50/50 dark:bg-slate-950/30 text-center">
-          <div className="inline-flex items-center gap-1.5 mx-auto px-3 py-1 rounded-full bg-slate-200/50 dark:bg-slate-800/50 border border-slate-300 dark:border-slate-700 mb-3">
-            <span className="text-[10px] font-black text-slate-700 dark:text-slate-300 uppercase tracking-widest">
+        <div className="p-6 flex flex-col justify-center bg-surface-2/30 text-center relative overflow-hidden">
+          <div className="inline-flex items-center gap-1 mx-auto px-2.5 py-0.5 rounded-element bg-surface-2 border border-outline mb-2">
+            <span className="text-[9px] font-bold text-foreground/80 font-mono uppercase tracking-wider">
               {stats.margin.toFixed(1)}% Marge
             </span>
           </div>
-          <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.15em] mb-1">
+          <p className="text-[9px] font-bold text-foreground/45 font-mono uppercase tracking-widest mb-1">
             Reingewinn
           </p>
-          <div className="text-4xl font-black text-slate-900 dark:text-slate-100 tracking-tight">
+          <div className="text-2xl font-bold text-foreground font-mono tracking-tight animate-pulse-value">
             {stats.profit.toLocaleString('de-DE', { minimumFractionDigits: 0, maximumFractionDigits: 0 })} €
           </div>
         </div>
 
         {/* SALES SECTION */}
-        <div className="p-8 flex flex-col justify-center text-right">
-          <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.15em] mb-3">
-             {isNetView ? "Warenwert (Net VK)" : "VK-Wert (Brutto)"}
+        <div className="p-6 flex flex-col justify-center text-right bg-grid-pattern bg-opacity-5">
+          <p className="text-[9px] font-bold text-foreground/45 font-mono uppercase tracking-widest mb-1.5">
+             {isNetView ? "Waren VK (Net)" : "VK-Wert (Gross)"}
           </p>
-          <div className="text-3xl font-black text-emerald-600 dark:text-emerald-400 tracking-tighter">
+          <div className="text-xl font-bold text-emerald-500 font-mono tracking-tight">
             +{stats.sell.toLocaleString('de-DE', { minimumFractionDigits: 0, maximumFractionDigits: 0 })} €
           </div>
         </div>
@@ -154,18 +154,18 @@ export const InventoryValueWidget = ({ config, onUpdateConfig }: { config: any, 
       </div>
 
       {/* Bottom info */}
-      <div className="bg-slate-50 dark:bg-slate-950/50 px-8 py-3 flex items-center justify-between border-t border-slate-100 dark:border-slate-800">
-        <span className="text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">
-           Gebundene USt: <span className="text-slate-600 dark:text-slate-300 ml-1">{stats.vat.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €</span>
+      <div className="bg-surface-2 px-6 py-2.5 flex items-center justify-between border-t border-outline font-mono text-[9px]">
+        <span className="text-foreground/50 uppercase tracking-widest">
+           Gebundene USt: <span className="text-foreground font-bold ml-1">{stats.vat.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €</span>
         </span>
         <div className="flex gap-4">
            <div className="flex items-center gap-1.5">
-             <div className="w-2 h-2 rounded-full bg-blue-500"></div>
-             <span className="text-[9px] font-bold text-slate-500 dark:text-slate-400 uppercase">Investition</span>
+             <div className="w-1.5 h-1.5 rounded-element bg-red-500"></div>
+             <span className="text-foreground/50 uppercase">Invest</span>
            </div>
            <div className="flex items-center gap-1.5">
-             <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
-             <span className="text-[9px] font-bold text-slate-500 dark:text-slate-400 uppercase">Rückfluss</span>
+             <div className="w-1.5 h-1.5 rounded-element bg-emerald-500"></div>
+             <span className="text-foreground/50 uppercase">Wert</span>
            </div>
         </div>
       </div>

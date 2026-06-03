@@ -18,11 +18,11 @@ export function getPasswordStrength(password: string): {
   if (/[^A-Za-z0-9]/.test(password)) score++;
 
   const levels = [
-    { label: "Zu kurz",    color: "text-slate-400",   bgColor: "bg-slate-300" },
+    { label: "Zu kurz",    color: "text-foreground/45",   bgColor: "bg-surface-2" },
     { label: "Schwach",    color: "text-red-500",      bgColor: "bg-red-500" },
     { label: "Mittel",     color: "text-orange-500",   bgColor: "bg-orange-500" },
     { label: "Stark",      color: "text-yellow-500",   bgColor: "bg-yellow-500" },
-    { label: "Sehr stark", color: "text-green-500",    bgColor: "bg-green-500" },
+    { label: "Sehr stark", color: "text-emerald-500",    bgColor: "bg-emerald-500" },
   ];
 
   return { score, ...levels[score] };
@@ -41,13 +41,13 @@ function PasswordStrengthBar({ password }: { password: string }) {
         {[1, 2, 3, 4].map((i) => (
           <div
             key={i}
-            className={`h-1 flex-1 rounded-full transition-all duration-300 ${
-              i <= score ? bgColor : "bg-slate-200"
+            className={`h-1 flex-1 rounded-element transition-all duration-300 ${
+              i <= score ? bgColor : "bg-surface-2"
             }`}
           />
         ))}
       </div>
-      <p className={`text-xs font-medium ${color}`}>{label}</p>
+      <p className={`text-[9px] font-bold font-mono uppercase tracking-widest ${color}`}>{label}</p>
     </div>
   );
 }
@@ -106,11 +106,11 @@ export function PasswordInput({
     <div>
       <label
         htmlFor={id}
-        className="block text-sm font-bold leading-6 text-slate-700"
+        className="block text-[10px] font-bold font-mono text-foreground/50 uppercase tracking-widest leading-6 mb-1.5 ml-1"
       >
         {label}
       </label>
-      <div className="mt-2 relative">
+      <div className="relative">
         <input
           id={id}
           name={name}
@@ -121,13 +121,13 @@ export function PasswordInput({
           required={required}
           disabled={disabled}
           placeholder={placeholder}
-          className="block w-full rounded-3xl border-0 py-1.5 pr-10 pl-3 text-slate-900 bg-white shadow-sm ring-1 ring-inset ring-slate-300 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-accent sm:text-sm sm:leading-6 disabled:opacity-50 font-bold"
+          className="block w-full rounded-element border border-outline py-2.5 pr-10 pl-3 text-foreground bg-surface-0 shadow-sm focus:ring-1 focus:ring-primary focus:border-primary placeholder:text-foreground/40 sm:text-xs disabled:opacity-50 font-mono font-bold transition-all"
         />
         <button
           type="button"
           onClick={() => setVisible((v) => !v)}
           disabled={disabled}
-          className="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors disabled:opacity-50"
+          className="absolute inset-y-0 right-0 flex items-center pr-3 text-foreground/40 hover:text-foreground transition-colors disabled:opacity-50"
           aria-label={visible ? "Passwort verbergen" : "Passwort anzeigen"}
         >
           {visible ? <EyeOffIcon /> : <EyeIcon />}

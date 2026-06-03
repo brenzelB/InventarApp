@@ -33,26 +33,26 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
   const { user, logout } = useAuth();
 
   return (
-    <nav className="sticky top-0 z-50 shadow-sm bg-white/80 dark:bg-slate-950/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 w-full h-16">
+    <nav className="sticky top-0 z-50 shadow-sm bg-widget/80 backdrop-blur-md border-b border-outline w-full h-16 transition-colors duration-300">
       <div className="h-full px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-full">
           <div className="flex items-center gap-8">
             <button 
               onClick={onMenuClick}
-              className="lg:hidden p-2 rounded-2xl hover:bg-slate-100 dark:hover:bg-slate-900 text-slate-500 dark:text-slate-400 transition-colors"
+              className="lg:hidden p-2 rounded-element hover:bg-surface-2 text-foreground/75 transition-colors"
               aria-label="Menü öffnen"
             >
               <Menu className="w-6 h-6" />
             </button>
-            <Link href="/" className="lg:hidden flex items-center font-bold text-xl tracking-tight text-accent">
-              InventarApp
+            <Link href="/" className="lg:hidden flex items-center font-bold font-sora text-xl tracking-tight text-primary">
+              [ SYS_INV_NAV ]
             </Link>
             <Link 
               href="/dashboard/profile"
-              className="hidden lg:flex items-center gap-1.5 text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest hover:text-accent transition-colors group"
+              className="hidden lg:flex items-center gap-1.5 text-[10px] font-bold text-foreground/60 font-mono uppercase tracking-widest hover:text-primary transition-colors group"
             >
               Willkommen zurück{user ? `, ` : ''}
-              <span className="text-slate-900 dark:text-slate-100 group-hover:text-accent transition-colors">
+              <span className="text-foreground font-extrabold group-hover:text-primary transition-colors">
                 {user ? (user.user_metadata?.display_name || user.email?.split('@')[0]) : ''}
               </span>
             </Link>
@@ -63,28 +63,28 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
               <div className="flex items-center gap-3">
                 <Link 
                   href="/dashboard/profile"
-                  className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 hover:text-accent dark:hover:text-accent transition-all border border-transparent hover:border-indigo-100 dark:hover:border-indigo-900"
+                  className="flex items-center gap-2 px-3 py-1.5 rounded-element bg-surface-2 text-foreground/80 hover:bg-primary/10 hover:text-primary hover:border-primary/30 transition-all border border-outline font-mono text-xs"
                 >
                   {(() => {
                     const AvatarIcon = iconMap[user.user_metadata?.avatar_id] || User;
-                    return <AvatarIcon className="w-4 h-4" />;
+                    return <AvatarIcon className="w-4 h-4 text-primary" />;
                   })()}
-                  <span className="text-xs font-black uppercase">{user.user_metadata?.display_name || user.email?.split('@')[0]}</span>
+                  <span className="text-[10px] font-bold uppercase tracking-wider">{user.user_metadata?.display_name || user.email?.split('@')[0]}</span>
                 </Link>
                 <button 
                   onClick={() => {
                     console.log("[Navbar] Logout button clicked");
                     logout();
                   }}
-                  className="flex items-center gap-2 px-4 py-2 text-sm font-black text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-3xl transition-all"
+                  className="flex items-center gap-2 px-4 py-2 text-xs font-bold text-red-500 hover:bg-red-500/10 rounded-element transition-all font-mono uppercase tracking-widest border border-transparent hover:border-red-500/20"
                   title="Abmelden"
                 >
                   <LogOut className="w-4 h-4" />
-                  <span className="hidden sm:inline text-xs tracking-widest">LOGOUT</span>
+                  <span className="hidden sm:inline">LOGOUT</span>
                 </button>
               </div>
             ) : (
-              <Link href="/login" className="bg-accent hover:bg-accent-hover text-white px-6 py-2 rounded-3xl text-sm font-bold transition-all shadow-sm border border-slate-200 dark:border-slate-800 shadow-indigo-200 dark:shadow-none">
+              <Link href="/login" className="bg-primary hover:bg-primary-hover text-white dark:text-black dark:font-black px-6 py-2 rounded-element text-xs font-bold transition-all shadow-sm border border-outline font-mono uppercase tracking-widest">
                 Login
               </Link>
             )}
