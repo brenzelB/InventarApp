@@ -1,0 +1,21 @@
+[Unit]
+Description=Supabase Local Development Server (Docker CLI)
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+
+# WICHTIG: Setze dies auf das Verzeichnis auf deinem Server, in dem Supabase initialisiert ist (wo der Ordner "supabase" liegt)
+WorkingDirectory=/home/denis/inventar
+
+# Passe den Pfad zur Supabase CLI an, falls nötig (kann mit 'which supabase' ermittelt werden)
+ExecStart=/usr/local/bin/supabase start
+ExecStop=/usr/local/bin/supabase stop
+
+# Der Benutzer, unter dem Supabase läuft (z.B. dein Server-Benutzername, der in der docker-Gruppe ist)
+User=denis
+
+[Install]
+WantedBy=multi-user.target

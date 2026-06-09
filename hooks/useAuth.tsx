@@ -97,7 +97,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     if (!isMockMode) {
       const { data: { subscription } } = supabase.auth.onAuthStateChange(
-        async (_event, session) => {
+        async (event, session) => {
           setSession(session);
           setUser(session?.user ?? null);
           
@@ -105,6 +105,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             fetchUserRole(session.user.id, session.user.email);
           } else {
             setRole('viewer');
+          }
+          
+          // Redirect to reset-password if auth event is recovery or invite/signup token in hash
+          if (typeof window !== "undefined") {
+            const path = window.location.pathname;
+            const hash = window.location.hash;
+            
+            const isRecovery = event === "PASSWORD_RECOVERY";
+            const isInviteOrRecoveryHash = hash && (
+              hash.includes("type=invite") || 
+              hash.includes("type=recovery") || 
+              hash.includes("type=signup")
+            );
+
+            if (path !== "/reset-password" && (isRecovery || isInviteOrRecoveryHash)) {
+              console.log("[Auth] Redirecting to /reset-password based on auth event/hash:", { event, hasHash: !!isInviteOrRecoveryHash });
+              router.push("/reset-password");
+            }
           }
           
           setLoading(false);
