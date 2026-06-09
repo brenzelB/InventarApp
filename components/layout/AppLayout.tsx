@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Sidebar from './Sidebar';
 import Navbar from '../Navbar';
 import { useAuth } from '@/hooks/useAuth';
+import { GlobalBarcodeScanner } from '../GlobalBarcodeScanner';
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -14,6 +15,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   if (!user) {
     return (
       <div className="min-h-screen flex flex-col bg-background bg-grid-pattern text-foreground">
+        <GlobalBarcodeScanner />
         <Navbar onMenuClick={() => setIsSidebarOpen(true)} />
         <main className="flex-grow w-full max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
           {children}
@@ -24,6 +26,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="min-h-screen bg-background bg-grid-pattern text-foreground">
+      <GlobalBarcodeScanner />
       <Sidebar 
         isOpen={isSidebarOpen} 
         setIsOpen={setIsSidebarOpen} 
