@@ -1,10 +1,12 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import { Article, ArticleHistoryEntry, ArticleComment } from "../types";
 import { articleService } from "../services/articleService";
 
 export function useArticleDetails(id: string) {
+  const router = useRouter();
   const [article, setArticle] = useState<Article | null>(null);
   const [history, setHistory] = useState<ArticleHistoryEntry[]>([]);
   const [comments, setComments] = useState<ArticleComment[]>([]);
@@ -70,7 +72,7 @@ export function useArticleDetails(id: string) {
     console.log("BERECHNETER BESTAND FÜR DB (OPTIMISTISCH):", calculatedNewStock);
     console.log("DEBUG_STOCK:", { id, currentStock, originalAmount: amount, absAmount, type, target: calculatedNewStock });
 
-    // Speichere den vorherigen Zustand für einen eventuellen Rollback bei Fehler
+    // Speichere den vorherigen Zustand für einen eventuellen Rollback bei Fehler des Haupt-Updates
     const previousArticle = { ...article };
     const previousHistory = [...history];
 
@@ -92,22 +94,31 @@ export function useArticleDetails(id: string) {
 
     // DB-Operationen asynchron im Hintergrund ausführen (kein await hier, um UI nicht zu blockieren)
     (async () => {
+      let updateSuccess = false;
       try {
         setIsAdjusting(true);
         // Haupt-Update in der Datenbank
         await articleService.updateArticle(id, { bestand: calculatedNewStock });
+        updateSuccess = true;
         
-        // Historie in der Datenbank loggen
-        await articleService.addHistoryEntry(id, currentStock, calculatedNewStock, type, signedAmount);
-        
-        // Saubere Historie aus der DB holen, um die temporäre zu ersetzen
-        const freshHistory = await articleService.getArticleHistory(id);
-        setHistory(freshHistory);
+        // Refresh Next.js caches
+        router.refresh();
       } catch (err: any) {
-        console.error("Hintergrund-Lagerbuchung fehlgeschlagen, führe Rollback aus:", err);
-        // Rollback bei Fehler
+        console.error("Haupt-Lagerbuchung fehlgeschlagen, führe Rollback aus:", err);
+        // Rollback NUR bei Fehler des Haupt-Updates
         setArticle(previousArticle);
         setHistory(previousHistory);
+        setIsAdjusting(false);
+        return;
+      }
+
+      // Historie & Logs getrennt behandeln, damit Fehler hierbei die Buchung in der UI nicht rückgängig machen
+      try {
+        await articleService.addHistoryEntry(id, currentStock, calculatedNewStock, type, signedAmount);
+        const freshHistory = await articleService.getArticleHistory(id);
+        setHistory(freshHistory);
+      } catch (hErr) {
+        console.warn("Historie-Logging im Hintergrund fehlgeschlagen (UI-Update bleibt erhalten):", hErr);
       } finally {
         setIsAdjusting(false);
       }

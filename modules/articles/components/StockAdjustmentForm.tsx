@@ -124,12 +124,7 @@ export function StockAdjustmentForm({ onAdjust, loading }: StockAdjustmentFormPr
           onClick={handleButtonClick}
           className="w-full py-3 rounded-element text-xs font-bold font-mono uppercase tracking-widest shadow-sm border transition-all active:scale-[0.98] flex items-center justify-center gap-2 bg-primary hover:bg-primary-hover border-outline text-white dark:text-black dark:font-extrabold"
         >
-          {loading ? (
-            <>
-              <Loader2 className="w-4 h-4 animate-spin" />
-              Wird gebucht...
-            </>
-          ) : error ? (
+          {error ? (
             <>
               <RotateCcw className="w-4 h-4" />
               Fehler (Nochmal?)
