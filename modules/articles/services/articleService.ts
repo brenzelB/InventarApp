@@ -411,7 +411,7 @@ export const articleService = {
     }
     const { data, error } = await supabase
       .from("article_comments")
-      .select("*, profile:profiles(display_name, full_name)")
+      .select("*")
       .eq("article_id", articleId)
       .order("created_at", { ascending: false });
     if (error) throw error;
@@ -428,19 +428,25 @@ export const articleService = {
         article_id: articleId,
         content,
         created_at: new Date().toISOString(),
-        profile: {
-          display_name: name,
-          full_name: name
-        }
+        author_name: name
       };
       comments.unshift(newComment);
       localStorage.setItem(`mock_comments_${articleId}`, JSON.stringify(comments));
       return newComment;
     }
+    
+    // Benutzernamen aus der aktiven Supabase-Session abrufen
+    const { data: { user } } = await supabase.auth.getUser();
+    const authorName = user?.user_metadata?.display_name || user?.user_metadata?.full_name || user?.email?.split('@')[0] || "Benutzer";
+
     const { data, error } = await supabase
       .from("article_comments")
-      .insert([{ article_id: articleId, content }])
-      .select("*, profile:profiles(display_name, full_name)")
+      .insert([{ 
+        article_id: articleId, 
+        content,
+        author_name: authorName
+      }])
+      .select()
       .single();
     if (error) throw error;
     return data as any;

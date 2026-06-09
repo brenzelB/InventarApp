@@ -76,7 +76,7 @@ export function ArticleComments({ comments, onAddComment }: ArticleCommentsProps
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between mb-1">
                   <span className="text-xs font-bold text-slate-500 dark:text-slate-400">
-                    {(comment.profile?.display_name || comment.profile?.full_name || 'Benutzer').toUpperCase()}
+                    {(comment.author_name || comment.profile?.display_name || comment.profile?.full_name || 'Benutzer').toUpperCase()}
                   </span>
                   <span className="text-[10px] text-slate-400 dark:text-slate-500 font-bold">
                     {new Date(comment.created_at).toLocaleString('de-DE', {

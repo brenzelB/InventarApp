@@ -80,8 +80,8 @@ CREATE TABLE IF NOT EXISTS public.article_comments (
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
     article_id UUID REFERENCES public.articles(id) ON DELETE CASCADE NOT NULL,
     content TEXT NOT NULL,
-    -- WICHTIG: Referenz auf public.profiles(id) für PostgREST
-    user_id UUID REFERENCES public.profiles(id) ON DELETE SET NULL DEFAULT auth.uid(),
+    user_id UUID REFERENCES auth.users(id) ON DELETE SET NULL DEFAULT auth.uid(),
+    author_name TEXT, -- Speichert den Anzeigenamen direkt für maximale Unabhängigkeit von Profil-Tabellen
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
