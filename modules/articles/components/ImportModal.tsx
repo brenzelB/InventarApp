@@ -31,27 +31,27 @@ export function ImportModal({ onClose, onSuccess }: ImportModalProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300">
-      <div className="bg-white dark:bg-slate-900 rounded-3xl shadow-2xl dark:shadow-none w-full max-w-md overflow-hidden border border-slate-200 dark:border-slate-800 animate-in zoom-in-95 duration-300">
-        <div className="p-6 border-b border-slate-100 dark:border-slate-700 flex justify-between items-center">
-          <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-tight">Smart Import</h3>
-          <button onClick={onClose} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-3xl transition-colors">
-            <X className="w-5 h-5 text-slate-500" />
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#111111]/85 backdrop-blur-[4px] animate-in fade-in duration-300">
+      <div className="bg-widget rounded-card shadow-lg w-full max-w-md overflow-hidden border border-outline bg-grid-pattern bg-opacity-5 animate-in zoom-in-95 duration-300">
+        <div className="p-6 border-b border-outline flex justify-between items-center bg-surface-2 dark:bg-surface-2/40">
+          <h3 className="text-sm font-bold text-foreground font-sora uppercase tracking-wide">[ SMART_IMPORT ] Smart Import</h3>
+          <button onClick={onClose} className="p-2 hover:bg-surface-2 rounded-element transition-colors">
+            <X className="w-4 h-4 text-foreground/45" />
           </button>
         </div>
 
-        <div className="p-8">
+        <div className="p-6">
           {!result && !loading && (
             <div 
               onClick={() => fileInputRef.current?.click()}
-              className="group cursor-pointer border-2 border-dashed border-slate-300 dark:border-slate-600 hover:border-indigo-500 dark:hover:border-indigo-400 rounded-3xl p-10 flex flex-col items-center justify-center gap-8 transition-all hover:bg-indigo-50/50 dark:hover:bg-indigo-900/10"
+              className="group cursor-pointer border border-dashed border-outline hover:border-primary rounded-element p-8 flex flex-col items-center justify-center gap-6 transition-all hover:bg-primary/5 bg-surface-0"
             >
-              <div className="w-16 h-16 rounded-2xl bg-indigo-50 dark:bg-indigo-900/20 text-accent dark:text-indigo-400 flex items-center justify-center group-hover:scale-110 transition-transform">
-                <Upload className="w-8 h-8" />
+              <div className="w-12 h-12 rounded-element bg-primary/10 text-primary flex items-center justify-center group-hover:scale-110 transition-transform">
+                <Upload className="w-6 h-6" />
               </div>
               <div className="text-center">
-                <p className="text-base font-bold text-slate-900 dark:text-white">Excel-Datei auswählen</p>
-                <p className="text-sm text-slate-500 mt-1">Klicken oder Datei hierher ziehen</p>
+                <p className="text-sm font-bold text-foreground font-sora">Excel-Datei auswählen</p>
+                <p className="text-xs text-foreground/60 mt-1 font-sans">Klicken oder Datei hierher ziehen</p>
               </div>
               <input 
                 type="file" 
@@ -64,24 +64,24 @@ export function ImportModal({ onClose, onSuccess }: ImportModalProps) {
           )}
 
           {loading && (
-            <div className="flex flex-col items-center justify-center py-10 gap-8">
-              <Loader2 className="w-12 h-12 text-accent animate-spin" />
+            <div className="flex flex-col items-center justify-center py-10 gap-6">
+              <Loader2 className="w-8 h-8 text-primary animate-spin" />
               <div className="text-center">
-                <p className="text-base font-bold text-slate-900 dark:text-white uppercase tracking-wider">Verarbeite Daten...</p>
-                <p className="text-sm text-slate-500 mt-1">Gruppen werden zugeordnet und Artikel erstellt.</p>
+                <p className="text-xs font-bold font-mono text-foreground uppercase tracking-widest">Verarbeite Daten...</p>
+                <p className="text-[11px] text-foreground/50 mt-1 font-sans">Gruppen werden zugeordnet und Artikel erstellt.</p>
               </div>
             </div>
           )}
 
           {result && (
             <div className="space-y-6">
-              <div className="flex items-center gap-8 p-8 bg-green-50 dark:bg-green-900/20 rounded-2xl border border-green-100 dark:border-green-800/50">
-                <div className="w-10 h-10 rounded-3xl bg-green-100 dark:bg-green-900/40 text-green-600 dark:text-green-400 flex items-center justify-center">
-                  <FileCheck className="w-6 h-6" />
+              <div className="flex items-center gap-4 p-4 bg-secondary/10 border border-secondary/20 rounded-element">
+                <div className="w-8 h-8 rounded-element bg-secondary/20 text-secondary flex items-center justify-center flex-shrink-0">
+                  <FileCheck className="w-5 h-5" />
                 </div>
                 <div>
-                  <p className="text-sm font-black text-green-700 dark:text-green-400 uppercase">Erfolg</p>
-                  <p className="text-xs text-green-600 dark:text-green-400/80">
+                  <p className="text-xs font-bold font-mono text-secondary uppercase tracking-wider">Erfolg</p>
+                  <p className="text-[11px] text-secondary font-mono mt-0.5">
                     {result.success} Artikel importiert, {result.groupsCreated} Gruppen neu erstellt.
                   </p>
                 </div>
@@ -89,11 +89,11 @@ export function ImportModal({ onClose, onSuccess }: ImportModalProps) {
 
               {result.errors.length > 0 && (
                 <div className="space-y-2">
-                  <p className="text-xs font-bold text-slate-500 uppercase tracking-widest pl-1">Hinweise / Fehler</p>
-                  <div className="max-h-32 overflow-y-auto space-y-1 p-2 bg-slate-50 dark:bg-widget/50 rounded-3xl border border-slate-100 dark:border-slate-800">
+                  <p className="text-[10px] font-bold font-mono text-foreground/50 uppercase tracking-widest pl-1">Hinweise / Fehler</p>
+                  <div className="max-h-32 overflow-y-auto space-y-1 p-2 bg-surface-0 rounded-element border border-outline">
                     {result.errors.map((err, i) => (
-                      <div key={i} className="flex gap-2 text-[11px] text-red-500 font-medium">
-                        <AlertCircle className="w-3 h-3 flex-shrink-0 mt-0.5" />
+                      <div key={i} className="flex gap-2 text-[10px] text-primary font-mono font-bold uppercase">
+                        <AlertCircle className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" />
                         <span>{err}</span>
                       </div>
                     ))}
@@ -103,7 +103,7 @@ export function ImportModal({ onClose, onSuccess }: ImportModalProps) {
 
               <button 
                 onClick={onClose}
-                className="w-full py-4 rounded-2xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black uppercase tracking-widest shadow-xl dark:shadow-none hover:scale-[1.02] transition-transform active:scale-95"
+                className="w-full py-2.5 rounded-element bg-primary text-white dark:text-black dark:font-extrabold font-mono font-bold text-xs uppercase tracking-widest hover:bg-primary-hover shadow-sm transition-colors"
               >
                 Schließen
               </button>

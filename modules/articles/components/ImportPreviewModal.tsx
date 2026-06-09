@@ -101,29 +101,29 @@ export function ImportPreviewModal({ onClose, onSuccess }: ImportPreviewModalPro
   const previewRows = previewData?.rows.slice(0, 5) ?? [];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/70 backdrop-blur-sm animate-in fade-in duration-300">
-      <div className="bg-white dark:bg-slate-900 rounded-3xl shadow-2xl dark:shadow-none w-full max-w-3xl overflow-hidden border border-slate-200 dark:border-slate-800 animate-in zoom-in-95 duration-300">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#111111]/85 backdrop-blur-[4px] animate-in fade-in duration-300">
+      <div className="bg-widget rounded-card shadow-lg w-full max-w-3xl overflow-hidden border border-outline bg-grid-pattern bg-opacity-5 animate-in zoom-in-95 duration-300">
 
         {/* Header */}
-        <div className="p-6 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center">
+        <div className="p-6 border-b border-outline flex justify-between items-center bg-surface-2 dark:bg-surface-2/40">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-2xl bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-element bg-primary/10 text-primary flex items-center justify-center">
               <Upload className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="text-lg font-black text-slate-900 dark:text-white uppercase tracking-tight">
-                Import Vorschau
+              <h3 className="text-sm font-bold text-foreground font-sora uppercase tracking-wide">
+                [ IMPORT_PREVIEW ] Import Vorschau
               </h3>
-              <p className="text-xs text-slate-500 font-medium">
+              <p className="text-[11px] text-foreground/50 font-sans">
                 Prüfe deine Daten, bevor sie importiert werden.
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-2xl transition-colors"
+            className="p-2 hover:bg-surface-2 rounded-element transition-colors"
           >
-            <X className="w-5 h-5 text-slate-500" />
+            <X className="w-4 h-4 text-foreground/45" />
           </button>
         </div>
 
@@ -136,21 +136,21 @@ export function ImportPreviewModal({ onClose, onSuccess }: ImportPreviewModalPro
               onDragLeave={() => setIsDragging(false)}
               onDrop={handleDrop}
               onClick={() => fileInputRef.current?.click()}
-              className={`group cursor-pointer border-2 border-dashed rounded-3xl p-12 flex flex-col items-center justify-center gap-6 transition-all
+              className={`group cursor-pointer border border-dashed rounded-element p-10 flex flex-col items-center justify-center gap-6 transition-all bg-surface-0
                 ${isDragging
-                  ? "border-blue-500 bg-blue-50 dark:bg-blue-900/10"
-                  : "border-slate-300 dark:border-slate-700 hover:border-blue-500 hover:bg-blue-50/50 dark:hover:bg-blue-900/10"
+                  ? "border-primary bg-primary/5"
+                  : "border-outline hover:border-primary hover:bg-primary/5"
                 }`}
             >
-              <div className="w-16 h-16 rounded-2xl bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 flex items-center justify-center group-hover:scale-110 transition-transform">
-                <Upload className="w-8 h-8" />
+              <div className="w-12 h-12 rounded-element bg-primary/10 text-primary flex items-center justify-center group-hover:scale-110 transition-transform">
+                <Upload className="w-6 h-6" />
               </div>
               <div className="text-center">
-                <p className="text-base font-bold text-slate-900 dark:text-white">
+                <p className="text-sm font-bold text-foreground font-sora">
                   Excel-Datei auswählen
                 </p>
-                <p className="text-sm text-slate-500 mt-1">Klicken oder Datei hierher ziehen</p>
-                <p className="text-xs text-slate-400 mt-2">.xlsx, .xls</p>
+                <p className="text-xs text-foreground/60 mt-1 font-sans">Klicken oder Datei hierher ziehen</p>
+                <p className="text-[10px] font-mono text-foreground/45 mt-2">.xlsx, .xls</p>
               </div>
               <input
                 type="file"
@@ -168,24 +168,24 @@ export function ImportPreviewModal({ onClose, onSuccess }: ImportPreviewModalPro
 
               {/* Summary chip */}
               <div className="flex flex-wrap items-center gap-3">
-                <div className="flex items-center gap-2 px-4 py-2 rounded-2xl bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800/50">
-                  <Table2 className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-                  <span className="text-sm font-black text-blue-800 dark:text-blue-300">
+                <div className="flex items-center gap-2 px-3 py-1.5 rounded-element bg-secondary/10 border border-secondary/20">
+                  <Table2 className="w-4 h-4 text-secondary" />
+                  <span className="text-xs font-bold font-mono text-secondary uppercase tracking-wider">
                     {previewData.totalCount} {previewData.totalCount === 1 ? "Artikel" : "Artikel"} in der Datei gefunden
                   </span>
                 </div>
                 {selectedFile && (
-                  <span className="text-xs font-medium text-slate-400 truncate max-w-[200px]">
+                  <span className="text-xs font-bold font-mono text-foreground/45 truncate max-w-[200px]">
                     {selectedFile.name}
                   </span>
                 )}
               </div>
 
               {/* Detected columns */}
-              <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
+              <div className="p-4 rounded-element bg-surface-2 border border-outline">
                 <div className="flex items-center gap-2 mb-3">
-                  <Tag className="w-3.5 h-3.5 text-slate-500" />
-                  <p className="text-[11px] font-black text-slate-500 uppercase tracking-widest">
+                  <Tag className="w-3.5 h-3.5 text-foreground/50" />
+                  <p className="text-[10px] font-bold font-mono text-foreground/50 uppercase tracking-widest">
                     Erkannte Felder
                   </p>
                 </div>
@@ -193,10 +193,10 @@ export function ImportPreviewModal({ onClose, onSuccess }: ImportPreviewModalPro
                   {previewData.headers.map((h) => (
                     <span
                       key={h}
-                      className={`inline-flex items-center px-2.5 py-1 rounded-xl text-[11px] font-bold
+                      className={`inline-flex items-center px-2 py-0.5 rounded-element text-[9px] font-bold font-mono uppercase border
                         ${MANDATORY_FIELDS.includes(h)
-                          ? "bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 ring-1 ring-emerald-200 dark:ring-emerald-800/50"
-                          : "bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300"
+                          ? "bg-secondary/15 text-secondary border-secondary/20"
+                          : "bg-surface-0 border-outline text-foreground/75"
                         }`}
                     >
                       {h}
@@ -207,13 +207,13 @@ export function ImportPreviewModal({ onClose, onSuccess }: ImportPreviewModalPro
 
               {/* Missing mandatory field error */}
               {missingMandatory.length > 0 && (
-                <div className="flex items-start gap-3 p-4 rounded-2xl bg-rose-50 dark:bg-rose-900/20 border border-rose-200 dark:border-rose-800/50">
-                  <AlertCircle className="w-5 h-5 text-rose-600 dark:text-rose-400 flex-shrink-0 mt-0.5" />
+                <div className="flex items-start gap-3 p-4 rounded-element bg-primary/10 border border-primary/20">
+                  <AlertCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
                   <div>
-                    <p className="text-sm font-black text-rose-700 dark:text-rose-400">
+                    <p className="text-xs font-bold font-mono text-primary uppercase">
                       Pflichtfeld fehlt
                     </p>
-                    <p className="text-xs text-rose-600 dark:text-rose-400/80 mt-0.5">
+                    <p className="text-[11px] text-primary/80 mt-0.5">
                       Die Spalte <strong>"{missingMandatory.join('", "')}"</strong> wurde in der Datei nicht gefunden.
                       Der Import kann nicht gestartet werden.
                     </p>
@@ -224,38 +224,38 @@ export function ImportPreviewModal({ onClose, onSuccess }: ImportPreviewModalPro
               {/* Preview table */}
               {previewRows.length > 0 && (
                 <div>
-                  <p className="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-2 pl-1">
+                  <p className="text-[10px] font-bold font-mono text-foreground/50 uppercase tracking-widest mb-2 pl-1">
                     Vorschau (erste {previewRows.length} Zeilen)
                   </p>
-                  <div className="overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-800">
-                    <table className="min-w-full text-xs">
+                  <div className="overflow-x-auto rounded-card border border-outline overflow-hidden bg-surface-0">
+                    <table className="min-w-full text-[10px] border-collapse">
                       <thead>
-                        <tr className="bg-slate-50 dark:bg-slate-800/70">
+                        <tr className="bg-surface-2 dark:bg-surface-2/40 border-b border-outline">
                           {previewData.headers.map((h) => (
                             <th
                               key={h}
-                              className="px-3 py-2.5 text-left font-black text-slate-500 dark:text-slate-400 uppercase tracking-wider whitespace-nowrap border-b border-slate-200 dark:border-slate-700"
+                              className="px-3 py-2.5 text-left font-bold font-mono text-foreground/70 uppercase tracking-widest text-[9px] border-r border-outline last:border-r-0 whitespace-nowrap"
                             >
                               {h}
                             </th>
                           ))}
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+                      <tbody className="divide-y divide-outline bg-transparent">
                         {previewRows.map((row, i) => (
                           <tr
                             key={i}
-                            className="bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors"
+                            className="hover:bg-surface-2/30 transition-all border-b border-outline last:border-0"
                           >
                             {previewData.headers.map((h) => (
                               <td
                                 key={h}
-                                className="px-3 py-2 text-slate-700 dark:text-slate-300 font-medium whitespace-nowrap max-w-[180px] truncate"
+                                className="px-3 py-2 text-foreground/80 font-mono text-[10px] border-r border-outline last:border-r-0 whitespace-nowrap max-w-[180px] truncate"
                                 title={String(row[h] ?? "")}
                               >
                                 {row[h] !== undefined && row[h] !== null
                                   ? String(row[h])
-                                  : <span className="text-slate-300 dark:text-slate-600">—</span>}
+                                  : <span className="text-foreground/30 font-bold">—</span>}
                               </td>
                             ))}
                           </tr>
@@ -264,28 +264,28 @@ export function ImportPreviewModal({ onClose, onSuccess }: ImportPreviewModalPro
                     </table>
                   </div>
                   {previewData.totalCount > 5 && (
-                    <p className="text-[11px] text-slate-400 font-medium mt-2 pl-1">
+                    <p className="text-[10px] text-foreground/50 font-mono mt-2 pl-1">
                       … und {previewData.totalCount - 5} weitere Zeilen
-                    </p>
+                  </p>
                   )}
                 </div>
               )}
 
               {/* Action buttons */}
-              <div className="flex items-center justify-end gap-3 pt-2 border-t border-slate-100 dark:border-slate-800">
+              <div className="flex items-center justify-end gap-3 pt-4 border-t border-outline">
                 <button
                   onClick={onClose}
-                  className="px-5 py-2.5 rounded-2xl text-sm font-bold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                  className="px-4 py-2 text-xs font-bold font-mono uppercase tracking-widest text-foreground/70 hover:text-foreground hover:bg-surface-2 rounded-element border border-transparent hover:border-outline transition-colors"
                 >
                   Abbrechen
                 </button>
                 <button
                   onClick={handleConfirmImport}
                   disabled={!canConfirm}
-                  className={`flex items-center gap-2 px-6 py-2.5 rounded-2xl text-sm font-black text-white transition-all active:scale-95
+                  className={`flex items-center gap-2 px-5 py-2.5 rounded-element text-xs font-bold text-white dark:text-black dark:font-extrabold transition-all border font-mono uppercase tracking-widest
                     ${canConfirm
-                      ? "bg-blue-600 hover:bg-blue-500 shadow-[0_0_20px_rgba(59,130,246,0.35)] hover:shadow-[0_0_28px_rgba(59,130,246,0.5)]"
-                      : "bg-slate-300 dark:bg-slate-700 cursor-not-allowed opacity-60"
+                      ? "bg-primary hover:bg-primary-hover border-outline shadow-sm"
+                      : "bg-surface-0 border-outline text-foreground/40 cursor-not-allowed"
                     }`}
                 >
                   Import jetzt starten
@@ -299,16 +299,16 @@ export function ImportPreviewModal({ onClose, onSuccess }: ImportPreviewModalPro
           {state === "importing" && (
             <div className="flex flex-col items-center justify-center py-16 gap-6">
               <div className="relative">
-                <div className="w-16 h-16 rounded-full border-4 border-blue-100 dark:border-blue-900/30 border-t-blue-600 animate-spin" />
+                <div className="w-16 h-16 rounded-full border-4 border-outline border-t-primary animate-spin" />
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-8 h-8 rounded-full bg-blue-50 dark:bg-blue-900/20" />
+                  <div className="w-8 h-8 rounded-full bg-surface-0" />
                 </div>
               </div>
               <div className="text-center">
-                <p className="text-base font-black text-slate-900 dark:text-white uppercase tracking-wider">
+                <p className="text-xs font-bold font-mono text-foreground uppercase tracking-widest">
                   Importiere Daten…
                 </p>
-                <p className="text-sm text-slate-500 mt-1">
+                <p className="text-[11px] text-foreground/50 mt-1 font-sans">
                   Gruppen werden zugeordnet und Artikel erstellt.
                 </p>
               </div>
@@ -318,15 +318,15 @@ export function ImportPreviewModal({ onClose, onSuccess }: ImportPreviewModalPro
           {/* ── DONE ── */}
           {state === "done" && result && (
             <div className="space-y-5">
-              <div className="flex items-center gap-4 p-5 bg-emerald-50 dark:bg-emerald-900/20 rounded-2xl border border-emerald-100 dark:border-emerald-800/50">
-                <div className="w-10 h-10 rounded-2xl bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-center flex-shrink-0">
+              <div className="flex items-center gap-4 p-4 bg-secondary/10 border border-secondary/20 rounded-element">
+                <div className="w-8 h-8 rounded-element bg-secondary/20 text-secondary flex items-center justify-center flex-shrink-0">
                   <FileCheck className="w-5 h-5" />
                 </div>
                 <div>
-                  <p className="text-sm font-black text-emerald-700 dark:text-emerald-400 uppercase tracking-tight">
+                  <p className="text-xs font-bold font-mono text-secondary uppercase tracking-wider">
                     Import abgeschlossen
                   </p>
-                  <p className="text-xs text-emerald-600 dark:text-emerald-400/80 mt-0.5">
+                  <p className="text-[11px] text-secondary font-mono mt-0.5">
                     <strong>{result.success}</strong> Artikel importiert
                     {result.groupsCreated > 0 && `, ${result.groupsCreated} neue Gruppe${result.groupsCreated > 1 ? "n" : ""} angelegt`}.
                   </p>
@@ -335,13 +335,13 @@ export function ImportPreviewModal({ onClose, onSuccess }: ImportPreviewModalPro
 
               {result.errors.length > 0 && (
                 <div className="space-y-2">
-                  <p className="text-[11px] font-black text-slate-400 uppercase tracking-widest pl-1">
+                  <p className="text-[10px] font-bold font-mono text-foreground/50 uppercase tracking-widest pl-1">
                     Hinweise / Fehler
                   </p>
-                  <div className="max-h-36 overflow-y-auto space-y-1 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-100 dark:border-slate-800">
+                  <div className="max-h-36 overflow-y-auto space-y-1 p-3 bg-surface-0 rounded-element border border-outline">
                     {result.errors.map((err, i) => (
-                      <div key={i} className="flex gap-2 text-[11px] text-rose-500 font-medium">
-                        <AlertCircle className="w-3 h-3 flex-shrink-0 mt-0.5" />
+                      <div key={i} className="flex gap-2 text-[10px] text-primary font-mono font-bold uppercase">
+                        <AlertCircle className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" />
                         <span>{err}</span>
                       </div>
                     ))}
@@ -351,7 +351,7 @@ export function ImportPreviewModal({ onClose, onSuccess }: ImportPreviewModalPro
 
               <button
                 onClick={onClose}
-                className="w-full py-3.5 rounded-2xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black uppercase tracking-widest hover:scale-[1.02] transition-transform active:scale-95"
+                className="w-full py-2.5 rounded-element bg-primary text-white dark:text-black dark:font-extrabold font-mono font-bold text-xs uppercase tracking-widest hover:bg-primary-hover shadow-sm transition-colors"
               >
                 Schließen
               </button>

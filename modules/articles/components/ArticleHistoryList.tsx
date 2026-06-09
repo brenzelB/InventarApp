@@ -12,23 +12,23 @@ export function ArticleHistoryList({ history }: ArticleHistoryListProps) {
     switch (type) {
       case 'input':
         return { 
-          icon: <ArrowUpRight className="w-4 h-4" />, 
-          bg: 'bg-emerald-100 dark:bg-emerald-900/30', 
-          text: 'text-emerald-900 dark:text-emerald-400', 
+          icon: <ArrowUpRight className="w-3.5 h-3.5" />, 
+          bg: 'bg-secondary/10 border-secondary/20', 
+          text: 'text-secondary', 
           label: 'Einlagerung' 
         };
       case 'output':
         return { 
-          icon: <ArrowDownRight className="w-4 h-4" />, 
-          bg: 'bg-rose-100 dark:bg-rose-900/30', 
-          text: 'text-rose-900 dark:text-rose-400', 
+          icon: <ArrowDownRight className="w-3.5 h-3.5" />, 
+          bg: 'bg-primary/10 border-primary/20', 
+          text: 'text-primary', 
           label: 'Entnahme' 
         };
       default:
         return { 
-          icon: <RefreshCw className="w-4 h-4" />, 
-          bg: 'bg-slate-100 dark:bg-slate-800/50', 
-          text: 'text-slate-900 dark:text-slate-300', 
+          icon: <RefreshCw className="w-3.5 h-3.5" />, 
+          bg: 'bg-surface-2 border-outline', 
+          text: 'text-foreground/70', 
           label: 'System' 
         };
     }
@@ -36,52 +36,52 @@ export function ArticleHistoryList({ history }: ArticleHistoryListProps) {
 
   if (history.length === 0) {
     return (
-      <div className="text-center py-10 bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-dashed border-slate-300 dark:border-slate-800">
-        <p className="text-slate-500 dark:text-slate-400 text-sm font-semibold">Keine Buchungshistorie vorhanden.</p>
+      <div className="text-center py-10 bg-widget rounded-card border border-outline shadow-sm">
+        <p className="text-foreground/60 text-xs font-mono uppercase tracking-widest">Keine Buchungshistorie vorhanden.</p>
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <div className="flex items-center gap-2 mb-2">
-        <History className="w-5 h-5 text-slate-600 dark:text-slate-400" />
-        <h3 className="text-lg font-bold tracking-wide text-slate-900 dark:text-slate-100">Letzte Bewegungen</h3>
+        <History className="w-5 h-5 text-primary" />
+        <h3 className="text-xs font-bold tracking-wide text-foreground uppercase font-sora">[ TRANSACTION_LOG ] Letzte Bewegungen</h3>
       </div>
 
-      <div className="overflow-hidden rounded-2xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm dark:shadow-none ring-1 ring-slate-100 dark:ring-slate-800">
+      <div className="overflow-hidden border border-outline bg-widget rounded-card shadow-sm bg-grid-pattern bg-opacity-5">
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-slate-100 dark:divide-slate-800">
-            <thead className="bg-slate-50 dark:bg-slate-950">
+          <table className="min-w-full divide-y divide-outline">
+            <thead className="bg-surface-2 dark:bg-surface-2/40 border-b border-outline">
               <tr>
-                <th className="px-6 py-4 text-left text-[11px] font-bold text-slate-900 dark:text-slate-400 uppercase tracking-widest">Typ</th>
-                <th className="px-6 py-4 text-left text-[11px] font-bold text-slate-900 dark:text-slate-400 uppercase tracking-widest">Menge</th>
-                <th className="px-6 py-4 text-left text-[11px] font-bold text-slate-900 dark:text-slate-400 uppercase tracking-widest">Datum</th>
+                <th className="px-6 py-4 text-left text-[10px] font-bold font-mono text-foreground/75 uppercase tracking-widest">Typ</th>
+                <th className="px-6 py-4 text-left text-[10px] font-bold font-mono text-foreground/75 uppercase tracking-widest">Menge</th>
+                <th className="px-6 py-4 text-left text-[10px] font-bold font-mono text-foreground/75 uppercase tracking-widest">Datum</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+            <tbody className="divide-y divide-outline bg-transparent">
               {history.map((entry) => {
                 const config = getTypeConfig(entry.type);
                 const amount = entry.new_stock - entry.old_stock;
                 return (
-                  <tr key={entry.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                  <tr key={entry.id} className="hover:bg-surface-2/30 transition-all border-b border-outline last:border-0">
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold ${config.bg} ${config.text}`}>
+                      <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-element text-[10px] font-mono font-bold uppercase tracking-wider border ${config.bg} ${config.text}`}>
                         {config.icon}
                         {config.label}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`text-sm font-black ${amount > 0 ? 'text-emerald-700 dark:text-emerald-500' : 'text-rose-700 dark:text-rose-500'}`}>
+                      <span className={`text-xs font-mono font-bold ${amount > 0 ? 'text-secondary' : 'text-primary'}`}>
                         {amount > 0 ? `+${amount}` : amount}
                       </span>
-                      <span className="ml-2 text-[10px] text-slate-400 dark:text-slate-500 font-medium">
+                      <span className="ml-2 text-[10px] text-foreground/45 font-mono">
                         ({entry.old_stock} → {entry.new_stock})
                       </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600 dark:text-slate-300 font-bold">
+                    <td className="px-6 py-4 whitespace-nowrap text-xs text-foreground/75 font-mono">
                       <div className="flex items-center gap-2">
-                        <Calendar className="w-3.5 h-3.5 text-slate-400" />
+                        <Calendar className="w-3.5 h-3.5 text-foreground/40" />
                         {new Date(entry.created_at).toLocaleString('de-DE', {
                           day: '2-digit', month: '2-digit', year: 'numeric',
                           hour: '2-digit', minute: '2-digit'

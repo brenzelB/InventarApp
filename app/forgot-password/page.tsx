@@ -29,24 +29,27 @@ export default function ForgotPasswordPage() {
   return (
     <div className="flex min-h-[60vh] flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-slate-900">
-          Passwort zurücksetzen
+        <div className="text-center text-[10px] font-bold font-mono text-secondary uppercase tracking-[0.2em] mb-1">
+          [ SYS_AUTH_RESET ]
+        </div>
+        <h2 className="text-center text-3xl font-bold font-sora tracking-tight text-foreground uppercase">
+          Passwort Reset
         </h2>
-        <p className="mt-2 text-center text-sm font-medium text-slate-600">
+        <p className="mt-2 text-center text-xs text-foreground/60 font-sans">
           Zurück zur{" "}
-          <Link href="/login" className="font-bold text-accent hover:opacity-80 transition-opacity">
+          <Link href="/login" className="font-bold text-primary hover:underline transition-all">
             Anmeldung
           </Link>
         </p>
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white py-8 px-4 shadow sm:rounded-2xl sm:px-10 border border-slate-200">
+        <div className="bg-widget py-8 px-4 border border-outline sm:rounded-card sm:px-10 shadow-[0_0_15px_rgba(224,108,117,0.02)] transition-colors duration-300 bg-grid-pattern bg-opacity-5">
 
           {isMockMode && (
-            <div className="mb-6 p-4 rounded-3xl bg-amber-50 border border-amber-200">
-              <p className="text-sm text-amber-800 font-bold">⚠️ Demo-Modus aktiv</p>
-              <p className="text-xs text-amber-700 mt-1 font-medium">
+            <div className="mb-6 p-4 rounded-element bg-secondary/10 border border-secondary/20">
+              <p className="text-xs text-secondary font-bold font-mono uppercase tracking-wider">⚠️ Demo-Modus aktiv</p>
+              <p className="text-xs text-foreground/80 mt-1 font-sans">
                 Passwort-Reset ist im Demo-Modus nicht verfügbar. Bitte echtes Supabase-Backend konfigurieren.
               </p>
             </div>
@@ -54,23 +57,23 @@ export default function ForgotPasswordPage() {
 
           {sent ? (
             <div className="text-center">
-              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
-                <svg className="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-element bg-emerald-500/10 border border-emerald-500/20 text-emerald-500">
+                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
               </div>
-              <h3 className="mt-4 text-lg font-bold tracking-wide text-slate-900">E-Mail versendet</h3>
-              <p className="mt-2 text-sm text-slate-600">
+              <h3 className="mt-4 text-sm font-bold font-sora uppercase tracking-wider text-foreground">E-Mail versendet</h3>
+              <p className="mt-2 text-xs text-foreground/60 font-sans leading-relaxed">
                 Falls ein Account mit der Adresse <strong>{email}</strong> existiert, wurde ein Reset-Link versendet.
                 Bitte prüfe auch deinen Spam-Ordner.
               </p>
-              <p className="mt-2 text-xs text-slate-500 dark:text-slate-400">
-                Der Link ist für 24 Stunden gültig.
+              <p className="mt-2 text-[10px] font-bold font-mono text-foreground/40 uppercase tracking-widest">
+                Gültig für 24 Stunden
               </p>
               <div className="mt-6">
                 <Link
                   href="/login"
-                  className="inline-flex items-center rounded-3xl bg-accent px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 transition-colors"
+                  className="inline-flex items-center rounded-element bg-primary hover:bg-primary-hover border border-outline px-4 py-2.5 text-xs font-bold text-white dark:text-black dark:font-extrabold shadow-sm transition-colors font-mono uppercase tracking-widest"
                 >
                   Zurück zur Anmeldung
                 </Link>
@@ -79,16 +82,16 @@ export default function ForgotPasswordPage() {
           ) : (
             <form onSubmit={handleSubmit} className="space-y-6">
               {error && (
-                <div className="rounded-3xl bg-red-50 p-4 border border-red-100">
-                  <p className="text-sm text-red-700 font-bold">{error}</p>
+                <div className="rounded-element bg-primary/10 p-4 border border-primary/20">
+                  <p className="text-xs text-primary font-bold font-mono uppercase tracking-wider">{error}</p>
                 </div>
               )}
 
               <div>
-                <p className="text-sm text-slate-600 font-medium mb-4">
+                <p className="text-xs text-foreground/75 font-sans leading-relaxed mb-4">
                   Gib deine E-Mail-Adresse ein. Wir senden dir einen Link zum Zurücksetzen deines Passworts.
                 </p>
-                <label htmlFor="email" className="block text-sm font-bold leading-6 text-slate-700">
+                <label htmlFor="email" className="block text-[10px] font-bold font-mono text-foreground/50 uppercase tracking-widest leading-6 mb-1.5 ml-1">
                   E-Mail Adresse
                 </label>
                 <div className="mt-2">
@@ -101,7 +104,7 @@ export default function ForgotPasswordPage() {
                     autoComplete="email"
                     required
                     disabled={loading}
-                    className="block w-full rounded-3xl border-0 py-1.5 px-3 text-slate-900 bg-white shadow-sm ring-1 ring-inset ring-slate-300 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-accent sm:text-sm sm:leading-6 disabled:opacity-50 font-bold"
+                    className="block w-full rounded-element border border-outline py-2.5 px-3 text-foreground bg-surface-0 shadow-sm focus:ring-1 focus:ring-primary focus:border-primary placeholder:text-foreground/40 sm:text-xs disabled:opacity-50 font-mono font-bold transition-all"
                   />
                 </div>
               </div>
@@ -109,10 +112,10 @@ export default function ForgotPasswordPage() {
               <button
                 type="submit"
                 disabled={loading || isMockMode}
-                className="flex w-full justify-center items-center rounded-3xl bg-accent px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 transition-colors disabled:opacity-75 disabled:cursor-not-allowed"
+                className="flex w-full justify-center items-center rounded-element bg-primary hover:bg-primary-hover border border-outline px-3 py-3 text-xs font-bold text-white dark:text-black dark:font-extrabold shadow-sm transition-colors disabled:opacity-75 disabled:cursor-not-allowed font-mono uppercase tracking-widest"
               >
                 {loading ? (
-                  <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <svg className="animate-spin h-4 w-4 text-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                   </svg>

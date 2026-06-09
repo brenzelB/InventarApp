@@ -72,19 +72,19 @@ export function ActivityLogWidget() {
         case 'create':
           return {
             icon: <PlusCircle className="w-3.5 h-3.5" />,
-            colorClass: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400',
+            colorClass: 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20',
             dotClass: 'bg-emerald-500'
           };
         case 'delete':
           return {
             icon: <Trash2 className="w-3.5 h-3.5" />,
-            colorClass: 'bg-rose-500/10 text-rose-600 dark:text-rose-400',
-            dotClass: 'bg-rose-500'
+            colorClass: 'bg-red-500/10 text-red-500 border border-red-500/20',
+            dotClass: 'bg-red-500'
           };
         case 'import':
           return {
             icon: <UploadCloud className="w-3.5 h-3.5" />,
-            colorClass: 'bg-blue-500/10 text-blue-600 dark:text-blue-400',
+            colorClass: 'bg-blue-500/10 text-blue-500 border border-blue-500/20',
             dotClass: 'bg-blue-500'
           };
         case 'stock_adjustment':
@@ -101,45 +101,45 @@ export function ActivityLogWidget() {
           })();
           return {
             icon: isUp ? <ArrowUpRight className="w-3.5 h-3.5" /> : <ArrowDownRight className="w-3.5 h-3.5" />,
-            colorClass: isUp ? 'bg-emerald-500/10 text-emerald-600' : 'bg-blue-500/10 text-blue-600',
-            dotClass: isUp ? 'bg-emerald-500' : 'bg-blue-500'
+            colorClass: isUp ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20' : 'bg-primary/10 text-primary border border-primary/20',
+            dotClass: isUp ? 'bg-emerald-500' : 'bg-primary'
           };
         default:
           return {
             icon: <Activity className="w-3.5 h-3.5" />,
-            colorClass: 'bg-slate-500/10 text-slate-600 dark:text-slate-400',
-            dotClass: 'bg-slate-500'
+            colorClass: 'bg-surface-2 text-foreground/70 border border-outline',
+            dotClass: 'bg-foreground/50'
           };
       }
     } catch (err) {
       console.error("Error in getLogConfig:", err);
       return {
         icon: <Activity className="w-3.5 h-3.5" />,
-        colorClass: 'bg-slate-500/10 text-slate-600 dark:text-slate-400',
-        dotClass: 'bg-slate-500'
+        colorClass: 'bg-surface-2 text-foreground/70 border border-outline',
+        dotClass: 'bg-foreground/50'
       };
     }
   };
 
   if (loading) {
     return (
-      <div className="h-full w-full bg-white dark:bg-slate-900 rounded-3xl p-8 shadow dark:shadow-none ring-1 ring-slate-200 dark:ring-slate-800 flex items-center justify-center animate-pulse">
-        <div className="h-4 w-20 bg-slate-200 dark:bg-slate-700 rounded"></div>
+      <div className="h-full w-full bg-widget border border-outline rounded-card p-6 flex items-center justify-center animate-pulse">
+        <div className="h-4 w-20 bg-outline rounded-element"></div>
       </div>
     );
   }
 
   return (
-    <div className="h-full w-full bg-white dark:bg-slate-900 rounded-3xl p-8 shadow dark:shadow-none ring-1 ring-slate-200 dark:ring-slate-800 flex flex-col">
-      <div className="flex items-center justify-between mb-8">
-        <h3 className="text-sm font-black text-slate-900 dark:text-white flex items-center gap-2">
-          <div className="p-1.5 bg-slate-100 dark:bg-slate-800 rounded-2xl">
-            <Activity className="w-4 h-4 text-slate-600 dark:text-slate-400" />
+    <div className="h-full w-full bg-widget border border-outline rounded-card p-6 flex flex-col">
+      <div className="flex items-center justify-between mb-6 border-b border-outline pb-4">
+        <h3 className="text-xs font-bold text-foreground font-mono uppercase tracking-wider flex items-center gap-2">
+          <div className="p-1 bg-surface-2 text-primary rounded-element border border-outline">
+            <Activity className="w-3.5 h-3.5" />
           </div>
-          Aktivitäts-Log
+          [ SYS_LOG_02 ] Aktivitäts-Log
         </h3>
-        <div className="flex items-center gap-1 text-[10px] font-black text-slate-400 uppercase tracking-widest">
-          <Clock className="w-3 h-3" />
+        <div className="flex items-center gap-1 text-[10px] font-bold text-secondary font-mono uppercase tracking-widest animate-pulse">
+          <Clock className="w-3 h-3 text-secondary" />
           Live
         </div>
       </div>
@@ -147,44 +147,44 @@ export function ActivityLogWidget() {
       <div className="flex-1 min-h-0 overflow-auto pr-2 custom-scrollbar scrollbar-gutter-stable">
         {logs.length === 0 ? (
           <div className="h-full flex flex-col items-center justify-center text-center gap-4">
-            <div className="w-12 h-12 rounded-3xl bg-slate-50 dark:bg-slate-800/50 flex items-center justify-center">
-              <Activity className="w-6 h-6 text-slate-300 dark:text-slate-600" />
+            <div className="w-10 h-10 rounded-element bg-surface-2 border border-outline flex items-center justify-center">
+              <Activity className="w-5 h-5 text-foreground/30" />
             </div>
-            <p className="text-xs text-slate-500 font-bold uppercase tracking-widest">
+            <p className="text-[10px] text-foreground/50 font-bold font-mono uppercase tracking-widest">
               Keine Aktivitäten vorhanden
             </p>
           </div>
         ) : (
-          <ul className="space-y-4">
+          <ul className="space-y-3">
             {logs.map(log => {
               const config = getLogConfig(log.type, log.message);
               return (
                 <li 
                   key={log.id} 
-                  className={`group relative flex items-start gap-4 p-3 rounded-2xl transition-all hover:bg-slate-50 dark:hover:bg-slate-800/50
-                    ${log.id === lastNewId ? 'ring-2 ring-blue-500/20 bg-blue-50/30 dark:bg-blue-900/10' : ''}`}
+                  className={`group relative flex items-start gap-3 p-2.5 rounded-element transition-all hover:bg-surface-2 border border-transparent hover:border-outline
+                    ${log.id === lastNewId ? 'border-primary/30 bg-primary/5' : ''}`}
                 >
-                  <div className={`w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 transition-transform group-hover:scale-110 ${config.colorClass}`}>
+                  <div className={`w-7 h-7 rounded-element flex items-center justify-center flex-shrink-0 transition-transform group-hover:scale-110 ${config.colorClass}`}>
                     {config.icon}
                   </div>
                   
                   <div className="min-w-0 flex-1">
-                    <p className="text-sm font-bold text-slate-900 dark:text-slate-100 leading-tight">
+                    <p className="text-xs font-medium text-foreground leading-tight font-sans">
                       {log.article_id ? (
-                        <Link href={`/dashboard/articles/${log.article_id}`} className="hover:text-blue-600 transition-colors">
+                        <Link href={`/dashboard/articles/${log.article_id}`} className="hover:text-primary hover:underline transition-colors">
                           {log.message}
                         </Link>
                       ) : (
                         log.message
                       )}
                     </p>
-                    <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mt-1">
+                    <p className="text-[9px] font-bold text-foreground/40 font-mono uppercase tracking-widest mt-1">
                       {formatTimestamp(log.created_at)}
                     </p>
                   </div>
 
                   {log.id === lastNewId && (
-                    <div className="absolute -left-1 top-1/2 -translate-y-1/2 w-1 h-4 bg-blue-500 rounded-full animate-in slide-in-from-left-2" />
+                    <div className="absolute -left-1 top-1/2 -translate-y-1/2 w-1 h-4 bg-primary rounded-element animate-in slide-in-from-left-2 shadow-[0_0_8px_var(--primary)]" />
                   )}
                 </li>
               );

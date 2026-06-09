@@ -51,21 +51,21 @@ export function StockAdjustmentForm({ onAdjust, loading }: StockAdjustmentFormPr
   };
 
   return (
-    <div className="bg-slate-50 dark:bg-slate-900/50 p-5 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm dark:shadow-none ring-1 ring-slate-200/50 dark:ring-slate-800/50">
+    <div className="bg-widget p-5 rounded-card border border-outline shadow-sm">
       <div className="flex items-center gap-2 mb-4">
-        <PackageOpen className="w-5 h-5 text-accent" />
-        <h3 className="font-bold text-slate-900 dark:text-slate-100 text-sm">Bestand anpassen</h3>
+        <PackageOpen className="w-5 h-5 text-primary" />
+        <h3 className="font-bold text-foreground text-xs uppercase font-mono tracking-wider">[ STOCK_EDIT ] Bestand anpassen</h3>
       </div>
 
       <div className="space-y-6">
-        <div className="grid grid-cols-2 bg-white dark:bg-slate-950 p-1 rounded-2xl border border-slate-200 dark:border-slate-800 gap-1">
+        <div className="grid grid-cols-2 bg-surface-2 p-1 rounded-element border border-outline gap-1">
           <button
             type="button"
             onClick={() => { setType('input'); setShowSuccess(false); }}
-            className={`flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-3xl text-xs font-medium transition-all ${
+            className={`flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-element text-xs font-bold transition-all uppercase font-mono tracking-wider ${
               type === 'input' 
-              ? 'bg-green-100 dark:bg-emerald-900/30 text-green-700 dark:text-emerald-400 shadow-sm dark:shadow-none' 
-              : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
+              ? 'bg-secondary/15 text-secondary border border-secondary/25 shadow-sm' 
+              : 'text-foreground/50 hover:text-foreground'
             }`}
           >
             <Plus className="w-3.5 h-3.5" />
@@ -74,10 +74,10 @@ export function StockAdjustmentForm({ onAdjust, loading }: StockAdjustmentFormPr
           <button
             type="button"
             onClick={() => { setType('output'); setShowSuccess(false); }}
-            className={`flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-3xl text-xs font-medium transition-all ${
+            className={`flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-element text-xs font-bold transition-all uppercase font-mono tracking-wider ${
               type === 'output' 
-              ? 'bg-red-100 dark:bg-rose-900/30 text-red-700 dark:text-rose-400 shadow-sm dark:shadow-none' 
-              : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
+              ? 'bg-primary/15 text-primary border border-primary/25 shadow-sm' 
+              : 'text-foreground/50 hover:text-foreground'
             }`}
           >
             <Minus className="w-3.5 h-3.5" />
@@ -86,14 +86,14 @@ export function StockAdjustmentForm({ onAdjust, loading }: StockAdjustmentFormPr
         </div>
 
         <div>
-          <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1.5 uppercase tracking-wider">Menge</label>
+          <label className="block text-[10px] font-bold font-mono text-foreground/50 mb-1.5 uppercase tracking-widest ml-1">Menge</label>
           <input
             type="number"
             step="0.01"
             min="0.01"
             value={amount}
             onChange={(e) => { setAmount(Number(e.target.value)); setShowSuccess(false); }}
-            className="block w-full rounded-2xl border-0 py-2.5 px-3 text-slate-900 dark:text-slate-100 bg-white dark:bg-slate-950 shadow-sm dark:shadow-none ring-1 ring-inset ring-slate-300 dark:ring-slate-700 focus:ring-2 focus:ring-accent dark:focus:ring-accent/50 sm:text-sm font-bold"
+            className="block w-full border border-outline rounded-element bg-surface-0 text-foreground placeholder-foreground/30 py-2 px-3 focus:ring-1 focus:ring-primary focus:border-primary text-xs font-mono font-bold transition-all shadow-sm"
             required
           />
         </div>
@@ -102,12 +102,12 @@ export function StockAdjustmentForm({ onAdjust, loading }: StockAdjustmentFormPr
           type="button"
           onClick={handleButtonClick}
           disabled={loading}
-          className={`w-full py-3 rounded-2xl text-sm font-black uppercase tracking-widest shadow-sm border border-slate-200 transition-all active:scale-[0.98] flex items-center justify-center gap-2 ${
+          className={`w-full py-3 rounded-element text-xs font-bold font-mono uppercase tracking-widest shadow-sm border transition-all active:scale-[0.98] flex items-center justify-center gap-2 ${
             showSuccess 
-            ? 'bg-green-600 text-white animate-pulse' 
+            ? 'bg-secondary text-white border-transparent animate-pulse' 
             : error
-            ? 'bg-red-600 text-white'
-            : 'bg-accent hover:bg-accent-hover text-white shadow-indigo-200 dark:shadow-[0_8px_30px_rgb(59,130,246,0.2)] dark:ring-1 dark:ring-blue-500/20 hover:dark:shadow-[0_8px_30px_rgb(59,130,246,0.4)]'
+            ? 'bg-primary text-white border-transparent'
+            : 'bg-primary hover:bg-primary-hover border-outline text-white dark:text-black dark:font-extrabold'
           } disabled:opacity-50 disabled:cursor-not-allowed`}
         >
           {loading ? (
@@ -131,7 +131,7 @@ export function StockAdjustmentForm({ onAdjust, loading }: StockAdjustmentFormPr
         </button>
 
         {error && (
-          <p className="text-[10px] text-red-600 dark:text-red-400 font-bold text-center mt-2 animate-bounce">
+          <p className="text-[10px] text-primary font-bold text-center mt-2 animate-bounce uppercase font-mono">
             {error}
           </p>
         )}

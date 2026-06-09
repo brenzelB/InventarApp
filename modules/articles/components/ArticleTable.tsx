@@ -182,20 +182,20 @@ export function ArticleTable({
 
   if (articles.length === 0) {
     return (
-      <div className="text-center py-12 bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
-        <svg className="mx-auto h-12 w-12 text-slate-400 dark:text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+      <div className="text-center py-12 bg-widget rounded-card border border-outline shadow-sm">
+        <svg className="mx-auto h-12 w-12 text-foreground/30" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
         </svg>
-        <h3 className="mt-2 text-sm font-bold text-slate-900 dark:text-slate-100">Keine Artikel gefunden</h3>
-        <p className="mt-1 text-sm text-slate-500 dark:text-slate-400 font-medium">Lege deinen ersten Artikel an.</p>
+        <h3 className="mt-2 text-sm font-bold font-sora tracking-wide text-foreground uppercase">Keine Artikel gefunden</h3>
+        <p className="mt-1 text-xs text-foreground/60 font-medium font-sans">Lege deinen ersten Artikel an.</p>
       </div>
     );
   }
 
   return (
-    <div className="overflow-x-auto shadow ring-1 ring-slate-200 dark:ring-slate-700 sm:rounded-2xl">
-      <table className="min-w-full divide-y divide-slate-200 dark:divide-slate-700 table-fixed border-collapse">
-        <thead className="bg-slate-50 dark:bg-slate-900">
+    <div className="overflow-x-auto border border-outline sm:rounded-card shadow-sm bg-widget">
+      <table className="min-w-full divide-y divide-outline table-fixed border-collapse">
+        <thead className="bg-surface-2 dark:bg-surface-2/40">
           <DndContext 
             sensors={sensors}
             collisionDetection={closestCenter}
@@ -203,7 +203,7 @@ export function ArticleTable({
             modifiers={[restrictToHorizontalAxis]}
           >
             <tr>
-              <th scope="col" className="w-8 px-3 py-4 bg-slate-50 dark:bg-slate-900"></th>
+              <th scope="col" className="w-8 px-3 py-4 bg-transparent border-r border-outline"></th>
               <SortableContext
                 items={columnSettings.filter(c => c.visible).map(c => c.key)}
                 strategy={horizontalListSortingStrategy}
@@ -219,7 +219,7 @@ export function ArticleTable({
             </tr>
           </DndContext>
         </thead>
-        <tbody className="divide-y divide-slate-200 dark:divide-slate-700 bg-white dark:bg-slate-950">
+        <tbody className="divide-y divide-outline bg-transparent">
           <DndContext
             sensors={sensors}
             collisionDetection={closestCenter}
@@ -320,12 +320,12 @@ function SortableRow({
         );
       case 'name':
         return (
-          <td key={colKey} style={cellStyle} className="px-3 py-4 text-sm font-bold overflow-hidden">
-            <Link href={`/dashboard/articles/${article.id}`} className="text-slate-900 dark:text-slate-100 hover:text-accent transition-colors block truncate">
+          <td key={colKey} style={cellStyle} className="px-3 py-4 text-xs font-bold font-sora overflow-hidden text-foreground">
+            <Link href={`/dashboard/articles/${article.id}`} className="text-foreground hover:text-primary transition-colors block truncate">
               {article.name}
             </Link>
             {article.group && (
-              <span className="inline-flex mt-1 items-center rounded-3xl bg-slate-100 dark:bg-slate-800 px-2 py-0.5 text-[10px] font-black text-slate-500 dark:text-slate-400 ring-1 ring-inset ring-slate-200 dark:ring-slate-700">
+              <span className="inline-flex mt-1 items-center rounded-element bg-secondary/15 px-2 py-0.5 text-[9px] font-bold text-secondary uppercase font-mono tracking-wider border border-secondary/20">
                 {article.group.name}
               </span>
             )}
@@ -333,33 +333,33 @@ function SortableRow({
         );
       case 'description':
         return (
-          <td key={colKey} style={cellStyle} className="px-3 py-4 text-sm text-slate-600 dark:text-slate-400 font-medium overflow-hidden truncate" title={article.description || ''}>
+          <td key={colKey} style={cellStyle} className="px-3 py-4 text-xs text-foreground/70 font-sans overflow-hidden truncate" title={article.description || ''}>
             {article.description || "—"}
           </td>
         );
       case 'sku':
         return (
-          <td key={colKey} style={cellStyle} className="whitespace-nowrap px-3 py-4 text-sm text-slate-600 dark:text-slate-400 font-bold font-mono overflow-hidden">{article.sku}</td>
+          <td key={colKey} style={cellStyle} className="whitespace-nowrap px-3 py-4 text-xs text-foreground/80 font-bold font-mono overflow-hidden">{article.sku}</td>
         );
       case 'lagerort':
         return (
-          <td key={colKey} style={cellStyle} className="whitespace-nowrap px-3 py-4 text-sm text-slate-600 dark:text-slate-400 font-medium overflow-hidden">{article.lagerort || "—"}</td>
+          <td key={colKey} style={cellStyle} className="whitespace-nowrap px-3 py-4 text-xs text-foreground/80 font-bold font-mono overflow-hidden uppercase">{article.lagerort || "—"}</td>
         );
       case 'bestand':
         return (
-          <td key={colKey} style={cellStyle} className="whitespace-nowrap px-3 py-4 text-sm text-right overflow-hidden">
+          <td key={colKey} style={cellStyle} className="whitespace-nowrap px-3 py-4 text-xs text-right overflow-hidden">
             <div className="flex items-center justify-end gap-2 group/stock">
               {role !== 'viewer' && (
-                <div className="flex items-center bg-slate-100 dark:bg-slate-800 rounded-2xl p-0.5 opacity-0 group-hover/stock:opacity-100 transition-opacity">
-                  <button onClick={() => handleQuickAdjust(article, -1)} className="p-1 hover:text-red-600 dark:hover:text-red-400 transition-colors" disabled={updatingId === article.id}>
+                <div className="flex items-center bg-surface-2 dark:bg-surface-2/40 border border-outline rounded-element p-0.5 opacity-0 group-hover/stock:opacity-100 transition-opacity">
+                  <button onClick={() => handleQuickAdjust(article, -1)} className="p-1 text-foreground/60 hover:text-primary transition-colors" disabled={updatingId === article.id}>
                     <Minus size={14} />
                   </button>
-                  <button onClick={() => handleQuickAdjust(article, 1)} className="p-1 hover:text-green-600 dark:hover:text-green-400 transition-colors" disabled={updatingId === article.id}>
+                  <button onClick={() => handleQuickAdjust(article, 1)} className="p-1 text-foreground/60 hover:text-secondary transition-colors" disabled={updatingId === article.id}>
                     <Plus size={14} />
                   </button>
                 </div>
               )}
-              <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-black ring-1 ring-inset transition-all ${updatingId === article.id ? 'opacity-50 blur-[1px]' : ''} ${article.bestand === 0 ? 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 ring-slate-900/10 dark:ring-slate-100/10' : article.bestand <= article.mindestbestand ? 'bg-rose-100 dark:bg-rose-900/30 text-rose-900 dark:text-rose-400 ring-rose-900/20' : 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-900 dark:text-emerald-400 ring-emerald-900/20'}`}>
+              <span className={`inline-flex items-center rounded-element px-2 py-0.5 text-[10px] font-bold font-mono border uppercase tracking-wider transition-all ${updatingId === article.id ? 'opacity-50 blur-[1px]' : ''} ${article.bestand === 0 ? 'bg-primary/20 text-primary border-primary/30 font-extrabold shadow-[0_0_10px_rgba(224,108,117,0.1)]' : article.bestand <= article.mindestbestand ? 'bg-primary/10 text-primary border-primary/20' : 'bg-secondary/10 text-secondary border-secondary/20'}`}>
                 {updatingId === article.id ? <Loader2 className="w-3 h-3 animate-spin mr-1" /> : null}
                 {article.bestand} {article.unit || 'Stück'}
               </span>
@@ -368,11 +368,11 @@ function SortableRow({
         );
       case 'purchase_price':
         return (
-          <td key={colKey} style={cellStyle} className="whitespace-nowrap px-3 py-4 text-sm text-right tabular-nums overflow-hidden">
+          <td key={colKey} style={cellStyle} className="whitespace-nowrap px-3 py-4 text-xs text-right tabular-nums overflow-hidden">
             {editingId === article.id ? (
-              <input autoFocus type="number" step="0.01" className="w-full rounded border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 text-right py-1 px-2 text-xs focus:ring-accent font-bold" value={editValue} onChange={(e) => setEditValue(e.target.value)} onBlur={() => handlePriceSave(article.id)} onKeyDown={(e) => { if (e.key === 'Enter') handlePriceSave(article.id); if (e.key === 'Escape') setEditingId(null); }} />
+              <input autoFocus type="number" step="0.01" className="w-full rounded-element border border-outline bg-surface-0 text-foreground text-right py-1 px-2 text-xs focus:ring-1 focus:ring-primary focus:border-primary font-mono font-bold" value={editValue} onChange={(e) => setEditValue(e.target.value)} onBlur={() => handlePriceSave(article.id)} onKeyDown={(e) => { if (e.key === 'Enter') handlePriceSave(article.id); if (e.key === 'Escape') setEditingId(null); }} />
             ) : (
-              <button onClick={() => startEditing(article)} disabled={updatingId === article.id} className="text-slate-900 dark:text-slate-100 hover:text-accent font-bold transition-colors">
+              <button onClick={() => startEditing(article)} disabled={updatingId === article.id} className="text-foreground hover:text-primary font-bold font-mono transition-colors">
                 {Number(article.purchase_price || 0).toFixed(2)} €
               </button>
             )}
@@ -380,40 +380,40 @@ function SortableRow({
         );
       case 'verkaufspreis':
         return (
-          <td key={colKey} style={cellStyle} className="whitespace-nowrap px-3 py-4 text-sm text-slate-500 dark:text-slate-400 text-right tabular-nums font-medium overflow-hidden">
+          <td key={colKey} style={cellStyle} className="whitespace-nowrap px-3 py-4 text-xs text-foreground/70 text-right tabular-nums font-bold font-mono overflow-hidden">
             {Number(article.verkaufspreis).toFixed(2)} €
           </td>
         );
       case 'herstellpreis':
         return (
-          <td key={colKey} style={cellStyle} className="whitespace-nowrap px-3 py-4 text-sm text-slate-500 dark:text-slate-400 text-right tabular-nums font-medium overflow-hidden">
+          <td key={colKey} style={cellStyle} className="whitespace-nowrap px-3 py-4 text-xs text-foreground/70 text-right tabular-nums font-bold font-mono overflow-hidden">
             {Number(article.herstellpreis).toFixed(2)} €
           </td>
         );
       case 'tax_rate':
         return (
-          <td key={colKey} style={cellStyle} className="whitespace-nowrap px-3 py-4 text-sm text-slate-500 dark:text-slate-400 text-right tabular-nums font-medium overflow-hidden">
+          <td key={colKey} style={cellStyle} className="whitespace-nowrap px-3 py-4 text-xs text-foreground/70 text-right tabular-nums font-bold font-mono overflow-hidden">
             {article.tax_rate} %
           </td>
         );
       case 'mindestbestand':
         return (
-          <td key={colKey} style={cellStyle} className="whitespace-nowrap px-3 py-4 text-sm text-slate-500 dark:text-slate-400 text-right tabular-nums font-medium overflow-hidden">
+          <td key={colKey} style={cellStyle} className="whitespace-nowrap px-3 py-4 text-xs text-foreground/70 text-right tabular-nums font-bold font-mono overflow-hidden">
             {article.mindestbestand}
           </td>
         );
       case 'actions':
         return (
-          <td key={colKey} style={cellStyle} className="whitespace-nowrap px-3 py-4 text-sm font-medium w-px overflow-hidden">
+          <td key={colKey} style={cellStyle} className="whitespace-nowrap px-3 py-4 text-xs font-medium w-px overflow-hidden">
             <div className="flex items-center justify-end gap-2">
               {(role === 'admin' || role === 'editor') && (
-                <Link href={`/dashboard/articles/${article.id}`} title="Bearbeiten" aria-label="Artikel bearbeiten" className="p-2 text-slate-400 dark:text-slate-500 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-50 dark:hover:bg-slate-900 rounded-xl transition-all">
+                <Link href={`/dashboard/articles/${article.id}`} title="Bearbeiten" aria-label="Artikel bearbeiten" className="p-2 text-foreground/40 hover:text-secondary hover:bg-surface-2 rounded-element border border-transparent hover:border-outline transition-all">
                   <Edit3 size={16} />
                 </Link>
               )}
               {role === 'admin' && (
-                <button onClick={() => handleDelete(article.id)} disabled={deletingId === article.id} title="Löschen" aria-label="Artikel löschen" className="p-2 text-slate-400 dark:text-slate-500 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-900/30 rounded-xl transition-all disabled:opacity-50">
-                  {deletingId === article.id ? <span className="w-4 h-4 border-2 border-slate-200 dark:border-slate-700 border-t-rose-600 rounded-full animate-spin inline-block" /> : <Trash2 size={16} />}
+                <button onClick={() => handleDelete(article.id)} disabled={deletingId === article.id} title="Löschen" aria-label="Artikel löschen" className="p-2 text-foreground/40 hover:text-primary hover:bg-primary/10 rounded-element border border-transparent hover:border-primary/20 transition-all disabled:opacity-50">
+                  {deletingId === article.id ? <span className="w-4 h-4 border-2 border-outline border-t-primary rounded-full animate-spin inline-block" /> : <Trash2 size={16} />}
                 </button>
               )}
             </div>
@@ -428,12 +428,12 @@ function SortableRow({
       ref={setNodeRef}
       style={style}
       className={`
-        hover:bg-slate-50 dark:hover:bg-slate-900 transition-all groups
-        ${isDragging ? 'bg-blue-50 dark:bg-blue-900/20 shadow-2xl ring-2 ring-blue-500/50 z-50 relative' : ''}
+        hover:bg-surface-2/40 transition-all border-b border-outline last:border-0
+        ${isDragging ? 'bg-primary/10 shadow-lg border border-primary/20 z-50 relative' : ''}
       `}
     >
-      <td className="px-3 py-4 w-8 bg-white dark:bg-slate-950">
-        <button {...attributes} {...listeners} className="p-1 text-slate-300 dark:text-slate-600 cursor-grab active:cursor-grabbing hover:text-blue-500 transition-colors">
+      <td className="px-3 py-4 w-8 bg-transparent border-r border-outline">
+        <button {...attributes} {...listeners} className="p-1 text-foreground/30 cursor-grab active:cursor-grabbing hover:text-primary transition-colors">
           <GripVertical size={16} />
         </button>
       </td>
@@ -495,7 +495,7 @@ function ResizableHeader({
       style={style}
       scope="col"
       className={`
-        group relative px-3 py-4 text-left text-[11px] font-black text-slate-900 dark:text-slate-400 uppercase tracking-widest bg-slate-50 dark:bg-slate-900 border-r border-slate-200/50 dark:border-slate-800/50 last:border-0 overflow-hidden
+        group relative px-3 py-4 text-left text-[10px] font-bold font-mono text-foreground/70 uppercase tracking-widest bg-transparent border-r border-outline last:border-0 overflow-hidden
         ${isDragging ? 'opacity-50 z-50' : ''}
       `}
     >
@@ -506,7 +506,7 @@ function ResizableHeader({
       {column.key !== 'actions' && (
         <div
           onMouseDown={handleMouseDown}
-          className="absolute right-0 top-0 h-full w-1 cursor-col-resize hover:bg-blue-500/50 transition-colors z-10"
+          className="absolute right-0 top-0 h-full w-1 cursor-col-resize hover:bg-primary/55 transition-colors z-10"
         />
       )}
     </th>

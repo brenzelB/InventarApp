@@ -3,36 +3,90 @@
 @tailwind utilities;
 
 :root {
-  --background: #f8fafc; /* Slate-50 */
-  --foreground: #0f172a; /* Slate-900 */
-  --widget: #ffffff;
+  /* Light Mode (Cyber-Minimalism) */
+  --background: #f8f9fa; /* clinical cool-white base */
+  --foreground: #191c1d;
+  --widget: #ffffff; /* Surface 1 */
+  --surface-0: #f8f9fa;
+  --surface-1: #ffffff;
+  --surface-2: #f1f3f5; /* table headers and input fills */
+  --outline: #e9ecef;
+  
+  --primary: #ff2e63; /* Neon Pink */
+  --primary-hover: #e02454;
+  --secondary: #006a68; /* Desaturated teal/cyan for accessible light text */
+  --secondary-hover: #00504e;
+  --accent: #ff2e63;
+  --accent-hover: #e02454;
+  
+  --border-radius-card: 0px; /* Strictly sharp corners */
+  --border-radius-element: 0px;
+  
+  --glow-shadow: none;
 }
 
 .dark {
-  --background: #020617; /* Slate-950 */
-  --foreground: #f1f5f9; /* Slate-100 */
-  --widget: #0f172a; /* Slate-900 */
+  /* Dark Mode (Cyberpunk Glassmorphism) */
+  --background: #111111; /* True Black base */
+  --foreground: #e5e2e1;
+  --widget: rgba(40, 44, 52, 0.6); /* surface elevated with 60% opacity */
+  --surface-0: #111111;
+  --surface-1: rgba(40, 44, 52, 0.6);
+  --surface-2: #201f1f;
+  --outline: rgba(255, 255, 255, 0.1); /* white 10% opacity */
+  
+  --primary: #e06c75; /* Primary pinkish-red */
+  --primary-hover: #e5858c;
+  --secondary: #9cdef2; /* Cyber-cyan */
+  --secondary-hover: #bcecf9;
+  --accent: #e06c75;
+  --accent-hover: #e5858c;
+  
+  --border-radius-card: 12px; /* Large containers */
+  --border-radius-element: 4px; /* Standard inputs, buttons, chips */
+  
+  --glow-shadow: 0 0 15px rgba(224, 108, 117, 0.3);
 }
 
 body {
   color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--background);
+  font-family: var(--font-sora), Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Base Table Styles (Dynamic colors handled via Tailwind dark: classes in components) */
-table th {
-  font-weight: 900 !important;
+.dark body {
+  font-family: var(--font-hanken), Arial, Helvetica, sans-serif;
 }
 
-/* Widget Background Utility */
-.bg-widget {
+/* Background grid blueprint pattern */
+.bg-grid-pattern {
+  background-size: 24px 24px;
+  background-image: 
+    linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+}
+
+.dark .bg-grid-pattern {
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+}
+
+/* Glassmorphism styling helpers */
+.glass-panel {
   background-color: var(--widget);
+  border: 1px solid var(--outline);
+  border-radius: var(--border-radius-card);
 }
 
-/* Custom Scrollbar Styling (High Specificity) */
+.dark .glass-panel {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Custom Scrollbar (Technical blueprint aesthetic) */
 .custom-scrollbar::-webkit-scrollbar {
   width: 6px !important;
   height: 6px !important;
@@ -43,17 +97,17 @@ table th {
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #475569 !important;
-  border-radius: 9999px !important;
+  background: var(--outline) !important;
+  border-radius: var(--border-radius-element) !important;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #334155 !important;
+  background: var(--primary) !important;
 }
 
 .custom-scrollbar {
   scrollbar-width: thin !important;
-  scrollbar-color: #475569 transparent !important;
+  scrollbar-color: var(--outline) transparent !important;
 }
 
 @layer utilities {
@@ -67,7 +121,7 @@ table th {
   }
 
   @keyframes flash-glow {
-    0% { background-color: rgba(99, 102, 241, 0.2); }
+    0% { background-color: rgba(224, 108, 117, 0.2); }
     100% { background-color: transparent; }
   }
 
@@ -78,7 +132,8 @@ table th {
 
   @keyframes pulse-value {
     0% { transform: scale(1); filter: brightness(1); }
-    50% { transform: scale(1.05); filter: brightness(1.2); color: #6366f1; }
+    50% { transform: scale(1.03); filter: brightness(1.2); color: var(--primary); }
     100% { transform: scale(1); filter: brightness(1); }
   }
 }
+
