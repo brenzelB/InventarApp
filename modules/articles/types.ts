@@ -69,4 +69,8 @@ export interface ArticleComment {
   content: string;
   user_id?: string;
   created_at: string;
+  profile?: {
+    display_name: string | null;
+    full_name?: string | null;
+  } | null;
 }

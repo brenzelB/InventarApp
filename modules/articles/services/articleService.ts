@@ -411,21 +411,27 @@ export const articleService = {
     }
     const { data, error } = await supabase
       .from("article_comments")
-      .select("*")
+      .select("*, profile:profiles(display_name, full_name)")
       .eq("article_id", articleId)
       .order("created_at", { ascending: false });
     if (error) throw error;
-    return data;
+    return data as any[];
   },
 
   async addComment(articleId: string, content: string) {
     if (isMockMode) {
       const comments = await this.getComments(articleId);
+      const email = localStorage.getItem("mock_user_email") || "demo@example.com";
+      const name = email.split('@')[0].toUpperCase();
       const newComment: import("../types").ArticleComment = {
         id: generateId(),
         article_id: articleId,
         content,
         created_at: new Date().toISOString(),
+        profile: {
+          display_name: name,
+          full_name: name
+        }
       };
       comments.unshift(newComment);
       localStorage.setItem(`mock_comments_${articleId}`, JSON.stringify(comments));
@@ -434,9 +440,9 @@ export const articleService = {
     const { data, error } = await supabase
       .from("article_comments")
       .insert([{ article_id: articleId, content }])
-      .select()
+      .select("*, profile:profiles(display_name, full_name)")
       .single();
     if (error) throw error;
-    return data;
+    return data as any;
   },
 };
