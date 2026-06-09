@@ -1,11 +1,15 @@
 -- Migration: Create article_comments table
 -- Execute this in the Supabase SQL Editor to enable the article comments feature.
 
-CREATE TABLE IF NOT EXISTS public.article_comments (
+-- Falls vorhanden, alte Tabelle löschen
+DROP TABLE IF EXISTS public.article_comments CASCADE;
+
+CREATE TABLE public.article_comments (
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
     article_id UUID REFERENCES public.articles(id) ON DELETE CASCADE NOT NULL,
     content TEXT NOT NULL,
-    user_id UUID REFERENCES auth.users(id) ON DELETE SET NULL DEFAULT auth.uid(),
+    -- WICHTIG: Referenz auf public.profiles statt auth.users, damit PostgREST den Join auflösen kann!
+    user_id UUID REFERENCES public.profiles(id) ON DELETE SET NULL DEFAULT auth.uid(),
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
