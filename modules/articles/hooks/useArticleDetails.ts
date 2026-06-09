@@ -59,39 +59,59 @@ export function useArticleDetails(id: string) {
 
   const adjustStock = async (amount: number, type: 'input' | 'output') => {
     if (!article) return;
-    try {
-      setIsAdjusting(true);
-      
-      const currentStock = Number.isFinite(article.bestand) ? Number(article.bestand) : 0;
-      const absAmount = Math.abs(amount);
-      
-      const calculatedNewStock = type === 'output' 
-        ? Math.max(0, currentStock - absAmount) 
-        : currentStock + absAmount;
+    
+    const currentStock = Number.isFinite(article.bestand) ? Number(article.bestand) : 0;
+    const absAmount = Math.abs(amount);
+    
+    const calculatedNewStock = type === 'output' 
+      ? Math.max(0, currentStock - absAmount) 
+      : currentStock + absAmount;
 
-      console.log("BERECHNETER BESTAND FÜR DB:", calculatedNewStock);
-      console.log("DEBUG_STOCK:", { id, currentStock, originalAmount: amount, absAmount, type, target: calculatedNewStock });
+    console.log("BERECHNETER BESTAND FÜR DB (OPTIMISTISCH):", calculatedNewStock);
+    console.log("DEBUG_STOCK:", { id, currentStock, originalAmount: amount, absAmount, type, target: calculatedNewStock });
 
-      // 1. Haupt-Update
-      await articleService.updateArticle(id, { bestand: calculatedNewStock });
-      setArticle(prev => prev ? { ...prev, bestand: calculatedNewStock } : null);
-      
-      // 2. Historie loggen
+    // Speichere den vorherigen Zustand für einen eventuellen Rollback bei Fehler
+    const previousArticle = { ...article };
+    const previousHistory = [...history];
+
+    // 1. Optimistisches Update für den Artikel-Bestand
+    setArticle(prev => prev ? { ...prev, bestand: calculatedNewStock } : null);
+
+    // 2. Optimistisches Update für die Historien-Liste
+    const signedAmount = type === 'output' ? -absAmount : absAmount;
+    const optimisticHistoryEntry: ArticleHistoryEntry = {
+      id: `temp-${Date.now()}`,
+      article_id: id,
+      old_stock: currentStock,
+      new_stock: calculatedNewStock,
+      amount: signedAmount,
+      type: type,
+      created_at: new Date().toISOString()
+    };
+    setHistory(prev => [optimisticHistoryEntry, ...prev]);
+
+    // DB-Operationen asynchron im Hintergrund ausführen (kein await hier, um UI nicht zu blockieren)
+    (async () => {
       try {
-        const signedAmount = type === 'output' ? -absAmount : absAmount;
+        setIsAdjusting(true);
+        // Haupt-Update in der Datenbank
+        await articleService.updateArticle(id, { bestand: calculatedNewStock });
+        
+        // Historie in der Datenbank loggen
         await articleService.addHistoryEntry(id, currentStock, calculatedNewStock, type, signedAmount);
+        
+        // Saubere Historie aus der DB holen, um die temporäre zu ersetzen
         const freshHistory = await articleService.getArticleHistory(id);
         setHistory(freshHistory);
-      } catch (hErr) {
-        console.warn("[Radical Fix] History logging failed:", hErr);
+      } catch (err: any) {
+        console.error("Hintergrund-Lagerbuchung fehlgeschlagen, führe Rollback aus:", err);
+        // Rollback bei Fehler
+        setArticle(previousArticle);
+        setHistory(previousHistory);
+      } finally {
+        setIsAdjusting(false);
       }
-
-    } catch (err: any) {
-      console.error("Lagerbuchung fehlgeschlagen:", err);
-      throw new Error(err.message || "Lagerbuchung fehlgeschlagen.");
-    } finally {
-      setIsAdjusting(false);
-    }
+    })();
   };
 
   const updateArticle = async (data: Partial<import("../types").ArticleFormData>) => {

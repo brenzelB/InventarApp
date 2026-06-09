@@ -12,9 +12,9 @@ interface Toast {
 }
 
 interface ToastContextType {
-  toast: (message: string, type?: ToastType) => void;
-  success: (message: string) => void;
-  error: (message: string) => void;
+  toast: (message: string, type?: ToastType, duration?: number) => void;
+  success: (message: string, duration?: number) => void;
+  error: (message: string, duration?: number) => void;
 }
 
 const ToastContext = createContext<ToastContextType | undefined>(undefined);
@@ -26,23 +26,23 @@ export function ToastProvider({ children }: { children: ReactNode }) {
     setToasts(prev => prev.filter(t => t.id !== id));
   }, []);
 
-  const toast = useCallback((message: string, type: ToastType = 'info') => {
+  const toast = useCallback((message: string, type: ToastType = 'info', duration = 4000) => {
     const id = Math.random().toString(36).slice(2, 9);
     setToasts(prev => [...prev, { id, message, type }]);
 
-    // Auto-remove after 4 seconds
-    setTimeout(() => removeToast(id), 4000);
+    // Auto-remove after custom or default duration
+    setTimeout(() => removeToast(id), duration);
   }, [removeToast]);
 
-  const success = (message: string) => toast(message, 'success');
-  const error = (message: string) => toast(message, 'error');
+  const success = (message: string, duration?: number) => toast(message, 'success', duration);
+  const error = (message: string, duration?: number) => toast(message, 'error', duration);
 
   return (
     <ToastContext.Provider value={{ toast, success, error }}>
       {children}
       
-      {/* Toast Container */}
-      <div className="fixed bottom-6 right-6 z-[9999] flex flex-col gap-3 pointer-events-none">
+      {/* Toast Container - Moved to top-right below navbar */}
+      <div className="fixed top-24 right-6 z-[9999] flex flex-col gap-3 pointer-events-none">
         {toasts.map(t => (
           <div 
             key={t.id}
