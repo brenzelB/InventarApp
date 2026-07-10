@@ -206,14 +206,18 @@ export default function ArticlesPage() {
           <ArticleActionButtons articles={filteredArticles} onRefresh={refetch} columnSettings={columnSettings} />
           
           <div className="h-6 w-px bg-outline hidden sm:block mx-1" />
-
           {role !== 'viewer' && (
-            <Link href="/dashboard/articles/new" className="inline-flex items-center gap-2 rounded-element bg-primary hover:bg-primary-hover px-5 py-2.5 text-xs font-bold text-white dark:text-black dark:font-extrabold shadow-sm font-mono uppercase tracking-widest transition-all">
-              <Plus className="w-4 h-4" />
-              Neuer Artikel
-            </Link>
-          )}
-        </div>
+            <div className="flex gap-2">
+              <Link href="/dashboard/articles/new-bundle" className="inline-flex items-center gap-2 rounded-element bg-secondary hover:bg-secondary-hover px-5 py-2.5 text-xs font-bold text-white dark:text-black dark:font-extrabold shadow-sm font-mono uppercase tracking-widest transition-all">
+                <Plus className="w-4 h-4" />
+                Bundle erstellen
+              </Link>
+              <Link href="/dashboard/articles/new" className="inline-flex items-center gap-2 rounded-element bg-primary hover:bg-primary-hover px-5 py-2.5 text-xs font-bold text-white dark:text-black dark:font-extrabold shadow-sm font-mono uppercase tracking-widest transition-all">
+                <Plus className="w-4 h-4" />
+                Neuer Artikel
+              </Link>
+            </div>
+          )}        </div>
       </div>
 
       <ArticleSearchFilters 

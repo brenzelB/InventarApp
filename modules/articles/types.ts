@@ -23,6 +23,7 @@ export interface Article {
   lagerort?: string | null;
   unit: string;
   tax_rate: number;
+  is_bundle?: boolean;
 }
 
 export interface ArticleFormData {
@@ -38,6 +39,7 @@ export interface ArticleFormData {
   lagerort?: string;
   unit: string;
   tax_rate: number;
+  is_bundle?: boolean;
 }
 
 export type HistoryType = 'input' | 'output';

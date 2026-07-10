@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { 
   ArrowLeft, 
   Edit3, 
@@ -13,7 +13,8 @@ import {
   AlertTriangle,
   Info,
   Camera,
-  FileText
+  FileText,
+  Layers
 } from "lucide-react";
 import Link from "next/link";
 import { useArticleDetails } from "@/modules/articles/hooks/useArticleDetails";
@@ -23,11 +24,19 @@ import { ArticleHistoryList } from "@/modules/articles/components/ArticleHistory
 import { ArticleComments } from "@/modules/articles/components/ArticleComments";
 import { StockAdjustmentForm } from "@/modules/articles/components/StockAdjustmentForm";
 import { QRCodeView } from "@/components/QRCodeView";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
+import { articleService } from "@/modules/articles/services/articleService";
+import { useAuth } from "@/hooks/useAuth";
+import { useToast } from "@/hooks/useToast";
+import { Article } from "@/modules/articles/types";
 
 type TabType = 'overview' | 'analysis' | 'comments' | 'edit';
 
 export default function ArticleDetailPage({ params }: { params: { id: string } }) {
+  const router = useRouter();
+  const { role } = useAuth();
+  const { success: toastSuccess, error: toastError } = useToast();
+  
   const { 
     article, 
     history, 
@@ -43,6 +52,26 @@ export default function ArticleDetailPage({ params }: { params: { id: string } }
   const searchParams = useSearchParams();
   const fromGroup = searchParams.get('fromGroup');
   const [activeTab, setActiveTab] = useState<TabType>('overview');
+  const [bundleItems, setBundleItems] = useState<{ article_id: string; quantity: number; article: Article }[]>([]);
+
+  useEffect(() => {
+    if (article?.is_bundle) {
+      articleService.getBundleItems(params.id)
+        .then(setBundleItems)
+        .catch(err => console.error("Fehler beim Laden der Bundle-Komponenten:", err));
+    }
+  }, [article, params.id]);
+
+  const handleDisbandBundle = async () => {
+    try {
+      await articleService.disbandBundle(params.id);
+      toastSuccess(`Bundle "${article?.name}" wurde erfolgreich aufgelöst.`);
+      router.push("/dashboard/articles");
+      router.refresh();
+    } catch (err: any) {
+      toastError(err.message || "Fehler beim Auflösen des Bundles.");
+    }
+  };
 
   if (loading) {
     return (
@@ -156,7 +185,7 @@ export default function ArticleDetailPage({ params }: { params: { id: string } }
 
               {/* Description & QR */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div className="md:col-span-2 bg-widget p-6 rounded-card border border-outline shadow-sm bg-grid-pattern bg-opacity-5 flex flex-col">
+                <div className={`${article.is_bundle ? 'md:col-span-1' : 'md:col-span-2'} bg-widget p-6 rounded-card border border-outline shadow-sm bg-grid-pattern bg-opacity-5 flex flex-col`}>
                   <h3 className="text-xs font-bold text-foreground mb-4 flex items-center gap-2 uppercase font-mono">
                     <Info className="w-4 h-4 text-primary" /> [ DESCRIPTION ] Beschreibung
                   </h3>
@@ -164,6 +193,32 @@ export default function ArticleDetailPage({ params }: { params: { id: string } }
                     {article.description || "Keine Beschreibung hinterlegt."}
                   </p>
                 </div>
+
+                {article.is_bundle && (
+                  <div className="md:col-span-1 bg-widget p-6 rounded-card border border-outline shadow-sm bg-grid-pattern bg-opacity-5 flex flex-col">
+                    <h3 className="text-xs font-bold text-foreground mb-4 flex items-center gap-2 uppercase font-mono">
+                      <Layers className="w-4 h-4 text-secondary" /> [ COMPONENTS ] Komponenten
+                    </h3>
+                    <div className="space-y-2.5 flex-grow overflow-y-auto max-h-[150px] custom-scrollbar pr-1">
+                      {bundleItems.map((item) => (
+                        <div key={item.article_id} className="flex justify-between items-center text-xs border-b border-outline pb-2 last:border-0 last:pb-0">
+                          <div className="truncate pr-2">
+                            <Link href={`/dashboard/articles/${item.article_id}`} className="font-bold text-foreground hover:text-primary transition-colors block truncate">
+                              {item.article?.name || "Lade..."}
+                            </Link>
+                            <span className="text-[9px] font-mono text-foreground/50">{item.article?.sku}</span>
+                          </div>
+                          <span className="font-bold font-mono text-foreground/85 bg-surface-2 px-2 py-0.5 rounded-element text-[10px] whitespace-nowrap">
+                            {item.quantity} {item.article?.unit || 'Stk'}
+                          </span>
+                        </div>
+                      ))}
+                      {bundleItems.length === 0 && (
+                        <p className="text-xs font-mono text-foreground/45">Keine Komponenten geladen.</p>
+                      )}
+                    </div>
+                  </div>
+                )}
                 
                  <div className="bg-widget p-6 rounded-card border border-outline shadow-sm bg-grid-pattern bg-opacity-5 relative overflow-hidden group">
                   <div className="flex justify-between items-center mb-6">
@@ -268,7 +323,30 @@ export default function ArticleDetailPage({ params }: { params: { id: string } }
 
         {/* Right Column: Actions & Quick Info */}
         <div className="space-y-8">
-          <StockAdjustmentForm onAdjust={adjustStock} loading={isAdjusting} />
+          {!article.is_bundle ? (
+            <StockAdjustmentForm onAdjust={adjustStock} loading={isAdjusting} />
+          ) : (
+            role !== 'viewer' && (
+              <div className="bg-widget p-6 rounded-card border border-primary/20 shadow-sm bg-grid-pattern bg-opacity-5 space-y-4">
+                <h3 className="font-bold text-foreground uppercase text-xs tracking-widest pl-2 border-l-2 border-primary font-mono">
+                  [ BUNDLE_ACTIONS ] Aktionen
+                </h3>
+                <p className="text-[10px] font-bold font-mono text-foreground/50 leading-relaxed uppercase">
+                  Möchtest du das Bundle auflösen? Dadurch wird dieses Bundle gelöscht und die enthaltenen Artikel-Mengen wieder auf deren jeweiligen Bestand aufgebucht.
+                </p>
+                <button
+                  onClick={() => {
+                    if (confirm(`Möchtest du das Bundle "${article.name}" wirklich auflösen?\nDies stellt den Bestand der Einzelartikel wieder her und löscht dieses Bundle.`)) {
+                      handleDisbandBundle();
+                    }
+                  }}
+                  className="w-full py-2.5 text-xs font-bold text-white dark:text-black dark:font-extrabold bg-primary hover:bg-primary-hover rounded-element border border-outline shadow-sm font-mono uppercase tracking-widest transition-all"
+                >
+                  Bundle auflösen
+                </button>
+              </div>
+            )
+          )}
           
           {/* Quick Stats Sidebar */}
           <div className="bg-widget p-6 rounded-card border border-outline shadow-sm bg-grid-pattern bg-opacity-5 space-y-6">

@@ -324,11 +324,18 @@ function SortableRow({
             <Link href={`/dashboard/articles/${article.id}`} className="text-foreground hover:text-primary transition-colors block truncate">
               {article.name}
             </Link>
-            {article.group && (
-              <span className="inline-flex mt-1 items-center rounded-element bg-secondary/15 px-2 py-0.5 text-[9px] font-bold text-secondary uppercase font-mono tracking-wider border border-secondary/20">
-                {article.group.name}
-              </span>
-            )}
+            <div className="flex flex-wrap gap-1.5 mt-1">
+              {article.group && (
+                <span className="inline-flex items-center rounded-element bg-secondary/15 px-2 py-0.5 text-[9px] font-bold text-secondary uppercase font-mono tracking-wider border border-secondary/20">
+                  {article.group.name}
+                </span>
+              )}
+              {article.is_bundle && (
+                <span className="inline-flex items-center rounded-element bg-primary/15 px-2 py-0.5 text-[9px] font-bold text-primary uppercase font-mono tracking-wider border border-primary/20">
+                  Bundle
+                </span>
+              )}
+            </div>
           </td>
         );
       case 'description':
@@ -349,7 +356,7 @@ function SortableRow({
         return (
           <td key={colKey} style={cellStyle} className="whitespace-nowrap px-3 py-4 text-xs text-right overflow-hidden">
             <div className="flex items-center justify-end gap-2 group/stock">
-              {role !== 'viewer' && (
+              {role !== 'viewer' && !article.is_bundle && (
                 <div className="flex items-center bg-surface-2 dark:bg-surface-2/40 border border-outline rounded-element p-0.5 opacity-0 group-hover/stock:opacity-100 transition-opacity">
                   <button onClick={() => handleQuickAdjust(article, -1)} className="p-1 text-foreground/60 hover:text-primary transition-colors" disabled={updatingId === article.id}>
                     <Minus size={14} />

@@ -451,4 +451,217 @@ export const articleService = {
     if (error) throw error;
     return data as any;
   },
+
+  async createBundle(bundleData: {
+    name: string;
+    sku: string;
+    description: string;
+    herstellpreis: number;
+    verkaufspreis: number;
+    purchase_price: number;
+    lagerort?: string;
+    unit?: string;
+    tax_rate?: number;
+    items: { article_id: string; quantity: number }[];
+  }) {
+    if (isMockMode) {
+      const articles = getMockArticles();
+      
+      // 1. Verify stock of all components
+      for (const item of bundleData.items) {
+        const component = articles.find(a => a.id === item.article_id);
+        if (!component) {
+          throw new Error(`Artikel mit ID ${item.article_id} existiert nicht.`);
+        }
+        if (component.bestand < item.quantity) {
+          throw new Error(`Nicht genügend Bestand für Artikel "${component.name}". Benötigt: ${item.quantity}, Vorhanden: ${component.bestand}`);
+        }
+      }
+
+      const now = new Date().toISOString();
+      const bundleId = generateId();
+
+      // 2. Subtract stock and log history for components
+      const updatedArticles = articles.map(art => {
+        const item = bundleData.items.find(i => i.article_id === art.id);
+        if (item) {
+          const oldStock = art.bestand;
+          const newStock = art.bestand - item.quantity;
+          
+          // Log history in local storage
+          const history = JSON.parse(localStorage.getItem(`mock_history_${art.id}`) || "[]");
+          history.unshift({
+            id: generateId(),
+            article_id: art.id,
+            old_stock: oldStock,
+            new_stock: newStock,
+            amount: -item.quantity,
+            type: "output",
+            created_at: now
+          });
+          localStorage.setItem(`mock_history_${art.id}`, JSON.stringify(history));
+
+          return { ...art, bestand: newStock, updated_at: now };
+        }
+        return art;
+      });
+
+      // 3. Create bundle article
+      const newBundle: Article = {
+        id: bundleId,
+        name: bundleData.name,
+        sku: bundleData.sku,
+        description: bundleData.description || "",
+        herstellpreis: bundleData.herstellpreis || 0,
+        verkaufspreis: bundleData.verkaufspreis || 0,
+        purchase_price: bundleData.purchase_price || 0,
+        bestand: 1,
+        mindestbestand: 0,
+        lagerort: bundleData.lagerort || "",
+        unit: bundleData.unit || "Stk",
+        tax_rate: bundleData.tax_rate || 19,
+        is_bundle: true,
+        created_at: now,
+        updated_at: now,
+        qr_code: null,
+      };
+
+      // Fetch QR Code over API
+      try {
+        const origin = typeof window !== "undefined" ? window.location.origin : undefined;
+        const qr = await fetchQrFromApi(bundleId, origin);
+        newBundle.qr_code = qr;
+      } catch (e) {
+        console.warn("Failed to generate mock QR code:", e);
+      }
+
+      updatedArticles.unshift(newBundle);
+      saveMockArticles(updatedArticles);
+
+      // Log history for the bundle itself
+      localStorage.setItem(`mock_history_${bundleId}`, JSON.stringify([{
+        id: generateId(),
+        article_id: bundleId,
+        old_stock: 0,
+        new_stock: 1,
+        amount: 1,
+        type: "input",
+        created_at: now
+      }]));
+
+      // Save mock bundle items
+      const allBundleItems = JSON.parse(localStorage.getItem("mock_bundle_items") || "[]");
+      bundleData.items.forEach(item => {
+        allBundleItems.push({
+          id: generateId(),
+          bundle_id: bundleId,
+          article_id: item.article_id,
+          quantity: item.quantity,
+          created_at: now
+        });
+      });
+      localStorage.setItem("mock_bundle_items", JSON.stringify(allBundleItems));
+
+      await this.logActivity('create', `Artikel-Bundle "${newBundle.name}" wurde neu angelegt und die Komponenten abgebucht`, newBundle.id);
+      this.notify();
+      return { success: true, bundle_id: bundleId };
+    }
+
+    // Live mode: call API Route
+    const res = await fetch("/api/bundles/create", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(bundleData),
+    });
+
+    const result = await res.json();
+    if (!res.ok) throw new Error(result.error || "Fehler beim Erstellen des Bundles.");
+    this.notify();
+    return result;
+  },
+
+  async disbandBundle(bundleId: string) {
+    if (isMockMode) {
+      const articles = getMockArticles();
+      const bundle = articles.find(a => a.id === bundleId);
+      if (!bundle) throw new Error(`Bundle mit ID ${bundleId} nicht gefunden.`);
+
+      const allBundleItems = JSON.parse(localStorage.getItem("mock_bundle_items") || "[]");
+      const bundleItems = allBundleItems.filter((bi: any) => bi.bundle_id === bundleId);
+
+      const now = new Date().toISOString();
+
+      // Return components back to stock
+      const updatedArticles = articles.filter(a => a.id !== bundleId).map(art => {
+        const item = bundleItems.find((bi: any) => bi.article_id === art.id);
+        if (item) {
+          const oldStock = art.bestand;
+          const newStock = art.bestand + item.quantity;
+
+          const history = JSON.parse(localStorage.getItem(`mock_history_${art.id}`) || "[]");
+          history.unshift({
+            id: generateId(),
+            article_id: art.id,
+            old_stock: oldStock,
+            new_stock: newStock,
+            amount: item.quantity,
+            type: "input",
+            created_at: now
+          });
+          localStorage.setItem(`mock_history_${art.id}`, JSON.stringify(history));
+
+          return { ...art, bestand: newStock, updated_at: now };
+        }
+        return art;
+      });
+
+      saveMockArticles(updatedArticles);
+
+      // Clean up mock references
+      localStorage.removeItem(`mock_history_${bundleId}`);
+      localStorage.removeItem(`mock_comments_${bundleId}`);
+      const remainingBundleItems = allBundleItems.filter((bi: any) => bi.bundle_id !== bundleId);
+      localStorage.setItem("mock_bundle_items", JSON.stringify(remainingBundleItems));
+
+      await this.logActivity('delete', `Artikel-Bundle "${bundle.name}" wurde aufgelöst und die Komponenten zurückgebucht`);
+      this.notify();
+      return { success: true };
+    }
+
+    // Live mode: call API Route
+    const res = await fetch("/api/bundles/disband", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ bundle_id: bundleId }),
+    });
+
+    const result = await res.json();
+    if (!res.ok) throw new Error(result.error || "Fehler beim Auflösen des Bundles.");
+    this.notify();
+    return result;
+  },
+
+  async getBundleItems(bundleId: string): Promise<{ article_id: string; quantity: number; article: Article }[]> {
+    if (isMockMode) {
+      const allBundleItems = JSON.parse(localStorage.getItem("mock_bundle_items") || "[]");
+      const items = allBundleItems.filter((bi: any) => bi.bundle_id === bundleId);
+      const articles = getMockArticles();
+      return items.map((item: any) => {
+        const art = articles.find(a => a.id === item.article_id);
+        return {
+          article_id: item.article_id,
+          quantity: item.quantity,
+          article: art || {} as Article
+        };
+      });
+    }
+
+    const { data, error } = await supabase
+      .from("bundle_items")
+      .select("article_id, quantity, article:articles(*)")
+      .eq("bundle_id", bundleId);
+
+    if (error) throw error;
+    return data as any[];
+  },
 };
