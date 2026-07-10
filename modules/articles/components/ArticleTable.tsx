@@ -370,7 +370,7 @@ function SortableRow({
         return (
           <td key={colKey} style={cellStyle} className="whitespace-nowrap px-3 py-4 text-xs text-right tabular-nums overflow-hidden">
             {editingId === article.id ? (
-              <input autoFocus type="number" step="0.01" className="w-full rounded-element border border-outline bg-surface-0 text-foreground text-right py-1 px-2 text-xs focus:ring-1 focus:ring-primary focus:border-primary font-mono font-bold" value={editValue} onChange={(e) => setEditValue(e.target.value)} onBlur={() => handlePriceSave(article.id)} onKeyDown={(e) => { if (e.key === 'Enter') handlePriceSave(article.id); if (e.key === 'Escape') setEditingId(null); }} />
+              <input autoFocus type="number" step="any" className="w-full rounded-element border border-outline bg-surface-0 text-foreground text-right py-1 px-2 text-xs focus:ring-1 focus:ring-primary focus:border-primary font-mono font-bold" value={editValue} onChange={(e) => setEditValue(e.target.value)} onBlur={() => handlePriceSave(article.id)} onKeyDown={(e) => { if (e.key === 'Enter') handlePriceSave(article.id); if (e.key === 'Escape') setEditingId(null); }} />
             ) : (
               <button onClick={() => startEditing(article)} disabled={updatingId === article.id} className="text-foreground hover:text-primary font-bold font-mono transition-colors">
                 {Number(article.purchase_price || 0).toFixed(2)} €

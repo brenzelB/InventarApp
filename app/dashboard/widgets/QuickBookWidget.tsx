@@ -83,7 +83,7 @@ export function QuickBookWidget() {
           <p className="text-[9px] font-bold font-mono text-foreground/50 uppercase tracking-widest mb-1.5 ml-1">Menge</p>
           <input
             type="number"
-            step="0.01"
+            step="any"
             min="0.01"
             value={amount}
             onChange={e => setAmount(Number(e.target.value))}

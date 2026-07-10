@@ -109,7 +109,7 @@ export function StockAdjustmentForm({ onAdjust, loading }: StockAdjustmentFormPr
           <input
             ref={inputRef}
             type="number"
-            step="0.01"
+            step="any"
             min="0.01"
             value={amount}
             onChange={(e) => { setAmount(Number(e.target.value)); }}

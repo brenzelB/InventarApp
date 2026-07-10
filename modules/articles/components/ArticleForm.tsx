@@ -169,17 +169,17 @@ export function ArticleForm({ initialData, articleId, qrCode, onUpdate }: Articl
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div>
           <label className="block text-[10px] font-bold font-mono text-foreground/50 uppercase tracking-widest leading-6 mb-1 ml-1">Herstellpreis (€) *</label>
-          <input required type="number" step="0.01" min="0" name="herstellpreis" value={formData.herstellpreis} onChange={handleChange} className="block w-full border border-outline rounded-element bg-surface-0 text-foreground placeholder-foreground/30 py-2 px-3 focus:ring-1 focus:ring-primary focus:border-primary text-xs font-mono font-bold transition-all shadow-sm disabled:opacity-50" disabled={loading || isReadOnly}/>
+          <input required type="number" step="any" min="0" name="herstellpreis" value={formData.herstellpreis} onChange={handleChange} className="block w-full border border-outline rounded-element bg-surface-0 text-foreground placeholder-foreground/30 py-2 px-3 focus:ring-1 focus:ring-primary focus:border-primary text-xs font-mono font-bold transition-all shadow-sm disabled:opacity-50" disabled={loading || isReadOnly}/>
         </div>
 
         <div>
           <label className="block text-[10px] font-bold font-mono text-foreground/50 uppercase tracking-widest leading-6 mb-1 ml-1">Einkaufspreis (€) *</label>
-          <input required type="number" step="0.01" min="0" name="purchase_price" value={formData.purchase_price} onChange={handleChange} className="block w-full border border-outline rounded-element bg-surface-0 text-foreground placeholder-foreground/30 py-2 px-3 focus:ring-1 focus:ring-primary focus:border-primary text-xs font-mono font-bold transition-all shadow-sm disabled:opacity-50" disabled={loading || isReadOnly}/>
+          <input required type="number" step="any" min="0" name="purchase_price" value={formData.purchase_price} onChange={handleChange} className="block w-full border border-outline rounded-element bg-surface-0 text-foreground placeholder-foreground/30 py-2 px-3 focus:ring-1 focus:ring-primary focus:border-primary text-xs font-mono font-bold transition-all shadow-sm disabled:opacity-50" disabled={loading || isReadOnly}/>
         </div>
 
         <div>
           <label className="block text-[10px] font-bold font-mono text-foreground/50 uppercase tracking-widest leading-6 mb-1 ml-1">Verkaufspreis (€) *</label>
-          <input required type="number" step="0.01" min="0" name="verkaufspreis" value={formData.verkaufspreis} onChange={handleChange} className="block w-full border border-outline rounded-element bg-surface-0 text-foreground placeholder-foreground/30 py-2 px-3 focus:ring-1 focus:ring-primary focus:border-primary text-xs font-mono font-bold transition-all shadow-sm disabled:opacity-50" disabled={loading || isReadOnly}/>
+          <input required type="number" step="any" min="0" name="verkaufspreis" value={formData.verkaufspreis} onChange={handleChange} className="block w-full border border-outline rounded-element bg-surface-0 text-foreground placeholder-foreground/30 py-2 px-3 focus:ring-1 focus:ring-primary focus:border-primary text-xs font-mono font-bold transition-all shadow-sm disabled:opacity-50" disabled={loading || isReadOnly}/>
         </div>
 
         <div>
